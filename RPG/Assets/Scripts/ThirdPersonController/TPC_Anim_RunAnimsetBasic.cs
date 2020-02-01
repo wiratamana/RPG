@@ -1,0 +1,40 @@
+﻿using UnityEngine;
+using System.Collections;
+
+namespace Tamana
+{
+    public static class TPC_Anim_RunAnimsetBasic
+    {
+        public const string Idle                = "Idle";
+
+        [TPC_Anim_AttributeMoving]
+        public const string RunFwdStart         = "RunFwdStart";
+
+        [TPC_Anim_AttributeMoving] 
+        public const string RunFwdLoop          = "RunFwdLoop";
+
+        [TPC_Anim_AttributeMoving] 
+        [TPC_Anim_AttributeMoveStarting] 
+        public const string RunFwdStart90_L     = "RunFwdStart90_L";
+
+        [TPC_Anim_AttributeMoving] 
+        [TPC_Anim_AttributeMoveStarting] 
+        public const string RunFwdStart90_R     = "RunFwdStart90_R";
+
+        [TPC_Anim_AttributeMoving] 
+        [TPC_Anim_AttributeMoveStarting] 
+        public const string RunFwdStart180_R    = "RunFwdStart180_R";
+
+        [TPC_Anim_AttributeMoving]
+        [TPC_Anim_AttributeMoveStarting] 
+        public const string RunFwdStart180_L    = "RunFwdStart180_L";
+
+        [TPC_Anim_AttributeMoving]
+        [TPC_Anim_AttributeMoveStopping] 
+        public const string RunFwdStop_LU       = "RunFwdStop_LU";
+
+        [TPC_Anim_AttributeMoving] 
+        [TPC_Anim_AttributeMoveStopping] 
+        public const string RunFwdStop_RU       = "RunFwdStop_RU";
+    }
+}
