@@ -11,7 +11,7 @@ namespace Tamana
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            TPC_PlayerMovement.Instance.SetValue(AnimationName, true);
+            TPC_AnimController.Instance.SetAnimStatusValue(AnimationName, true);
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -23,7 +23,7 @@ namespace Tamana
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            TPC_PlayerMovement.Instance.SetValue(AnimationName, false);
+            TPC_AnimController.Instance.SetAnimStatusValue(AnimationName, false);
         }
     }
 

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Tamana
 {
-    public class Debugger_AnimatorState : MonoBehaviour
+    public class Debugger_UI_AnimatorRunAnimsetBasic : Debugger_UI_WindowBase
     {
         [SerializeField] private Color notPlaying;
         [SerializeField] private Color playing;
@@ -25,14 +25,6 @@ namespace Tamana
         [SerializeField] private Image Idle;
 
         [SerializeField] private TextMeshProUGUI AnimStateText;
-
-        private Dictionary<string, bool> AnimStateDic;
-
-        private void Start()
-        {
-            AnimStateDic = (Dictionary<string, bool>)TPC_PlayerMovement.Instance.GetType().GetField(nameof(AnimStateDic),
-                BindingFlags.NonPublic | BindingFlags.Instance).GetValue(TPC_PlayerMovement.Instance);
-        }
 
         private void Update()
         {
@@ -51,7 +43,7 @@ namespace Tamana
 
         private void SetColor(Image img, string varName)
         {
-            if (TPC_PlayerMovement.Instance.IsPlaying(varName) == true)
+            if (TPC_AnimController.Instance.IsPlaying(varName) == true)
             {
                 img.color = playing;
             }
@@ -88,7 +80,7 @@ namespace Tamana
         private void SetState()
         {
             var sb = new StringBuilder();
-            foreach(var state in AnimStateDic)
+            foreach(var state in TPC_AnimController.Instance.AnimStateDic)
             {
                 sb.AppendLine($"{state.Key} : {state.Value}");
             }

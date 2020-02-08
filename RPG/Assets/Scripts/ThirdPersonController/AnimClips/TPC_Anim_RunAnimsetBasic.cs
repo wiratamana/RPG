@@ -3,8 +3,13 @@ using System.Collections;
 
 namespace Tamana
 {
+    [TPC_Animset_AttributeAnimClip(nameof(TPC_Anim_RunAnimsetBasic))]
     public static class TPC_Anim_RunAnimsetBasic
     {
+        [TPC_Anim_AttributeNotAnim]
+        public const string LAYER               = "RunAnimsetBasic";
+
+        [TPC_Anim_AttributeIdle]
         public const string Idle                = "Idle";
 
         [TPC_Anim_AttributeMoving]

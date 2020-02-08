@@ -2,7 +2,7 @@
 namespace Tamana
 {
     [AttributeUsage(AttributeTargets.Field)]
-    public class TPC_Anim_AttributeMoveStarting : Attribute
+    public class TPC_Anim_AttributeMoveStarting : TPC_Anim_AttributeBase
     {
 
     }

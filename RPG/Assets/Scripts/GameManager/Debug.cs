@@ -57,7 +57,7 @@ namespace Tamana
 
             UnityEngine.Debug.Log($"<b>{fromOpenColor}{methodName.ToString()} : {fromCloseColor}</b>{message}");
 
-            if(logType == LogType.ForceQuit)
+            if(Application.isPlaying == true && logType == LogType.ForceQuit)
             {
                 Application.Quit();
             }
