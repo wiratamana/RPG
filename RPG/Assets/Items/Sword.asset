@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cdfd2e41a20e034c9cb66b0de9b665b, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  holsterPosition: {x: 16.88717, y: 12.82156, z: 21.80004}
-  holsterRotation: {x: -228.023, y: 89.99999, z: 0}
+  holsterPosition: {x: -3.911153, y: -14.95422, z: -22.32498}
+  holsterRotation: {x: -57.61, y: -87.22201, z: -2.467}
   equipPosition: {x: 6.74, y: 3.17, z: 0.65}
   equipRotation: {x: -162.232, y: -113.106, z: 91.743}
