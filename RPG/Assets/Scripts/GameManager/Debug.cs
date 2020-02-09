@@ -59,7 +59,7 @@ namespace Tamana
 
             if(Application.isPlaying == true && logType == LogType.ForceQuit)
             {
-                Application.Quit();
+                Application.Quit();                
             }
         }
     }

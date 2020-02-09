@@ -26,6 +26,27 @@ namespace Tamana
             }
         }
 
+        public TPC_BodyTransform BodyTransform { get; private set; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            BodyTransform = gameObject.AddComponent<TPC_BodyTransform>();
+        }
+
+        [TPC_AnimClip_AttributeEvent]
+        private void OnEquip()
+        {
+            Debug.Log("OnEquip");
+        }
+
+        [TPC_AnimClip_AttributeEvent]
+        private void OnHolster()
+        {
+            Debug.Log("OnHolster");
+        }
+
         public string GetStartMoveAnimationName(float angle)
         {
             if (angle < 45 && angle > -45)
