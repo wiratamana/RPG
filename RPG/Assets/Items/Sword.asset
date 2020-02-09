@@ -16,3 +16,4 @@ MonoBehaviour:
   holsterRotation: {x: -57.61, y: -87.22201, z: -2.467}
   equipPosition: {x: 6.74, y: 3.17, z: 0.65}
   equipRotation: {x: -162.232, y: -113.106, z: 91.743}
+  prefab: {fileID: 1631607032641582, guid: 0c14f3ea30af4174ba288b3c2042f665, type: 3}
