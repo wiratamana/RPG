@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlayerCameraLookPoint
+  - UIManager
   layers:
   - Default
   - TransparentFX

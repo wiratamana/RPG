@@ -15,6 +15,7 @@ namespace Tamana
         public Transform CameraLookPoint { private set; get; }
         public TPC_AnimController AnimController { private set; get; }
         public TPC_PlayerMovement PlayerMovement { private set; get; }
+        public TPC_PlayerMovementCombat PlayerMovementCombat { private set; get; }
 
         public float CameraAngleFromPlayerForward
         {
@@ -36,6 +37,7 @@ namespace Tamana
             CreateThirdPersonCamera();
             InstantiateAnimControllerOnPlayer();
             InstantiatePlayerMovementOnPlayer();
+            InstantiatePlayerMovementCombatOnPlayer();
         }
 
         private void Update()
@@ -85,6 +87,11 @@ namespace Tamana
         private void InstantiatePlayerMovementOnPlayer()
         {
             PlayerMovement = gameObject.AddComponent<TPC_PlayerMovement>();
+        }
+
+        private void InstantiatePlayerMovementCombatOnPlayer()
+        {
+            PlayerMovementCombat = gameObject.AddComponent<TPC_PlayerMovementCombat>();
         }
     }
 }
