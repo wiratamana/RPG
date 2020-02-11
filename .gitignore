@@ -61,3 +61,5 @@ crashlytics-build.properties
 RPG/Library/
 RPG/Temp/
 RPG/obj/
+*.meta
+!*.*.meta
