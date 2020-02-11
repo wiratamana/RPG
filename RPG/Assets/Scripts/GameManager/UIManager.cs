@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 namespace Tamana
 {
@@ -32,6 +33,15 @@ namespace Tamana
             base.Awake();
 
             runningWindow = new Dictionary<string, UI_WindowBase>();
+        }
+
+        private void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.B))
+            {
+                var menu = ResourcesLoader.Instance.InstantiatePrefabWithReturnValue<UI_Menu>();
+                menu.OpenMenu(UI_Menu.MenuItem.Inventory);
+            }
         }
 
         public void RegisterWindow(UI_WindowBase window)
@@ -104,6 +114,20 @@ namespace Tamana
         public bool IsWindowRunning(UI_WindowBase windowBase)
         {       
             return runningWindow.ContainsKey(windowBase.GetType().Name);
+        }
+
+        public static Image CreateImage(Transform parent, int width, int height, string name)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent);
+            var img = go.AddComponent<Image>();
+            img.rectTransform.sizeDelta = new Vector2(width, height);
+
+            return img;
+        }
+        public static Image CreateImage()
+        {
+            return CreateImage(null, 100, 100, "Image");
         }
     }
 }

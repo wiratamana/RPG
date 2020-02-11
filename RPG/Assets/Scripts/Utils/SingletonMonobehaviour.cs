@@ -10,6 +10,11 @@ namespace Tamana
 
         protected virtual void Awake()
         {
+            if(Instance != null)
+            {
+                Destroy(gameObject);
+            }
+
             Instance = this as T;
         }
     }

@@ -5,6 +5,9 @@ namespace Tamana
 {
     public class TPC_PlayerMovementCombat : SingletonMonobehaviour<TPC_PlayerMovementCombat>
     {
+        private Transform swordTransform;
+        private Item_Weapon weapon;
+
         private void Update()
         {
             if(Input.GetKeyDown(KeyCode.Space) == true)
@@ -33,18 +36,28 @@ namespace Tamana
             base.Awake();
 
             BodyTransform = gameObject.AddComponent<TPC_BodyTransform>();
+
+            weapon = Instantiate(Resources.Load<Item_Weapon>("Sword"));
+            swordTransform = Instantiate(weapon.Prefab, BodyTransform.Spine).transform;
+            swordTransform.localPosition = weapon.HolsterPosition;
+            swordTransform.localRotation = weapon.HolsterRotation;
+            swordTransform.localScale = new Vector3(100, 100, 100);
         }
 
         [TPC_AnimClip_AttributeEvent]
         private void OnEquip()
         {
-            Debug.Log("OnEquip");
+            swordTransform.SetParent(BodyTransform.HandR);
+            swordTransform.localPosition = weapon.EquipPostion;
+            swordTransform.localRotation = weapon.EquipRotation;
         }
 
         [TPC_AnimClip_AttributeEvent]
         private void OnHolster()
         {
-            Debug.Log("OnHolster");
+            swordTransform.SetParent(BodyTransform.Spine);
+            swordTransform.localPosition = weapon.HolsterPosition;
+            swordTransform.localRotation = weapon.HolsterRotation;
         }
 
         public string GetStartMoveAnimationName(float angle)

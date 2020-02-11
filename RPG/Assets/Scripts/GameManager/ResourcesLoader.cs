@@ -51,5 +51,26 @@ namespace Tamana
                 }
             }
         }
+
+        public T InstantiatePrefabWithReturnValue<T>() where T : MonoBehaviour
+        {
+            foreach (var i in instantiatorDic)
+            {
+                var nameofT = typeof(T).Name;
+                if (i.Key.Name == nameofT)
+                {
+                    var obj = Instantiate(i.Value);
+                    var component = obj.GetComponent<T>();
+                    if(component == null)
+                    {
+                        component = obj.GetComponentInChildren<T>();
+                    }
+
+                    return component;
+                }
+            }
+
+            return null;
+        }
     }
 }
