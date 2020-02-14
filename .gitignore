@@ -65,3 +65,4 @@ RPG/obj/
 !*.*.meta
 *.json.meta
 *.txt.meta
+*.asset.meta
