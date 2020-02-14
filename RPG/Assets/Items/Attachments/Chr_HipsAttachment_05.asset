@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd88f3a90c6800a40a8e02b4c113b901, type: 3}
+  m_Name: Chr_HipsAttachment_05
+  m_EditorClassIdentifier: 
+  itemName: Chr_HipsAttachment_05
+  itemDescription: Item 'Chr_HipsAttachment_05' description!!
+  partLocation: PartsGetter/Modular_Characters/All_09_Hips_Attachment
+  prefab: {fileID: 4118177524824810, guid: ecdc3a0dec2707c4e82c5e4b6231f06a, type: 3}
+  type: 6

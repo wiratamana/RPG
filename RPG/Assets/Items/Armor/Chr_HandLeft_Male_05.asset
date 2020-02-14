@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e820f9861bfd04ea7359a6ae741656, type: 3}
+  m_Name: Chr_HandLeft_Male_05
+  m_EditorClassIdentifier: 
+  itemName: Chr_HandLeft_Male_05
+  itemDescription: Item 'Chr_HandLeft_Male_05' description!!
+  partLocation: PartsGetter/Modular_Characters/Male_09_Hand_Left
+  prefab: {fileID: 4776243682236994, guid: 4c2cc54b74833b240bb4ec76e953b498, type: 3}
+  type: 7

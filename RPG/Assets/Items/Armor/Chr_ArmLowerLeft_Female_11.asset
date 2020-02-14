@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e820f9861bfd04ea7359a6ae741656, type: 3}
+  m_Name: Chr_ArmLowerLeft_Female_11
+  m_EditorClassIdentifier: 
+  itemName: Chr_ArmLowerLeft_Female_11
+  itemDescription: Item 'Chr_ArmLowerLeft_Female_11' description!!
+  partLocation: PartsGetter/Modular_Characters/Female_07_Arm_Lower_Left
+  prefab: {fileID: 4633628391994380, guid: c91108df775c1fa4f94972bae81514a5, type: 3}
+  type: 5

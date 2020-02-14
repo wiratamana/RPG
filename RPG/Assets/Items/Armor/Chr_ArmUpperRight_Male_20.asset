@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e820f9861bfd04ea7359a6ae741656, type: 3}
+  m_Name: Chr_ArmUpperRight_Male_20
+  m_EditorClassIdentifier: 
+  itemName: Chr_ArmUpperRight_Male_20
+  itemDescription: Item 'Chr_ArmUpperRight_Male_20' description!!
+  partLocation: PartsGetter/Modular_Characters/Male_04_Arm_Upper_Right
+  prefab: {fileID: 4601703809265310, guid: b338cc782b317df4aad74fbdc2208ba7, type: 3}
+  type: 2

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd88f3a90c6800a40a8e02b4c113b901, type: 3}
+  m_Name: Chr_ShoulderAttachLeft_17
+  m_EditorClassIdentifier: 
+  itemName: Chr_ShoulderAttachLeft_17
+  itemDescription: Item 'Chr_ShoulderAttachLeft_17' description!!
+  partLocation: PartsGetter/Modular_Characters/All_06_Shoulder_Attachment_Left
+  prefab: {fileID: 4656402430505404, guid: 39ffdfb7cd1065744b10adf52216bbfe, type: 3}
+  type: 3
