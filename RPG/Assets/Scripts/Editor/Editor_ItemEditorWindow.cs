@@ -39,20 +39,40 @@ namespace Tamana
             }
         }
 
+        private Editor_ItemEditorWindow_AddItemAndSearch _additemAndSearch;
+        public Editor_ItemEditorWindow_AddItemAndSearch AdditemAndSearch
+        {
+            get
+            {
+                if (_additemAndSearch == null)
+                {
+                    _additemAndSearch = new Editor_ItemEditorWindow_AddItemAndSearch(this);
+                }
+
+                return _additemAndSearch;
+            }
+        }
+
         private void Awake()
         {
             minSize = new Vector2(650, 300);
-            autoRepaintOnSceneChange = true;
         }
+
 
         private void OnGUI()
         {
+            EditorGUILayout.BeginVertical();
+
+            AdditemAndSearch.Draw();
+
             EditorGUILayout.BeginHorizontal(); // | Item List | Item Inspector |
 
             ItemList.Draw();
             ItemInspector.Draw();
 
             EditorGUILayout.EndHorizontal(); // | Item List | Item Inspector |
+
+            EditorGUILayout.EndVertical();
         }                       
     }
 }

@@ -20,28 +20,10 @@ namespace Tamana
             }
         }
 
-        [SerializeField] private Transform prefab;
-        public Transform Prefab
-        {
-            get
-            {
-                return prefab;
-            }
-            protected set
-            {
-                prefab = value;
-            }
-        }
-
 #if UNITY_EDITOR
         public void SetPartLocation(string value)
         {
             PartLocation = value;
-        }
-
-        public void SetPrefab(Transform prefab)
-        {
-            Prefab = prefab;
         }
 #endif
     }

@@ -212,7 +212,6 @@ namespace Tamana
             Close();
 
             Editor_ItemEditorWindow window = GetWindow<Editor_ItemEditorWindow>();
-            window.autoRepaintOnSceneChange = true;
             window.Show();
         }
     }

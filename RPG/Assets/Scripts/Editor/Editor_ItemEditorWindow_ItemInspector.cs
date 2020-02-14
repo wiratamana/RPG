@@ -40,6 +40,11 @@ namespace Tamana
 
             System.Func<string, string, string> repeater = (labelName, inputValue) =>
             {
+                if(string.IsNullOrEmpty(inputValue) == true)
+                {
+                    return string.Empty;
+                }
+
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(labelName, GUILayout.MaxWidth(100));
                 var output = GUILayout.TextArea(inputValue);
@@ -50,15 +55,13 @@ namespace Tamana
 
             repeater("Name", window.selectedItem.itemBase.ItemName);
             repeater("Description", window.selectedItem.itemBase.ItemDescription);
-            repeater("Location", (window.selectedItem.itemBase as Item_ModularBodyPart).PartLocation);
+            repeater("Location", (window.selectedItem.itemBase as Item_ModularBodyPart)?.PartLocation ?? null);
 
-
-            var modularBodyPart = (window.selectedItem.itemBase as Item_ModularBodyPart);
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Prefab", GUILayout.MaxWidth(100));
-            var transform = EditorGUILayout.ObjectField(modularBodyPart.Prefab as Transform,
+            var transform = EditorGUILayout.ObjectField(window.selectedItem.itemBase.Prefab as Transform,
                 typeof(Transform), false) as Transform;
-            modularBodyPart.SetPrefab(transform);
+            window.selectedItem.itemBase.SetPrefab(transform);
             EditorGUILayout.EndHorizontal();
 
             if (GUILayout.Button("Save"))

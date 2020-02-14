@@ -21,7 +21,6 @@ namespace Tamana
             EditorGUILayout.BeginVertical(GUILayout.MaxWidth(300)); // Item List
 
             EditorGUILayout.LabelField("Item List", EditorStyles.boldLabel);
-            EditorGUILayout.TextField("Search", "All", EditorStyles.toolbarSearchField);
 
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
 

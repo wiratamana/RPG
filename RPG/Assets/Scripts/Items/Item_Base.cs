@@ -36,6 +36,20 @@ namespace Tamana
             }
         }
 
+
+        [SerializeField] private Transform prefab;
+        public Transform Prefab
+        {
+            get
+            {
+                return prefab;
+            }
+            protected set
+            {
+                prefab = value;
+            }
+        }
+
 #if UNITY_EDITOR
         public void SetItemName(string value)
         {
@@ -44,6 +58,11 @@ namespace Tamana
         public void SetItemDescription(string value)
         {
             ItemDescription = value;
+        }
+
+        public void SetPrefab(Transform prefab)
+        {
+            Prefab = prefab;
         }
 #endif
     }
