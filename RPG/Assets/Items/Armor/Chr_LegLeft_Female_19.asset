@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e820f9861bfd04ea7359a6ae741656, type: 3}
+  m_Name: Chr_LegLeft_Female_19
+  m_EditorClassIdentifier: 
+  itemName: Chr_LegLeft_Female_19
+  itemDescription: Item 'Chr_LegLeft_Female_19' description!!
+  partLocation: PartsGetter/Modular_Characters/Female_12_Leg_Left
+  prefab: {fileID: 4566307266153482, guid: e64ca2bc78540e54392da6b6cd8643f5, type: 3}
+  type: 10

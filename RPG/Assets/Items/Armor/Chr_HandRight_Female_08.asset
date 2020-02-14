@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e820f9861bfd04ea7359a6ae741656, type: 3}
+  m_Name: Chr_HandRight_Female_08
+  m_EditorClassIdentifier: 
+  itemName: Chr_HandRight_Female_08
+  itemDescription: Item 'Chr_HandRight_Female_08' description!!
+  partLocation: PartsGetter/Modular_Characters/Female_08_Hand_Right
+  prefab: {fileID: 4738462073865260, guid: 29d092a351a353247b4834a99b8d06ab, type: 3}
+  type: 6
