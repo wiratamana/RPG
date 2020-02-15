@@ -6,9 +6,11 @@ namespace Tamana
     public class Item_FloatingItem : MonoBehaviour
     {
         [SerializeField] private Item_Base item;
+        [SerializeField] private float colliderRadius;
 
         private Transform itemTransform;
         private Transform prefab;
+        private UI_Navigator navigator;
 
         private void Start()
         {
@@ -40,16 +42,6 @@ namespace Tamana
             }            
         }
 
-        [SerializeField] private float colliderRadius;
-        private bool isColliding = false;
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = isColliding ? Color.red : Color.green;
-
-            Gizmos.DrawWireSphere(transform.position, colliderRadius);
-        }
-
         private IEnumerator SphereCast()
         {
             var halfSecond = new WaitForSeconds(0.5f);
@@ -57,17 +49,20 @@ namespace Tamana
             while(true)
             {
                 var overlap = Physics.OverlapSphere(transform.position, colliderRadius);
-                isColliding = overlap.Length > 0;
                 if (overlap.Length > 0)
                 {
-                    foreach(var c in overlap)
+                    if(navigator == null)
                     {
-                        //Debug.Log(c.gameObject.name);
-                    }
+                        navigator = UI_NavigatorManager.Instance.Add(item.ItemName, 'E');
+                    }                    
                 }
                 else
                 {
-                    //Debug.Log("Nothing colliding with me");
+                    if(navigator != null)
+                    {
+                        UI_NavigatorManager.Instance.Remove(navigator);
+                        navigator = null;
+                    }                    
                 }
 
                 yield return halfSecond;
