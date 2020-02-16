@@ -109,11 +109,7 @@ namespace Tamana
                         itemObject.SetItemDescription($"Item '{itemObject.ItemName}' description");
 
                         var itemCharacterBody = itemObject as Item_ModularBodyPart;
-                        itemCharacterBody.SetPartLocation(GetPartLocation(m.transform));
-                        //if (prefabsDic.ContainsKey(m.transform.GetChild(i).name) == true)
-                        //{
-                        //    itemCharacterBody.SetPrefab(prefabsDic[m.transform.GetChild(i).name]);
-                        //}
+                        itemCharacterBody.SetPartLocation(GetPartLocation(m.transform.GetChild(i)));
 
                         AssetDatabase.CreateAsset(itemObject, assetWritePath);
                     }
@@ -142,7 +138,7 @@ namespace Tamana
                         itemObject.SetItemDescription($"Item '{itemObject.ItemName}' description!!");
 
                         var itemCharacterBody = itemObject as Item_ModularBodyPart;
-                        itemCharacterBody.SetPartLocation(GetPartLocation(m.transform));
+                        itemCharacterBody.SetPartLocation(GetPartLocation(m.transform.GetChild(i)));
                         if (prefabsDic.ContainsKey(m.transform.GetChild(i).name) == true)
                         {
                             itemCharacterBody.SetPrefab(prefabsDic[m.transform.GetChild(i).name]);
@@ -168,7 +164,7 @@ namespace Tamana
                 return null;
             };
 
-            var parent = t.parent;
+            var parent = t;
 
             while(parent != null)
             {

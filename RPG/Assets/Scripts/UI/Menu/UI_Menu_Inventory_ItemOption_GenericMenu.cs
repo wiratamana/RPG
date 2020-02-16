@@ -22,20 +22,18 @@ namespace Tamana
             }
         }
 
-        private Image ring;
-        private TextMeshProUGUI text;
+        public Image Ring { private set; get; }
+        public TextMeshProUGUI Text { private set; get; }
         private EventTrigger eventTrigger;
 
-        public EventManager OnClick { private set; get; } = new EventManager();
+        public EventManager OnMouseLeftClick { private set; get; } = new EventManager();
+        public EventManager OnMouseEnter { private set; get; } = new EventManager();
+        public EventManager OnMouseExit { private set; get; } = new EventManager();
 
         private void Start()
         {
-            AddEntryToEventTrigger();
-        }
+            eventTrigger = Ring.gameObject.AddComponent<EventTrigger>();
 
-        private void AddEntryToEventTrigger()
-        {
-            eventTrigger = ring.gameObject.AddComponent<EventTrigger>();
             var pointerEnterEntry = new EventTrigger.Entry();
             var pointerExitEntry = new EventTrigger.Entry();
             var pointerClickEntry = new EventTrigger.Entry();
@@ -44,9 +42,9 @@ namespace Tamana
             pointerExitEntry.eventID = EventTriggerType.PointerExit;
             pointerClickEntry.eventID = EventTriggerType.PointerClick;
 
-            pointerEnterEntry.callback.AddListener(OnMouseEnter);
-            pointerExitEntry.callback.AddListener(OnMouseExit);
-            pointerClickEntry.callback.AddListener(OnMouseClick);
+            pointerEnterEntry.callback.AddListener(OnPointerEnter);
+            pointerExitEntry.callback.AddListener(OnPointerExit);
+            pointerClickEntry.callback.AddListener(OnPointerClick);
 
             eventTrigger.triggers.Add(pointerEnterEntry);
             eventTrigger.triggers.Add(pointerExitEntry);
@@ -63,29 +61,41 @@ namespace Tamana
             rt.sizeDelta = new Vector2(width, height);
             var genericMenu = go.AddComponent<UI_Menu_Inventory_ItemOption_GenericMenu>();
 
-            genericMenu.ring = UI_Menu_Pool.Instance.GetImage(rt, width, height, nameof(ring));
-            genericMenu.ring.sprite = UI_Menu.Instance.MenuResources.InventoryItemIconRing_Sprite;
-            genericMenu.ring.type = Image.Type.Sliced;
+            genericMenu.Ring = UI_Menu_Pool.Instance.GetImage(rt, width, height, nameof(Ring));
+            genericMenu.Ring.sprite = UI_Menu.Instance.MenuResources.InventoryItemIconRing_Sprite;
+            genericMenu.Ring.type = Image.Type.Sliced;
+            genericMenu.Ring.rectTransform.anchorMin = Vector2.zero;
+            genericMenu.Ring.rectTransform.anchorMax = Vector2.one;
+            genericMenu.Ring.rectTransform.offsetMin = Vector2.zero;
+            genericMenu.Ring.rectTransform.offsetMax = Vector2.zero;
 
-            genericMenu.text = UI_Menu_Pool.Instance.GetText(rt, width, height, name, nameof(text));
-            genericMenu.text.fontSize = 28;
+            genericMenu.Text = UI_Menu_Pool.Instance.GetText(rt, width, height, name, nameof(Text));
+            genericMenu.Text.fontSize = 28;
+            genericMenu.Text.rectTransform.anchorMin = Vector2.zero;
+            genericMenu.Text.rectTransform.anchorMax = Vector2.one;
+            genericMenu.Text.rectTransform.offsetMin = Vector2.zero;
+            genericMenu.Text.rectTransform.offsetMax = Vector2.zero;
 
             return genericMenu;
         }
 
-        public void OnMouseExit(BaseEventData eventData)
+        private void OnPointerExit(BaseEventData eventData)
         {
-            
+            OnMouseExit.Invoke();
+
+            Ring.color = UI_Menu_Inventory_ItemOption.RingNormalColor;
         }
 
-        public void OnMouseEnter(BaseEventData eventData)
+        private void OnPointerEnter(BaseEventData eventData)
         {
-            
+            OnMouseEnter.Invoke();
+
+            Ring.color = Color.white;
         }
 
-        public void OnMouseClick(BaseEventData eventData)
+        private void OnPointerClick(BaseEventData eventData)
         {
-            
+            OnMouseLeftClick.Invoke();
         }
     }
 }

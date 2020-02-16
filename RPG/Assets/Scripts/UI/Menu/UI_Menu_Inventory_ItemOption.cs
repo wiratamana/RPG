@@ -25,8 +25,8 @@ namespace Tamana
         private Image background;
         private Image ring;
 
-        private static readonly Color BackgroundNormalColor = new Color(40.0f / 255.0f, 40.0f / 255.0f, 40.0f / 255.0f, 250.0f / 255.0f);
-        private static readonly Color RingNormalColor = new Color(200.0f / 255.0f, 200.0f / 255.0f, 200.0f / 255.0f, 1.0f);
+        public static readonly Color BackgroundNormalColor = new Color(40.0f / 255.0f, 40.0f / 255.0f, 40.0f / 255.0f, 250.0f / 255.0f);
+        public static readonly Color RingNormalColor = new Color(200.0f / 255.0f, 200.0f / 255.0f, 200.0f / 255.0f, 1.0f);
 
         public const int WIDTH = 300;
         public const int GENERIC_HEIGHT = 50;
@@ -57,18 +57,12 @@ namespace Tamana
             ring.color = RingNormalColor;
 
             gameObject.SetActive(false);
+
+            UI_Menu_Inventory.OnMenuInventoryClosed.AddListener(Close);
         }
 
-        public void Open()
+        public void Open(UI_Menu_Inventory_Left_ItemIcon itemIcon)
         {
-            Debug.Log("Open");
-
-            var equip = UI_Menu_Inventory_ItemOption_GenericMenu.CreateGenericMenu("Equip");
-            var cancel = UI_Menu_Inventory_ItemOption_GenericMenu.CreateGenericMenu("Cancel");
-
-            RegisterGenericMenu(equip);
-            RegisterGenericMenu(cancel);
-
             var verticalSpacing = 15;
 
             RectTransform.sizeDelta = new Vector2(WIDTH,
@@ -87,13 +81,31 @@ namespace Tamana
 
             gameObject.SetActive(true);
 
-            RectTransform.position = Input.mousePosition + 
+            RectTransform.position = itemIcon.RectTransform.position + 
                 new Vector3(RectTransform.sizeDelta.x * 0.5f, RectTransform.sizeDelta.y * -0.5f);
+        }
+
+        public void Close()
+        {
+            gameObject.SetActive(false);
         }
 
         public void RegisterGenericMenu(UI_Menu_Inventory_ItemOption_GenericMenu genericMenu)
         {
             genericMenusList.Add(genericMenu);
+        }
+
+        public void ClearRegisteredGenericMenu()
+        {
+            foreach(var g in genericMenusList)
+            {
+                UI_Menu_Pool.Instance.RemoveImage(g.Ring);
+                UI_Menu_Pool.Instance.RemoveText(g.Text);
+
+                Destroy(g.gameObject);
+            }
+
+            genericMenusList.Clear();
         }
     }
 

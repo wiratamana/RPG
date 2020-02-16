@@ -8,6 +8,7 @@ namespace Tamana
         private MeshRenderer renderer;
         private Material material;
         [SerializeField] private Camera cam;
+        public Item_Base ItemBase { private set; get; }
 
         private void Awake()
         {
@@ -21,9 +22,10 @@ namespace Tamana
             transform.Rotate(Vector3.up * 120 * Time.deltaTime);
         }
 
-        public void SetCameraRender(Camera cam)
+        public void SetValue(Camera cam, Item_Base itemBase)
         {
             this.cam = cam;
+            ItemBase = itemBase;
         }
 
         public void ResetPosition()

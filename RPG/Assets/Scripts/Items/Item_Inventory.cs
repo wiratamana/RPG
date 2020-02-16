@@ -29,9 +29,14 @@ namespace Tamana
             return item[idx].ItemName;
         }
 
-        public Transform GetItemPrefabIndex(int idx)
+        public Transform GetItemPrefabAtIndex(int idx)
         {
             return item[idx].Prefab;
+        }
+
+        public Item_Base GetItemAtIndex(int idx)
+        {
+            return item[idx];
         }
 
         public void AddItem(Item_Base item)

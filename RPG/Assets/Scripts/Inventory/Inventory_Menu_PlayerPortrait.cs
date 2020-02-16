@@ -34,7 +34,7 @@ namespace Tamana
 
         private void ChangeMaterial()
         {
-            var meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+            var meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
             foreach(var mr in meshRenderers)
             {
                 mr.sharedMaterial = new Material(GameManager.ItemMaterial);

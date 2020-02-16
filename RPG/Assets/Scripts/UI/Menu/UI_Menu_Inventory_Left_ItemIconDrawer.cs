@@ -126,7 +126,7 @@ namespace Tamana
                 // ===============================================================================================
                 // Create RawTexture to render the item
                 // ===============================================================================================
-                var obj = CreateItemRendererCamera(Item_Inventory.Instance.GetItemPrefabIndex(i), new Vector2(i, offsetY));
+                var obj = CreateItemRendererCamera(Item_Inventory.Instance.GetItemAtIndex(i), new Vector2(i, offsetY));
                 var itemImage = UI_Menu_Pool.Instance.GetRawImage(rt, 100, 100, Item_Inventory.Instance.GetItemNameAtIndex(i));
                 itemImage.rectTransform.localPosition = Vector2.zero;
                 itemImage.color = Color.white;
@@ -180,13 +180,13 @@ namespace Tamana
             }
         }
 
-        private Transform CreateItemRendererCamera(Transform prefab, Vector2 positionOffset)
+        private Transform CreateItemRendererCamera(Item_Base itemBase, Vector2 positionOffset)
         {
-            var item = Instantiate(prefab);
+            var item = Instantiate(itemBase.Prefab);
             item.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
             item.gameObject.layer = LayerMask.NameToLayer(LayerManager.LAYER_ITEM_PROJECTION);
             item.GetComponent<MeshRenderer>().sharedMaterial = GameManager.ItemMaterial;
-            item.gameObject.AddComponent<Item_Preview>().SetCameraRender(TextureRendererCamera);
+            item.gameObject.AddComponent<Item_Preview>().SetValue(TextureRendererCamera, itemBase);
 
             item.position = new Vector3(0, 1000, 1) + (Vector3)positionOffset;
             item.rotation = Quaternion.Euler(0, 180, 0);

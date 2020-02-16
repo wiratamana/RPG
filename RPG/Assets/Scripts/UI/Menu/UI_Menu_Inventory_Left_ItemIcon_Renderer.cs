@@ -21,6 +21,20 @@ namespace Tamana
             }
         }
 
+        private UI_Menu_Inventory_Left_ItemIcon itemIcon;
+        public UI_Menu_Inventory_Left_ItemIcon ItemIcon
+        {
+            get
+            {
+                if(itemIcon == null)
+                {
+                    itemIcon = transform.parent.GetComponent<UI_Menu_Inventory_Left_ItemIcon>();
+                }
+
+                return itemIcon;
+            }
+        }
+
         public Item_Preview ItemPreview { get; set; }
         private bool isMousePointerAboveMe = false;
 

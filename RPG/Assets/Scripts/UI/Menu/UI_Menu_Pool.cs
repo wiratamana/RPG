@@ -84,6 +84,13 @@ namespace Tamana
             rawImage.texture = null;
             rawImagesPool.Push(rawImage);
         }
+
+        public void RemoveText(TextMeshProUGUI text)
+        {
+            text.transform.SetParent(transform);
+            text.text = null;
+            textsPool.Push(text);
+        }
     }
 }
 
