@@ -55,5 +55,26 @@ namespace Tamana
                 return _mainCamera;
             }
         }
+
+        private static Material itemMaterial;
+        public static Material ItemMaterial
+        {
+            get
+            {
+                if(itemMaterial == null)
+                {
+                    var loadPath = "ItemShader/ItemMaterial";
+                    itemMaterial = Resources.Load<Material>(loadPath);
+
+                    if(itemMaterial == null)
+                    {
+                        Debug.Log($"Failed to load '{nameof(Material)}' from Resources folder at path '{loadPath}'", Debug.LogType.ForceQuit);
+                        return null;
+                    }
+                }
+
+                return itemMaterial;
+            }
+        }
     }
 }

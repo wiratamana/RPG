@@ -114,5 +114,30 @@ namespace Tamana
                     break;
             }
         }
+
+        public void CloseMenu()
+        {
+            Instance.gameObject.SetActive(false);
+        }
+
+        public static void OpenMenuInventory()
+        {
+            if(Instance == null)
+            {
+                var menu = ResourcesLoader.Instance.InstantiatePrefabWithReturnValue<UI_Menu>();
+                menu.OpenMenu(MenuItem.Inventory);
+                return;
+            }
+
+            if(Instance.gameObject.activeInHierarchy == true)
+            {
+                Instance.CloseMenu();
+            }
+            else
+            {
+                Instance.gameObject.SetActive(true);
+            }
+            
+        }
     }
 }

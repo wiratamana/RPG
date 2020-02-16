@@ -9,6 +9,10 @@ namespace Tamana
         public RectTransform RectTransform { private set; get; }
         public UI_Menu_Inventory_Left Left { private set; get; }
         public UI_Menu_Inventory_Right Right { private set; get; }
+        public UI_Menu_Inventory_ItemOption ItemOption { private set; get; }
+
+        public static EventManager OnMenuInventoryOpened { private set; get; } = new EventManager();
+        public static EventManager OnMenuInventoryClosed { private set; get; } = new EventManager();
 
         public enum InventoryItemType
         {
@@ -51,13 +55,33 @@ namespace Tamana
             rightRT.localPosition = new Vector3(Screen.width * 0.25f, 0.0f);
 
             // ===============================================================================================
+            // Instantiate - Item Option
+            // ===============================================================================================
+            var itemOptionGO = new GameObject(nameof(UI_Menu_Inventory_ItemOption));
+            itemOptionGO.transform.SetParent(rt);
+            var itemOptionRT = itemOptionGO.AddComponent<RectTransform>();
+            itemOptionRT.localPosition = Vector3.zero;
+
+            // ===============================================================================================
             // Jobs done !!
             // ===============================================================================================
             var inventory = go.AddComponent<UI_Menu_Inventory>();
             inventory.RectTransform = rt;
             inventory.Left = leftGO.AddComponent<UI_Menu_Inventory_Left>();
             inventory.Right = rightGO.AddComponent<UI_Menu_Inventory_Right>();
+            inventory.ItemOption = itemOptionGO.AddComponent<UI_Menu_Inventory_ItemOption>();
+
             return inventory;
+        }
+
+        private void OnEnable()
+        {
+            OnMenuInventoryOpened.Invoke();
+        }
+
+        private void OnDisable()
+        {
+            OnMenuInventoryClosed.Invoke();
         }
     }
 }

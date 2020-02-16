@@ -6,7 +6,7 @@ namespace Tamana
     public sealed class LayerManager : SingletonMonobehaviour<LayerManager>
     {
         [RuntimeInitializeOnLoadMethod]
-        private static void InstantiateMyself()
+        private static void CreateInstance()
         {
             var go = new GameObject(nameof(LayerManager));
             var component = go.AddComponent<LayerManager>();
@@ -14,7 +14,9 @@ namespace Tamana
             DontDestroyOnLoad(go);
         }
 
-        public const string LAYER_MENU_3D_PORTRAIT = "Menu3DPortrait";
+        public const string LAYER_PLAYER_MENU_PORTRAIT = "PlayerMenuPortrait";
+        public const string LAYER_PLAYER = "Player";
+        public const string LAYER_ITEM_PROJECTION = "ItemProjection";
     }
 
 }

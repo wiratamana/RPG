@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Tamana
 {
     public class UIManager : SingletonMonobehaviour<UIManager>
     {
         [RuntimeInitializeOnLoadMethod]
-        private static void InstantiateMe()
+        private static void CreateInstance()
         {
             var go = new GameObject(nameof(UIManager));
             go.AddComponent<UIManager>();
@@ -33,15 +34,8 @@ namespace Tamana
             base.Awake();
 
             runningWindow = new Dictionary<string, UI_WindowBase>();
-        }
 
-        private void Update()
-        {
-            if(Input.GetKeyDown(KeyCode.B))
-            {
-                var menu = ResourcesLoader.Instance.InstantiatePrefabWithReturnValue<UI_Menu>();
-                menu.OpenMenu(UI_Menu.MenuItem.Inventory);
-            }
+            InputEvent.Instance.Event_OpenMenuInventory.AddListener(UI_Menu.OpenMenuInventory);
         }
 
         public void RegisterWindow(UI_WindowBase window)
@@ -125,9 +119,35 @@ namespace Tamana
 
             return img;
         }
+
         public static Image CreateImage()
         {
             return CreateImage(null, 100, 100, "Image");
+        }
+
+        public static RawImage CreateRawImage(Transform parent, int width, int height, string name)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent);
+            var img = go.AddComponent<RawImage>();
+            img.rectTransform.sizeDelta = new Vector2(width, height);
+
+            return img;
+        }
+
+        public static RawImage CreateRawImage()
+        {
+            return CreateRawImage(null, 100, 100, "Image");
+        }
+
+        public static TextMeshProUGUI CreateText(Transform parent, int width, int height, string text, string name)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent);
+            var txt = go.AddComponent<TextMeshProUGUI>();
+            txt.rectTransform.sizeDelta = new Vector2(width, height);
+
+            return txt;
         }
     }
 }

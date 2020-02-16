@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cdfd2e41a20e034c9cb66b0de9b665b, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+  itemName: Iron Sword
+  itemDescription: A sword made with iron.
+  prefab: {fileID: 4561571508225656, guid: 0c14f3ea30af4174ba288b3c2042f665, type: 3}
   holsterPosition: {x: -3.911153, y: -14.95422, z: -22.32498}
   holsterRotation: {x: -57.61, y: -87.22201, z: -2.467}
   equipPosition: {x: 6.74, y: 3.17, z: 0.65}
   equipRotation: {x: -162.232, y: -113.106, z: 91.743}
-  prefab: {fileID: 1631607032641582, guid: 0c14f3ea30af4174ba288b3c2042f665, type: 3}
