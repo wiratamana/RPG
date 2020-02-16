@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Chr_Hips_Female_09
   itemDescription: Item 'Chr_Hips_Female_09' description!!
-  partLocation: PartsGetter/Modular_Characters/Female_10_Hips
   prefab: {fileID: 4491030228763836, guid: c608837d0bce2854cbe5f0499f9c3006, type: 3}
+  partLocation: PartsGetter/Modular_Characters/Female_Parts/Female_10_Hips/Chr_Hips_Female_09
   type: 8

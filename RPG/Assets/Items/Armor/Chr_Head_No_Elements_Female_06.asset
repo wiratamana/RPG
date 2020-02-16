@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Chr_Head_No_Elements_Female_06
   itemDescription: Item 'Chr_Head_No_Elements_Female_06' description!!
-  partLocation: PartsGetter/Modular_Characters/Female_Parts/Female_Head_No_Elements
   prefab: {fileID: 4938704938396514, guid: 08e7672141575d74580ea498df794f6b, type: 3}
+  partLocation: PartsGetter/Modular_Characters/Female_Parts/Female_00_Head/Female_Head_No_Elements/Chr_Head_No_Elements_Female_06
   type: 0

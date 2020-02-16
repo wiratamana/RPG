@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Chr_HelmetAttachment_03
   itemDescription: Item 'Chr_HelmetAttachment_03' description!!
-  partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/Helmet
   prefab: {fileID: 4984304470420168, guid: 2ddf6b928f7400c4bb7417e95d6c5475, type: 3}
+  partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/All_02_Head_Attachment/Helmet/Chr_HelmetAttachment_03
   type: 0

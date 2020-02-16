@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Chr_KneeAttachLeft_09
   itemDescription: Item 'Chr_KneeAttachLeft_09' description!!
-  partLocation: PartsGetter/Modular_Characters/All_11_Knee_Attachement_Left
   prefab: {fileID: 4366512505619538, guid: 07eabdb56c8c05d4aa483f3ac38655bb, type: 3}
+  partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/All_11_Knee_Attachement_Left/Chr_KneeAttachLeft_09
   type: 8
