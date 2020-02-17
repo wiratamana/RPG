@@ -16,6 +16,8 @@ namespace Tamana
 
         private Dictionary<Item_Attachment.AttachmentPart, Item_Attachment> equippedAttachmentDic;
         private Dictionary<Item_Armor.ArmorPart, Item_Armor> equippedArmorDic;
+        public Item_Weapon EquippedWeapon { private set; get; }
+        public Transform WeaponTransform { private set; get; }
 
         protected override void Awake()
         {
@@ -52,7 +54,21 @@ namespace Tamana
                 }
             }
 
+            if(equipment is Item_Weapon)
+            {
+                var weapon = equipment as Item_Weapon;
+                if(EquippedWeapon == weapon)
+                {
+                    return true;
+                }
+            }
+
             return false;
+        }
+
+        public bool IsEquippedWithWeapon()
+        {
+            return EquippedWeapon != null;
         }
 
         public void EquipModularPart(Item_ModularBodyPart modularPart)
@@ -179,14 +195,16 @@ namespace Tamana
             }
         }
 
-        public void EquipWeapon()
+        public void EquipWeapon(Item_Weapon equippedWeapon, Transform weaponTransform)
         {
-
+            EquippedWeapon = equippedWeapon;
+            WeaponTransform = weaponTransform;
         }
 
         public void UnequipWeapon()
         {
-
+            EquippedWeapon = null;
+            WeaponTransform = null;
         }
 
         private Transform GetChildTransformWithName(Transform parent, string name)

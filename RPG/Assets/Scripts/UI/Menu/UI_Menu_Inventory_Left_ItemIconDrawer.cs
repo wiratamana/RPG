@@ -183,7 +183,12 @@ namespace Tamana
         private Transform CreateItemRendererCamera(Item_Base itemBase, Vector2 positionOffset)
         {
             var item = Instantiate(itemBase.Prefab);
-            item.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+
+            if(itemBase is Item_Armor || itemBase is Item_Attachment)
+            {
+                item.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+            }
+            
             item.gameObject.layer = LayerMask.NameToLayer(LayerManager.LAYER_ITEM_PROJECTION);
             item.GetComponent<MeshRenderer>().sharedMaterial = GameManager.ItemMaterial;
             item.gameObject.AddComponent<Item_Preview>().SetValue(TextureRendererCamera, itemBase);

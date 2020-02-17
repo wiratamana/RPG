@@ -30,7 +30,15 @@ namespace Tamana
 
         public void ResetPosition()
         {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            if (ItemBase is Item_Weapon)
+            {
+                var weapon = ItemBase as Item_Weapon;
+                transform.rotation = Quaternion.Euler(weapon.MenuDefaultItemRotation);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
         }
     }
 }

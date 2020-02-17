@@ -21,6 +21,43 @@ namespace Tamana
             }
         }
 
+        [SerializeField] private Transform hips;
+        public Transform Hips
+        {
+            get
+            {
+                return hips;
+            }
+        }
+
+        private Transform weaponTransform;
+        public Transform WeaponTransform 
+        {
+            get
+            {
+                return weaponTransform;
+            }
+
+            set
+            {
+                if(weaponTransform != null)
+                {
+                    Destroy(weaponTransform.gameObject);
+                }
+
+                weaponTransform = value;
+                if (value == null)
+                {
+                    return;
+                }
+
+                weaponTransform.gameObject.layer = LayerMask.NameToLayer(LayerManager.LAYER_PLAYER_MENU_PORTRAIT);
+                var meshRenderer = weaponTransform.GetComponent<MeshRenderer>();
+                meshRenderer.sharedMaterial = new Material(GameManager.ItemMaterial);
+                meshRenderer.sharedMaterial.SetVector("_CamDir", PortraitCamera.transform.forward);
+            }
+        }
+
         protected override void Awake()
         {
             base.Awake();
@@ -34,7 +71,8 @@ namespace Tamana
 
         private void ChangeMaterial()
         {
-            var meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
+            var meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>(true
+                );
             foreach(var mr in meshRenderers)
             {
                 mr.sharedMaterial = new Material(GameManager.ItemMaterial);

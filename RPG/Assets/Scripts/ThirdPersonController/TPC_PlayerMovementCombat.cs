@@ -5,13 +5,15 @@ namespace Tamana
 {
     public class TPC_PlayerMovementCombat : SingletonMonobehaviour<TPC_PlayerMovementCombat>
     {
-        private Transform swordTransform;
-        private Item_Weapon weapon;
-
         private void Update()
         {
             if(Input.GetKeyDown(KeyCode.Space) == true)
             {
+                if(Inventory_EquipmentManager.Instance.IsEquippedWithWeapon() == false)
+                {
+                    return;
+                }
+
                 if(TPC_AnimController.Instance.AnimStateDic[nameof(TPC_Anim_AttributeIdle)] == false)
                 {
                     return;
@@ -36,28 +38,28 @@ namespace Tamana
             base.Awake();
 
             BodyTransform = gameObject.AddComponent<TPC_BodyTransform>();
-
-            weapon = Instantiate(Resources.Load<Item_Weapon>("Sword"));
-            swordTransform = Instantiate(weapon.Prefab, BodyTransform.Spine).transform;
-            swordTransform.localPosition = weapon.HolsterPosition;
-            swordTransform.localRotation = weapon.HolsterRotation;
-            swordTransform.localScale = new Vector3(100, 100, 100);
         }
 
         [TPC_AnimClip_AttributeEvent]
         private void OnEquip()
         {
-            swordTransform.SetParent(BodyTransform.HandR);
-            swordTransform.localPosition = weapon.EquipPostion;
-            swordTransform.localRotation = weapon.EquipRotation;
+            var weaponTransform = Inventory_EquipmentManager.Instance.WeaponTransform;
+            var weaponItem = Inventory_EquipmentManager.Instance.EquippedWeapon;
+
+            weaponTransform.SetParent(BodyTransform.HandR);
+            weaponTransform.localPosition = weaponItem.EquipPostion;
+            weaponTransform.localRotation = weaponItem.EquipRotation;
         }
 
         [TPC_AnimClip_AttributeEvent]
         private void OnHolster()
         {
-            swordTransform.SetParent(BodyTransform.Spine);
-            swordTransform.localPosition = weapon.HolsterPosition;
-            swordTransform.localRotation = weapon.HolsterRotation;
+            var weaponTransform = Inventory_EquipmentManager.Instance.WeaponTransform;
+            var weaponItem = Inventory_EquipmentManager.Instance.EquippedWeapon;
+
+            weaponTransform.SetParent(BodyTransform.Hips);
+            weaponTransform.localPosition = weaponItem.HolsterPosition;
+            weaponTransform.localRotation = weaponItem.HolsterRotation;
         }
 
         public string GetStartMoveAnimationName(float angle)
