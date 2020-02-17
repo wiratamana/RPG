@@ -34,6 +34,16 @@ namespace Tamana
             }
         }
 
+        public override void Equip()
+        {
+            Inventory_EquipmentManager.Instance.EquipModularPart(this);
+        }
+
+        public override void Unequip()
+        {
+            Debug.Log("Unequip");
+        }
+
 #if UNITY_EDITOR
         public void SetType(AttachmentPart value)
         {

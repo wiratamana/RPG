@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 namespace Tamana
 {
+    public enum Gender { All = 0, Male, Female }
+
     public sealed class GameManager : SingletonMonobehaviour<GameManager>
     {
         [RuntimeInitializeOnLoadMethod]
@@ -64,13 +66,15 @@ namespace Tamana
                 if(itemMaterial == null)
                 {
                     var loadPath = "ItemShader/ItemMaterial";
-                    itemMaterial = Resources.Load<Material>(loadPath);
+                    var materialFromResources = Resources.Load<Material>(loadPath);
 
-                    if(itemMaterial == null)
+                    if(materialFromResources == null)
                     {
                         Debug.Log($"Failed to load '{nameof(Material)}' from Resources folder at path '{loadPath}'", Debug.LogType.ForceQuit);
                         return null;
                     }
+
+                    itemMaterial = new Material(materialFromResources);
                 }
 
                 return itemMaterial;

@@ -57,26 +57,50 @@ namespace Tamana
 
         private void OpenItemOption()
         {
+            // ===============================================================================================
+            // Clear current registerd generic menu.
+            // ===============================================================================================
             UI_Menu_Inventory_ItemOption.Instance.ClearRegisteredGenericMenu();
 
+            // ===============================================================================================
+            // Create Equip and Cancel generic menu instance.
+            // ===============================================================================================
             var equip = UI_Menu_Inventory_ItemOption_GenericMenu.CreateGenericMenu("Equip");
             var cancel = UI_Menu_Inventory_ItemOption_GenericMenu.CreateGenericMenu("Cancel");
 
-            var modularPart = itemRenderer.ItemPreview.ItemBase as Item_ModularBodyPart;
-            if(modularPart != null)
+            // ===============================================================================================
+            // Register on equip callback
+            // ===============================================================================================
+            var equipment = itemRenderer.ItemPreview.ItemBase as Item_Equipment;
+            var isEquipped = Inventory_EquipmentManager.Instance.IsCurrentlyEquipped(equipment);
+            if (isEquipped == true)
             {
-                Inventory_EquipmentManager.Instance.ObjectPartPath = modularPart?.PartLocation;
-                equip.OnMouseLeftClick.AddListener(Inventory_EquipmentManager.Instance.EquipModularPart);
+                equip.Text.text = "Unequip";
+                equip.OnMouseLeftClick.AddListener(equipment.Unequip);
             }
+            else
+            {
+                equip.OnMouseLeftClick.AddListener(equipment.Equip);
+            }
+
             equip.OnMouseLeftClick.AddListener(UI_Menu_Inventory_ItemOption.Instance.Close);
             equip.OnMouseLeftClick.AddListener(equip.OnMouseLeftClick.RemoveAllListener);
 
+            // ===============================================================================================
+            // Register on cancel callback
+            // ===============================================================================================
             cancel.OnMouseLeftClick.AddListener(UI_Menu_Inventory_ItemOption.Instance.Close);
             cancel.OnMouseLeftClick.AddListener(cancel.OnMouseLeftClick.RemoveAllListener);
 
+            // ===============================================================================================
+            // Register instantiated Equip and Cancel generic menu to ItemOption.
+            // ===============================================================================================
             UI_Menu_Inventory_ItemOption.Instance.RegisterGenericMenu(equip);
             UI_Menu_Inventory_ItemOption.Instance.RegisterGenericMenu(cancel);
 
+            // ===============================================================================================
+            // Open the menu.
+            // ===============================================================================================
             UI_Menu_Inventory_ItemOption.Instance.Open(this);
         }
     }

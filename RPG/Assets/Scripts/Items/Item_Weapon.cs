@@ -4,7 +4,7 @@ using System.Collections;
 namespace Tamana
 {
     [CreateAssetMenu(fileName = "New Weapon", menuName = "Item/Weapon", order = 1)]
-    public class Item_Weapon : Item_Base
+    public class Item_Weapon : Item_Equipment
     {
         [SerializeField] private Vector3 holsterPosition;
         [SerializeField] private Vector3 holsterRotation;
@@ -15,5 +15,15 @@ namespace Tamana
         public Quaternion HolsterRotation { get { return Quaternion.Euler(holsterRotation); } }
         public Vector3 EquipPostion { get { return equipPosition; } }
         public Quaternion EquipRotation { get { return Quaternion.Euler(equipRotation); } }
+
+        public override void Equip()
+        {
+            
+        }
+
+        public override void Unequip()
+        {
+            Debug.Log("Unequip");
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace Tamana
         }
 
         [SerializeField] private ArmorPart type;
+        [SerializeField] private bool isDefault;
 
         [GM_AttributeValueIsSetWithReflection(nameof(Type))]
         public ArmorPart Type
@@ -36,10 +37,39 @@ namespace Tamana
             }
         }
 
+        public bool IsDefault
+        {
+            get
+            {
+                return isDefault;
+            }
+        }
+
+
+        public override void Equip()
+        {
+            Inventory_EquipmentManager.Instance.EquipModularPart(this);
+        }
+
+        public override void Unequip()
+        {
+            var json = ResourcesLoader.Instance.LoadModularBodyMetadataJson();
+            var modularMetaData = JsonUtility.FromJson<ArrayObject<Item_ModularBodyPart_Metadata>>(json);
+            var myPart = System.Array.Find(modularMetaData.objs, x => x.ArmorType == Type && 
+                x.IsDefault == true && x.Gender == Gender.Male);
+
+            Inventory_EquipmentManager.Instance.UnequipModularPart(myPart);
+        }
+
 #if UNITY_EDITOR
         public void SetType(ArmorPart value)
         {
             Type = value;
+        }
+
+        public void SetIsDefault(bool isDefault)
+        {
+            this.isDefault = isDefault;
         }
 #endif
     }
