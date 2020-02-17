@@ -16,4 +16,6 @@ MonoBehaviour:
   itemDescription: Item 'Chr_ArmUpperRight_Female_19' description!!
   prefab: {fileID: 4195845528927068, guid: 82d62c6cfa3e4f748889680c74d13c72, type: 3}
   partLocation: PartsGetter/Modular_Characters/Female_Parts/Female_04_Arm_Upper_Right/Chr_ArmUpperRight_Female_19
+  gender: 2
   type: 2
+  isDefault: 0

@@ -16,4 +16,5 @@ MonoBehaviour:
   itemDescription: Item 'Chr_HipsAttachment_02' description!!
   prefab: {fileID: 4520260709679462, guid: 34258841610c86043a0d0121bc09a718, type: 3}
   partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/All_09_Hips_Attachment/Chr_HipsAttachment_02
+  gender: 0
   type: 6

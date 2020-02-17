@@ -16,4 +16,6 @@ MonoBehaviour:
   itemDescription: Item 'Chr_Torso_Male_20' description!!
   prefab: {fileID: 4708916630032370, guid: 316a2564b7a6e544fb24144882fd256f, type: 3}
   partLocation: PartsGetter/Modular_Characters/Male_Parts/Male_03_Torso/Chr_Torso_Male_20
+  gender: 1
   type: 1
+  isDefault: 0

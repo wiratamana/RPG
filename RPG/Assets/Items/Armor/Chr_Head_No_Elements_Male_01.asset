@@ -16,4 +16,6 @@ MonoBehaviour:
   itemDescription: Item 'Chr_Head_No_Elements_Male_01' description!!
   prefab: {fileID: 4885120923307558, guid: c9909e3c424461a46986d347c6d9df21, type: 3}
   partLocation: PartsGetter/Modular_Characters/Male_Parts/Male_00_Head/Male_Head_No_Elements/Chr_Head_No_Elements_Male_01
+  gender: 1
   type: 0
+  isDefault: 0

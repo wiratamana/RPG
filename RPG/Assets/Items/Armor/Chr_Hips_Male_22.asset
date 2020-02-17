@@ -16,4 +16,6 @@ MonoBehaviour:
   itemDescription: Item 'Chr_Hips_Male_22' description!!
   prefab: {fileID: 4397837197031106, guid: 2926b1b5ea4469140970428fc60a397d, type: 3}
   partLocation: PartsGetter/Modular_Characters/Male_Parts/Male_10_Hips/Chr_Hips_Male_22
+  gender: 1
   type: 8
+  isDefault: 0

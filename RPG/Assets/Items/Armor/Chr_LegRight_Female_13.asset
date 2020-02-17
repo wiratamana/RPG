@@ -16,4 +16,6 @@ MonoBehaviour:
   itemDescription: Item 'Chr_LegRight_Female_13' description!!
   prefab: {fileID: 4877743975905720, guid: 27355cbc8e035ab47b1a2d0fa927dfa7, type: 3}
   partLocation: PartsGetter/Modular_Characters/Female_Parts/Female_11_Leg_Right/Chr_LegRight_Female_13
+  gender: 2
   type: 9
+  isDefault: 0

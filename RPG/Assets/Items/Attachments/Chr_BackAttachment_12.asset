@@ -16,4 +16,5 @@ MonoBehaviour:
   itemDescription: Item 'Chr_BackAttachment_12' description!!
   prefab: {fileID: 4497892494679082, guid: 01edbb1b439f2684382c744d1e2f0edd, type: 3}
   partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/All_04_Back_Attachment/Chr_BackAttachment_12
+  gender: 0
   type: 1

@@ -16,4 +16,6 @@ MonoBehaviour:
   itemDescription: Item 'Chr_HandLeft_Male_11' description!!
   prefab: {fileID: 4482106831224264, guid: 6033fa40671d82d4abe3452e729c8026, type: 3}
   partLocation: PartsGetter/Modular_Characters/Male_Parts/Male_09_Hand_Left/Chr_HandLeft_Male_11
+  gender: 1
   type: 7
+  isDefault: 0

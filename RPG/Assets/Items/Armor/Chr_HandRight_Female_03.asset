@@ -16,4 +16,6 @@ MonoBehaviour:
   itemDescription: Item 'Chr_HandRight_Female_03' description!!
   prefab: {fileID: 4250807061950740, guid: a14511bd8f4f9b84f8853e0e63885298, type: 3}
   partLocation: PartsGetter/Modular_Characters/Female_Parts/Female_08_Hand_Right/Chr_HandRight_Female_03
+  gender: 2
   type: 6
+  isDefault: 0

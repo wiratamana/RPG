@@ -16,4 +16,5 @@ MonoBehaviour:
   itemDescription: Item 'Chr_KneeAttachLeft_06' description!!
   prefab: {fileID: 4094096914451090, guid: bb91994301b20f743ac114718cbe899d, type: 3}
   partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/All_11_Knee_Attachement_Left/Chr_KneeAttachLeft_06
+  gender: 0
   type: 8

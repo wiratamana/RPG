@@ -16,4 +16,5 @@ MonoBehaviour:
   itemDescription: Item 'Chr_HelmetAttachment_05' description!!
   prefab: {fileID: 4793947447326588, guid: 4d4a3f4da7913b044bc80b4ae955c024, type: 3}
   partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/All_02_Head_Attachment/Helmet/Chr_HelmetAttachment_05
+  gender: 0
   type: 0

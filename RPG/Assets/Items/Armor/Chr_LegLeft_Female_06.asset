@@ -16,4 +16,6 @@ MonoBehaviour:
   itemDescription: Item 'Chr_LegLeft_Female_06' description!!
   prefab: {fileID: 4070312852363228, guid: 7397855870daa5449b0e948c732aae65, type: 3}
   partLocation: PartsGetter/Modular_Characters/Female_Parts/Female_12_Leg_Left/Chr_LegLeft_Female_06
+  gender: 2
   type: 10
+  isDefault: 0

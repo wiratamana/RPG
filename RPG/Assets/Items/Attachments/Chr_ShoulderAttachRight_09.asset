@@ -16,4 +16,5 @@ MonoBehaviour:
   itemDescription: Item 'Chr_ShoulderAttachRight_09' description!!
   prefab: {fileID: 4722671635653704, guid: 74e97f3e417053e4f8c6139016bee241, type: 3}
   partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/All_05_Shoulder_Attachment_Right/Chr_ShoulderAttachRight_09
+  gender: 0
   type: 2

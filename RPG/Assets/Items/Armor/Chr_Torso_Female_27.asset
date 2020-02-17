@@ -16,4 +16,6 @@ MonoBehaviour:
   itemDescription: Item 'Chr_Torso_Female_27' description!!
   prefab: {fileID: 4232875647065166, guid: 8ea28f398a4be694584784a001ae7644, type: 3}
   partLocation: PartsGetter/Modular_Characters/Female_Parts/Female_03_Torso/Chr_Torso_Female_27
+  gender: 2
   type: 1
+  isDefault: 0

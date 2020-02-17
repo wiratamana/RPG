@@ -16,4 +16,6 @@ MonoBehaviour:
   itemDescription: Item 'Chr_HeadCoverings_No_FacialHair_03' description!!
   prefab: {fileID: 4697743241546030, guid: 9aaa1331d94563449953e1be621d884f, type: 3}
   partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/All_00_HeadCoverings/HeadCoverings_No_FacialHair/Chr_HeadCoverings_No_FacialHair_03
+  gender: 0
   type: 0
+  isDefault: 0

@@ -16,4 +16,6 @@ MonoBehaviour:
   itemDescription: Item 'Chr_Hips_Female_22' description!!
   prefab: {fileID: 4582505143188196, guid: 836af8ed67144b24eb5af0bed8b8b87c, type: 3}
   partLocation: PartsGetter/Modular_Characters/Female_Parts/Female_10_Hips/Chr_Hips_Female_22
+  gender: 2
   type: 8
+  isDefault: 0
