@@ -69,15 +69,7 @@ namespace Tamana
             if (TPC_AnimController.Instance.IsPlaying(varName) == true)
             {
                 img.color = SwordAnimsetPro.ColorPlaying;
-            }
-            else
-            {
-                var anim = TPC_AnimController.Instance.GetStartMoveAnimationName();
-                if(varName == anim)
-                {
-                    img.color = swordAnimsetPro.ColorStartMoving;
-                }
-            }
+            }   
         }
     }
 }

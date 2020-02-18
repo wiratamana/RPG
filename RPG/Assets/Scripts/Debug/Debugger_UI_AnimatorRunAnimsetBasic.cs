@@ -22,7 +22,7 @@ namespace Tamana
         [SerializeField] private Image RunFwdStart180_L;
         [SerializeField] private Image RunFwdStop_RU;
         [SerializeField] private Image RunFwdStop_LU;
-        [SerializeField] private Image Idle;
+        [SerializeField] private Image RunAnimsetBasic_Idle;
 
         [SerializeField] private TextMeshProUGUI AnimStateText;
 
@@ -36,7 +36,7 @@ namespace Tamana
             SetColor(RunFwdStart180_L, nameof(RunFwdStart180_L));
             SetColor(RunFwdStop_RU, nameof(RunFwdStop_RU));
             SetColor(RunFwdStop_LU, nameof(RunFwdStop_LU));
-            SetColor(Idle, nameof(Idle));
+            SetColor(RunAnimsetBasic_Idle, nameof(RunAnimsetBasic_Idle));
 
             SetState();
         }
@@ -49,31 +49,7 @@ namespace Tamana
             }
             else
             {
-                var anim = TPC_AnimController.Instance.GetStartMoveAnimationName();
-                if (anim == TPC_Anim_RunAnimsetBasic.RunFwdStart && varName == anim)
-                {
-                    img.color = startMoving;
-                }
-                else if (anim == TPC_Anim_RunAnimsetBasic.RunFwdStart90_L && varName == anim)
-                {
-                    img.color = startMoving;
-                }
-                else if (anim == TPC_Anim_RunAnimsetBasic.RunFwdStart90_R && varName == anim)
-                {
-                    img.color = startMoving;
-                }
-                else if (anim == TPC_Anim_RunAnimsetBasic.RunFwdStart180_L && varName == anim)
-                {
-                    img.color = startMoving;
-                }
-                else if (anim == TPC_Anim_RunAnimsetBasic.RunFwdStart180_R && varName == anim)
-                {
-                    img.color = startMoving;
-                }
-                else
-                {
-                    img.color = notPlaying;
-                }                
+                img.color = notPlaying;
             }
         }
 
