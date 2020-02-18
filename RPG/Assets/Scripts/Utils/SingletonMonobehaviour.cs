@@ -10,6 +10,25 @@ namespace Tamana
 
         protected virtual void Awake()
         {
+            var obj = Instance as MonoBehaviour;
+            try
+            {
+                var myname = obj.name;
+            }
+            catch (MissingReferenceException)
+            {
+                Instance = null;
+            }
+            catch (System.NullReferenceException)
+            {
+
+            }
+
+            if(Instance != null)
+            {
+                Destroy(gameObject);
+            }
+
             Instance = this as T;
         }
     }

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Chr_HandLeft_Male_05
   itemDescription: Item 'Chr_HandLeft_Male_05' description!!
-  partLocation: PartsGetter/Modular_Characters/Male_09_Hand_Left
   prefab: {fileID: 4776243682236994, guid: 4c2cc54b74833b240bb4ec76e953b498, type: 3}
+  partLocation: PartsGetter/Modular_Characters/Male_Parts/Male_09_Hand_Left/Chr_HandLeft_Male_05
+  gender: 1
   type: 7
+  isDefault: 0

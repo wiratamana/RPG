@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Chr_Torso_Female_04
   itemDescription: Item 'Chr_Torso_Female_04' description!!
-  partLocation: PartsGetter/Modular_Characters/Female_03_Torso
   prefab: {fileID: 4221418011529072, guid: 8b7d8282f24505444bdf450c19157ac0, type: 3}
+  partLocation: PartsGetter/Modular_Characters/Female_Parts/Female_03_Torso/Chr_Torso_Female_04
+  gender: 2
   type: 1
+  isDefault: 0

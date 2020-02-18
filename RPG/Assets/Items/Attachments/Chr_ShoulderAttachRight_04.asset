@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Chr_ShoulderAttachRight_04
   itemDescription: Item 'Chr_ShoulderAttachRight_04' description!!
-  partLocation: PartsGetter/Modular_Characters/All_05_Shoulder_Attachment_Right
   prefab: {fileID: 4461429173694746, guid: 50b447327a5183841a117f792a0d74dd, type: 3}
+  partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/All_05_Shoulder_Attachment_Right/Chr_ShoulderAttachRight_04
+  gender: 0
   type: 2

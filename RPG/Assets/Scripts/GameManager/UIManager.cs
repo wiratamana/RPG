@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
+using TMPro;
 
 namespace Tamana
 {
     public class UIManager : SingletonMonobehaviour<UIManager>
     {
         [RuntimeInitializeOnLoadMethod]
-        private static void InstantiateMe()
+        private static void CreateInstance()
         {
             var go = new GameObject(nameof(UIManager));
             go.AddComponent<UIManager>();
@@ -32,6 +34,8 @@ namespace Tamana
             base.Awake();
 
             runningWindow = new Dictionary<string, UI_WindowBase>();
+
+            InputEvent.Instance.Event_OpenMenuInventory.AddListener(UI_Menu.OpenMenuInventory);
         }
 
         public void RegisterWindow(UI_WindowBase window)
@@ -104,6 +108,46 @@ namespace Tamana
         public bool IsWindowRunning(UI_WindowBase windowBase)
         {       
             return runningWindow.ContainsKey(windowBase.GetType().Name);
+        }
+
+        public static Image CreateImage(Transform parent, int width, int height, string name)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent);
+            var img = go.AddComponent<Image>();
+            img.rectTransform.sizeDelta = new Vector2(width, height);
+
+            return img;
+        }
+
+        public static Image CreateImage()
+        {
+            return CreateImage(null, 100, 100, "Image");
+        }
+
+        public static RawImage CreateRawImage(Transform parent, int width, int height, string name)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent);
+            var img = go.AddComponent<RawImage>();
+            img.rectTransform.sizeDelta = new Vector2(width, height);
+
+            return img;
+        }
+
+        public static RawImage CreateRawImage()
+        {
+            return CreateRawImage(null, 100, 100, "Image");
+        }
+
+        public static TextMeshProUGUI CreateText(Transform parent, int width, int height, string text, string name)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent);
+            var txt = go.AddComponent<TextMeshProUGUI>();
+            txt.rectTransform.sizeDelta = new Vector2(width, height);
+
+            return txt;
         }
     }
 }

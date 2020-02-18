@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Chr_BackAttachment_07
   itemDescription: Item 'Chr_BackAttachment_07' description!!
-  partLocation: PartsGetter/Modular_Characters/All_04_Back_Attachment
   prefab: {fileID: 4818693587653624, guid: 4a9462d17bd1e0b48957a7368d296d14, type: 3}
+  partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/All_04_Back_Attachment/Chr_BackAttachment_07
+  gender: 0
   type: 1

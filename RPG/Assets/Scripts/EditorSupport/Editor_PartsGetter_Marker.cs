@@ -6,8 +6,6 @@ namespace Tamana
 #if UNITY_EDITOR
     public class Editor_PartsGetter_Marker : MonoBehaviour
     {
-        public enum Gender { All = 0, Male, Female }
-
         [SerializeField] private bool isAttachment;
         [SerializeField] private Gender genderPart;
         [SerializeField] private Item_Armor.ArmorPart armorPart;

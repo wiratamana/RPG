@@ -8,6 +8,7 @@ namespace Tamana
         [SerializeField] private List<GameObject> _prefabs;
 
         private Dictionary<System.Type, GameObject> instantiatorDic;
+        public const string ITEM_MODULAR_BODY_METADATA_PATH = "ItemModularBodyMetadata";
 
         protected override void Awake()
         {
@@ -50,6 +51,36 @@ namespace Tamana
                     return;
                 }
             }
+        }
+
+        public T InstantiatePrefabWithReturnValue<T>() where T : MonoBehaviour
+        {
+            foreach (var i in instantiatorDic)
+            {
+                var nameofT = typeof(T).Name;
+                if (i.Key.Name == nameofT)
+                {
+                    var obj = Instantiate(i.Value);
+                    var component = obj.GetComponent<T>();
+                    if(component == null)
+                    {
+                        component = obj.GetComponentInChildren<T>();
+                    }
+
+                    return component;
+                }
+            }
+
+            return null;
+        }
+
+        public string LoadModularBodyMetadataJson()
+        {
+            var wira = Resources.Load(ITEM_MODULAR_BODY_METADATA_PATH) as TextAsset;
+            var json = wira.text;
+            Resources.UnloadAsset(wira);
+
+            return json;
         }
     }
 }

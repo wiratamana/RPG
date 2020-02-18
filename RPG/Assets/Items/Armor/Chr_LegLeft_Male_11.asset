@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Chr_LegLeft_Male_11
   itemDescription: Item 'Chr_LegLeft_Male_11' description!!
-  partLocation: PartsGetter/Modular_Characters/Male_11_Leg_Right
   prefab: {fileID: 4955177368644286, guid: c7bec002b041d3a4b87ca71466cf2027, type: 3}
+  partLocation: PartsGetter/Modular_Characters/Male_Parts/Male_11_Leg_Right/Chr_LegLeft_Male_11
+  gender: 1
   type: 9
+  isDefault: 0

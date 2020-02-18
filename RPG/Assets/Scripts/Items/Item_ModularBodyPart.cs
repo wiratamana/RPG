@@ -3,9 +3,10 @@ using System.Collections;
 
 namespace Tamana
 {
-    public abstract class Item_ModularBodyPart : Item_Base
+    public abstract class Item_ModularBodyPart : Item_Equipment
     {
         [SerializeField] private string partLocation;
+        [SerializeField] private Gender gender;
 
         [GM_AttributeValueIsSetWithReflection(nameof(PartLocation))]
         public string PartLocation
@@ -20,10 +21,23 @@ namespace Tamana
             }
         }
 
+        public Gender Gender
+        {
+            get
+            {
+                return gender;
+            }
+        }
+
 #if UNITY_EDITOR
         public void SetPartLocation(string value)
         {
             PartLocation = value;
+        }
+
+        public void SetGender(Gender gender)
+        {
+            this.gender = gender;
         }
 #endif
     }

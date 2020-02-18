@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Chr_ArmLowerRight_Male_08
   itemDescription: Item 'Chr_ArmLowerRight_Male_08' description!!
-  partLocation: PartsGetter/Modular_Characters/Male_06_Arm_Lower_Right
   prefab: {fileID: 4926423269783840, guid: 18db25c342c32624ab298bfd7023101c, type: 3}
+  partLocation: PartsGetter/Modular_Characters/Male_Parts/Male_06_Arm_Lower_Right/Chr_ArmLowerRight_Male_08
+  gender: 1
   type: 4
+  isDefault: 0

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Chr_ElbowAttachLeft_03
   itemDescription: Item 'Chr_ElbowAttachLeft_03' description!!
-  partLocation: PartsGetter/Modular_Characters/All_08_Elbow_Attachment_Left
   prefab: {fileID: 4121880636891800, guid: dd28569099c11bb478f758f58239c49f, type: 3}
+  partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/All_08_Elbow_Attachment_Left/Chr_ElbowAttachLeft_03
+  gender: 0
   type: 5
