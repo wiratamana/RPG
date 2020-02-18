@@ -20,27 +20,26 @@ namespace Tamana
             }
         }
 
-        private UI_Menu_Inventory_Left_ItemIcon_Background background;
-        private UI_Menu_Inventory_Left_ItemIcon_Ring ring;
-        private UI_Menu_Inventory_Left_ItemIcon_Renderer itemRenderer;
+        public UI_Menu_Inventory_Left_ItemIcon_Background Background { private set; get; }
+        public UI_Menu_Inventory_Left_ItemIcon_Ring Ring { private set; get; }
+        public UI_Menu_Inventory_Left_ItemIcon_Renderer ItemRenderer { private set; get; }
+        public Item_Base Item { get { return ItemRenderer.ItemPreview.ItemBase; } }
 
         private void Start()
         {
-            itemRenderer.OnMouseEnter.AddListener(OnMouseEnter);
-            itemRenderer.OnMouseExit.AddListener(OnMouseExit);
-
-            itemRenderer.OnMouseLeftClick.AddListener(OpenItemOption);
+            ItemRenderer.OnMouseEnter.AddListener(OnMouseEnter);
+            ItemRenderer.OnMouseExit.AddListener(OnMouseExit);
+            
+            ItemRenderer.OnMouseLeftClick.AddListener(OpenItemOption);
         }
 
         private void OnMouseEnter()
         {
-            Debug.Log("OnMouseEnter");
             UI_Menu_Selection.CreateInstance(RectTransform, 32);
         }
 
         private void OnMouseExit()
         {
-            Debug.Log("OnMouseEnter");
             UI_Menu_Selection.DestroyInstance();
         }
 
@@ -48,20 +47,20 @@ namespace Tamana
             UI_Menu_Inventory_Left_ItemIcon_Ring ring,
             UI_Menu_Inventory_Left_ItemIcon_Renderer itemRenderer)
         {
-            this.background = background;
-            this.ring = ring;
-            this.itemRenderer = itemRenderer;
+            Background = background;
+            Ring = ring;
+            ItemRenderer = itemRenderer;
         }
 
         public void ReturnToPool()
         {
-            UI_Menu_Pool.Instance.RemoveImage(background.Background);
-            UI_Menu_Pool.Instance.RemoveImage(ring.Ring);
-            UI_Menu_Pool.Instance.RemoveRawImage(itemRenderer.RawImage);
+            UI_Menu_Pool.Instance.RemoveImage(Background.Background);
+            UI_Menu_Pool.Instance.RemoveImage(Ring.Ring);
+            UI_Menu_Pool.Instance.RemoveRawImage(ItemRenderer.RawImage);
 
-            Destroy(background);
-            Destroy(itemRenderer);
-            Destroy(ring);
+            Destroy(Background);
+            Destroy(ItemRenderer);
+            Destroy(Ring);
             Destroy(gameObject);
         }
 
@@ -81,18 +80,22 @@ namespace Tamana
             // ===============================================================================================
             // Register on equip callback
             // ===============================================================================================
-            var equipment = itemRenderer.ItemPreview.ItemBase as Item_Equipment;
+            var equipment = ItemRenderer.ItemPreview.ItemBase as Item_Equipment;
             var isEquipped = Inventory_EquipmentManager.Instance.IsCurrentlyEquipped(equipment);
             if (isEquipped == true)
             {
                 equip.Text.text = "Unequip";
                 equip.OnMouseLeftClick.AddListener(equipment.Unequip);
+                equip.OnMouseLeftClick.AddListener(UnregisterThisItemIcon);
             }
             else
             {
                 equip.OnMouseLeftClick.AddListener(equipment.Equip);
+                equip.OnMouseLeftClick.AddListener(RegisterThisItemIcon);
             }
 
+            equip.OnMouseLeftClick.AddListener(Ring.UpdateColor);
+            equip.OnMouseLeftClick.AddListener(Background.UpdateColor);
             equip.OnMouseLeftClick.AddListener(UI_Menu_Inventory_ItemOption.Instance.Close);
             equip.OnMouseLeftClick.AddListener(equip.OnMouseLeftClick.RemoveAllListener);
 
@@ -112,6 +115,42 @@ namespace Tamana
             // Open the menu.
             // ===============================================================================================
             UI_Menu_Inventory_ItemOption.Instance.Open(this);
+        }
+
+        private void RegisterThisItemIcon()
+        {
+            if(Item is Item_Armor)
+            {
+                var armor = Item as Item_Armor;
+                UI_Menu_Inventory_Left_EquippedItemIcon.SetArmor(armor.Type, this);
+            }
+            else if (Item is Item_Attachment)
+            {
+                var attachment = Item as Item_Attachment;
+                UI_Menu_Inventory_Left_EquippedItemIcon.SetAttachment(attachment.Type, this);
+            }
+            else if (Item is Item_Weapon)
+            {
+                UI_Menu_Inventory_Left_EquippedItemIcon.SetEquippedWeapon(this);
+            }
+        }
+
+        private void UnregisterThisItemIcon()
+        {
+            if (Item is Item_Armor)
+            {
+                var armor = Item as Item_Armor;
+                UI_Menu_Inventory_Left_EquippedItemIcon.SetArmor(armor.Type, null);
+            }
+            else if (Item is Item_Attachment)
+            {
+                var attachment = Item as Item_Attachment;
+                UI_Menu_Inventory_Left_EquippedItemIcon.SetAttachment(attachment.Type, null);
+            }
+            else if (Item is Item_Weapon)
+            {
+                UI_Menu_Inventory_Left_EquippedItemIcon.SetEquippedWeapon(null);
+            }
         }
     }
 }

@@ -67,6 +67,8 @@ namespace Tamana
 
             listTransform.Clear();
             itemIconsList.Clear();
+
+            UI_Menu_Inventory_Left_EquippedItemIcon.SetToNull();
         }
 
         private void InstantiateItemIconBackground()
@@ -160,6 +162,11 @@ namespace Tamana
                 {
                     position.x += spacing + iconSize;
                 }
+
+                // ===============================================================================================
+                // Register this to EquippedItemIcon
+                // ===============================================================================================
+                UI_Menu_Inventory_Left_EquippedItemIcon.SetItem(itemIcon);
             }
 
             // ===============================================================================================

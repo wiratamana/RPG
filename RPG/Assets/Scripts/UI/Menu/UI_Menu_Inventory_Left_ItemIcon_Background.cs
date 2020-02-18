@@ -37,19 +37,23 @@ namespace Tamana
         private static readonly Color NormalColor = new Color(40.0f / 255.0f, 40.0f / 255.0f, 40.0f / 255.0f, 200.0f / 255.0f);
         private static readonly Color OnMouseOver = Color.blue;
 
-        private void Awake()
+        private void Start()
         {
-            Background.color = NormalColor;
+            UpdateColor();
         }
 
-        public void OnMouseEnter()
+        public void UpdateColor()
         {
-            Background.color = OnMouseOver;
-        }
-
-        public void OnMouseExit()
-        {
-            Background.color = NormalColor;
+            var equipment = ItemIcon.Item as Item_Equipment;
+            if (equipment != null && Inventory_EquipmentManager.Instance.IsCurrentlyEquipped(equipment) == true)
+            {
+                Background.sprite = UI_Menu.Instance.MenuResources.InventoryItemBackgroundEquipped_Sprite;
+                Background.color = Color.white;
+            }
+            else
+            {
+                Background.color = NormalColor;
+            }
         }
     }
 }

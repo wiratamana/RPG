@@ -11,7 +11,7 @@ namespace Tamana
         {
             get
             {
-                if(ring == null)
+                if (ring == null)
                 {
                     ring = GetComponent<Image>();
                 }
@@ -23,19 +23,36 @@ namespace Tamana
         private static readonly Color OnMouseOver = Color.red;
         private static readonly Color NormalColor = new Color(200.0f / 255.0f, 200.0f / 255.0f, 200.0f / 255.0f, 1.0f);
 
-        private void Awake()
+        private UI_Menu_Inventory_Left_ItemIcon itemIcon;
+        public UI_Menu_Inventory_Left_ItemIcon ItemIcon
         {
-            Ring.color = NormalColor;
+            get
+            {
+                if (itemIcon == null)
+                {
+                    itemIcon = transform.parent.GetComponent<UI_Menu_Inventory_Left_ItemIcon>();
+                }
+
+                return itemIcon;
+            }
         }
 
-        public void OnMouseEnter()
+        private void Start()
         {
-            Ring.color = OnMouseOver;
+            UpdateColor();
         }
 
-        public void OnMouseExit()
+        public void UpdateColor()
         {
-            Ring.color = NormalColor;
+            var equipment = ItemIcon.Item as Item_Equipment;
+            if (equipment != null && Inventory_EquipmentManager.Instance.IsCurrentlyEquipped(equipment) == true)
+            {
+                Ring.color = Color.white;
+            }
+            else
+            {
+                Ring.color = NormalColor;
+            }
         }
     }
 }
