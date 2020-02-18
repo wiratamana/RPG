@@ -26,13 +26,22 @@ namespace Tamana
 
         private void Start()
         {
-            itemRenderer.OnMouseEnter.AddListener(ring.OnMouseEnter);
-            itemRenderer.OnMouseExit.AddListener(ring.OnMouseExit);
-
-            itemRenderer.OnMouseEnter.AddListener(background.OnMouseEnter);
-            itemRenderer.OnMouseExit.AddListener(background.OnMouseExit);
+            itemRenderer.OnMouseEnter.AddListener(OnMouseEnter);
+            itemRenderer.OnMouseExit.AddListener(OnMouseExit);
 
             itemRenderer.OnMouseLeftClick.AddListener(OpenItemOption);
+        }
+
+        private void OnMouseEnter()
+        {
+            Debug.Log("OnMouseEnter");
+            UI_Menu_Selection.CreateInstance(RectTransform, 32);
+        }
+
+        private void OnMouseExit()
+        {
+            Debug.Log("OnMouseEnter");
+            UI_Menu_Selection.DestroyInstance();
         }
 
         public void SetValue(UI_Menu_Inventory_Left_ItemIcon_Background background,
@@ -53,6 +62,7 @@ namespace Tamana
             Destroy(background);
             Destroy(itemRenderer);
             Destroy(ring);
+            Destroy(gameObject);
         }
 
         private void OpenItemOption()

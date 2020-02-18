@@ -36,7 +36,7 @@ namespace Tamana
 
         public RawImage GetRawImage(Transform parent, int width, int height, string objName)
         {
-            if (imagesPool.Count == 0)
+            if (rawImagesPool.Count == 0)
             {
                 return UIManager.CreateRawImage(parent, width, height, objName);
             }
@@ -51,7 +51,7 @@ namespace Tamana
 
         public TextMeshProUGUI GetText(Transform parent, int width, int height, string text, string objName)
         {
-            if (imagesPool.Count == 0)
+            if (textsPool.Count == 0)
             {
                 var txt = UIManager.CreateText(parent, width, height, text, objName);
                 txt.alignment = TextAlignmentOptions.Center;

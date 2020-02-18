@@ -82,15 +82,13 @@ namespace Tamana
         private void OnPointerExit(BaseEventData eventData)
         {
             OnMouseExit.Invoke();
-
-            Ring.color = UI_Menu_Inventory_ItemOption.RingNormalColor;
+            UI_Menu_Selection.DestroyInstance();
         }
 
         private void OnPointerEnter(BaseEventData eventData)
         {
             OnMouseEnter.Invoke();
-
-            Ring.color = Color.white;
+            UI_Menu_Selection.CreateInstance(RectTransform, 24);
         }
 
         private void OnPointerClick(BaseEventData eventData)
