@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e820f9861bfd04ea7359a6ae741656, type: 3}
+  m_Name: Chr_ArmLowerLeft_Male_01
+  m_EditorClassIdentifier: 
+  itemName: Chr_ArmLowerLeft_Male_01
+  itemDescription: Item 'Chr_ArmLowerLeft_Male_01' description!!
+  prefab: {fileID: 4175380120573194, guid: f02d83b498cea7f40b3ddf4be497f394, type: 3}
+  partLocation: PartsGetter/Modular_Characters/Male_Parts/Male_07_Arm_Lower_Left/Chr_ArmLowerLeft_Male_01
+  gender: 1
+  type: 5
+  isDefault: 0

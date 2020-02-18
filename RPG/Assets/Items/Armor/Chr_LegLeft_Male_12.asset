@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e820f9861bfd04ea7359a6ae741656, type: 3}
+  m_Name: Chr_LegLeft_Male_12
+  m_EditorClassIdentifier: 
+  itemName: Chr_LegLeft_Male_12
+  itemDescription: Item 'Chr_LegLeft_Male_12' description!!
+  prefab: {fileID: 4166890852894090, guid: 2520aad21b7df024fbbc047ea1b15ee2, type: 3}
+  partLocation: PartsGetter/Modular_Characters/Male_Parts/Male_11_Leg_Right/Chr_LegLeft_Male_12
+  gender: 1
+  type: 9
+  isDefault: 0

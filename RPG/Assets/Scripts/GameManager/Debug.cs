@@ -29,7 +29,7 @@ namespace Tamana
             }
         }
 
-        public static void Log(string message, LogType logType = LogType.Message)
+        public static void Log(object message, LogType logType = LogType.Message)
         {
             string fromOpenColor = "<color=black>";
             string fromCloseColor = "</color>";

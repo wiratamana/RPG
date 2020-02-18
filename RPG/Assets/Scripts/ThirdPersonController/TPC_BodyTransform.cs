@@ -74,9 +74,6 @@ namespace Tamana
         protected override void Awake()
         {
             base.Awake();
-
-            Debug.Log(Spine.name);
-            Debug.Log(HandR.name);
         }
 
         private Transform GetChild(string childName, Transform parent)
