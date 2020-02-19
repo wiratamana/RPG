@@ -2520,7 +2520,7 @@ MonoBehaviour:
   Sword1h_WalkFwdStart135_L: {fileID: 8070593982960817212}
   Sword1h_WalkFwdStart180_L: {fileID: 1851715371058809990}
   Sword1h_Equip: {fileID: 3950239419380141642}
-  Sword1h_Holter: {fileID: 7911780353203416584}
+  Sword1h_Holster: {fileID: 7911780353203416584}
   Sword1h_StrafeLtStop_LU: {fileID: 6028732672345449522}
   Sword1h_StrafeLtStop_RU: {fileID: 294058545596669328}
   Sword1h_StrafeRtStop_LU: {fileID: 3302068865168307262}
@@ -4313,7 +4313,7 @@ GameObject:
   - component: {fileID: 1249174487201126762}
   - component: {fileID: 7911780353203416584}
   m_Layer: 5
-  m_Name: Sword1h_Holter
+  m_Name: Sword1h_Holster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

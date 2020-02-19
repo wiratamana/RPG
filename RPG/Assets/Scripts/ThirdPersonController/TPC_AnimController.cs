@@ -134,16 +134,6 @@ namespace Tamana
             CharacterAnimator.Play(animName);
         }
 
-        public void SetBool(string triggerName, bool value)
-        {
-            CharacterAnimator.SetBool(triggerName, value);
-        }
-
-        public void PlayAnimCrossFade(string animName, float transition)
-        {
-            CharacterAnimator.CrossFade(animName, transition);
-        }
-
         public void PlayStartMoveAnimation()
         {
             AnimParams.IsMoving = true;
@@ -151,7 +141,7 @@ namespace Tamana
 
         public void PlayStopMoveAnimation()
         {
-            SetBool(TPC_Anim_RunAnimsetBasic.IsMoving, false);
+            AnimParams.IsMoving = false;
         }
 
         private void GetAllAttribute()

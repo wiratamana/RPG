@@ -36,7 +36,7 @@ namespace Tamana
         [SerializeField] private Image Sword1h_WalkFwdStart135_L;
         [SerializeField] private Image Sword1h_WalkFwdStart180_L;
         [SerializeField] private Image Sword1h_Equip;
-        [SerializeField] private Image Sword1h_Holter;
+        [SerializeField] private Image Sword1h_Holster;
         [SerializeField] private Image Sword1h_StrafeLtStop_LU;
         [SerializeField] private Image Sword1h_StrafeLtStop_RU;
         [SerializeField] private Image Sword1h_StrafeRtStop_LU;
@@ -54,7 +54,7 @@ namespace Tamana
             SetColor(Sword1h_WalkFwdStart90_L, nameof(Sword1h_WalkFwdStart90_L));
             SetColor(Sword1h_WalkFwdStart135_L, nameof(Sword1h_WalkFwdStart135_L));
             SetColor(Sword1h_WalkFwdStart180_L, nameof(Sword1h_WalkFwdStart180_L));
-            SetColor(Sword1h_Holter, nameof(Sword1h_Holter));
+            SetColor(Sword1h_Holster, nameof(Sword1h_Holster));
             SetColor(Sword1h_StrafeLtStop_LU, nameof(Sword1h_StrafeLtStop_LU));
             SetColor(Sword1h_StrafeLtStop_RU, nameof(Sword1h_StrafeLtStop_RU));
             SetColor(Sword1h_StrafeRtStop_LU, nameof(Sword1h_StrafeRtStop_LU));

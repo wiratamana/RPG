@@ -55,6 +55,11 @@ namespace Tamana
         
         public string GetStartMoveAnimationName(float angle)
         {
+            if(TPC_AnimController.Instance.GetLayerWeight(TPC_Anim_SwordAnimsetPro.LAYER) > 0.0f)
+            {
+                return TPC_Anim_SwordAnimsetPro.Sword1h_RunFwdLoop;
+            }
+
             return TPC_Anim_RunAnimsetBasic.RunFwdLoop;
         }
     }
