@@ -14,7 +14,6 @@ namespace Tamana
     public class TPC_CombatAnimData
     {
         [SerializeField] private string myAnimStateName;
-        [SerializeField] private float animationLength;
         [SerializeField] private float receivingInputStart;
         [SerializeField] private float receivingInputFinish;
 
@@ -26,10 +25,8 @@ namespace Tamana
 
         public bool IsInputReceived { get; set; }
         public bool IsCurrentlyReceivingInput { get; set; }
-        public bool IsThisAnimationDonePlaying { get; set; }
 
         public string MyAnimStateName => myAnimStateName;
-        public float AnimationLength => animationLength;
 
         public float ReceivingInputStart => receivingInputStart;
         public float ReceivingInputFinish => receivingInputFinish;

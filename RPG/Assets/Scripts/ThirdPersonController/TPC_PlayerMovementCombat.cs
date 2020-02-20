@@ -5,8 +5,12 @@ namespace Tamana
 {
     public class TPC_PlayerMovementCombat : SingletonMonobehaviour<TPC_PlayerMovementCombat>
     {
-        public  TPC_CombatAnimDataContainer lightAttack;
+        public TPC_CombatAnimDataContainer lightAttack;
+        public TPC_CombatAnimDataContainer heavyAttack;
+
+        public TPC_CombatAnimDataContainer CurrentlyPlayingCombatAnimDataContainer { set; get; }
         public TPC_CombatAnimData CurrentlyPlayingCombatAnimData { get; set; }
+        public TPC_BodyTransform BodyTransform { get; private set; }
 
         private void Update()
         {
@@ -36,24 +40,9 @@ namespace Tamana
             if (TPC_AnimController.Instance.GetLayerWeight(TPC_Anim_SwordAnimsetPro.LAYER) == 0)
             { return; }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) == true)
-            {
-                if(lightAttack != null && CurrentlyPlayingCombatAnimData == null)
-                {
-                    TPC_AnimController.Instance.PlayAnim(lightAttack.CombatDatas[0].MyAnimStateName);
-                }
-
-                else if (CurrentlyPlayingCombatAnimData != null)
-                {
-                    if (CurrentlyPlayingCombatAnimData.IsCurrentlyReceivingInput == true)
-                    {                        
-                        CurrentlyPlayingCombatAnimData.IsInputReceived = true;
-                    }
-                }
-            }
-        }
-
-        public TPC_BodyTransform BodyTransform { get; private set; }
+            PlayAttackAnim(KeyCode.Mouse0, lightAttack);
+            PlayAttackAnim(KeyCode.Mouse1, heavyAttack);
+        }        
 
         protected override void Awake()
         {
@@ -84,38 +73,24 @@ namespace Tamana
             weaponTransform.localRotation = weaponItem.HolsterRotation;
         }
 
-        public string GetStartMoveAnimationName(float angle)
+        private void PlayAttackAnim(KeyCode keyTrigger, TPC_CombatAnimDataContainer attackType)
         {
-            if (angle < 45 && angle > -45)
+            if (Input.GetKeyDown(keyTrigger) == true && (CurrentlyPlayingCombatAnimDataContainer == null || CurrentlyPlayingCombatAnimDataContainer == attackType))
             {
-                return TPC_Anim_SwordAnimsetPro.Sword1h_WalkFwdStart;
-            }
-            else if (angle < 120 && angle >= 45)
-            {
-                return TPC_Anim_SwordAnimsetPro.Sword1h_WalkFwdStart90_L;
-            }
-            else if (angle > -120 && angle <= -45)
-            {
-                return TPC_Anim_SwordAnimsetPro.Sword1h_WalkFwdStart90_R;
-            }
-            else if (angle < 165 && angle >= 45)
-            {
-                return TPC_Anim_SwordAnimsetPro.Sword1h_WalkFwdStart135_L;
-            }
-            else if (angle > -165 && angle <= -45)
-            {
-                return TPC_Anim_SwordAnimsetPro.Sword1h_WalkFwdStart135_R;
-            }
-            else if (angle <= 179.99 && angle >= 165)
-            {
-                return TPC_Anim_SwordAnimsetPro.Sword1h_WalkFwdStart180_L;
-            }
-            else if (angle >= -180 && angle <= -165)
-            {
-                return TPC_Anim_SwordAnimsetPro.Sword1h_WalkFwdStart180_R;
-            }
+                if (attackType != null && CurrentlyPlayingCombatAnimData == null)
+                {
+                    CurrentlyPlayingCombatAnimDataContainer = attackType;
+                    TPC_AnimController.Instance.PlayAnim(attackType.CombatDatas[0].MyAnimStateName);
+                }
 
-            return null;
+                else if (CurrentlyPlayingCombatAnimData != null)
+                {
+                    if (CurrentlyPlayingCombatAnimData.IsCurrentlyReceivingInput == true)
+                    {
+                        CurrentlyPlayingCombatAnimData.IsInputReceived = true;
+                    }
+                }
+            }
         }
     }
 }

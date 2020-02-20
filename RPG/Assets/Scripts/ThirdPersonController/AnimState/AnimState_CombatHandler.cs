@@ -26,7 +26,7 @@ namespace Tamana
             {
                 return;
             }
-
+            
             if (isCrossFading == true)
             {
                 if(TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData == animData)
@@ -69,6 +69,7 @@ namespace Tamana
                 isCrossFading = true;
 
                 TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = null;
+                TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimDataContainer = null;
                 TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = false;
             }
         }
@@ -78,6 +79,7 @@ namespace Tamana
             if (animData.IsLastAnimation == true)
             {
                 TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = false;
+                TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimDataContainer = null;
                 TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = null;
             }
         }
