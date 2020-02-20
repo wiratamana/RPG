@@ -10,7 +10,7 @@ namespace Tamana
         public const string LAYER               = "RunAnimsetBasic";
 
         [TPC_Anim_AttributeIdle]
-        public const string Idle                = "Idle";
+        public const string RunAnimsetBasic_Idle = "RunAnimsetBasic_Idle";
 
         [TPC_Anim_AttributeMoving]
         public const string RunFwdStart         = "RunFwdStart";
@@ -41,5 +41,7 @@ namespace Tamana
         [TPC_Anim_AttributeMoving] 
         [TPC_Anim_AttributeMoveStopping] 
         public const string RunFwdStop_RU       = "RunFwdStop_RU";
+
+        public const string IsMoving = "IsMoving";
     }
 }

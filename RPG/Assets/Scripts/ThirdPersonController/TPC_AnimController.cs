@@ -32,10 +32,13 @@ namespace Tamana
 
         public Dictionary<string, int> AnimatorLayerInfoDic { private set; get; } = new Dictionary<string, int>();
 
+        public TPC_AnimParams AnimParams { private set; get; }
+
         protected override void Awake()
         {
             base.Awake();
-            
+
+            AnimParams = new GameObject(nameof(TPC_AnimParams)).AddComponent<TPC_AnimParams>();
             GetAllAttribute();
             GetAnimatorLayerInformation();
 
@@ -132,28 +135,12 @@ namespace Tamana
 
         public void PlayStartMoveAnimation()
         {
-            var animName = GetStartMoveAnimationName();
-            if(string.IsNullOrEmpty(animName) == true)
-            {
-                Debug.Log("TPC_AnimController.GetStartMoveAnimationName() returned empty string.", 
-                    Debug.LogType.Warning);
-                return;
-            }
-
-            PlayAnim(animName);
+            AnimParams.IsMoving = true;
         }
 
         public void PlayStopMoveAnimation()
         {
-            var animName = GetStopMoveAnimationName();
-            if (string.IsNullOrEmpty(animName) == true)
-            {
-                Debug.Log("TPC_AnimController.GetStartMoveAnimationName() returned empty string.",
-                    Debug.LogType.Warning);
-                return;
-            }
-
-            PlayAnim(animName);
+            AnimParams.IsMoving = false;
         }
 
         private void GetAllAttribute()
@@ -170,28 +157,6 @@ namespace Tamana
             {
                 AnimatorLayerInfoDic.Add(CharacterAnimator.GetLayerName(i), i);
             }
-        }
-
-        public string GetStartMoveAnimationName()
-        {
-            var angle = TPC_CameraMovementManager.Instance.CameraAngleFromPlayerForward;
-
-            if(GetLayerWeight(TPC_Anim_SwordAnimsetPro.LAYER) > 0.0f)
-            {
-                return TPC_PlayerMovementCombat.Instance.GetStartMoveAnimationName(angle);
-            }
-
-            return TPC_PlayerMovement.Instance.GetStartMoveAnimationName(angle);
-        }
-
-        public string GetStopMoveAnimationName()
-        {
-            if (GetLayerWeight(TPC_Anim_SwordAnimsetPro.LAYER) > 0.0f)
-            {
-                return TPC_Anim_SwordAnimsetPro.Sword1h_WalkStop_RU;
-            }
-
-            return TPC_Anim_RunAnimsetBasic.RunFwdStop_RU;
         }
     }
 }

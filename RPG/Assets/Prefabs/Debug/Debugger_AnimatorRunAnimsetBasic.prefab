@@ -785,7 +785,7 @@ MonoBehaviour:
   RunFwdStart180_L: {fileID: 4767338312442642203}
   RunFwdStop_RU: {fileID: 58378898117305907}
   RunFwdStop_LU: {fileID: 6357194697054066555}
-  Idle: {fileID: 8839125646961054603}
+  RunAnimsetBasic_Idle: {fileID: 8839125646961054603}
   AnimStateText: {fileID: 2459097317271170930}
 --- !u!1 &6188709881294305810
 GameObject:
