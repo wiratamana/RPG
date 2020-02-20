@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea789d10e1e270d4a973fb46a92bee8b, type: 3}
+  m_Name: New Combat Data
+  m_EditorClassIdentifier: 
+  combatDatas:
+  - myAnimStateName: Attack_Place_fast_Rdown_1
+    animationLength: 1.333
+    receivingInputStart: 0.167
+    receivingInputFinish: 0.483
+    transitionToNextAnim: 0.5
+    transitionTimeNext: 0.26
+    transitionToIdleAnim: 1.083
+    transitionTimeIdle: 1.333
+    nextAnimStateName: Attack_Place_fast_Lup_1
+    idleAnimStateName: Sword1h_Idle
+  - myAnimStateName: 
+    animationLength: 0
+    receivingInputStart: 0
+    receivingInputFinish: 0
+    transitionToNextAnim: 0
+    transitionTimeNext: 0
+    transitionToIdleAnim: 0
+    transitionTimeIdle: 0
+    nextAnimStateName: 
+    idleAnimStateName: 
+  - myAnimStateName: 
+    animationLength: 0
+    receivingInputStart: 0
+    receivingInputFinish: 0
+    transitionToNextAnim: 0
+    transitionTimeNext: 0
+    transitionToIdleAnim: 0
+    transitionTimeIdle: 0
+    nextAnimStateName: 
+    idleAnimStateName: 

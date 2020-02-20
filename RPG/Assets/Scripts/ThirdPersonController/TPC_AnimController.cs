@@ -39,7 +39,6 @@ namespace Tamana
             base.Awake();
 
             AnimParams = new GameObject(nameof(TPC_AnimParams)).AddComponent<TPC_AnimParams>();
-
             GetAllAttribute();
             GetAnimatorLayerInformation();
 

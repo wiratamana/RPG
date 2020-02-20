@@ -5,6 +5,9 @@ namespace Tamana
 {
     public class TPC_PlayerMovementCombat : SingletonMonobehaviour<TPC_PlayerMovementCombat>
     {
+        public  TPC_CombatAnimDataContainer lightAttack;
+        public TPC_CombatAnimData CurrentlyPlayingCombatAnimData { get; set; }
+
         private void Update()
         {
             if(Input.GetKeyDown(KeyCode.Space) == true)
@@ -28,6 +31,25 @@ namespace Tamana
                 {
                     TPC_AnimController.Instance.PlayAnim(TPC_Anim_SwordAnimsetPro.Sword1h_Holster);
                 }                
+            }
+
+            if (TPC_AnimController.Instance.GetLayerWeight(TPC_Anim_SwordAnimsetPro.LAYER) == 0)
+            { return; }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) == true)
+            {
+                if(lightAttack != null && CurrentlyPlayingCombatAnimData == null)
+                {
+                    TPC_AnimController.Instance.PlayAnim(lightAttack.CombatDatas[0].MyAnimStateName);
+                }
+
+                else if (CurrentlyPlayingCombatAnimData != null)
+                {
+                    if (CurrentlyPlayingCombatAnimData.IsCurrentlyReceivingInput == true)
+                    {                        
+                        CurrentlyPlayingCombatAnimData.IsInputReceived = true;
+                    }
+                }
             }
         }
 

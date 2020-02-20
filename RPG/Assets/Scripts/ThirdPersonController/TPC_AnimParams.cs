@@ -40,5 +40,19 @@ namespace Tamana
                 animator.SetBool(isRotateBeforeMove, value);
             }
         }
+
+        private readonly string isTransitingToNextAttackAnimation = "IsTransitingToNextAttackAnimation";
+        public bool IsTransitingToNextAttackAnimation
+        {
+            get
+            {
+                return animator.GetBool(isTransitingToNextAttackAnimation);
+            }
+
+            set
+            {
+                animator.SetBool(isTransitingToNextAttackAnimation, value);
+            }
+        }
     }
 }
