@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combatDatas:
   - myAnimStateName: Attack_Place_fast_Rdown_1
-    animationLength: 1.333
     receivingInputStart: 0.167
     receivingInputFinish: 0.483
     transitionTimingToIdleAnim: 1.083
@@ -22,7 +21,6 @@ MonoBehaviour:
     idleAnimStateName: Sword1h_Idle
     isLastAnimation: 0
   - myAnimStateName: Attack_Place_fast_Lup_1
-    animationLength: 1.85
     receivingInputStart: 0.3333
     receivingInputFinish: 0.75
     transitionTimingToIdleAnim: 1.6
@@ -30,7 +28,6 @@ MonoBehaviour:
     idleAnimStateName: Sword1h_Idle
     isLastAnimation: 0
   - myAnimStateName: Attack_Place_slow_Rdown_1
-    animationLength: 1.933
     receivingInputStart: 0
     receivingInputFinish: 0
     transitionTimingToIdleAnim: 0

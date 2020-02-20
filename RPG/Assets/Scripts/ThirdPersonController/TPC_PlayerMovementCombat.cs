@@ -11,6 +11,15 @@ namespace Tamana
         public TPC_CombatAnimDataContainer CurrentlyPlayingCombatAnimDataContainer { set; get; }
         public TPC_CombatAnimData CurrentlyPlayingCombatAnimData { get; set; }
         public TPC_BodyTransform BodyTransform { get; private set; }
+        public TPC_CombatHandler CombatHandler { private set; get; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            BodyTransform = gameObject.AddComponent<TPC_BodyTransform>();
+            CombatHandler = gameObject.AddComponent<TPC_CombatHandler>();
+        }
 
         private void Update()
         {
@@ -44,14 +53,7 @@ namespace Tamana
             PlayAttackAnim(KeyCode.Mouse1, heavyAttack);
         }        
 
-        protected override void Awake()
-        {
-            base.Awake();
-
-            BodyTransform = gameObject.AddComponent<TPC_BodyTransform>();
-        }
-
-        [TPC_AnimClip_AttributeEvent]
+        [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnEquip()
         {
             var weaponTransform = Inventory_EquipmentManager.Instance.WeaponTransform;
@@ -62,7 +64,7 @@ namespace Tamana
             weaponTransform.localRotation = weaponItem.EquipRotation;
         }
 
-        [TPC_AnimClip_AttributeEvent]
+        [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnHolster()
         {
             var weaponTransform = Inventory_EquipmentManager.Instance.WeaponTransform;
