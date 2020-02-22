@@ -521,6 +521,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Layer: RunAnimsetBasic
   Value: 0
+--- !u!114 &-1382224781209633650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987c6d783ab0beb42bf4f74c711adfed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: RunAnimsetBasic
+  Value: 1
 --- !u!1102 &-277508172906687455
 AnimatorState:
   serializedVersion: 5
@@ -753,6 +767,7 @@ AnimatorState:
   m_StateMachineBehaviours:
   - {fileID: 4939705861559759570}
   - {fileID: -7560552934681772322}
+  - {fileID: -1382224781209633650}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

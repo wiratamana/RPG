@@ -23,9 +23,21 @@ namespace Tamana
             {
                 foreach(var c in colliders)
                 {
-                    Debug.Log(c.name);
+                    var damageHandler = c.GetComponent<Status_DamageHandler>();
+                    if(damageHandler != null)
+                    {
+                        SendDamage(damageHandler);
+                    }
                 }
             }
+        }
+
+        private void SendDamage(Status_DamageHandler damageHandler)
+        {
+            damageHandler.SendDamage(new Status_DamageData()
+            {
+                damagePoint = 100
+            });
         }
     }
 }
