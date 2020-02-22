@@ -18,40 +18,34 @@ namespace Tamana
             base.Awake();
 
             BodyTransform = gameObject.AddComponent<TPC_BodyTransform>();
-            CombatHandler = gameObject.AddComponent<TPC_CombatHandler>();
+            CombatHandler = gameObject.AddComponent<TPC_CombatHandler>();            
         }
 
-        private void Update()
+        private void Start()
         {
-            if(Input.GetKeyDown(KeyCode.Space) == true)
+            InputEvent.Instance.Event_Equip.AddListener(Equip);
+        }
+
+        private void Equip()
+        {
+            if (Inventory_EquipmentManager.Instance.IsEquippedWithWeapon() == false)
             {
-                if(Inventory_EquipmentManager.Instance.IsEquippedWithWeapon() == false)
-                {
-                    return;
-                }
-
-                if(TPC_AnimController.Instance.AnimStateDic[nameof(TPC_Anim_AttributeIdle)] == false)
-                {
-                    return;
-                }
-
-                if(TPC_AnimController.Instance.GetLayerWeight(TPC_Anim_SwordAnimsetPro.LAYER) == 0.0f)
-                {
-                    TPC_AnimController.Instance.SetLayerWeight(TPC_Anim_SwordAnimsetPro.LAYER, 1.0f);
-                    TPC_AnimController.Instance.PlayAnim(TPC_Anim_SwordAnimsetPro.Sword1h_Equip);
-                }
-                else
-                {
-                    TPC_AnimController.Instance.PlayAnim(TPC_Anim_SwordAnimsetPro.Sword1h_Holster);
-                }                
+                return;
             }
 
-            if (TPC_AnimController.Instance.GetLayerWeight(TPC_Anim_SwordAnimsetPro.LAYER) == 0)
-            { return; }
+            if (TPC_AnimController.Instance.AnimStateDic[nameof(TPC_Anim_AttributeIdle)] == false)
+            {
+                return;
+            }
 
-            PlayAttackAnim(KeyCode.Mouse0, lightAttack);
-            PlayAttackAnim(KeyCode.Mouse1, heavyAttack);
-        }        
+            TPC_AnimController.Instance.SetLayerWeight(TPC_Anim_SwordAnimsetPro.LAYER, 1.0f);
+            TPC_AnimController.Instance.PlayAnim(TPC_Anim_SwordAnimsetPro.Sword1h_Equip);
+        }
+
+        private void Holster()
+        {
+            TPC_AnimController.Instance.PlayAnim(TPC_Anim_SwordAnimsetPro.Sword1h_Holster);
+        }
 
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnEquip()
@@ -62,6 +56,12 @@ namespace Tamana
             weaponTransform.SetParent(BodyTransform.HandR);
             weaponTransform.localPosition = weaponItem.EquipPostion;
             weaponTransform.localRotation = weaponItem.EquipRotation;
+
+            InputEvent.Instance.Event_Equip.RemoveListener(Equip);
+            InputEvent.Instance.Event_Holster.AddListener(Holster);
+
+            InputEvent.Instance.Event_DoAttackHeavy.AddListener(PlayAttackAnim_Heavy);
+            InputEvent.Instance.Event_DoAttackLight.AddListener(PlayAttackAnim_Light);
         }
 
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
@@ -73,11 +73,17 @@ namespace Tamana
             weaponTransform.SetParent(BodyTransform.Hips);
             weaponTransform.localPosition = weaponItem.HolsterPosition;
             weaponTransform.localRotation = weaponItem.HolsterRotation;
+
+            InputEvent.Instance.Event_Holster.RemoveListener(Holster);
+            InputEvent.Instance.Event_Equip.AddListener(Equip);
+
+            InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(PlayAttackAnim_Heavy);
+            InputEvent.Instance.Event_DoAttackLight.RemoveListener(PlayAttackAnim_Light);
         }
 
-        private void PlayAttackAnim(KeyCode keyTrigger, TPC_CombatAnimDataContainer attackType)
+        private void PlayAttackAnim(TPC_CombatAnimDataContainer attackType)
         {
-            if (Input.GetKeyDown(keyTrigger) == true && (CurrentlyPlayingCombatAnimDataContainer == null || CurrentlyPlayingCombatAnimDataContainer == attackType))
+            if (CurrentlyPlayingCombatAnimDataContainer == null || CurrentlyPlayingCombatAnimDataContainer == attackType)
             {
                 if (attackType != null && CurrentlyPlayingCombatAnimData == null)
                 {
@@ -93,6 +99,15 @@ namespace Tamana
                     }
                 }
             }
+        }
+
+        private void PlayAttackAnim_Light()
+        {
+            PlayAttackAnim(lightAttack);
+        }
+        private void PlayAttackAnim_Heavy()
+        {
+            PlayAttackAnim(heavyAttack);
         }
     }
 }
