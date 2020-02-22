@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cdfd2e41a20e034c9cb66b0de9b665b, type: 3}
+  m_Name: Sword
+  m_EditorClassIdentifier: 
+  itemName: Iron Sword
+  itemDescription: A sword made with iron.
+  prefab: {fileID: 4561571508225656, guid: 0c14f3ea30af4174ba288b3c2042f665, type: 3}
+  holsterPosition: {x: -10.5, y: 12.3, z: 19.3}
+  holsterRotation: {x: -137.548, y: -89.35199, z: -3.992004}
+  equipPosition: {x: 6.74, y: 3.17, z: 0.65}
+  equipRotation: {x: -162.232, y: -113.106, z: 91.743}
+  menuDefaultItemRotation: {x: 0, y: 90, z: 0}
+  menuDefaultCameraRotation: {x: 0, y: 0, z: 45}
+  menuCameraOffset: {x: 0, y: 0.4, z: 0}
+  customOrthoSize: 0.4
+  weaponCollider:
+    center: {x: 0.00001677684, y: 0.5708392, z: -0.00004446507}
+    size: {x: 0.03091071, y: 0.9426218, z: 0.1377233}

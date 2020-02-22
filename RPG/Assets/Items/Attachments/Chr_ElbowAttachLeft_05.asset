@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd88f3a90c6800a40a8e02b4c113b901, type: 3}
+  m_Name: Chr_ElbowAttachLeft_05
+  m_EditorClassIdentifier: 
+  itemName: Chr_ElbowAttachLeft_05
+  itemDescription: Item 'Chr_ElbowAttachLeft_05' description!!
+  prefab: {fileID: 4470459448008318, guid: 72869d185aa42064cb99c44715d37b3e, type: 3}
+  partLocation: PartsGetter/Modular_Characters/All_Gender_Parts/All_08_Elbow_Attachment_Left/Chr_ElbowAttachLeft_05
+  gender: 0
+  type: 5
