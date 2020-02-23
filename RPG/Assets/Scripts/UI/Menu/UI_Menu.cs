@@ -91,11 +91,33 @@ namespace Tamana
         [SerializeField] private UI_Menu_Resources menuResourcesPrefab;
         public UI_Menu_Resources MenuResources { private set; get; }
 
+        public UI_Menu_Inventory Inventory { private set; get; }
+
+        public EventManager OnBeforeOpen { private set; get; } = new EventManager();
+        public EventManager OnAfterOpen { private set; get; } = new EventManager();
+        public EventManager OnBeforeClose { private set; get; } = new EventManager();
+        public EventManager OnAfterClose { private set; get; } = new EventManager();
+
         protected override void Awake()
         {
             base.Awake();
 
             MenuResources = Instantiate(menuResourcesPrefab);
+
+            OnAfterOpen.AddListener(OnOpened);
+            OnAfterClose.AddListener(OnClosed);
+        }
+
+        private void OnOpened()
+        {
+            InputEvent.Instance.Event_OpenOrCloseMenuInventory.RemoveListener(OpenMenuInventory);
+            InputEvent.Instance.Event_OpenOrCloseMenuInventory.AddListener(CloseMenuInventory);
+        }
+
+        private void OnClosed()
+        {
+            InputEvent.Instance.Event_OpenOrCloseMenuInventory.RemoveListener(CloseMenuInventory);
+            InputEvent.Instance.Event_OpenOrCloseMenuInventory.AddListener(OpenMenuInventory);
         }
 
         public enum MenuItem
@@ -105,39 +127,47 @@ namespace Tamana
 
         public void OpenMenu(MenuItem item)
         {
+            OnBeforeOpen.Invoke();
+
             switch (item)
             {
                 case MenuItem.Inventory:
-                    UI_Menu_Inventory.CreateMenuInventory(Body, Header, Navigator);
+                    Inventory = UI_Menu_Inventory.CreateMenuInventory(Body, Header, Navigator);
                     break;
                 case MenuItem.Character:
                     break;
             }
+
+            OnAfterOpen.Invoke();
         }
 
         public void CloseMenu()
         {
-            Instance.gameObject.SetActive(false);
+            OnBeforeClose.Invoke();
+
+            Inventory.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+
+            OnAfterClose.Invoke();
         }
 
         public static void OpenMenuInventory()
         {
             if(Instance == null)
             {
-                var menu = ResourcesLoader.Instance.InstantiatePrefabWithReturnValue<UI_Menu>();
-                menu.OpenMenu(MenuItem.Inventory);
-                return;
+                ResourcesLoader.Instance.InstantiatePrefabWithReturnValue<UI_Menu>();
             }
 
-            if(Instance.gameObject.activeInHierarchy == true)
+            Instance.gameObject.SetActive(true);
+            Instance.OpenMenu(MenuItem.Inventory);
+        }
+
+        public static void CloseMenuInventory()
+        {
+            if (Instance.gameObject.activeInHierarchy == true)
             {
                 Instance.CloseMenu();
             }
-            else
-            {
-                Instance.gameObject.SetActive(true);
-            }
-            
         }
     }
 }

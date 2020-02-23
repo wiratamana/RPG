@@ -61,6 +61,19 @@ namespace Tamana
             Inventory_EquipmentManager.Instance.UnequipModularPart(myPart);
         }
 
+        public override Item_ItemDetails ItemDetails
+        {
+            get
+            {
+                return new Item_ItemDetails()
+                {
+                    ItemName = ItemName,
+                    ItemDescription = ItemDescription,
+                    ItemEffect = null
+                };
+            }
+        }
+
 #if UNITY_EDITOR
         public void SetType(ArmorPart value)
         {

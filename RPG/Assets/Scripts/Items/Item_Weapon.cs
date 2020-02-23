@@ -54,6 +54,19 @@ namespace Tamana
             Inventory_EquipmentManager.Instance.UnequipWeapon();
         }
 
+        public override Item_ItemDetails ItemDetails
+        {
+            get
+            {
+                return new Item_ItemDetails()
+                {
+                    ItemName = ItemName,
+                    ItemDescription = ItemDescription,
+                    ItemEffect = "+100 Attack Power"
+                };
+            }
+        }
+
         [System.Serializable]
         public struct WeaponOverlapBox
         {

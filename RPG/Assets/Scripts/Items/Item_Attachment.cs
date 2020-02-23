@@ -44,6 +44,19 @@ namespace Tamana
             Debug.Log("Unequip");
         }
 
+        public override Item_ItemDetails ItemDetails
+        {
+            get
+            {
+                return new Item_ItemDetails()
+                {
+                    ItemName = ItemName,
+                    ItemDescription = ItemDescription,
+                    ItemEffect = null
+                };
+            }
+        }
+
 #if UNITY_EDITOR
         public void SetType(AttachmentPart value)
         {

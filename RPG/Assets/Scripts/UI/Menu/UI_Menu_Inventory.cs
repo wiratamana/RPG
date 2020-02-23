@@ -24,6 +24,19 @@ namespace Tamana
         public static UI_Menu_Inventory CreateMenuInventory(UI_Menu_Body body, UI_Menu_Header header, UI_Menu_Navigator navigator)
         {
             // ===============================================================================================
+            // Just return the instance if the instance isnt null
+            // ===============================================================================================
+            if (Instance != null)
+            {
+                if(Instance.gameObject.activeSelf == false)
+                {
+                    Instance.gameObject.SetActive(true);
+                }
+
+                return Instance;
+            }
+
+            // ===============================================================================================
             // Create gameobject and set it parent to body
             // ===============================================================================================
             var go = new GameObject(nameof(UI_Menu_Inventory));
