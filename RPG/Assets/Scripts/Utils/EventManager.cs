@@ -88,6 +88,7 @@ namespace Tamana
         public EventManager()
         {
             callbacksDic = new Dictionary<string, UnityAction<T>>();
+            invokes = new Queue<UnityAction<T>>();
         }
 
         public void AddListener(UnityAction<T> callback)
