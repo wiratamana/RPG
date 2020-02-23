@@ -17,7 +17,7 @@ namespace Tamana
         public const char ACTION_OPEN_MENU_INVENTORY = 'B';
 
         public EventManager Event_PickUpItem { private set; get; } = new EventManager();
-        public EventManager Event_OpenMenuInventory { private set; get; } = new EventManager();
+        public EventManager Event_OpenOrCloseMenuInventory { private set; get; } = new EventManager();
 
         public EventManager Event_DoAttackLight { private set; get; } = new EventManager();
         public EventManager Event_DoAttackHeavy { private set; get; } = new EventManager();
@@ -34,7 +34,7 @@ namespace Tamana
 
             if (Input.GetKeyDown(KeyCode.B) == true)
             {
-                Event_OpenMenuInventory.Invoke();
+                Event_OpenOrCloseMenuInventory.Invoke();
             }
 
             if(Input.GetKeyDown(KeyCode.Space) == true)

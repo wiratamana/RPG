@@ -7,10 +7,12 @@ namespace Tamana
     public class EventManager
     {
         private Dictionary<string, UnityAction> callbacksDic;
+        private Queue<UnityAction> invokes;
 
         public EventManager()
         {
             callbacksDic = new Dictionary<string, UnityAction>();
+            invokes = new Queue<UnityAction>();
         }
 
         public void AddListener(UnityAction callback)
@@ -42,27 +44,26 @@ namespace Tamana
 
         public void Invoke()
         {
-            try
+            foreach(var cb in callbacksDic)
             {
-                foreach (var cb in callbacksDic)
-                {
-                    try
-                    {
-                        cb.Value?.Invoke();
-                    }
-                    catch (System.Exception e)
-                    {
-                        Debug.Log($"Method : {cb.Key}", Debug.LogType.Error);
-                        Debug.Log($"Message : {e.Message}", Debug.LogType.Error);
-                        Debug.Log($"Stack Trace : {e.StackTrace}", Debug.LogType.Error);
-                    }
+                invokes.Enqueue(cb.Value);
+            }
 
+
+            while(invokes.Count > 0)
+            {
+                var cb = invokes.Dequeue();
+
+                try
+                {
+                    cb?.Invoke();
+                }
+                catch (System.Exception e)
+                {
+                    Debug.Log($"Message : {e.Message}", Debug.LogType.Error);
+                    Debug.Log($"Stack Trace : {e.StackTrace}", Debug.LogType.Error);
                 }
             }
-            catch (System.InvalidOperationException)
-            {
-                Invoke();
-            }            
         }
 
         private string GetCallbackKey(UnityAction callback)
@@ -82,6 +83,7 @@ namespace Tamana
     public class EventManager<T>
     {
         private Dictionary<string, UnityAction<T>> callbacksDic;
+        private Queue<UnityAction<T>> invokes;
 
         public EventManager()
         {
@@ -117,26 +119,25 @@ namespace Tamana
 
         public void Invoke(T param)
         {
-            try
+            foreach(var cb in callbacksDic)
             {
-                foreach (var cb in callbacksDic)
-                {
-                    try
-                    {
-                        cb.Value?.Invoke(param);
-                    }
-                    catch (System.Exception e)
-                    {
-                        Debug.Log($"Method : {cb.Key}", Debug.LogType.Error);
-                        Debug.Log($"Message : {e.Message}", Debug.LogType.Error);
-                        Debug.Log($"Stack Trace : {e.StackTrace}", Debug.LogType.Error);
-                    }
-
-                }
+                invokes.Enqueue(cb.Value);
             }
-            catch (System.InvalidOperationException)
+
+
+            while (invokes.Count > 0)
             {
-                Invoke(param);
+                var cb = invokes.Dequeue();
+
+                try
+                {
+                    cb?.Invoke(param);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.Log($"Message : {e.Message}", Debug.LogType.Error);
+                    Debug.Log($"Stack Trace : {e.StackTrace}", Debug.LogType.Error);
+                }
             }
         }
 

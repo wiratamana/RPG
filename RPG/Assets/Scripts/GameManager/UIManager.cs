@@ -35,7 +35,7 @@ namespace Tamana
 
             runningWindow = new Dictionary<string, UI_WindowBase>();
 
-            InputEvent.Instance.Event_OpenMenuInventory.AddListener(UI_Menu.OpenMenuInventory);
+            InputEvent.Instance.Event_OpenOrCloseMenuInventory.AddListener(UI_Menu.OpenMenuInventory);
         }
 
         public void RegisterWindow(UI_WindowBase window)

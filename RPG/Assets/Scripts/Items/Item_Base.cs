@@ -50,6 +50,8 @@ namespace Tamana
             }
         }
 
+        public abstract Item_ItemDetails ItemDetails { get; }
+
 #if UNITY_EDITOR
         public void SetItemName(string value)
         {

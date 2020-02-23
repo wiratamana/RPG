@@ -105,12 +105,14 @@ namespace Tamana
         public void OnPointerEnter(PointerEventData eventData)
         {
             isMousePointerAboveMe = true;
+            UI_Menu.Instance.Inventory.Right.ItemDescription.Activate(ItemPreview.ItemBase);
             OnMouseEnter.Invoke();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             isMousePointerAboveMe = false;
+            UI_Menu.Instance.Inventory.Right.ItemDescription.Deactivate();
             OnMouseExit.Invoke();
         }
 
