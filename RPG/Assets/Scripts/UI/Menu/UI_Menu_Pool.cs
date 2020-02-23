@@ -77,11 +77,17 @@ namespace Tamana
             image.transform.SetParent(transform);
             image.type = Image.Type.Simple;
             image.sprite = null;
+            image.color = Color.white;
             imagesPool.Push(image);
         }
 
         public void RemoveRawImage(RawImage rawImage)
         {
+            if(rawImage.texture !=  null)
+            {
+                DestroyImmediate(rawImage.texture);
+            }
+
             ResetRectTransform(rawImage.rectTransform);
             rawImage.transform.SetParent(transform);
             rawImage.texture = null;

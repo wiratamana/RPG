@@ -60,7 +60,9 @@ namespace Tamana
 
         private void OnDisable()
         {
-            foreach(var itemIcon in itemIconsList)
+            TextureRendererCamera.targetTexture = null;
+
+            foreach (var itemIcon in itemIconsList)
             {
                 itemIcon.ReturnToPool();
             }

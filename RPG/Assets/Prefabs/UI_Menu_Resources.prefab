@@ -56,3 +56,13 @@ MonoBehaviour:
     type: 3}
   inventoryItemOnPointerOver_Sprite: {fileID: 21300000, guid: d7e81fcdf8dedd14ba97f1766a72a3a4,
     type: 3}
+  mainStatus_HP_Sprite: {fileID: 21300000, guid: 8827108fbae61474db432eae02fbb470,
+    type: 3}
+  mainStatus_MP_Sprite: {fileID: 21300000, guid: 678f6bd20159b5e4d86e7318320a5087,
+    type: 3}
+  mainStatus_ST_Sprite: {fileID: 21300000, guid: 7d42fc1ce12cf314ba58850078e33463,
+    type: 3}
+  mainStatus_AT_Sprite: {fileID: 21300000, guid: d316e95541d4ed34f9a49efc1d8313f6,
+    type: 3}
+  mainStatus_DF_Sprite: {fileID: 21300000, guid: ad5cfeb4c63d91947a00996e540600c4,
+    type: 3}

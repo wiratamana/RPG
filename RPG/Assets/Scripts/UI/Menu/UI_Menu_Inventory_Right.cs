@@ -23,6 +23,7 @@ namespace Tamana
 
         public UI_Menu_Inventory_Right_PlayerPortrait PlayerPortrait { private set; get; }
         public UI_Menu_Inventory_Right_ItemDetails ItemDescription { private set; get; }
+        public UI_Menu_Inventory_Right_PlayerInfo PlayerInfo { private set; get; }
 
         protected override void Awake()
         {
@@ -48,6 +49,16 @@ namespace Tamana
             itemDescriptionRT.localPosition = new Vector3(0, (RectTransform.sizeDelta.y * -0.5f) + 
                 (itemDescriptionRT.sizeDelta.y * 0.5f) + UI_Menu_Inventory_Right_ItemDetails.POSITION_Y_OFFSET);
             ItemDescription = itemDescriptionRT.gameObject.AddComponent<UI_Menu_Inventory_Right_ItemDetails>();
+
+            // ===============================================================================================
+            // Item Description
+            // ===============================================================================================
+            var playerInfoGO = new GameObject(nameof(UI_Menu_Inventory_Right_PlayerInfo));
+            var playerInfoRT = playerInfoGO.AddComponent<RectTransform>();
+            playerInfoRT.SetParent(transform);
+            playerInfoRT.sizeDelta = new Vector2(RectTransform.sizeDelta.x * 0.5f, RectTransform.sizeDelta.y);
+            playerInfoRT.localPosition = new Vector3(playerInfoRT.sizeDelta.x * -0.5f, 0);
+            PlayerInfo = playerInfoGO.AddComponent<UI_Menu_Inventory_Right_PlayerInfo>();
         }
     }
 }

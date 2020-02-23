@@ -26,6 +26,17 @@ namespace Tamana
             callbacksDic.Add(key, callback);
         }
 
+        public void AddListener(UnityAction callback, object uniqueID)
+        {
+            var key = $"{uniqueID}.{GetCallbackKey(callback)}";
+            if (string.IsNullOrEmpty(key) == true || callbacksDic.ContainsKey(key) == true)
+            {
+                return;
+            }
+
+            callbacksDic.Add(key, callback);
+        }
+
         public void RemoveListener(UnityAction callback)
         {
             var key = GetCallbackKey(callback);
@@ -94,6 +105,17 @@ namespace Tamana
         public void AddListener(UnityAction<T> callback)
         {
             var key = GetCallbackKey(callback);
+            if (string.IsNullOrEmpty(key) == true || callbacksDic.ContainsKey(key) == true)
+            {
+                return;
+            }
+
+            callbacksDic.Add(key, callback);
+        }
+
+        public void AddListener(UnityAction<T> callback, object uniqueID)
+        {
+            var key = $"{uniqueID}.{GetCallbackKey(callback)}";
             if (string.IsNullOrEmpty(key) == true || callbacksDic.ContainsKey(key) == true)
             {
                 return;
