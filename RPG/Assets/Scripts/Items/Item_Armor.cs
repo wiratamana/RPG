@@ -69,7 +69,7 @@ namespace Tamana
                 {
                     ItemName = ItemName,
                     ItemDescription = ItemDescription,
-                    ItemEffect = null
+                    ItemEffects = ItemEffects
                 };
             }
         }

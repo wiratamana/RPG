@@ -62,7 +62,7 @@ namespace Tamana
                 {
                     ItemName = ItemName,
                     ItemDescription = ItemDescription,
-                    ItemEffect = "+100 Attack Power"
+                    ItemEffects = ItemEffects
                 };
             }
         }

@@ -25,6 +25,9 @@ namespace Tamana
         public const float POSITION_Y_OFFSET = 50.0f;
         public const float CONTENT_OFFSET = 10.0f;
 
+        public EventManager OnBecomeDeactiveEvent { private set; get; } = new EventManager();
+        public EventManager OnBecomeActiveEvent { private set; get; } = new EventManager();
+
         public UI_Menu_Inventory_Right_ItemDetails_Background Background { private set; get; }
         public UI_Menu_Inventory_Right_ItemDetails_Description Description { private set; get; }
         public UI_Menu_Inventory_Right_ItemDetails_Effect Effect { private set; get; }
@@ -79,12 +82,14 @@ namespace Tamana
 
         public void Activate(Item_Base item)
         {
+            OnBecomeActiveEvent.Invoke();
             gameObject.SetActive(true);
             SetItemDetails(item.ItemDetails);
         }
 
         public void Deactivate()
         {
+            OnBecomeDeactiveEvent.Invoke();
             gameObject.SetActive(false);
         }
 
@@ -93,7 +98,13 @@ namespace Tamana
             Name.ItemName.text = itemDetails.ItemName;
             Description.SetItemDescription(itemDetails.ItemDescription);
 
-            Description.InitPosition(string.IsNullOrEmpty(itemDetails.ItemEffect));
+            var isWithoutEffect = itemDetails.ItemEffects == null || itemDetails.ItemEffects.Length == 0;
+            Description.InitPosition(isWithoutEffect);
+
+            if(isWithoutEffect == false)
+            {
+                Effect.SetEffects(itemDetails.ItemEffects);
+            }
         }
     }
 }

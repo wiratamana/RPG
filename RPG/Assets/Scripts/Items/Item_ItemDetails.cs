@@ -7,6 +7,6 @@ namespace Tamana
     {
         public string ItemName;
         public string ItemDescription;
-        public string ItemEffect;
+        public Item_Equipment_Effect[] ItemEffects;
     }
 }

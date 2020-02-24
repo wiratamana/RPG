@@ -89,7 +89,7 @@ namespace Tamana
             }
         }
 
-        public void InitPosition(bool withoutEffect)
+        public void InitPosition(bool isWithoutEffect)
         {
             // ===============================================================================================
             // Variables declaration
@@ -103,7 +103,7 @@ namespace Tamana
             // ===============================================================================================
             // Get top
             // ===============================================================================================
-            if (withoutEffect == true)
+            if (isWithoutEffect == true)
             {
                 var nameRT = ItemDetails.Name.RectTransform;
 
@@ -119,13 +119,13 @@ namespace Tamana
             // ===============================================================================================
             // Calculate and set size
             // ===============================================================================================
-            ySize = Mathf.Abs(topPos - botPos);
-            RectTransform.sizeDelta = new Vector2(itemDetailsRT.sizeDelta.x - offset, ySize - offset);
+            ySize = Mathf.Abs(topPos - botPos) - offset;
+            RectTransform.sizeDelta = new Vector2(itemDetailsRT.sizeDelta.x - offset, ySize);
 
             // ===============================================================================================
             // Set position
             // ===============================================================================================
-            if (withoutEffect == true)
+            if (isWithoutEffect == true)
             {
                 var nameRT = ItemDetails.Name.RectTransform;
                 RectTransform.position = nameRT.position - new Vector3(0, (ySize * 0.5f) + offset);
@@ -133,7 +133,7 @@ namespace Tamana
             else
             {
                 var effectRT = ItemDetails.Effect.RectTransform;
-                RectTransform.position = effectRT.position - new Vector3(0, ySize * 0.5f);
+                RectTransform.position = effectRT.position - new Vector3(0, (ySize * 0.5f) + (effectRT.sizeDelta.y * 0.5f));
             }
         }
     }
