@@ -3,13 +3,6 @@ using System.Collections;
 
 namespace Tamana
 {
-    public enum AnimationState
-    {
-        IsNotPlaying,
-        IsCurrentlyPlaying,
-        IsFinishedPlaying,
-    }
-
     [System.Serializable]
     public class TPC_CombatAnimData
     {

@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 namespace Tamana
 {
-    public enum Gender { All = 0, Male, Female }
-
     public sealed class GameManager : SingletonMonobehaviour<GameManager>
     {
         [RuntimeInitializeOnLoadMethod]

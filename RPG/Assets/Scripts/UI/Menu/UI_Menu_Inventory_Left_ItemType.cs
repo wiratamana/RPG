@@ -29,7 +29,7 @@ namespace Tamana
 
         private void InstantiateItemTypeIcons()
         {
-            var itemTypeCount = System.Enum.GetNames(typeof(UI_Menu_Inventory.InventoryItemType)).Length;
+            var itemTypeCount = System.Enum.GetNames(typeof(ItemType)).Length;
             var iconSize = 64;
             var spacing = 15.0f;
 
@@ -42,7 +42,7 @@ namespace Tamana
                 Image ring;
                 Image img;
 
-                parent = UI_Menu_Pool.Instance.GetImage(RectTransform, iconSize, iconSize, ((UI_Menu_Inventory.InventoryItemType)i).ToString());
+                parent = UI_Menu_Pool.Instance.GetImage(RectTransform, iconSize, iconSize, ((ItemType)i).ToString());
                 parent.rectTransform.localPosition = position;
                 parent.color = Color.black;
 
@@ -54,7 +54,7 @@ namespace Tamana
 
                 img = UI_Menu_Pool.Instance.GetImage(parent.rectTransform, iconSize - 16, iconSize - 16, nameof(img));
                 img.rectTransform.localPosition = Vector3.zero;
-                img.sprite = UI_Menu.Instance.MenuResources.GetItemTypeSprites((UI_Menu_Inventory.InventoryItemType)i);
+                img.sprite = UI_Menu.Instance.MenuResources.GetItemTypeSprites((ItemType)i);
 
                 position += new Vector3(spacing + iconSize, 0.0f);
             }

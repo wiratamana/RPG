@@ -9,19 +9,19 @@ namespace Tamana
         [SerializeField] private Sprite headerSmallCircle;
 
         [SerializeField] 
-        [UI_Menu_AttributeSpriteItemType(UI_Menu_Inventory.InventoryItemType.Weapon)]
+        [UI_Menu_AttributeSpriteItemType(ItemType.Weapon)]
         private Sprite inventoryItemTypeWeapon;
 
         [SerializeField]
-        [UI_Menu_AttributeSpriteItemType(UI_Menu_Inventory.InventoryItemType.Armor)]
+        [UI_Menu_AttributeSpriteItemType(ItemType.Armor)]
         private Sprite inventoryItemTypeArmor;
 
         [SerializeField]
-        [UI_Menu_AttributeSpriteItemType(UI_Menu_Inventory.InventoryItemType.Attachment)]
+        [UI_Menu_AttributeSpriteItemType(ItemType.Attachment)]
         private Sprite inventoryItemTypeAttachment;
 
         [SerializeField]
-        [UI_Menu_AttributeSpriteItemType(UI_Menu_Inventory.InventoryItemType.Consumable)]
+        [UI_Menu_AttributeSpriteItemType(ItemType.Consumable)]
         private Sprite inventoryItemTypeConsumable;
 
         [SerializeField]
@@ -55,14 +55,14 @@ namespace Tamana
         public Sprite InventoryItemBackgroundEquipped_Sprite { get { return inventoryItemBackgroundEquipped_Sprite; } }
         public Sprite InventoryItemOnPointerOver_Sprite { get { return inventoryItemOnPointerOver_Sprite; } }
 
-        private Dictionary<UI_Menu_Inventory.InventoryItemType, Sprite> itemTypeSpritesDic;
-        public Dictionary<UI_Menu_Inventory.InventoryItemType, Sprite> ItemTypeSpritesDic
+        private Dictionary<ItemType, Sprite> itemTypeSpritesDic;
+        public Dictionary<ItemType, Sprite> ItemTypeSpritesDic
         {
             get
             {
                 if(itemTypeSpritesDic == null || itemTypeSpritesDic.Count == 0)
                 {
-                    itemTypeSpritesDic = GetItemTypeSprites<UI_Menu_Inventory.InventoryItemType, Sprite, UI_Menu_AttributeSpriteItemType>();
+                    itemTypeSpritesDic = GetItemTypeSprites<ItemType, Sprite, UI_Menu_AttributeSpriteItemType>();
                 }
 
                 return itemTypeSpritesDic;
@@ -89,7 +89,7 @@ namespace Tamana
             name = nameof(UI_Menu_Resources);
         }
 
-        public Sprite GetItemTypeSprites(UI_Menu_Inventory.InventoryItemType key)
+        public Sprite GetItemTypeSprites(ItemType key)
         {
             if(ItemTypeSpritesDic.ContainsKey(key) == false)
             {

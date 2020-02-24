@@ -3,11 +3,6 @@ using System.Collections;
 
 namespace Tamana
 {
-    public enum MainStatus
-    {
-        HP, ST, AT, DF
-    }
-
     [CreateAssetMenu(fileName = "New Status", menuName = "NewStatus", order = 1)]
     [System.Serializable]
     public class Status_Information : ScriptableObject
