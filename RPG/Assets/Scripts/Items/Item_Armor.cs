@@ -69,6 +69,8 @@ namespace Tamana
             }
         }
 
+        public override ItemType ItemType => ItemType.Armor;
+
 #if UNITY_EDITOR
         public void SetType(ArmorPart value)
         {

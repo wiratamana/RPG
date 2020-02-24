@@ -57,6 +57,8 @@ namespace Tamana
             }
         }
 
+        public override ItemType ItemType => ItemType.Attachment;
+
 #if UNITY_EDITOR
         public void SetType(AttachmentPart value)
         {
