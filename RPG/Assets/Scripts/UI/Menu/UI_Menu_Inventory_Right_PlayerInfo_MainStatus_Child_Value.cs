@@ -43,7 +43,7 @@ namespace Tamana
             Value = UI_Menu_Pool.Instance.GetText(RectTransform, 0, 0, null, nameof(Background));
             Value.rectTransform.sizeDelta = RectTransform.sizeDelta - new Vector2(20, 10);
             Value.rectTransform.localPosition = Vector2.zero;
-            Value.text = "999";
+            Value.text = GameManager.PlayerStatus.GetStatus((MainStatus)System.Enum.Parse(typeof(MainStatus), transform.parent.name)).ToString();
             Value.color = Color.white;
             Value.fontSize = Value.rectTransform.sizeDelta.y;
             Value.alignment = TextAlignmentOptions.MidlineLeft;
@@ -56,6 +56,11 @@ namespace Tamana
 
             Background = null;
             Value = null;
+        }
+
+        public void UpdateValue()
+        {
+            Value.text = GameManager.PlayerStatus.GetStatus((MainStatus)System.Enum.Parse(typeof(MainStatus), transform.parent.name)).ToString();
         }
     }
 }

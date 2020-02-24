@@ -8,6 +8,8 @@ namespace Tamana
         HP, MP, ST, AT, DF
     }
 
+    [CreateAssetMenu(fileName = "New Status", menuName = "NewStatus", order = 1)]
+    [System.Serializable]
     public class Status_Information : ScriptableObject
     {
         [Status_Attribute_MainStatus(MainStatus.HP)]
@@ -29,7 +31,7 @@ namespace Tamana
             var index = 0;
 
             var fields = System.Array.Find(ClassManager.Types, x => x.Name == nameof(Status_Information)).GetFields();
-            if(fields.Length != length)
+            if (fields.Length != length)
             {
                 Debug.Log($"The number fields in '{nameof(Status_Information)}' type not same with length of '{nameof(MainStatus)}' enum!", 
                     Debug.LogType.ForceQuit);

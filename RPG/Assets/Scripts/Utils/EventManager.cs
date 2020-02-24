@@ -177,5 +177,92 @@ namespace Tamana
             return $"{declaringTypeFullName}.{methodName}";
         }
     }
+
+    public class EventManager<T0, T1>
+    {
+        private Dictionary<string, UnityAction<T0, T1>> callbacksDic;
+        private Queue<UnityAction<T0, T1>> invokes;
+
+        public EventManager()
+        {
+            callbacksDic = new Dictionary<string, UnityAction<T0, T1>>();
+            invokes = new Queue<UnityAction<T0, T1>>();
+        }
+
+        public void AddListener(UnityAction<T0, T1> callback)
+        {
+            var key = GetCallbackKey(callback);
+            if (string.IsNullOrEmpty(key) == true || callbacksDic.ContainsKey(key) == true)
+            {
+                return;
+            }
+
+            callbacksDic.Add(key, callback);
+        }
+
+        public void AddListener(UnityAction<T0, T1> callback, object uniqueID)
+        {
+            var key = $"{uniqueID}.{GetCallbackKey(callback)}";
+            if (string.IsNullOrEmpty(key) == true || callbacksDic.ContainsKey(key) == true)
+            {
+                return;
+            }
+
+            callbacksDic.Add(key, callback);
+        }
+
+        public void RemoveListener(UnityAction<T0, T1> callback)
+        {
+            var key = GetCallbackKey(callback);
+            if (string.IsNullOrEmpty(key) == true || callbacksDic.ContainsKey(key) == false)
+            {
+                return;
+            }
+
+            callbacksDic.Remove(key);
+        }
+
+        public void RemoveAllListener()
+        {
+            callbacksDic.Clear();
+        }
+
+        public void Invoke(T0 param0, T1 param1)
+        {
+            foreach (var cb in callbacksDic)
+            {
+                invokes.Enqueue(cb.Value);
+            }
+
+
+            while (invokes.Count > 0)
+            {
+                var cb = invokes.Dequeue();
+
+                try
+                {
+                    cb?.Invoke(param0, param1);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.Log($"Message : {e.Message}", Debug.LogType.Error);
+                    Debug.Log($"Stack Trace : {e.StackTrace}", Debug.LogType.Error);
+                }
+            }
+        }
+
+        private string GetCallbackKey(UnityAction<T0, T1> callback)
+        {
+            if (callback == null)
+            {
+                return null;
+            }
+
+            var declaringTypeFullName = callback.Method.DeclaringType.FullName;
+            var methodName = callback.Method.Name;
+
+            return $"{declaringTypeFullName}.{methodName}";
+        }
+    }
 }
 

@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Tamana
 {
     public class Status_Main : MonoBehaviour
     {
-        public Status_Information mainStatus;
-        public List<Status_Information> additionalStatus;
+        [SerializeField] protected Status_Information mainStatus;
+        [SerializeField] protected List<Status_Information> additionalStatus;
 
         public EventManager<Status_DamageData> OnDamageReceived { private set; get; } = new EventManager<Status_DamageData>();
         public EventManager OnDeadEvent { private set; get; } = new EventManager();

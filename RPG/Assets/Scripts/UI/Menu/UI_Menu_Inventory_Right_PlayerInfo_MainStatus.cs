@@ -56,6 +56,32 @@ namespace Tamana
                 startPos -= new Vector2(0, HEIGHT);
                 index++;
             }
+
+            // ===============================================================================================
+            // Register OnEquipped and OnUnequipped callback to event
+            // ===============================================================================================
+            Inventory_EquipmentManager.Instance.OnEquippedEvent.AddListener(OnEquipped);
+            Inventory_EquipmentManager.Instance.OnUnequippedEvent.AddListener(OnUnequipped);
+        }
+
+        private void UpdateValue()
+        {
+            foreach (var item in MainStatus)
+            {
+                item.Value.UpdateValue();
+            }
+        }
+
+        private void OnUnequipped(Item_Equipment equipment)
+        {
+            Debug.Log($"Old : {equipment.ItemName}");
+            UpdateValue();
+        }
+
+        private void OnEquipped(Item_Equipment oldEquipment, Item_Equipment newEquipment)
+        {
+            Debug.Log($"Old : {oldEquipment?.ItemName} | New : {newEquipment.ItemName}");
+            UpdateValue();
         }
     }
 }

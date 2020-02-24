@@ -38,6 +38,20 @@ namespace Tamana
             }
         }
 
+        private static Status_Player _playerStatus;
+        public static Status_Player PlayerStatus
+        {
+            get
+            {
+                if(_playerStatus == null)
+                {
+                    _playerStatus = Player.gameObject.GetOrAddComponent<Status_Player>();
+                }
+
+                return _playerStatus;
+            }
+        }
+
         private static Transform _mainCamera;
         public static Transform MainCamera
         {

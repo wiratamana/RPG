@@ -9,6 +9,7 @@ namespace Tamana
 
         private Dictionary<System.Type, GameObject> instantiatorDic;
         public const string ITEM_MODULAR_BODY_METADATA_PATH = "ItemModularBodyMetadata";
+        public const string PLAYER_BASE_STATUS = "PlayerBaseStatus";
 
         protected override void Awake()
         {
@@ -81,6 +82,15 @@ namespace Tamana
             Resources.UnloadAsset(wira);
 
             return json;
+        }
+        
+        public Status_Information GetPlayerBaseStatus()
+        {
+            var playerBaseStatus = Resources.Load<Status_Information>(PLAYER_BASE_STATUS);
+            var newInstance = Instantiate(playerBaseStatus);
+            Resources.UnloadAsset(playerBaseStatus);
+
+            return newInstance;
         }
     }
 }

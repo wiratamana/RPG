@@ -63,10 +63,6 @@ namespace Tamana
         {
             DamageHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
             StatusMain.OnDeadEvent.AddListener(OnDead);
-
-            var statusMain = ScriptableObject.CreateInstance<Status_Information>();
-            statusMain.HP = 100;
-            StatusMain.mainStatus = statusMain;
         }
 
         private void OnReceivedDamage(Status_DamageData receivedDamage)
