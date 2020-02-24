@@ -34,10 +34,6 @@ namespace Tamana
         private Sprite mainStatus_HP_Sprite;
 
         [SerializeField]
-        [Status_Attribute_MainStatus(MainStatus.MP)]
-        private Sprite mainStatus_MP_Sprite;
-
-        [SerializeField]
         [Status_Attribute_MainStatus(MainStatus.ST)]
         private Sprite mainStatus_ST_Sprite;
 

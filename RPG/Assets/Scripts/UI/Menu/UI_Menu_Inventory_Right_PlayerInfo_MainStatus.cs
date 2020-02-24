@@ -33,7 +33,7 @@ namespace Tamana
         {
             var mainStatus = Status_Information.GetMainStatusFieldsName();
             MainStatus = new UI_Menu_Inventory_Right_PlayerInfo_MainStatus_Child[mainStatus.Length];
-            var spacing = new float[] { SPACING, SPACING, SPACING_BIG, SPACING };
+            var spacing = new float[] { SPACING, SPACING, SPACING };
             var index = 0;
 
             var startPos = new Vector2((RectTransform.sizeDelta.x * -0.5f) + (WIDTH * 0.5f),

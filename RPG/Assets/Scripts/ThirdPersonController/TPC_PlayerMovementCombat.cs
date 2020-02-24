@@ -18,7 +18,7 @@ namespace Tamana
             base.Awake();
 
             BodyTransform = gameObject.AddComponent<TPC_BodyTransform>();
-            CombatHandler = gameObject.AddComponent<TPC_CombatHandler>();            
+            CombatHandler = gameObject.AddComponent<TPC_CombatHandler>();               
         }
 
         private void Start()
@@ -83,11 +83,22 @@ namespace Tamana
 
         private void PlayAttackAnim(TPC_CombatAnimDataContainer attackType)
         {
+            if(attackType is null)
+            {
+                return;
+            }
+
+            if(attackType.StaminaCost > GameManager.PlayerStatus.ST.CurrentStamina)
+            {
+                return;
+            }
+
             if (CurrentlyPlayingCombatAnimDataContainer == null || CurrentlyPlayingCombatAnimDataContainer == attackType)
             {
                 if (attackType != null && CurrentlyPlayingCombatAnimData == null)
                 {
                     CurrentlyPlayingCombatAnimDataContainer = attackType;
+                    GameManager.PlayerStatus.ST.Attack(attackType.StaminaCost);
                     TPC_AnimController.Instance.PlayAnim(attackType.CombatDatas[0].MyAnimStateName);
                 }
 
@@ -95,6 +106,7 @@ namespace Tamana
                 {
                     if (CurrentlyPlayingCombatAnimData.IsCurrentlyReceivingInput == true)
                     {
+                        GameManager.PlayerStatus.ST.Attack(attackType.StaminaCost);
                         CurrentlyPlayingCombatAnimData.IsInputReceived = true;
                     }
                 }

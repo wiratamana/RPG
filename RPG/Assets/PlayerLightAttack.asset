@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea789d10e1e270d4a973fb46a92bee8b, type: 3}
   m_Name: PlayerLightAttack
   m_EditorClassIdentifier: 
+  staminaCost: 20
   combatDatas:
   - myAnimStateName: Attack_Place_fast_Rdown_1
     receivingInputStart: 0.167

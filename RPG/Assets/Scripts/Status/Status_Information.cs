@@ -5,7 +5,7 @@ namespace Tamana
 {
     public enum MainStatus
     {
-        HP, MP, ST, AT, DF
+        HP, ST, AT, DF
     }
 
     [CreateAssetMenu(fileName = "New Status", menuName = "NewStatus", order = 1)]
@@ -14,8 +14,6 @@ namespace Tamana
     {
         [Status_Attribute_MainStatus(MainStatus.HP)]
         public int HP;
-        [Status_Attribute_MainStatus(MainStatus.MP)]
-        public int MP;
         [Status_Attribute_MainStatus(MainStatus.ST)]
         public int ST;
 

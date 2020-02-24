@@ -35,6 +35,20 @@ namespace Tamana
             }
         }
 
+        private Status_ST st;
+        public Status_ST ST
+        {
+            get
+            {
+                if(st == null)
+                {
+                    st = new Status_ST(mainStatus);
+                }
+
+                return st;
+            }
+        }
+
         private void Awake()
         {
             mainStatus = ResourcesLoader.Instance.GetPlayerBaseStatus();
