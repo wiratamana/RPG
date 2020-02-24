@@ -17,6 +17,10 @@ namespace Tamana
         private Sprite inventoryItemTypeArmor;
 
         [SerializeField]
+        [UI_Menu_AttributeSpriteItemType(UI_Menu_Inventory.InventoryItemType.Attachment)]
+        private Sprite inventoryItemTypeAttachment;
+
+        [SerializeField]
         [UI_Menu_AttributeSpriteItemType(UI_Menu_Inventory.InventoryItemType.Consumable)]
         private Sprite inventoryItemTypeConsumable;
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 namespace Tamana
 {
@@ -37,8 +38,22 @@ namespace Tamana
 
             for(int i = 0; i < itemTypeCount; i++)
             {
-                var img = UIManager.CreateImage(RectTransform, iconSize, iconSize, ((UI_Menu_Inventory.InventoryItemType)i).ToString());
-                img.rectTransform.localPosition = position;
+                Image parent;
+                Image ring;
+                Image img;
+
+                parent = UI_Menu_Pool.Instance.GetImage(RectTransform, iconSize, iconSize, ((UI_Menu_Inventory.InventoryItemType)i).ToString());
+                parent.rectTransform.localPosition = position;
+                parent.color = Color.black;
+
+                ring = UI_Menu_Pool.Instance.GetImage(parent.rectTransform, iconSize - 4, iconSize - 4, nameof(ring));
+                ring.rectTransform.localPosition = Vector3.zero;
+                ring.sprite = UI_Menu.Instance.MenuResources.InventoryItemIconRing_Sprite;
+                ring.type = Image.Type.Sliced;
+                ring.color = Color.white;
+
+                img = UI_Menu_Pool.Instance.GetImage(parent.rectTransform, iconSize - 16, iconSize - 16, nameof(img));
+                img.rectTransform.localPosition = Vector3.zero;
                 img.sprite = UI_Menu.Instance.MenuResources.GetItemTypeSprites((UI_Menu_Inventory.InventoryItemType)i);
 
                 position += new Vector3(spacing + iconSize, 0.0f);

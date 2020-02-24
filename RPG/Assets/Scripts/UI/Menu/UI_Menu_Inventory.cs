@@ -16,7 +16,7 @@ namespace Tamana
 
         public enum InventoryItemType
         {
-            Weapon, Armor, Consumable
+            Weapon, Armor, Attachment, Consumable
         }
 
         public InventoryItemType ItemType { private set; get; }

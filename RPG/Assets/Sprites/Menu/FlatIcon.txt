@@ -1,14 +1,14 @@
 Sword  : https://www.flaticon.com/authors/eucalyp
-         Source : https://www.flaticon.com/free-icon/sword_2464414?term=sword&page=1&position=2
+         Source : https://www.flaticon.com/free-icon/sword_2464425
 
-Potion : https://www.flaticon.com/authors/freepik
-         Source : https://www.flaticon.com/free-icon/research_2487581?term=Potion&page=1&position=2
+Potion : https://www.flaticon.com/authors/ddara
+         Source : https://www.flaticon.com/free-icon/poison_1907853?term=potion&page=1&position=10
 
 Armor  : https://www.flaticon.com/authors/ddara
-         Source : https://www.flaticon.com/free-icon/armor_1907813
+         Source : https://www.flaticon.com/free-icon/armor_1907775
 
-Cape   : https://www.flaticon.com/authors/freepik
-         Source : https://www.flaticon.com/free-icon/cloak_2470869?term=cape&page=1&position=3
+Helmet : https://www.flaticon.com/authors/surang
+         Source : https://www.flaticon.com/free-icon/helmet_2074766?term=knight%20helmet&page=1&position=39
 
 Sword BnW : https://www.flaticon.com/authors/freepik
          Source : https://www.flaticon.com/free-icon/sword_1705690
