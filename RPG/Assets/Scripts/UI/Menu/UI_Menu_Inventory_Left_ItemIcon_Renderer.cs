@@ -83,18 +83,18 @@ namespace Tamana
 
         private void RenderCamera()
         {
-            UI_Menu_Inventory_Left_ItemIconDrawer.Instance.TextureRendererCamera.orthographicSize = DEFAULT_PREVIEW_CAMERA_ORTHO_SIZE;
-            UI_Menu_Inventory_Left_ItemIconDrawer.Instance.TextureRendererCamera.transform.position = ItemPreview.transform.position - new Vector3(0, 0, 1);
-            UI_Menu_Inventory_Left_ItemIconDrawer.Instance.TextureRendererCamera.transform.rotation = Quaternion.identity;
+            UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.orthographicSize = DEFAULT_PREVIEW_CAMERA_ORTHO_SIZE;
+            UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.position = ItemPreview.transform.position - new Vector3(0, 0, 1);
+            UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.rotation = Quaternion.identity;
             if(ItemPreview.ItemBase is Item_Weapon)
             {
                 var weapon = ItemPreview.ItemBase as Item_Weapon;
-                UI_Menu_Inventory_Left_ItemIconDrawer.Instance.TextureRendererCamera.orthographicSize = weapon.CustomOrthoSize;
-                UI_Menu_Inventory_Left_ItemIconDrawer.Instance.TextureRendererCamera.transform.position += weapon.MenuCameraOffset;
-                UI_Menu_Inventory_Left_ItemIconDrawer.Instance.TextureRendererCamera.transform.rotation = Quaternion.Euler(weapon.MenuDefaultCameraRotation);
+                UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.orthographicSize = weapon.CustomOrthoSize;
+                UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.position += weapon.MenuCameraOffset;
+                UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.rotation = Quaternion.Euler(weapon.MenuDefaultCameraRotation);
             }
-            UI_Menu_Inventory_Left_ItemIconDrawer.Instance.TextureRendererCamera.targetTexture = RawImage.texture as RenderTexture;
-            UI_Menu_Inventory_Left_ItemIconDrawer.Instance.TextureRendererCamera.Render();
+            UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.targetTexture = RawImage.texture as RenderTexture;
+            UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.Render();
         }
 
         public void OnPointerClick(PointerEventData eventData)

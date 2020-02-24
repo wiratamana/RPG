@@ -20,8 +20,8 @@ namespace Tamana
             }
         }
 
-        public UI_Menu_Inventory_Left_ItemType ItemType;
-        public UI_Menu_Inventory_Left_ItemIconDrawer ItemIconDrawer;
+        public UI_Menu_Inventory_Left_Drawer_ItemType ItemType;
+        public UI_Menu_Inventory_Left_Drawer_ItemIcon ItemIconDrawer;
 
         protected override void Awake()
         {
@@ -45,7 +45,7 @@ namespace Tamana
             topRT.sizeDelta = new Vector2(RectTransform.sizeDelta.x, topSize);
             topRT.localPosition = new Vector3(0.0f, (RectTransform.sizeDelta.y * half) - (topRT.sizeDelta.y * half));
 
-            ItemType = topGO.AddComponent<UI_Menu_Inventory_Left_ItemType>();
+            ItemType = topGO.AddComponent<UI_Menu_Inventory_Left_Drawer_ItemType>();
 
             // ===============================================================================================
             // Bot (Height : 80%)
@@ -57,7 +57,7 @@ namespace Tamana
             botRT.sizeDelta = new Vector2(RectTransform.sizeDelta.x, botSize);
             botRT.localPosition = new Vector3(0.0f, (RectTransform.sizeDelta.y * -half) + (botRT.sizeDelta.y * half));
 
-            ItemIconDrawer = botGO.AddComponent<UI_Menu_Inventory_Left_ItemIconDrawer>();
+            ItemIconDrawer = botGO.AddComponent<UI_Menu_Inventory_Left_Drawer_ItemIcon>();
         }
     }
 }

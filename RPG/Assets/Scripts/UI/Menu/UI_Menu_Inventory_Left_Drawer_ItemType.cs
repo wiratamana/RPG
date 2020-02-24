@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Tamana
 {
-    public class UI_Menu_Inventory_Left_ItemType : SingletonMonobehaviour<UI_Menu_Inventory_Left_ItemType>
+    public class UI_Menu_Inventory_Left_Drawer_ItemType : SingletonMonobehaviour<UI_Menu_Inventory_Left_Drawer_ItemType>
     {
         private RectTransform _rectTransform;
         public RectTransform RectTransform

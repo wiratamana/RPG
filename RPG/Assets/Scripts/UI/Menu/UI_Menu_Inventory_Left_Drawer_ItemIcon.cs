@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Tamana
 {
-    public class UI_Menu_Inventory_Left_ItemIconDrawer : SingletonMonobehaviour<UI_Menu_Inventory_Left_ItemIconDrawer>
+    public class UI_Menu_Inventory_Left_Drawer_ItemIcon : SingletonMonobehaviour<UI_Menu_Inventory_Left_Drawer_ItemIcon>
     {
         private RectTransform _rectTransform;
         public RectTransform RectTransform
@@ -28,7 +28,7 @@ namespace Tamana
             {
                 if(_textureRendererCamera == null)
                 {
-                    var go = new GameObject(nameof(UI_Menu_Inventory_Left_ItemIconDrawer.CreateItemRendererCamera));
+                    var go = new GameObject(nameof(UI_Menu_Inventory_Left_Drawer_ItemIcon.CreateItemRendererCamera));
                     var cam = go.AddComponent<Camera>();
                     cam.orthographic = true;
                     cam.orthographicSize = 0.4f;
