@@ -7,9 +7,8 @@ namespace Tamana
     {
         private MeshRenderer renderer;
         private Material material;
-        [SerializeField] private Camera cam;
 
-        public Item_Base ItemBase { private set; get; }
+        public Item_Base ItemBase => ItemIcon.Item;
         public UI_Menu_Inventory_Left_ItemIcon ItemIcon { private set; get; }
 
         private void Awake()
@@ -28,7 +27,8 @@ namespace Tamana
 
         public void UpdateMaterial()
         {
-            material.SetVector("_CamDir", cam == null ? GameManager.MainCamera.forward : cam.transform.forward);
+            var cam = UI_Menu.Instance.Inventory.Left.ItemIconDrawer.TextureRendererCamera;
+            material.SetVector("_CamDir", cam.transform.forward);
         }
 
         public void UpdateRotation()
@@ -36,11 +36,9 @@ namespace Tamana
             transform.Rotate(Vector3.up * 120 * Time.deltaTime);
         }
 
-        public void SetValue(Camera cam, Item_Base itemBase, UI_Menu_Inventory_Left_ItemIcon itemIcon)
+        public void SetItemIcon(UI_Menu_Inventory_Left_ItemIcon itemIcon)
         {
-            this.cam = cam;
             ItemIcon = itemIcon;
-            ItemBase = itemBase;
         }
 
         public void ResetRotation()
@@ -56,9 +54,9 @@ namespace Tamana
             }
         }
 
-        public static Item_Preview InstantiateItemPrefab(Item_Base itemBase, Vector2 positionOffset, 
-            UI_Menu_Inventory_Left_ItemIcon itemIcon, Camera textureRendererCamera)
+        public static Item_Preview InstantiateItemPrefab(UI_Menu_Inventory_Left_ItemIcon itemIcon, Vector2 positionOffset)
         {
+            var itemBase = itemIcon.Item;
             var item = Instantiate(itemBase.Prefab);
 
             if (itemBase is Item_Armor || itemBase is Item_Attachment)
@@ -68,7 +66,7 @@ namespace Tamana
 
             item.gameObject.layer = LayerMask.NameToLayer(LayerManager.LAYER_ITEM_PROJECTION);
             item.GetComponent<MeshRenderer>().sharedMaterial = GameManager.ItemMaterial;
-            item.gameObject.AddComponent<Item_Preview>().SetValue(textureRendererCamera, itemBase, itemIcon);
+            item.gameObject.AddComponent<Item_Preview>().SetItemIcon(itemIcon);
 
             item.position = new Vector3(0, 1000, 1) + (Vector3)positionOffset;
             item.rotation = Quaternion.Euler(0, 180, 0);

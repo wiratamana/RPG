@@ -137,6 +137,9 @@ namespace Tamana
                 }
                 else
                 {
+                    // ===============================================================================================
+                    // Load from pool
+                    // ===============================================================================================
                     itemIcon = itemIconsPool.Pop();
                     itemIcon.gameObject.SetActive(true);
                     itemIcon.RectTransform.SetParent(RectTransform);
@@ -190,7 +193,7 @@ namespace Tamana
                 TextureRendererCamera.transform.position = t.Key.transform.position - new Vector3(0, 0, 1);
                 TextureRendererCamera.targetTexture = t.Value;
 
-                t.Key.ItemIcon.ItemRenderer.RenderCamera();
+                t.Key.ItemIcon.ItemRenderer.ResetCameraPositionAndRotation();
                 t.Key.ResetRotation();
                 t.Key.UpdateMaterial();
                 TextureRendererCamera.Render();

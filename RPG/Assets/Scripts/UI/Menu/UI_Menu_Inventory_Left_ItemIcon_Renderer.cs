@@ -52,6 +52,7 @@ namespace Tamana
                 if (ItemPreview.enabled == false)
                 {
                     ItemPreview.enabled = true;
+                    ResetCameraPositionAndRotation();
                 }
             }
             else
@@ -77,6 +78,7 @@ namespace Tamana
             yield return new WaitForEndOfFrame();
 
             ItemPreview.ResetRotation();
+            ResetCameraPositionAndRotation();
             RenderCamera();
         }
 
@@ -91,24 +93,27 @@ namespace Tamana
             // ===============================================================================================
             // Instantiate item prefab and set its position.
             // ===============================================================================================
-            ItemPreview = Item_Preview.InstantiateItemPrefab(ItemIcon.Item, positionOffeset,
-                ItemIcon, UI_Menu.Instance.Inventory.Left.ItemIconDrawer.TextureRendererCamera);
+            ItemPreview = Item_Preview.InstantiateItemPrefab(ItemIcon, positionOffeset);
 
             return ItemPreview;
         }
 
-        public void RenderCamera()
+        public void ResetCameraPositionAndRotation()
         {
             UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.orthographicSize = DEFAULT_PREVIEW_CAMERA_ORTHO_SIZE;
             UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.position = ItemPreview.transform.position - new Vector3(0, 0, 1);
             UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.rotation = Quaternion.identity;
-            if(ItemPreview.ItemBase is Item_Weapon)
+            if (ItemPreview.ItemBase is Item_Weapon)
             {
                 var weapon = ItemPreview.ItemBase as Item_Weapon;
                 UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.orthographicSize = weapon.CustomOrthoSize;
                 UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.position += weapon.MenuCameraOffset;
                 UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.rotation = Quaternion.Euler(weapon.MenuDefaultCameraRotation);
             }
+        }
+
+        private void RenderCamera()
+        {            
             UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.targetTexture = RawImage.texture as RenderTexture;
             UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.Render();
         }
