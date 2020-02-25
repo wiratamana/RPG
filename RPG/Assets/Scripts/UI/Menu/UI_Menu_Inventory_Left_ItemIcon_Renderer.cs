@@ -138,19 +138,19 @@ namespace Tamana
             UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.Render();
         }
 
-        public void OnPointerClick(BaseEventData eventData)
+        private void OnPointerClick(BaseEventData eventData)
         {
             OnMouseLeftClick.Invoke();
         }
 
-        public void OnPointerEnter(BaseEventData eventData)
+        private void OnPointerEnter(BaseEventData eventData)
         {
             isMousePointerAboveMe = true;
             UI_Menu.Instance.Inventory.Right.ItemDescription.Activate(ItemPreview.ItemBase);
             OnMouseEnter.Invoke();
         }
 
-        public void OnPointerExit(BaseEventData eventData)
+        private void OnPointerExit(BaseEventData eventData)
         {
             isMousePointerAboveMe = false;
             UI_Menu.Instance.Inventory.Right.ItemDescription.Deactivate();
