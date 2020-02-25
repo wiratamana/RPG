@@ -55,5 +55,25 @@ namespace Tamana
                 transform.rotation = Quaternion.Euler(0, 180, 0);
             }
         }
+
+        public static Item_Preview InstantiateItemPrefab(Item_Base itemBase, Vector2 positionOffset, 
+            UI_Menu_Inventory_Left_ItemIcon itemIcon, Camera textureRendererCamera)
+        {
+            var item = Instantiate(itemBase.Prefab);
+
+            if (itemBase is Item_Armor || itemBase is Item_Attachment)
+            {
+                item.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+            }
+
+            item.gameObject.layer = LayerMask.NameToLayer(LayerManager.LAYER_ITEM_PROJECTION);
+            item.GetComponent<MeshRenderer>().sharedMaterial = GameManager.ItemMaterial;
+            item.gameObject.AddComponent<Item_Preview>().SetValue(textureRendererCamera, itemBase, itemIcon);
+
+            item.position = new Vector3(0, 1000, 1) + (Vector3)positionOffset;
+            item.rotation = Quaternion.Euler(0, 180, 0);
+
+            return item.GetComponent<Item_Preview>();
+        }
     }
 }

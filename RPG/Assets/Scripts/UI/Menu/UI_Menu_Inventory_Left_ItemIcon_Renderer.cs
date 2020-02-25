@@ -35,7 +35,7 @@ namespace Tamana
             }
         }
 
-        public Item_Preview ItemPreview { get; set; }
+        public Item_Preview ItemPreview { get; private set; }
         private bool isMousePointerAboveMe = false;
         private const float DEFAULT_PREVIEW_CAMERA_ORTHO_SIZE = 0.4f;
 
@@ -78,6 +78,23 @@ namespace Tamana
 
             ItemPreview.ResetRotation();
             RenderCamera();
+        }
+
+        public Item_Preview InstantiateItemPreview(Vector2 positionOffeset)
+        {
+            if(ItemPreview != null)
+            {
+                Debug.Log("ItemPreview is not null !!");
+                return ItemPreview;
+            }
+
+            // ===============================================================================================
+            // Instantiate item prefab and set its position.
+            // ===============================================================================================
+            ItemPreview = Item_Preview.InstantiateItemPrefab(ItemIcon.Item, positionOffeset,
+                ItemIcon, UI_Menu.Instance.Inventory.Left.ItemIconDrawer.TextureRendererCamera);
+
+            return ItemPreview;
         }
 
         public void RenderCamera()

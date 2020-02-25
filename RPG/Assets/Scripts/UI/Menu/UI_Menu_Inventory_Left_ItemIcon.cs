@@ -23,10 +23,20 @@ namespace Tamana
         public UI_Menu_Inventory_Left_ItemIcon_Background Background { private set; get; }
         public UI_Menu_Inventory_Left_ItemIcon_Ring Ring { private set; get; }
         public UI_Menu_Inventory_Left_ItemIcon_Renderer ItemRenderer { private set; get; }
-        public Item_Base Item { get { return ItemRenderer.ItemPreview.ItemBase; } }
+        public Item_Base Item { private set; get; }
 
-        private void Awake()
+        public void Init(Item_Base item)
         {
+            Item = item;
+
+            if(Background != null && Ring != null && ItemRenderer != null)
+            {
+                return;
+            }
+
+            // ===============================================================================================
+            // Local variable declaration
+            // ===============================================================================================
             var iconSize = 128;
             var ringSize = 120;
             var rawImageSize = 100;
@@ -57,7 +67,7 @@ namespace Tamana
             itemImage.color = Color.white;
             itemImage.raycastTarget = true;
             itemImage.texture = new RenderTexture(renderTextureSize, renderTextureSize, 16, RenderTextureFormat.ARGBHalf);
-            ItemRenderer = itemImage.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemIcon_Renderer>();
+            ItemRenderer = itemImage.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemIcon_Renderer>();   
         }
 
         private void Start()

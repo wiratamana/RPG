@@ -28,7 +28,7 @@ namespace Tamana
             {
                 if(_textureRendererCamera == null)
                 {
-                    var go = new GameObject(nameof(UI_Menu_Inventory_Left_Drawer_ItemIcon.InstantiateItemPrefab));
+                    var go = new GameObject(nameof(TextureRendererCamera));
                     var cam = go.AddComponent<Camera>();
                     cam.orthographic = true;
                     cam.orthographicSize = 0.4f;
@@ -123,7 +123,6 @@ namespace Tamana
             for (int i = 0; i < itemCount; i++)
             {
                 UI_Menu_Inventory_Left_ItemIcon itemIcon = null;
-
                 if (itemIconsPool.Count == 0)
                 {
                     // ===============================================================================================
@@ -143,19 +142,15 @@ namespace Tamana
                     itemIcon.RectTransform.SetParent(RectTransform);
                     itemIcon.RectTransform.localPosition = position;
                 }
-                
+
                 // ===============================================================================================
-                // Register itemiconlist
+                // Init ItemIcon and register it to itemiconlist
                 // ===============================================================================================
+                itemIcon.Init(itemList[i]);
                 itemIconsList.Add(itemIcon);
-
-                // ===============================================================================================
-                // Instantiate item prefab and set its position.
-                // ===============================================================================================
-                var itemPreview = InstantiateItemPrefab(itemList[i], new Vector2(i, offsetY), itemIcon);
-                itemIcon.ItemRenderer.ItemPreview = itemPreview;
+                var itemPreview = itemIcon.ItemRenderer.InstantiateItemPreview(new Vector2(i, offsetY));
                 instantiatedPrefabDic.Add(itemPreview, itemIcon.ItemRenderer.RawImage.texture as RenderTexture);
-
+ 
                 // ===============================================================================================
                 // Register this to EquippedItemIcon
                 // ===============================================================================================
@@ -202,25 +197,6 @@ namespace Tamana
 
                 t.Key.ItemIcon.ItemRenderer.gameObject.SetActive(true);
             }
-        }
-
-        private Item_Preview InstantiateItemPrefab(Item_Base itemBase, Vector2 positionOffset, UI_Menu_Inventory_Left_ItemIcon itemIcon)
-        {
-            var item = Instantiate(itemBase.Prefab);
-
-            if(itemBase is Item_Armor || itemBase is Item_Attachment)
-            {
-                item.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-            }
-            
-            item.gameObject.layer = LayerMask.NameToLayer(LayerManager.LAYER_ITEM_PROJECTION);
-            item.GetComponent<MeshRenderer>().sharedMaterial = GameManager.ItemMaterial;
-            item.gameObject.AddComponent<Item_Preview>().SetValue(TextureRendererCamera, itemBase, itemIcon);
-
-            item.position = new Vector3(0, 1000, 1) + (Vector3)positionOffset;
-            item.rotation = Quaternion.Euler(0, 180, 0);
-
-            return item.GetComponent<Item_Preview>();
         }
     }
 }
