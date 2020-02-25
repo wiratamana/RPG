@@ -61,21 +61,9 @@ namespace Tamana
 
         private void Start()
         {
-            var pointerEnterEntry = new EventTrigger.Entry();
-            var pointerExitEntry = new EventTrigger.Entry();
-            var pointerClickEntry = new EventTrigger.Entry();
-
-            pointerEnterEntry.eventID = EventTriggerType.PointerEnter;
-            pointerExitEntry.eventID = EventTriggerType.PointerExit;
-            pointerClickEntry.eventID = EventTriggerType.PointerClick;
-
-            pointerEnterEntry.callback.AddListener(OnPointerEnter);
-            pointerExitEntry.callback.AddListener(OnPointerExit);
-            pointerClickEntry.callback.AddListener(OnPointerClick);
-
-            EventTrigger.triggers.Add(pointerEnterEntry);
-            EventTrigger.triggers.Add(pointerExitEntry);
-            EventTrigger.triggers.Add(pointerClickEntry);
+            EventTrigger.AddListener(EventTriggerType.PointerEnter, OnPointerEnter);
+            EventTrigger.AddListener(EventTriggerType.PointerExit, OnPointerExit);
+            EventTrigger.AddListener(EventTriggerType.PointerClick, OnPointerClick);
         }
 
         private void OnPointerEnter(BaseEventData eventData)

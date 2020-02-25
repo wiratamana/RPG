@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Tamana
 {
-    public class UI_Menu_Inventory_Left_ItemIcon_Renderer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class UI_Menu_Inventory_Left_ItemIcon_Renderer : MonoBehaviour
     {
         private RawImage rawImage;
         public RawImage RawImage
@@ -44,6 +44,26 @@ namespace Tamana
         public EventManager OnMouseEnter { private set; get; } = new EventManager();
         public EventManager OnMouseExit { private set; get; } = new EventManager();
         public EventManager OnMouseLeftClick { private set; get; } = new EventManager();
+        private EventTrigger eventTrigger;
+        private EventTrigger EventTrigger
+        {
+            get
+            {
+                if(eventTrigger == null)
+                {
+                    eventTrigger = gameObject.GetOrAddComponent<EventTrigger>();
+                }
+
+                return eventTrigger;
+            }
+        }
+
+        private void Awake()
+        {
+            EventTrigger.AddListener(EventTriggerType.PointerEnter, OnPointerEnter);
+            EventTrigger.AddListener(EventTriggerType.PointerExit, OnPointerExit);
+            EventTrigger.AddListener(EventTriggerType.PointerClick, OnPointerClick);
+        }
 
         private void Update()
         {
@@ -118,19 +138,19 @@ namespace Tamana
             UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.Render();
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void OnPointerClick(BaseEventData eventData)
         {
             OnMouseLeftClick.Invoke();
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+        public void OnPointerEnter(BaseEventData eventData)
         {
             isMousePointerAboveMe = true;
             UI_Menu.Instance.Inventory.Right.ItemDescription.Activate(ItemPreview.ItemBase);
             OnMouseEnter.Invoke();
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public void OnPointerExit(BaseEventData eventData)
         {
             isMousePointerAboveMe = false;
             UI_Menu.Instance.Inventory.Right.ItemDescription.Deactivate();
