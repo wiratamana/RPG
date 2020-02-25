@@ -20,14 +20,14 @@ namespace Tamana
             }
         }
 
-        private Dictionary<UI_Menu_Inventory_Left_ItemType, ItemType> itemTypeDic;
-        public Dictionary<UI_Menu_Inventory_Left_ItemType, ItemType> ItemTypeDic
+        private Dictionary<ItemType, UI_Menu_Inventory_Left_ItemType> itemTypeDic;
+        public Dictionary<ItemType, UI_Menu_Inventory_Left_ItemType> ItemTypeDic
         {
             get
             {
                 if(itemTypeDic == null || itemTypeDic.Count == 0)
                 {
-                    itemTypeDic = new Dictionary<UI_Menu_Inventory_Left_ItemType, ItemType>();
+                    itemTypeDic = new Dictionary<ItemType, UI_Menu_Inventory_Left_ItemType>();
 
                     for(int i = 0; i < RectTransform.childCount; i++)
                     {
@@ -36,7 +36,7 @@ namespace Tamana
 
                         if(comp != null)
                         {
-                            itemTypeDic.Add(comp, type);
+                            itemTypeDic.Add(type, comp);
                         }
                     }
                 }
@@ -44,6 +44,9 @@ namespace Tamana
                 return itemTypeDic;
             }
         }
+
+        public ItemType CurrentlyActiveItemType { private set; get; } = ItemType.Weapon;
+        public EventManager<ItemType> OnActiveItemTypeValueChanged { private set; get; } = new EventManager<ItemType>();
 
         protected override void Awake()
         {
@@ -68,6 +71,37 @@ namespace Tamana
 
                 position += new Vector3(spacing + iconSize, 0.0f);
             }
+
+            SetActive(CurrentlyActiveItemType, false);
+            UI_Menu_Inventory.OnMenuInventoryOpened.AddListener(ResetWhenInventoryOpened);
+        }
+
+        public void SetActive(ItemType itemType, bool invokeListener)
+        {
+            foreach(var item in ItemTypeDic)
+            {
+                if(item.Key == itemType)
+                {
+                    item.Value.Activate();
+                }
+
+                else
+                {
+                    item.Value.Deactivate();
+                }
+            }
+
+            CurrentlyActiveItemType = itemType;
+
+            if(invokeListener == true)
+            {
+                OnActiveItemTypeValueChanged.Invoke(CurrentlyActiveItemType);
+            }            
+        }
+
+        private void ResetWhenInventoryOpened()
+        {
+            SetActive(CurrentlyActiveItemType, false);
         }
     }
 }

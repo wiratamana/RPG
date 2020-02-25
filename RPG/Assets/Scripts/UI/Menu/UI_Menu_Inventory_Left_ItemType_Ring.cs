@@ -35,10 +35,12 @@ namespace Tamana
         }
 
 
+
         private void Awake()
         {
             Ring.color = Color.white;
             Ring.sprite = UI_Menu.Instance.MenuResources.InventoryItemIconRing_Sprite;
+            Ring.type = Image.Type.Sliced;
         }
     }
 }

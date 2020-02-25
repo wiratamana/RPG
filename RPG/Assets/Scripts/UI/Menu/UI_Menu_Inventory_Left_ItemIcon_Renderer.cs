@@ -45,7 +45,6 @@ namespace Tamana
         public EventManager OnMouseExit { private set; get; } = new EventManager();
         public EventManager OnMouseLeftClick { private set; get; } = new EventManager();
 
-
         private void Update()
         {
             if(isMousePointerAboveMe == true)
@@ -77,11 +76,11 @@ namespace Tamana
         {
             yield return new WaitForEndOfFrame();
 
-            ItemPreview.ResetPosition();
+            ItemPreview.ResetRotation();
             RenderCamera();
         }
 
-        private void RenderCamera()
+        public void RenderCamera()
         {
             UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.orthographicSize = DEFAULT_PREVIEW_CAMERA_ORTHO_SIZE;
             UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.position = ItemPreview.transform.position - new Vector3(0, 0, 1);
@@ -116,9 +115,20 @@ namespace Tamana
             OnMouseExit.Invoke();
         }
 
-        private void OnDestroy()
+        public void DestroyItemPreview()
         {
             Destroy(ItemPreview.gameObject);
+            ItemPreview = null;
+        }
+
+        private void OnDestroy()
+        {
+            if(RawImage.texture != null)
+            {
+                DestroyImmediate(RawImage.texture);
+            }
+
+            DestroyItemPreview();
         }
     }
 }

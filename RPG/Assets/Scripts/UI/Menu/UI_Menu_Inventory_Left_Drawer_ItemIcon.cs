@@ -28,7 +28,7 @@ namespace Tamana
             {
                 if(_textureRendererCamera == null)
                 {
-                    var go = new GameObject(nameof(UI_Menu_Inventory_Left_Drawer_ItemIcon.CreateItemRendererCamera));
+                    var go = new GameObject(nameof(UI_Menu_Inventory_Left_Drawer_ItemIcon.InstantiateItemPrefab));
                     var cam = go.AddComponent<Camera>();
                     cam.orthographic = true;
                     cam.orthographicSize = 0.4f;
@@ -45,20 +45,40 @@ namespace Tamana
             }
         }
 
-        private Dictionary<Transform, RenderTexture> listTransform = new Dictionary<Transform, RenderTexture>();
+        private Dictionary<Item_Preview, RenderTexture> instantiatedPrefabDic = new Dictionary<Item_Preview, RenderTexture>();
         private List<UI_Menu_Inventory_Left_ItemIcon> itemIconsList = new List<UI_Menu_Inventory_Left_ItemIcon>();
+        private Stack<UI_Menu_Inventory_Left_ItemIcon> itemIconsPool = new Stack<UI_Menu_Inventory_Left_ItemIcon>();
 
-        protected override void Awake()
-        {
-            base.Awake();    
-        }
-
-        private void OnEnable()
+        private void Start()
         {
             InstantiateItemIconBackground();
+            UI_Menu_Inventory.OnMenuInventoryOpened.AddListener(InstantiateItemIconBackground);
+            UI_Menu_Inventory.OnMenuInventoryClosed.AddListener(CleanItem);
+            UI_Menu.Instance.Inventory.Left.ItemTypeDrawer.OnActiveItemTypeValueChanged.AddListener(OnItemTypeChanged);
         }
 
-        private void OnDisable()
+        private void OnItemTypeChanged(ItemType itemType)
+        {
+            TextureRendererCamera.enabled = false;
+            TextureRendererCamera.targetTexture = null;
+
+            foreach (var i in itemIconsList)
+            {
+                i.ItemRenderer.DestroyItemPreview();
+                i.ItemRenderer.gameObject.SetActive(false);
+                i.gameObject.SetActive(false);
+                itemIconsPool.Push(i);
+            }
+
+            instantiatedPrefabDic.Clear();
+            itemIconsList.Clear();
+
+            InstantiateItemIconBackground();
+
+            TextureRendererCamera.enabled = true;
+        }
+
+        private void CleanItem()
         {
             TextureRendererCamera.targetTexture = null;
 
@@ -67,18 +87,20 @@ namespace Tamana
                 itemIcon.ReturnToPool();
             }
 
-            listTransform.Clear();
+            instantiatedPrefabDic.Clear();
             itemIconsList.Clear();
+            itemIconsPool.Clear();
 
             UI_Menu_Inventory_Left_EquippedItemIcon.SetToNull();
         }
 
         private void InstantiateItemIconBackground()
         {
-            var itemCount = Item_Inventory.Instance.ItemCount;
+            var itemList = Item_Inventory.Instance.GetItemListAsReadOnly(x => 
+                x.ItemType == UI_Menu.Instance.Inventory.Left.ItemTypeDrawer.CurrentlyActiveItemType);
+            var itemCount = itemList.Count;
             var spacing = 10.0f;
             var iconSize = 128;
-            var ringSize = 120;
             var horizontalMaxSize = RectTransform.sizeDelta.x;
             var horizontalShowLimit = 1;
 
@@ -98,54 +120,46 @@ namespace Tamana
 
             float offsetY = 0;
 
-            for(int i = 0; i < itemCount; i++)
+            for (int i = 0; i < itemCount; i++)
             {
-                // ===============================================================================================
-                // Create Parent
-                // ===============================================================================================
-                var go = new GameObject("ItemIcon");
-                go.transform.SetParent(RectTransform);
-                var itemIcon = go.AddComponent<UI_Menu_Inventory_Left_ItemIcon>();
-                var rt = go.AddComponent<RectTransform>();
-                rt.sizeDelta = new Vector2(iconSize, iconSize);
-                rt.localPosition = position;
+                UI_Menu_Inventory_Left_ItemIcon itemIcon = null;
 
-                // ===============================================================================================
-                // Create Background
-                // ===============================================================================================
-                var backgroundImg = UI_Menu_Pool.Instance.GetImage(rt, iconSize, iconSize, "ItemIcon-Background");
-                backgroundImg.rectTransform.localPosition = Vector2.zero;
-                backgroundImg.raycastTarget = false;
-                var background = backgroundImg.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemIcon_Background>();
-
-                // ===============================================================================================
-                // Create Ring
-                // ===============================================================================================
-                var ringImg = UI_Menu_Pool.Instance.GetImage(rt, ringSize, ringSize, "ItemIcon-Ring");                
-                ringImg.rectTransform.localPosition = Vector2.zero;
-                ringImg.sprite = UI_Menu.Instance.MenuResources.InventoryItemIconRing_Sprite;
-                ringImg.raycastTarget = false;
-                var ring = ringImg.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemIcon_Ring>();
-
-                // ===============================================================================================
-                // Create RawTexture to render the item
-                // ===============================================================================================
-                var obj = CreateItemRendererCamera(Item_Inventory.Instance.GetItemAtIndex(i), new Vector2(i, offsetY));
-                var itemImage = UI_Menu_Pool.Instance.GetRawImage(rt, 100, 100, Item_Inventory.Instance.GetItemNameAtIndex(i));
-                itemImage.rectTransform.localPosition = Vector2.zero;
-                itemImage.color = Color.white;
-                itemImage.raycastTarget = true;
-                itemImage.texture = new RenderTexture(175, 175, 16, RenderTextureFormat.ARGBHalf);
-                var itemIconRenderer = itemImage.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemIcon_Renderer>();
-                itemIconRenderer.ItemPreview = obj.GetComponent<Item_Preview>();
-
-                listTransform.Add(obj, itemImage.texture as RenderTexture);
-
+                if (itemIconsPool.Count == 0)
+                {
+                    // ===============================================================================================
+                    // Create Parent
+                    // ===============================================================================================
+                    var go = new GameObject(itemList[i].ItemName);
+                    var rt = go.AddComponent<RectTransform>();
+                    rt.SetParent(RectTransform);
+                    rt.localPosition = position;
+                    rt.sizeDelta = new Vector2(iconSize, iconSize);
+                    itemIcon = go.AddComponent<UI_Menu_Inventory_Left_ItemIcon>();
+                }
+                else
+                {
+                    itemIcon = itemIconsPool.Pop();
+                    itemIcon.gameObject.SetActive(true);
+                    itemIcon.RectTransform.SetParent(RectTransform);
+                    itemIcon.RectTransform.localPosition = position;
+                }
+                
                 // ===============================================================================================
                 // Register itemiconlist
                 // ===============================================================================================
-                itemIcon.SetValue(background, ring, itemIconRenderer);
                 itemIconsList.Add(itemIcon);
+
+                // ===============================================================================================
+                // Instantiate item prefab and set its position.
+                // ===============================================================================================
+                var itemPreview = InstantiateItemPrefab(itemList[i], new Vector2(i, offsetY), itemIcon);
+                itemIcon.ItemRenderer.ItemPreview = itemPreview;
+                instantiatedPrefabDic.Add(itemPreview, itemIcon.ItemRenderer.RawImage.texture as RenderTexture);
+
+                // ===============================================================================================
+                // Register this to EquippedItemIcon
+                // ===============================================================================================
+                UI_Menu_Inventory_Left_EquippedItemIcon.MarkItemAsEquippedItem(itemIcon);
 
                 // ===============================================================================================
                 // Update position
@@ -164,11 +178,6 @@ namespace Tamana
                 {
                     position.x += spacing + iconSize;
                 }
-
-                // ===============================================================================================
-                // Register this to EquippedItemIcon
-                // ===============================================================================================
-                UI_Menu_Inventory_Left_EquippedItemIcon.SetItem(itemIcon);
             }
 
             // ===============================================================================================
@@ -181,15 +190,21 @@ namespace Tamana
         {
             yield return new WaitForEndOfFrame();
 
-            foreach(var t in listTransform)
+            foreach(var t in instantiatedPrefabDic)
             {
-                TextureRendererCamera.transform.position = t.Key.position - new Vector3(0, 0, 1);
+                TextureRendererCamera.transform.position = t.Key.transform.position - new Vector3(0, 0, 1);
                 TextureRendererCamera.targetTexture = t.Value;
+
+                t.Key.ItemIcon.ItemRenderer.RenderCamera();
+                t.Key.ResetRotation();
+                t.Key.UpdateMaterial();
                 TextureRendererCamera.Render();
+
+                t.Key.ItemIcon.ItemRenderer.gameObject.SetActive(true);
             }
         }
 
-        private Transform CreateItemRendererCamera(Item_Base itemBase, Vector2 positionOffset)
+        private Item_Preview InstantiateItemPrefab(Item_Base itemBase, Vector2 positionOffset, UI_Menu_Inventory_Left_ItemIcon itemIcon)
         {
             var item = Instantiate(itemBase.Prefab);
 
@@ -200,12 +215,12 @@ namespace Tamana
             
             item.gameObject.layer = LayerMask.NameToLayer(LayerManager.LAYER_ITEM_PROJECTION);
             item.GetComponent<MeshRenderer>().sharedMaterial = GameManager.ItemMaterial;
-            item.gameObject.AddComponent<Item_Preview>().SetValue(TextureRendererCamera, itemBase);
+            item.gameObject.AddComponent<Item_Preview>().SetValue(TextureRendererCamera, itemBase, itemIcon);
 
             item.position = new Vector3(0, 1000, 1) + (Vector3)positionOffset;
             item.rotation = Quaternion.Euler(0, 180, 0);
 
-            return item;
+            return item.GetComponent<Item_Preview>();
         }
     }
 }

@@ -36,6 +36,14 @@ namespace Tamana
             }
         }
 
+        private Color BackgroundColorInactive = Color.black;
+        private Color RingColorInactive = Color.white;
+        private Color IconColorInactive = Color.white;
+
+        private Color BackgroundColorActive = Color.white;
+        private Color RingColorActive = Color.black;
+        private Color IconColorActive = Color.black;
+
         private void Awake()
         {
             var background = UI_Menu_Pool.Instance.GetImage(RectTransform, BACKGROUND_SIZE, BACKGROUND_SIZE, nameof(Background));
@@ -50,6 +58,32 @@ namespace Tamana
             Background = background.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemType_Background>();
             Ring = ring.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemType_Ring>();
             Icon = icon.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemType_Icon>();
+
+            Background.OnPointerClickEvent.AddListener(OnClick);
+        }
+
+        public void Activate()
+        {
+            Background.Background.color = BackgroundColorActive;
+            Ring.Ring.color = RingColorActive;
+            Icon.Icon.color = IconColorActive;
+        }
+
+        public void Deactivate()
+        {
+            Background.Background.color = BackgroundColorInactive;
+            Ring.Ring.color = RingColorInactive;
+            Icon.Icon.color = IconColorInactive;
+        }
+
+        private void OnClick()
+        {
+            if(ItemType == UI_Menu.Instance.Inventory.Left.ItemTypeDrawer.CurrentlyActiveItemType)
+            {
+                return;
+            }
+
+            UI_Menu.Instance.Inventory.Left.ItemTypeDrawer.SetActive(ItemType, true);
         }
     }
 }

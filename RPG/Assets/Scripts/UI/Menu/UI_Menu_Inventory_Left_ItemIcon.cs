@@ -25,6 +25,41 @@ namespace Tamana
         public UI_Menu_Inventory_Left_ItemIcon_Renderer ItemRenderer { private set; get; }
         public Item_Base Item { get { return ItemRenderer.ItemPreview.ItemBase; } }
 
+        private void Awake()
+        {
+            var iconSize = 128;
+            var ringSize = 120;
+            var rawImageSize = 100;
+            var renderTextureSize = 175;
+
+            // ===============================================================================================
+            // Create Background
+            // ===============================================================================================
+            var backgroundImg = UI_Menu_Pool.Instance.GetImage(RectTransform, iconSize, iconSize, nameof(Background));
+            backgroundImg.rectTransform.localPosition = Vector2.zero;
+            backgroundImg.raycastTarget = false;
+            Background = backgroundImg.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemIcon_Background>();
+
+            // ===============================================================================================
+            // Create Ring
+            // ===============================================================================================
+            var ringImg = UI_Menu_Pool.Instance.GetImage(RectTransform, ringSize, ringSize, nameof(Ring));
+            ringImg.rectTransform.localPosition = Vector2.zero;
+            ringImg.sprite = UI_Menu.Instance.MenuResources.InventoryItemIconRing_Sprite;
+            ringImg.raycastTarget = false;
+            Ring = ringImg.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemIcon_Ring>();
+
+            // ===============================================================================================
+            // Create RawTexture to render the item
+            // ===============================================================================================
+            var itemImage = UI_Menu_Pool.Instance.GetRawImage(RectTransform, rawImageSize, rawImageSize, nameof(ItemRenderer));
+            itemImage.rectTransform.localPosition = Vector2.zero;
+            itemImage.color = Color.white;
+            itemImage.raycastTarget = true;
+            itemImage.texture = new RenderTexture(renderTextureSize, renderTextureSize, 16, RenderTextureFormat.ARGBHalf);
+            ItemRenderer = itemImage.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemIcon_Renderer>();
+        }
+
         private void Start()
         {
             ItemRenderer.OnMouseEnter.AddListener(OnMouseEnter);
@@ -43,24 +78,16 @@ namespace Tamana
             UI_Menu_Selection.DestroyInstance();
         }
 
-        public void SetValue(UI_Menu_Inventory_Left_ItemIcon_Background background,
-            UI_Menu_Inventory_Left_ItemIcon_Ring ring,
-            UI_Menu_Inventory_Left_ItemIcon_Renderer itemRenderer)
-        {
-            Background = background;
-            Ring = ring;
-            ItemRenderer = itemRenderer;
-        }
-
         public void ReturnToPool()
         {
+            Destroy(Background);
+            Destroy(ItemRenderer);
+            Destroy(Ring);
+
             UI_Menu_Pool.Instance.RemoveImage(Background.Background);
             UI_Menu_Pool.Instance.RemoveImage(Ring.Ring);
             UI_Menu_Pool.Instance.RemoveRawImage(ItemRenderer.RawImage);
 
-            Destroy(Background);
-            Destroy(ItemRenderer);
-            Destroy(Ring);
             Destroy(gameObject);
         }
 

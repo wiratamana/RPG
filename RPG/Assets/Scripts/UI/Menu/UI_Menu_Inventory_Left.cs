@@ -20,8 +20,8 @@ namespace Tamana
             }
         }
 
-        public UI_Menu_Inventory_Left_Drawer_ItemType ItemType;
-        public UI_Menu_Inventory_Left_Drawer_ItemIcon ItemIconDrawer;
+        public UI_Menu_Inventory_Left_Drawer_ItemType ItemTypeDrawer { private set; get; }
+        public UI_Menu_Inventory_Left_Drawer_ItemIcon ItemIconDrawer { private set; get; }
 
         protected override void Awake()
         {
@@ -38,14 +38,14 @@ namespace Tamana
             // ===============================================================================================
             // Top (Height : 20%)
             // ===============================================================================================
-            var topGO = new GameObject(nameof(ItemType));
+            var topGO = new GameObject(nameof(ItemTypeDrawer));
             topGO.transform.SetParent(transform);
             var topRT = topGO.AddComponent<RectTransform>();
 
             topRT.sizeDelta = new Vector2(RectTransform.sizeDelta.x, topSize);
             topRT.localPosition = new Vector3(0.0f, (RectTransform.sizeDelta.y * half) - (topRT.sizeDelta.y * half));
 
-            ItemType = topGO.AddComponent<UI_Menu_Inventory_Left_Drawer_ItemType>();
+            ItemTypeDrawer = topGO.AddComponent<UI_Menu_Inventory_Left_Drawer_ItemType>();
 
             // ===============================================================================================
             // Bot (Height : 80%)
