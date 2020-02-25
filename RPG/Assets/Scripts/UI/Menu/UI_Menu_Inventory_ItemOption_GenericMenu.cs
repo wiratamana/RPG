@@ -62,6 +62,7 @@ namespace Tamana
             var genericMenu = go.AddComponent<UI_Menu_Inventory_ItemOption_GenericMenu>();
 
             genericMenu.Ring = UI_Menu_Pool.Instance.GetImage(rt, width, height, nameof(Ring));
+            genericMenu.Ring.raycastTarget = true;
             genericMenu.Ring.sprite = UI_Menu.Instance.MenuResources.InventoryItemIconRing_Sprite;
             genericMenu.Ring.type = Image.Type.Sliced;
             genericMenu.Ring.rectTransform.anchorMin = Vector2.zero;

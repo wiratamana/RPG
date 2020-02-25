@@ -95,6 +95,11 @@ namespace Tamana
 
             if(invokeListener == true)
             {
+                if(UI_Menu_Inventory_ItemOption.Instance.IsActive == true)
+                {
+                    UI_Menu_Inventory_ItemOption.Instance.Close();
+                }
+
                 OnActiveItemTypeValueChanged.Invoke(CurrentlyActiveItemType);
             }            
         }
