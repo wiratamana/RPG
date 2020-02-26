@@ -177,67 +177,101 @@ namespace Tamana
             OnEquippedEvent.Invoke(oldEquipment, modularPart);
         }
 
-        public void UnequipModularPart(Item_ModularBodyPart modularMetadata)
+        public void UnequipModularPart(Item_ModularBodyPart modularBodyPart)
         {
+            // ===============================================================================================
+            // Get default part
+            // ===============================================================================================
+            var modularMetadata = ResourcesLoader.Instance.LoadModularBodyMetadata();
+            var defaults = modularMetadata.objs
+                .Where(x => x.Gender == modularBodyPart.Gender &&
+                            x.IsDefault == true);
+
+            Item_ModularBodyPart_Metadata? defaultPart = null;
+            Item_Armor armor = null;
+            Item_Attachment attachment = null;
+
+            if (modularBodyPart is Item_Armor)
+            {
+                armor = modularBodyPart as Item_Armor;
+                defaultPart = defaults.FirstOrDefault(x => x.ArmorType == armor.Type);
+            }
+            else
+            {
+                attachment = modularBodyPart as Item_Attachment;
+                defaultPart = defaults.FirstOrDefault(x => x.AttachmentType == attachment.Type);
+            }
+
+            if(defaultPart == null || defaultPart.HasValue == false)
+            {
+                string type = armor == null ? armor.Type.ToString() : attachment.Type.ToString();
+                Debug.Log($"Faile to unequip. Default part was not found!! ItemType : {modularBodyPart.ItemType} | Type : {type}");
+                return;
+            }
+
             // ===============================================================================================
             // Split the path to the Transform part
             // ===============================================================================================
-            var split = modularMetadata.PartLocation.Split('/').ToList();
-            split.RemoveAt(0);
+            var splitCurrentEquippedPart = modularBodyPart.PartLocation.Split('/').ToList();
+            var splitDefaultPart = string.IsNullOrEmpty(defaultPart.Value.PartLocation) ? 
+                null : defaultPart.Value.PartLocation.Split('/').ToList();
+            splitCurrentEquippedPart.RemoveAt(0);
+            splitDefaultPart?.RemoveAt(0);
 
             // ===============================================================================================
             // Get the Transform renference from player and the portrait on inventory menu.
             // ===============================================================================================
-            var PortraitTransform = Inventory_Menu_PlayerPortrait.Instance.transform;
+            var portraitTransform = Inventory_Menu_PlayerPortrait.Instance.transform;
             var playerTransform = GameManager.Player;
 
             // ===============================================================================================
             // Get the equip part by searching it through child
             // ===============================================================================================
-            var PortraitPart = PortraitTransform;
+            var portraitPart = portraitTransform;
             var playerPart = playerTransform;
-            while (split.Count > 0)
-            {
-                PortraitPart = GetChildTransformWithName(PortraitPart, split[0]);
-                playerPart = GetChildTransformWithName(playerPart, split[0]);
-                split.RemoveAt(0);
-            }
+            var defaultPortaitPart = portraitTransform;
+            var defaultPlayerPart = playerPart;
 
-            // ===============================================================================================
-            // Deactivate all parts with same type as the equip item
-            // ===============================================================================================
-            var portaitPartParent = PortraitPart.parent;
-            var playerPartParent = playerPart.parent;
-            for (int i = 0; i < portaitPartParent.childCount; i++)
+            while (splitCurrentEquippedPart.Count > 0)
             {
-                if (portaitPartParent.GetChild(i) == PortraitPart)
+                portraitPart = GetChildTransformWithName(portraitPart, splitCurrentEquippedPart[0]);
+                playerPart = GetChildTransformWithName(playerPart, splitCurrentEquippedPart[0]);
+                splitCurrentEquippedPart.RemoveAt(0);
+
+                if(splitDefaultPart != null)
                 {
-                    continue;
+                    defaultPortaitPart = GetChildTransformWithName(defaultPortaitPart, splitDefaultPart[0]);
+                    defaultPlayerPart = GetChildTransformWithName(defaultPlayerPart, splitDefaultPart[0]);
+
+                    splitDefaultPart.RemoveAt(0);
                 }
 
-                portaitPartParent.GetChild(i).gameObject.SetActive(false);
-                playerPartParent.GetChild(i).gameObject.SetActive(false);
-            }
+            }            
 
             // ===============================================================================================
             // Finally, activate the equip
             // ===============================================================================================
-            playerPart.gameObject.SetActive(true);
-            PortraitPart.gameObject.SetActive(true);
+            playerPart.gameObject.SetActive(false);
+            portraitPart.gameObject.SetActive(false);
+            if(splitDefaultPart != null)
+            {
+                defaultPortaitPart.gameObject.SetActive(true);
+                defaultPlayerPart.gameObject.SetActive(true);
+            }            
 
             // ===============================================================================================
             // Register equip item to dictionary
             // ===============================================================================================
             Item_Equipment oldEquipment = null;
-            if (modularMetadata is Item_Attachment)
+            if (modularBodyPart is Item_Attachment)
             {
-                var itemAttachment = modularMetadata as Item_Attachment;
+                var itemAttachment = modularBodyPart as Item_Attachment;
                 oldEquipment = itemAttachment;
                 equippedAttachmentDic[itemAttachment.Type] = null;
             }
-            else if(modularMetadata is Item_Armor)
+            else if(modularBodyPart is Item_Armor)
             {
-                var itemArmor = modularMetadata as Item_Armor;
+                var itemArmor = modularBodyPart as Item_Armor;
                 oldEquipment = itemArmor;
                 equippedArmorDic[itemArmor.Type] = null;
             }

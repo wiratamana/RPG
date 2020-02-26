@@ -13,6 +13,14 @@ namespace Tamana
         private UI_Navigator navigator;
         private MeshRenderer meshRenderer;
 
+        private void OnValidate()
+        {
+            if(item != null)
+            {
+                gameObject.name = $"{item.ItemType} - {item.ItemName}";
+            }
+        }
+
         private void Start()
         {
             StartCoroutine(SphereCast());

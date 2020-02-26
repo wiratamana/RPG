@@ -75,13 +75,14 @@ namespace Tamana
             return null;
         }
 
-        public string LoadModularBodyMetadataJson()
+        public ArrayObject<Item_ModularBodyPart_Metadata> LoadModularBodyMetadata()
         {
             var wira = Resources.Load(ITEM_MODULAR_BODY_METADATA_PATH) as TextAsset;
             var json = wira.text;
             Resources.UnloadAsset(wira);
 
-            return json;
+            var returnValue = JsonUtility.FromJson<ArrayObject<Item_ModularBodyPart_Metadata>>(json);
+            return returnValue;
         }
         
         public Status_Information GetPlayerBaseStatus()
