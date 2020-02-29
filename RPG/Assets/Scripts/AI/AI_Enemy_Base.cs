@@ -7,14 +7,12 @@ namespace Tamana
     public class AI_Enemy_Base : MonoBehaviour
     {
         private Status_Main statusMain;
-        private Status_DamageHandler damageHandler;
         private AI_Enemy_Animator enemyAnimator;
         private AI_Enemy_CombatLogic combatLogic;
         private AI_Enemy_CombatHandler combatHandler;
         private Unit_AI_Hostile unit;
 
         public Status_Main StatusMain => this.GetOrAddAndAssignComponent(statusMain);
-        public Status_DamageHandler DamageHandler => this.GetOrAddAndAssignComponent(damageHandler);
         public AI_Enemy_Animator EnemyAnimator => this.GetOrAddAndAssignComponent(enemyAnimator);
         public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(combatLogic);        
         public AI_Enemy_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(combatHandler);
@@ -24,7 +22,7 @@ namespace Tamana
         {
             Debug.Log($"Is CombatHandler.AI == null ? {CombatHandler.AI == null}");
 
-            DamageHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
+            Unit.DamageHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
             StatusMain.OnDeadEvent.AddListener(OnDead);
         }
 

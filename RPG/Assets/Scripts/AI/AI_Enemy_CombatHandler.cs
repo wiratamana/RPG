@@ -34,11 +34,5 @@ namespace Tamana
 
             AI.Unit.Equipment.EquippedWeapon.SetWeaponTransformParent(true);
         }
-
-        [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
-        private void OnDoDamage()
-        {
-            Debug.Log("OnDoDamage - Enemy");
-        }
     }
 }

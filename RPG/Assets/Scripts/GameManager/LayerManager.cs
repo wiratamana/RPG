@@ -17,6 +17,7 @@ namespace Tamana
         public const string LAYER_PLAYER_MENU_PORTRAIT = "PlayerMenuPortrait";
         public const string LAYER_PLAYER = "Player";
         public const string LAYER_ITEM_PROJECTION = "ItemProjection";
+        public const string LAYER_ENEMY = "Enemy";
     }
 
 }
