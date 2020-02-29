@@ -60,8 +60,8 @@ namespace Tamana
             // ===============================================================================================
             // Register OnEquipped and OnUnequipped callback to event
             // ===============================================================================================
-            Inventory_EquipmentManager.Instance.OnEquippedEvent.AddListener(OnEquipped);
-            Inventory_EquipmentManager.Instance.OnUnequippedEvent.AddListener(OnUnequipped);
+            GameManager.Player.Equipment.OnEquippedEvent.AddListener(OnEquipped);
+            GameManager.Player.Equipment.OnUnequippedEvent.AddListener(OnUnequipped);
         }
 
         private void UpdateValue()

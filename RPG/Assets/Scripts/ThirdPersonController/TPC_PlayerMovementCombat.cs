@@ -28,7 +28,7 @@ namespace Tamana
 
         private void Equip()
         {
-            if (Inventory_EquipmentManager.Instance.IsEquippedWithWeapon() == false)
+            if (GameManager.Player.Equipment.IsEquippedWithWeapon() == false)
             {
                 return;
             }
@@ -50,8 +50,8 @@ namespace Tamana
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnEquip()
         {
-            var weaponTransform = Inventory_EquipmentManager.Instance.WeaponTransform;
-            var weaponItem = Inventory_EquipmentManager.Instance.EquippedWeapon;
+            var weaponTransform = GameManager.Player.Equipment.WeaponTransform;
+            var weaponItem = GameManager.Player.Equipment.EquippedWeapon;
 
             weaponTransform.SetParent(BodyTransform.HandR);
             weaponTransform.localPosition = weaponItem.EquipPostion;
@@ -67,8 +67,8 @@ namespace Tamana
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnHolster()
         {
-            var weaponTransform = Inventory_EquipmentManager.Instance.WeaponTransform;
-            var weaponItem = Inventory_EquipmentManager.Instance.EquippedWeapon;
+            var weaponTransform = GameManager.Player.Equipment.WeaponTransform;
+            var weaponItem = GameManager.Player.Equipment.EquippedWeapon;
 
             weaponTransform.SetParent(BodyTransform.Hips);
             weaponTransform.localPosition = weaponItem.HolsterPosition;

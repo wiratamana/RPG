@@ -10,8 +10,8 @@ namespace Tamana
         {
             Debug.Log("Do Damage");
 
-            var weapon = Inventory_EquipmentManager.Instance.EquippedWeapon;
-            var weaponTransform = Inventory_EquipmentManager.Instance.WeaponTransform;
+            var weapon = GameManager.Player.Equipment.EquippedWeapon;
+            var weaponTransform = GameManager.Player.Equipment.WeaponTransform;
             var colliders = Physics.OverlapBox(weaponTransform.position + weapon.WeaponCollider.center, weapon.WeaponCollider.size * 0.5f, weaponTransform.rotation);
 
             if(colliders.Length == 0)

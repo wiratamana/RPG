@@ -4,15 +4,11 @@ using System.Collections.Generic;
 
 namespace Tamana
 {
-    public class Inventory_EquipmentManager : SingletonMonobehaviour<Inventory_EquipmentManager>
+    public class Unit_Equipment
     {
-        [RuntimeInitializeOnLoadMethod]
-        private static void CreateInstance()
-        {
-            var go = new GameObject(nameof(Inventory_EquipmentManager));
-            DontDestroyOnLoad(go);
-            go.AddComponent<Inventory_EquipmentManager>();
-        }
+        public Unit_Base Owner { private set; get; }
+        public Transform OwnerTransform => Owner.transform;
+        private Transform portraitTransform;
 
         private Dictionary<Item_Attachment.AttachmentPart, Item_Attachment> equippedAttachmentDic;
         private Dictionary<Item_Armor.ArmorPart, Item_Armor> equippedArmorDic;
@@ -21,6 +17,24 @@ namespace Tamana
 
         public EventManager<Item_Equipment, Item_Equipment> OnEquippedEvent { private set; get; } = new EventManager<Item_Equipment, Item_Equipment>();
         public EventManager<Item_Equipment> OnUnequippedEvent { private set; get; } = new EventManager<Item_Equipment>();
+
+        public Unit_Equipment(Unit_Base owner, Transform portraitTransform)
+        {
+            Owner = owner;
+            this.portraitTransform = portraitTransform;
+
+            equippedAttachmentDic = new Dictionary<Item_Attachment.AttachmentPart, Item_Attachment>();
+            for (int i = 0; i < System.Enum.GetValues(typeof(Item_Attachment.AttachmentPart)).Length; i++)
+            {
+                equippedAttachmentDic.Add((Item_Attachment.AttachmentPart)i, null);
+            }
+
+            equippedArmorDic = new Dictionary<Item_Armor.ArmorPart, Item_Armor>();
+            for (int i = 0; i < System.Enum.GetValues(typeof(Item_Armor.ArmorPart)).Length; i++)
+            {
+                equippedArmorDic.Add((Item_Armor.ArmorPart)i, null);
+            }
+        }
 
         public List<Item_Equipment_Effect> GetEquippedItemEffects()
         {
@@ -52,23 +66,6 @@ namespace Tamana
             }
 
             return effects;
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();
-
-            equippedAttachmentDic = new Dictionary<Item_Attachment.AttachmentPart, Item_Attachment>();
-            for (int i = 0; i < System.Enum.GetValues(typeof(Item_Attachment.AttachmentPart)).Length; i++)
-            {
-                equippedAttachmentDic.Add((Item_Attachment.AttachmentPart)i, null);
-            }
-
-            equippedArmorDic = new Dictionary<Item_Armor.ArmorPart, Item_Armor>();
-            for (int i = 0; i < System.Enum.GetValues(typeof(Item_Armor.ArmorPart)).Length; i++)
-            {
-                equippedArmorDic.Add((Item_Armor.ArmorPart)i, null);
-            }
         }
 
         public bool IsCurrentlyEquipped(Item_Equipment equipment)
@@ -115,44 +112,38 @@ namespace Tamana
             split.RemoveAt(0);
 
             // ===============================================================================================
-            // Get the Transform renference from player and the portrait on inventory menu.
-            // ===============================================================================================
-            var PortraitTransform = Inventory_Menu_PlayerPortrait.Instance.transform;
-            var playerTransform = GameManager.Player;
-
-            // ===============================================================================================
             // Get the equip part by searching it through child
             // ===============================================================================================
-            var PortraitPart = PortraitTransform;
-            var playerPart = playerTransform;
+            var portraitPart = portraitTransform;
+            var ownerPart = OwnerTransform;
             while (split.Count > 0)
             {
-                PortraitPart = GetChildTransformWithName(PortraitPart, split[0]);
-                playerPart = GetChildTransformWithName(playerPart, split[0]);
+                portraitPart = GetChildTransformWithName(portraitPart, split[0]);
+                ownerPart = GetChildTransformWithName(ownerPart, split[0]);
                 split.RemoveAt(0);
             }
 
             // ===============================================================================================
             // Deactivate all parts with same type as the equip item
             // ===============================================================================================
-            var portaitPartParent = PortraitPart.parent;
-            var playerPartParent = playerPart.parent;
-            for(int i = 0; i < portaitPartParent.childCount; i++)
+            var portaitPartParent = portraitPart?.parent;
+            var ownerPartParent = ownerPart.parent;
+            for(int i = 0; i < ownerPartParent.childCount; i++)
             {
-                if(portaitPartParent.GetChild(i) == PortraitPart)
+                if(ownerPartParent.GetChild(i) == ownerPart)
                 {
                     continue;
                 }
 
-                portaitPartParent.GetChild(i).gameObject.SetActive(false);
-                playerPartParent.GetChild(i).gameObject.SetActive(false);
+                portaitPartParent?.GetChild(i).gameObject.SetActive(false);
+                ownerPartParent.GetChild(i).gameObject.SetActive(false);
             }
 
             // ===============================================================================================
             // Finally, activate the equip
             // ===============================================================================================
-            playerPart.gameObject.SetActive(true);
-            PortraitPart.gameObject.SetActive(true);
+            ownerPart.gameObject.SetActive(true);
+            portraitPart?.gameObject.SetActive(true);
 
             // ===============================================================================================
             // Register equip item to dictionary
@@ -219,29 +210,24 @@ namespace Tamana
             splitDefaultPart?.RemoveAt(0);
 
             // ===============================================================================================
-            // Get the Transform renference from player and the portrait on inventory menu.
-            // ===============================================================================================
-            var portraitTransform = Inventory_Menu_PlayerPortrait.Instance.transform;
-            var playerTransform = GameManager.Player;
-
-            // ===============================================================================================
             // Get the equip part by searching it through child
             // ===============================================================================================
             var portraitPart = portraitTransform;
-            var playerPart = playerTransform;
+            var ownerPart = OwnerTransform;
+
             var defaultPortaitPart = portraitTransform;
-            var defaultPlayerPart = playerPart;
+            var defaultOwnerPart = ownerPart;
 
             while (splitCurrentEquippedPart.Count > 0)
             {
                 portraitPart = GetChildTransformWithName(portraitPart, splitCurrentEquippedPart[0]);
-                playerPart = GetChildTransformWithName(playerPart, splitCurrentEquippedPart[0]);
+                ownerPart = GetChildTransformWithName(ownerPart, splitCurrentEquippedPart[0]);
                 splitCurrentEquippedPart.RemoveAt(0);
 
                 if(splitDefaultPart != null)
                 {
                     defaultPortaitPart = GetChildTransformWithName(defaultPortaitPart, splitDefaultPart[0]);
-                    defaultPlayerPart = GetChildTransformWithName(defaultPlayerPart, splitDefaultPart[0]);
+                    defaultOwnerPart = GetChildTransformWithName(defaultOwnerPart, splitDefaultPart[0]);
 
                     splitDefaultPart.RemoveAt(0);
                 }
@@ -251,12 +237,12 @@ namespace Tamana
             // ===============================================================================================
             // Finally, activate the equip
             // ===============================================================================================
-            playerPart.gameObject.SetActive(false);
-            portraitPart.gameObject.SetActive(false);
+            ownerPart.gameObject.SetActive(false);
+            portraitPart?.gameObject.SetActive(false);
             if(splitDefaultPart != null)
             {
-                defaultPortaitPart.gameObject.SetActive(true);
-                defaultPlayerPart.gameObject.SetActive(true);
+                defaultPortaitPart?.gameObject.SetActive(true);
+                defaultOwnerPart.gameObject.SetActive(true);
             }            
 
             // ===============================================================================================
@@ -282,8 +268,23 @@ namespace Tamana
             OnUnequippedEvent.Invoke(oldEquipment);
         }
 
-        public void EquipWeapon(Item_Weapon equippedWeapon, Transform weaponTransform)
+        public void EquipWeapon(Item_Weapon equippedWeapon)
         {
+            var weaponTransform = Object.Instantiate(equippedWeapon.Prefab, TPC_BodyTransform.Instance.Hips);
+            weaponTransform.transform.localScale = new Vector3(100, 100, 100);
+            weaponTransform.transform.localPosition = equippedWeapon.HolsterPosition;
+            weaponTransform.transform.localRotation = equippedWeapon.HolsterRotation;
+
+            if(portraitTransform != null)
+            {
+                var weaponPreview = Object.Instantiate(equippedWeapon.Prefab, Inventory_Menu_PlayerPortrait.Instance.Hips);
+                weaponPreview.transform.localScale = new Vector3(100, 100, 100);
+                weaponPreview.transform.localPosition = equippedWeapon.HolsterPosition;
+                weaponPreview.transform.localRotation = equippedWeapon.HolsterRotation;
+
+                Inventory_Menu_PlayerPortrait.Instance.WeaponTransform = weaponPreview;
+            }
+
             var oldWeapon = EquippedWeapon;
             EquippedWeapon = equippedWeapon;
             WeaponTransform = weaponTransform;
@@ -296,6 +297,12 @@ namespace Tamana
 
         public void UnequipWeapon()
         {
+            Object.Destroy(WeaponTransform.gameObject);
+            if(portraitTransform != null)
+            {
+                Inventory_Menu_PlayerPortrait.Instance.WeaponTransform = null;
+            }
+
             var oldWeapon = EquippedWeapon;
             EquippedWeapon = null;
             WeaponTransform = null;
@@ -308,6 +315,11 @@ namespace Tamana
 
         private Transform GetChildTransformWithName(Transform parent, string name)
         {
+            if(parent == null)
+            {
+                return null;
+            }
+
             for(int i = 0; i < parent.childCount; i++)
             {
                 if(parent.GetChild(i).name == name)

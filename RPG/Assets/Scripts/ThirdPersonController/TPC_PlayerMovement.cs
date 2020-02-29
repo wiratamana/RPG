@@ -18,7 +18,7 @@ namespace Tamana
         {
             base.Awake();
 
-            StartRotateAnimHandler = GameManager.Player.gameObject.AddComponent<TPC_RotateBeforeStartMoveAnimPlayHandler>();
+            StartRotateAnimHandler = GameManager.PlayerTransform.gameObject.AddComponent<TPC_RotateBeforeStartMoveAnimPlayHandler>();
         }
 
         private void Update()
@@ -62,7 +62,7 @@ namespace Tamana
                 cameraForward = cameraForward.normalized;
 
                 var lookRotation = Quaternion.LookRotation(cameraForward);
-                GameManager.Player.transform.rotation = Quaternion.Slerp(GameManager.Player.transform.rotation, lookRotation, 5 * Time.deltaTime);
+                GameManager.PlayerTransform.transform.rotation = Quaternion.Slerp(GameManager.PlayerTransform.transform.rotation, lookRotation, 5 * Time.deltaTime);
             }
         }
         
