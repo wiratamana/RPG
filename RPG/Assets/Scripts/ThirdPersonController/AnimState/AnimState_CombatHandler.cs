@@ -15,6 +15,7 @@ namespace Tamana
         {
             isCrossFading = false;
             animData.IsInputReceived = false;
+            animData.IsCurrentlyReceivingInput = false;
 
             TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = false;
             TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = animData;
@@ -82,7 +83,8 @@ namespace Tamana
                 TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimDataContainer = null;
                 TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = null;
             }
+
+            animData.IsCurrentlyReceivingInput = false;
         }
     }
-
 }

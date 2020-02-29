@@ -25,6 +25,7 @@ namespace Tamana
         public Vector3 MenuCameraOffset { get { return menuCameraOffset; } }
         public float CustomOrthoSize { get { return customOrthoSize; } }
         public WeaponOverlapBox WeaponCollider { get { return weaponCollider; } }
+        public override ItemType ItemType => ItemType.Weapon;
 
         public override void Equip()
         {
@@ -52,6 +53,19 @@ namespace Tamana
 
             Inventory_Menu_PlayerPortrait.Instance.WeaponTransform = null;
             Inventory_EquipmentManager.Instance.UnequipWeapon();
+        }
+
+        public override Item_ItemDetails ItemDetails
+        {
+            get
+            {
+                return new Item_ItemDetails()
+                {
+                    ItemName = ItemName,
+                    ItemDescription = ItemDescription,
+                    ItemEffects = ItemEffects
+                };
+            }
         }
 
         [System.Serializable]

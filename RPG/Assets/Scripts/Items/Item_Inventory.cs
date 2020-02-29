@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
 
 namespace Tamana
@@ -24,20 +26,15 @@ namespace Tamana
             }
         }
 
-        public string GetItemNameAtIndex(int idx)
+        public ReadOnlyCollection<Item_Base> GetItemListAsReadOnly()
         {
-            return item[idx].ItemName;
+            return GetItemListAsReadOnly(x => x is Item_Base);
         }
 
-        public Transform GetItemPrefabAtIndex(int idx)
+        public ReadOnlyCollection<Item_Base> GetItemListAsReadOnly(System.Func<Item_Base, bool> predicate)
         {
-            return item[idx].Prefab;
-        }
-
-        public Item_Base GetItemAtIndex(int idx)
-        {
-            return item[idx];
-        }
+            return item.Where(predicate).ToList().AsReadOnly();
+        }    
 
         public void AddItem(Item_Base item)
         {

@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 namespace Tamana
 {
-    public enum Gender { All = 0, Male, Female }
-
     public sealed class GameManager : SingletonMonobehaviour<GameManager>
     {
         [RuntimeInitializeOnLoadMethod]
@@ -35,6 +33,20 @@ namespace Tamana
                 }
 
                 return _player;
+            }
+        }
+
+        private static Status_Player _playerStatus;
+        public static Status_Player PlayerStatus
+        {
+            get
+            {
+                if(_playerStatus == null)
+                {
+                    _playerStatus = Player.gameObject.GetOrAddComponent<Status_Player>();
+                }
+
+                return _playerStatus;
             }
         }
 

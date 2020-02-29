@@ -40,6 +40,23 @@ namespace Tamana
         private void Start()
         {
             UpdateColor();
+
+            UI_Menu.Instance.Inventory.Left.ItemTypeDrawer.OnActiveItemTypeValueChanged.AddListener(UpdateColor, GetInstanceID());
+        }
+
+        private void UpdateColor(ItemType type)
+        {
+            var equipment = ItemIcon.Item as Item_Equipment;
+            if (equipment != null && equipment.ItemType == type && 
+                Inventory_EquipmentManager.Instance.IsCurrentlyEquipped(equipment) == true)
+            {
+                Background.sprite = UI_Menu.Instance.MenuResources.InventoryItemBackgroundEquipped_Sprite;
+                Background.color = Color.white;
+            }
+            else
+            {
+                Background.color = NormalColor;
+            }
         }
 
         public void UpdateColor()
@@ -54,6 +71,11 @@ namespace Tamana
             {
                 Background.color = NormalColor;
             }
+        }
+
+        private void OnDestroy()
+        {
+            UI_Menu.Instance.Inventory.Left.ItemTypeDrawer.OnActiveItemTypeValueChanged.RemoveListener(UpdateColor, GetInstanceID());
         }
     }
 }

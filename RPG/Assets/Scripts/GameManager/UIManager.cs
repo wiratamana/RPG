@@ -35,7 +35,7 @@ namespace Tamana
 
             runningWindow = new Dictionary<string, UI_WindowBase>();
 
-            InputEvent.Instance.Event_OpenMenuInventory.AddListener(UI_Menu.OpenMenuInventory);
+            InputEvent.Instance.Event_OpenOrCloseMenuInventory.AddListener(UI_Menu.OpenMenuInventory);
         }
 
         public void RegisterWindow(UI_WindowBase window)
@@ -116,6 +116,7 @@ namespace Tamana
             go.transform.SetParent(parent);
             var img = go.AddComponent<Image>();
             img.rectTransform.sizeDelta = new Vector2(width, height);
+            img.raycastTarget = false;
 
             return img;
         }
@@ -131,6 +132,7 @@ namespace Tamana
             go.transform.SetParent(parent);
             var img = go.AddComponent<RawImage>();
             img.rectTransform.sizeDelta = new Vector2(width, height);
+            img.raycastTarget = false;
 
             return img;
         }
@@ -146,6 +148,8 @@ namespace Tamana
             go.transform.SetParent(parent);
             var txt = go.AddComponent<TextMeshProUGUI>();
             txt.rectTransform.sizeDelta = new Vector2(width, height);
+            txt.raycastTarget = false;
+            txt.richText = false;
 
             return txt;
         }

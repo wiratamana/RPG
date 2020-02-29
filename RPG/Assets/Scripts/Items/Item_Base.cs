@@ -7,7 +7,6 @@ namespace Tamana
     public abstract class Item_Base : ScriptableObject
     {
         [SerializeField] private string itemName;
-
         [GM_AttributeValueIsSetWithReflection(nameof(ItemName))]
         public string ItemName 
         {
@@ -22,7 +21,6 @@ namespace Tamana
         }
 
         [SerializeField] private string itemDescription;
-
         [GM_AttributeValueIsSetWithReflection(nameof(ItemDescription))]
         public string ItemDescription
         {
@@ -36,6 +34,7 @@ namespace Tamana
             }
         }
 
+        public abstract ItemType ItemType { get; }
 
         [SerializeField] private Transform prefab;
         public Transform Prefab
@@ -49,6 +48,8 @@ namespace Tamana
                 prefab = value;
             }
         }
+
+        public abstract Item_ItemDetails ItemDetails { get; }
 
 #if UNITY_EDITOR
         public void SetItemName(string value)
