@@ -270,7 +270,7 @@ namespace Tamana
 
         public void EquipWeapon(Item_Weapon equippedWeapon)
         {
-            var weaponTransform = Object.Instantiate(equippedWeapon.Prefab, TPC_BodyTransform.Instance.Hips);
+            var weaponTransform = Object.Instantiate(equippedWeapon.Prefab, Owner.BodyTransform.Hips);
             weaponTransform.transform.localScale = new Vector3(100, 100, 100);
             weaponTransform.transform.localPosition = equippedWeapon.HolsterPosition;
             weaponTransform.transform.localRotation = equippedWeapon.HolsterRotation;
