@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Tamana
 {
-    public class TPC_BodyTransform : SingletonMonobehaviour<TPC_BodyTransform>
+    public class Unit_BodyTransform : MonoBehaviour
     {
         private const string ROOT   = "Root";
         private const string HIPS   = "Hips";
@@ -69,11 +69,6 @@ namespace Tamana
 
                 return handr;
             }
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();
         }
 
         private Transform GetChild(string childName, Transform parent)
