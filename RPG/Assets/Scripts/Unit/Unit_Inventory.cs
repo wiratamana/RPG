@@ -37,7 +37,7 @@ namespace Tamana
         public void AddItem(Item_Base item)
         {
             itemList.Add(item);
-            item.SetOwner(this);
+            item.SetItemOwner(this);
 
             Debug.Log($"Item added. Name : '{item.ItemName}'");
         }

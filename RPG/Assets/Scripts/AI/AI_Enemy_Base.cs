@@ -11,12 +11,14 @@ namespace Tamana
         private AI_Enemy_Animator enemyAnimator;
         private AI_Enemy_CombatLogic combatLogic;
         private AI_Enemy_CombatHandler combatHandler;
+        private Unit_AI_Hostile unit;
 
         public Status_Main StatusMain => this.GetOrAddAndAssignComponent(statusMain);
         public Status_DamageHandler DamageHandler => this.GetOrAddAndAssignComponent(damageHandler);
         public AI_Enemy_Animator EnemyAnimator => this.GetOrAddAndAssignComponent(enemyAnimator);
         public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(combatLogic);        
         public AI_Enemy_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(combatHandler);
+        public Unit_AI_Hostile Unit => this.GetOrAddAndAssignComponent(unit);
 
         protected virtual void Awake()
         {

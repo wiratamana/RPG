@@ -52,12 +52,7 @@ namespace Tamana
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnEquip()
         {
-            var weaponTransform = GameManager.Player.Equipment.WeaponTransform;
-            var weaponItem = GameManager.Player.Equipment.EquippedWeapon;
-
-            weaponTransform.SetParent(GameManager.Player.BodyTransform.HandR);
-            weaponTransform.localPosition = weaponItem.EquipPostion;
-            weaponTransform.localRotation = weaponItem.EquipRotation;
+            GameManager.Player.Equipment.EquippedWeapon.SetWeaponTransformParent(true);
 
             InputEvent.Instance.Event_Equip.RemoveListener(Equip);
             InputEvent.Instance.Event_Holster.AddListener(Holster);
@@ -69,12 +64,7 @@ namespace Tamana
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnHolster()
         {
-            var weaponTransform = GameManager.Player.Equipment.WeaponTransform;
-            var weaponItem = GameManager.Player.Equipment.EquippedWeapon;
-
-            weaponTransform.SetParent(GameManager.Player.BodyTransform.Hips);
-            weaponTransform.localPosition = weaponItem.HolsterPosition;
-            weaponTransform.localRotation = weaponItem.HolsterRotation;
+            GameManager.Player.Equipment.EquippedWeapon.SetWeaponTransformParent(false);
 
             InputEvent.Instance.Event_Holster.RemoveListener(Holster);
             InputEvent.Instance.Event_Equip.AddListener(Equip);

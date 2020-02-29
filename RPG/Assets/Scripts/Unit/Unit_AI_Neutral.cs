@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit_AI_Neutral : MonoBehaviour
+namespace Tamana
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Unit_AI_Neutral : Unit_Base
     {
-        
+  
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

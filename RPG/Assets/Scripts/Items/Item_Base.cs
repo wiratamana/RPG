@@ -53,7 +53,7 @@ namespace Tamana
 
         protected Unit_Inventory inventoryOwner;
 
-        public void SetOwner(Unit_Inventory inventoryOwner)
+        public void SetItemOwner(Unit_Inventory inventoryOwner)
         {
             this.inventoryOwner = inventoryOwner;
         }
