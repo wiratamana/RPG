@@ -99,7 +99,7 @@ namespace Tamana
                         continue;
                     }
 
-                    foreach (var t in ClassManager.GetAttributes<TPC_Anim_AttributeBase>())
+                    foreach (var t in ClassManager.GetAttributesFromClass<TPC_Anim_AttributeBase>())
                     {                        
                         if (anim.Value.StateDic[t.Name] == true)
                         {
@@ -135,17 +135,19 @@ namespace Tamana
 
         public void PlayStartMoveAnimation()
         {
+            TPC_PlayerMovement.OnPlayerMoveStart.Invoke();
             AnimParams.IsMoving = true;
         }
 
         public void PlayStopMoveAnimation()
         {
+            TPC_PlayerMovement.OnPlayerMoveStop.Invoke();
             AnimParams.IsMoving = false;
         }
 
         private void GetAllAttribute()
         {
-            foreach (var t in ClassManager.GetAttributes<TPC_Anim_AttributeBase>())
+            foreach (var t in ClassManager.GetAttributesFromClass<TPC_Anim_AttributeBase>())
             {
                 AnimStateDic.Add(t.Name, false);
             }

@@ -4,65 +4,34 @@ using UnityEngine;
 
 namespace Tamana
 {
-    public abstract class AI_Enemy_Base : MonoBehaviour
+    public class AI_Enemy_Base : MonoBehaviour
     {
-        private Animator enemyAnimator;
-        public Animator EnemyAnimator
-        {
-            get
-            {
-                if(enemyAnimator == null)
-                {
-                    enemyAnimator = GetComponent<Animator>();
-                }
-
-                return enemyAnimator;
-            }
-        }
-
-        private Status_DamageHandler damageHandler;
-        public Status_DamageHandler DamageHandler
-        {
-            get
-            {
-                if(damageHandler == null)
-                {
-                    damageHandler = GetComponent<Status_DamageHandler>();
-                }
-
-                if(damageHandler == null)
-                {
-                    damageHandler = gameObject.AddComponent<Status_DamageHandler>();
-                }
-
-                return damageHandler;
-            }
-        }
-
         private Status_Main statusMain;
-        public Status_Main StatusMain
-        {
-            get
-            {
-                if(statusMain == null)
-                {
-                    statusMain = GetComponent<Status_Main>();
-                }
+        private Status_DamageHandler damageHandler;
+        private AI_Enemy_Animator enemyAnimator;
+        private AI_Enemy_CombatLogic combatLogic;
+        private AI_Enemy_CombatHandler combatHandler;
 
-                if(statusMain == null)
-                {
-                    statusMain = gameObject.AddComponent<Status_Main>();
-                }
-
-                return statusMain;
-            }
-        }
-        
+        public Status_Main StatusMain => this.GetOrAddAndAssignComponent(statusMain);
+        public Status_DamageHandler DamageHandler => this.GetOrAddAndAssignComponent(damageHandler);
+        public AI_Enemy_Animator EnemyAnimator => this.GetOrAddAndAssignComponent(enemyAnimator);
+        public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(combatLogic);        
+        public AI_Enemy_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(combatHandler);
 
         protected virtual void Awake()
         {
+            Debug.Log($"Is CombatHandler.AI == null ? {CombatHandler.AI == null}");
+
             DamageHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
             StatusMain.OnDeadEvent.AddListener(OnDead);
+        }
+
+        private void Start()
+        {
+            var brain = ScriptableObject.CreateInstance<AI_Brain_Enemy_Dummy>();
+            brain.name = nameof(AI_Brain_Enemy_Dummy);
+            brain.Init(this);
+            CombatLogic.InstallBrain(brain);
         }
 
         private void OnReceivedDamage(Status_DamageData receivedDamage)
