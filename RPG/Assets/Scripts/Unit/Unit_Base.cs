@@ -9,7 +9,7 @@ namespace Tamana
         private Unit_Inventory inventory;        
         private Unit_Equipment equipment;
         private Unit_BodyTransform bodyTransform;
-        private Status_DamageHandler damageHandler;
+        private Unit_DamageHandler damageHandler;
 
         public Unit_Inventory Inventory
         {
@@ -45,7 +45,7 @@ namespace Tamana
         }
 
         public Unit_BodyTransform BodyTransform => this.GetOrAddAndAssignComponent(bodyTransform);
-        public Status_DamageHandler DamageHandler => this.GetOrAddAndAssignComponent(damageHandler);
+        public Unit_DamageHandler DamageHandler => this.GetOrAddAndAssignComponent(damageHandler);
 
         protected virtual void OnValidate()
         {

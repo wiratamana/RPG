@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Tamana
 {
-    public class Status_DamageHandler : MonoBehaviour
+    public class Unit_DamageHandler : MonoBehaviour
     {
         private Unit_Base unit;
-        public Unit_Base Unit => this.GetOrAddAndAssignComponent(unit);
+        public Unit_Base Unit => this.GetAndAssignComponent(unit);
         public bool IsUnitPlayer => Unit is Unit_Player;
 
         public EventManager<Status_DamageData> OnReceivedDamageEvent { private set; get; } = new EventManager<Status_DamageData>();
@@ -52,7 +52,7 @@ namespace Tamana
             {
                 foreach (var c in colliders)
                 {
-                    var damageHandler = c.GetComponent<Status_DamageHandler>();
+                    var damageHandler = c.GetComponent<Unit_DamageHandler>();
                     if (damageHandler == null)
                     {
                         continue;

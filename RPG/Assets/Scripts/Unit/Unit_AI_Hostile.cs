@@ -11,7 +11,7 @@ namespace Tamana
 
         [SerializeField] private Item_Weapon weapon;
 
-        private void OnValidate()
+        protected override void OnValidate()
         {
             this.LogErrorIfComponentIsNull(AI);
         }

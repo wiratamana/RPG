@@ -18,7 +18,7 @@ namespace Tamana
             animData.IsCurrentlyReceivingInput = false;
 
             TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = false;
-            TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = animData;
+            GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimData = animData;
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -30,16 +30,16 @@ namespace Tamana
             
             if (isCrossFading == true)
             {
-                if(TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData == animData)
+                if(GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimData == animData)
                 {
                     var nextAnimationIndex = index + 1;
                     if(nextAnimationIndex < combatContainer.CombatDatas.Length)
                     {
-                        TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = combatContainer.CombatDatas[nextAnimationIndex];
+                        GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimData = combatContainer.CombatDatas[nextAnimationIndex];
                     }
                     else
                     {
-                        TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = null;
+                        GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimData = null;
                     }
                 }
                 
@@ -69,8 +69,8 @@ namespace Tamana
                 animator.CrossFade(animData.IdleAnimStateName, animData.TransitionTimeIdle);
                 isCrossFading = true;
 
-                TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = null;
-                TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimDataContainer = null;
+                GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimData = null;
+                GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimDataContainer = null;
                 TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = false;
             }
         }
@@ -80,8 +80,8 @@ namespace Tamana
             if (animData.IsLastAnimation == true)
             {
                 TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = false;
-                TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimDataContainer = null;
-                TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = null;
+                GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimDataContainer = null;
+                GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimData = null;
             }
 
             animData.IsCurrentlyReceivingInput = false;

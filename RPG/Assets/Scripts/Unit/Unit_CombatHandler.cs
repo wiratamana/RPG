@@ -3,25 +3,13 @@ using System.Collections;
 
 namespace Tamana
 {
-    public class TPC_PlayerMovementCombat : SingletonMonobehaviour<TPC_PlayerMovementCombat>
+    public class Unit_CombatHandler : MonoBehaviour
     {
         public TPC_CombatAnimDataContainer lightAttack;
         public TPC_CombatAnimDataContainer heavyAttack;
-        private TPC_CombatHandler combatHandler;
 
         public TPC_CombatAnimDataContainer CurrentlyPlayingCombatAnimDataContainer { set; get; }
         public TPC_CombatAnimData CurrentlyPlayingCombatAnimData { get; set; }
-        public TPC_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(combatHandler);
-
-        private void OnValidate()
-        {
-            this.LogErrorIfComponentIsNull(CombatHandler);
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();         
-        }
 
         private void Start()
         {
@@ -75,12 +63,12 @@ namespace Tamana
 
         private void PlayAttackAnim(TPC_CombatAnimDataContainer attackType)
         {
-            if(attackType is null)
+            if (attackType is null)
             {
                 return;
             }
 
-            if(attackType.StaminaCost > GameManager.PlayerStatus.ST.CurrentStamina)
+            if (attackType.StaminaCost > GameManager.PlayerStatus.ST.CurrentStamina)
             {
                 return;
             }
