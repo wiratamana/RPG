@@ -14,7 +14,7 @@ namespace Tamana
 
         public override void Update()
         {
-            var playerPos = GameManager.Player.position;
+            var playerPos = GameManager.PlayerTransform.position;
 
             var myTransform = brain.AI.transform;
             var myPosition = myTransform.position;

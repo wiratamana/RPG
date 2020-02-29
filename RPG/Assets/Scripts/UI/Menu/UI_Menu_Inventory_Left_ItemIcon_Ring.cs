@@ -47,8 +47,8 @@ namespace Tamana
         public void UpdateColor(ItemType type)
         {
             var equipment = ItemIcon.Item as Item_Equipment;
-            if (equipment != null && equipment.ItemType == type && 
-                Inventory_EquipmentManager.Instance.IsCurrentlyEquipped(equipment) == true)
+            if (equipment != null && equipment.ItemType == type &&
+                GameManager.Player.Equipment.IsCurrentlyEquipped(equipment) == true)
             {
                 Ring.color = Color.white;
             }
@@ -61,7 +61,7 @@ namespace Tamana
         public void UpdateColor()
         {
             var equipment = ItemIcon.Item as Item_Equipment;
-            if (equipment != null && Inventory_EquipmentManager.Instance.IsCurrentlyEquipped(equipment) == true)
+            if (equipment != null && GameManager.Player.Equipment.IsCurrentlyEquipped(equipment) == true)
             {
                 Ring.color = Color.white;
             }

@@ -90,7 +90,7 @@ namespace Tamana
 
         public void PickUpItem()
         {
-            Item_Inventory.Instance.AddItem(item);
+            GameManager.Player.Inventory.AddItem(item);
             if (itemTransform != null)
             {
                 Destroy(itemTransform.gameObject);
