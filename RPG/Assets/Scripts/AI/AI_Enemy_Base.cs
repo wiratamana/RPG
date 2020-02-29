@@ -4,19 +4,19 @@ using UnityEngine;
 
 namespace Tamana
 {
-    public abstract class AI_Enemy_Base : MonoBehaviour
+    public class AI_Enemy_Base : MonoBehaviour
     {
-        private Animator enemyAnimator;
-        public Animator EnemyAnimator
+        private Status_Main statusMain;
+        public Status_Main StatusMain
         {
             get
             {
-                if(enemyAnimator == null)
+                if (statusMain == null)
                 {
-                    enemyAnimator = GetComponent<Animator>();
+                    statusMain = gameObject.GetOrAddComponent<Status_Main>();
                 }
-
-                return enemyAnimator;
+                
+                return statusMain;
             }
         }
 
@@ -25,44 +25,55 @@ namespace Tamana
         {
             get
             {
-                if(damageHandler == null)
+                if (damageHandler == null)
                 {
-                    damageHandler = GetComponent<Status_DamageHandler>();
-                }
-
-                if(damageHandler == null)
-                {
-                    damageHandler = gameObject.AddComponent<Status_DamageHandler>();
+                    damageHandler = gameObject.GetOrAddComponent<Status_DamageHandler>();
                 }
 
                 return damageHandler;
             }
         }
 
-        private Status_Main statusMain;
-        public Status_Main StatusMain
+        private AI_Enemy_Animator enemyAnimator;
+        public AI_Enemy_Animator EnemyAnimator
         {
             get
             {
-                if(statusMain == null)
+                if(enemyAnimator == null)
                 {
-                    statusMain = GetComponent<Status_Main>();
+                    enemyAnimator = gameObject.GetOrAddComponent<AI_Enemy_Animator>();
                 }
 
-                if(statusMain == null)
-                {
-                    statusMain = gameObject.AddComponent<Status_Main>();
-                }
-
-                return statusMain;
+                return enemyAnimator;
             }
         }
-        
+
+        private AI_Enemy_CombatLogic combatLogic;
+        public AI_Enemy_CombatLogic CombatLogic
+        {
+            get
+            {
+                if (combatLogic == null)
+                {
+                    combatLogic = gameObject.GetOrAddComponent<AI_Enemy_CombatLogic>();
+                }
+
+                return combatLogic;
+            }
+        }
 
         protected virtual void Awake()
         {
             DamageHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
             StatusMain.OnDeadEvent.AddListener(OnDead);
+        }
+
+        private void Start()
+        {
+            var brain = ScriptableObject.CreateInstance<AI_Brain_Enemy_Dummy>();
+            brain.name = nameof(AI_Brain_Enemy_Dummy);
+            brain.Init(this);
+            CombatLogic.InstallBrain(brain);
         }
 
         private void OnReceivedDamage(Status_DamageData receivedDamage)

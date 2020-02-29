@@ -30,7 +30,7 @@ namespace Tamana
         }
         //--------------------------------------------------------------------------------------
         private static Dictionary<string, List<System.Type>> filteredAttribute;
-        public static List<System.Type> GetAttributes<T>() where T : System.Attribute
+        public static List<System.Type> GetAttributesFromClass<T>() where T : System.Attribute
         {
             if(filteredAttribute == null)
             {
@@ -128,7 +128,7 @@ namespace Tamana
                 }
 
                 var value = new TPC_Anim_AnimInfo<bool>(false, layerField);
-                foreach (var t in GetAttributes<Attribute>())
+                foreach (var t in GetAttributesFromClass<Attribute>())
                 {
                     value.StateDic[t.Name] = constVar.IsDefined(t);
                 }

@@ -75,8 +75,7 @@ namespace Tamana
                 invokes.Enqueue(cb.Value);
             }
 
-
-            while(invokes.Count > 0)
+            while (invokes.Count > 0)
             {
                 var cb = invokes.Dequeue();
 

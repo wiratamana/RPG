@@ -9,11 +9,11 @@ namespace Tamana
 
         public static void Start(string startMessage = null)
         {
-            stopwatch.Start();
             if(string.IsNullOrEmpty(startMessage) == false)
             {
                 Debug.Log($"startMessage : {startMessage}", Debug.LogType.Message);
             }
+            stopwatch.Start();
         }
 
         public static void Stop(string stopMessage = null)
