@@ -25,6 +25,7 @@ namespace Tamana
         public Vector3 MenuCameraOffset { get { return menuCameraOffset; } }
         public float CustomOrthoSize { get { return customOrthoSize; } }
         public WeaponOverlapBox WeaponCollider { get { return weaponCollider; } }
+        public override ItemType ItemType => ItemType.Weapon;
 
         public override void Equip()
         {
@@ -62,7 +63,7 @@ namespace Tamana
                 {
                     ItemName = ItemName,
                     ItemDescription = ItemDescription,
-                    ItemEffect = "+100 Attack Power"
+                    ItemEffects = ItemEffects
                 };
             }
         }

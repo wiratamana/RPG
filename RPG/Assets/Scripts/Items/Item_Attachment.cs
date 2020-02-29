@@ -41,7 +41,7 @@ namespace Tamana
 
         public override void Unequip()
         {
-            Debug.Log("Unequip");
+            Inventory_EquipmentManager.Instance.UnequipModularPart(this);
         }
 
         public override Item_ItemDetails ItemDetails
@@ -52,10 +52,12 @@ namespace Tamana
                 {
                     ItemName = ItemName,
                     ItemDescription = ItemDescription,
-                    ItemEffect = null
+                    ItemEffects = ItemEffects
                 };
             }
         }
+
+        public override ItemType ItemType => ItemType.Attachment;
 
 #if UNITY_EDITOR
         public void SetType(AttachmentPart value)

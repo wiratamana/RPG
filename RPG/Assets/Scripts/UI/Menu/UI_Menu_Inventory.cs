@@ -14,12 +14,7 @@ namespace Tamana
         public static EventManager OnMenuInventoryOpened { private set; get; } = new EventManager();
         public static EventManager OnMenuInventoryClosed { private set; get; } = new EventManager();
 
-        public enum InventoryItemType
-        {
-            Weapon, Armor, Consumable
-        }
-
-        public InventoryItemType ItemType { private set; get; }
+        public ItemType ItemType { private set; get; }
 
         public static UI_Menu_Inventory CreateMenuInventory(UI_Menu_Body body, UI_Menu_Header header, UI_Menu_Navigator navigator)
         {

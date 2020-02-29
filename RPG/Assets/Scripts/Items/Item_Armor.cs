@@ -53,12 +53,7 @@ namespace Tamana
 
         public override void Unequip()
         {
-            var json = ResourcesLoader.Instance.LoadModularBodyMetadataJson();
-            var modularMetaData = JsonUtility.FromJson<ArrayObject<Item_ModularBodyPart_Metadata>>(json);
-            var myPart = System.Array.Find(modularMetaData.objs, x => x.ArmorType == Type && 
-                x.IsDefault == true && x.Gender == Gender.Male);
-
-            Inventory_EquipmentManager.Instance.UnequipModularPart(myPart);
+            Inventory_EquipmentManager.Instance.UnequipModularPart(this);
         }
 
         public override Item_ItemDetails ItemDetails
@@ -69,10 +64,12 @@ namespace Tamana
                 {
                     ItemName = ItemName,
                     ItemDescription = ItemDescription,
-                    ItemEffect = null
+                    ItemEffects = ItemEffects
                 };
             }
         }
+
+        public override ItemType ItemType => ItemType.Armor;
 
 #if UNITY_EDITOR
         public void SetType(ArmorPart value)

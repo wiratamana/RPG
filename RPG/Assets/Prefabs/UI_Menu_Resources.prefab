@@ -48,6 +48,8 @@ MonoBehaviour:
     type: 3}
   inventoryItemTypeArmor: {fileID: 21300000, guid: d67d7abed53fb294491d02cdbe030ac8,
     type: 3}
+  inventoryItemTypeAttachment: {fileID: 21300000, guid: 0c59a958ed02a7d4aa7c9d345a206c4a,
+    type: 3}
   inventoryItemTypeConsumable: {fileID: 21300000, guid: a06c055b2ee75644f8adb7ba1de0b1ca,
     type: 3}
   inventoryItemIconRing_Sprite: {fileID: 21300000, guid: e924c73615bad5143a0c039caf95bb97,
@@ -55,4 +57,12 @@ MonoBehaviour:
   inventoryItemBackgroundEquipped_Sprite: {fileID: 21300000, guid: 5cda208402f51084f882851e69683fa8,
     type: 3}
   inventoryItemOnPointerOver_Sprite: {fileID: 21300000, guid: d7e81fcdf8dedd14ba97f1766a72a3a4,
+    type: 3}
+  mainStatus_HP_Sprite: {fileID: 21300000, guid: 8827108fbae61474db432eae02fbb470,
+    type: 3}
+  mainStatus_ST_Sprite: {fileID: 21300000, guid: 7d42fc1ce12cf314ba58850078e33463,
+    type: 3}
+  mainStatus_AT_Sprite: {fileID: 21300000, guid: d316e95541d4ed34f9a49efc1d8313f6,
+    type: 3}
+  mainStatus_DF_Sprite: {fileID: 21300000, guid: ad5cfeb4c63d91947a00996e540600c4,
     type: 3}

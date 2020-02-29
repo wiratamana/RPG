@@ -39,15 +39,45 @@ namespace Tamana
             }
         }
 
+        private Status_Main statusMain;
+        public Status_Main StatusMain
+        {
+            get
+            {
+                if(statusMain == null)
+                {
+                    statusMain = GetComponent<Status_Main>();
+                }
+
+                if(statusMain == null)
+                {
+                    statusMain = gameObject.AddComponent<Status_Main>();
+                }
+
+                return statusMain;
+            }
+        }
+        
+
         protected virtual void Awake()
         {
             DamageHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
+            StatusMain.OnDeadEvent.AddListener(OnDead);
         }
 
         private void OnReceivedDamage(Status_DamageData receivedDamage)
         {
-            Debug.Log($"Damage Received : {receivedDamage.damagePoint}");
-            EnemyAnimator.Play("Sword1h_Hit_Torso_Front");
+            StatusMain.HP.Damage(receivedDamage);
+
+            if(StatusMain.IsDead == false)
+            {
+                EnemyAnimator.Play("Sword1h_Hit_Torso_Front");
+            }
+        }
+
+        private void OnDead()
+        {
+            EnemyAnimator.Play("Sword1h_Death_Front");
         }
     }
 }

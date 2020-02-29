@@ -77,14 +77,22 @@ namespace Tamana
             image.transform.SetParent(transform);
             image.type = Image.Type.Simple;
             image.sprite = null;
+            image.color = Color.white;
+            image.raycastTarget = false;
             imagesPool.Push(image);
         }
 
         public void RemoveRawImage(RawImage rawImage)
         {
+            if(rawImage.texture !=  null)
+            {
+                DestroyImmediate(rawImage.texture);
+            }
+
             ResetRectTransform(rawImage.rectTransform);
             rawImage.transform.SetParent(transform);
             rawImage.texture = null;
+            rawImage.raycastTarget = false;
             rawImagesPool.Push(rawImage);
         }
 
@@ -95,6 +103,7 @@ namespace Tamana
             text.fontSize = 36;
             text.alignment = TextAlignmentOptions.Center;
             text.text = null;
+            text.raycastTarget = false;
             textsPool.Push(text);
         }
 
