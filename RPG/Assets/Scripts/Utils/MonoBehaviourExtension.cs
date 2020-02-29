@@ -29,5 +29,13 @@ namespace Tamana
 
             return value;
         }
+
+        public static void LogErrorIfComponentIsNull<T>(this MonoBehaviour component, T value) where T : Component
+        {
+            if(value == null)
+            {
+                Debug.Log($"Component '{typeof(T).Name}' is not exist on GameObject with name '{component.name}'.", Debug.LogType.Error);
+            }
+        }
     }
 }

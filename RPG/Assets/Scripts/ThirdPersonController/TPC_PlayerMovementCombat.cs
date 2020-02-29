@@ -7,18 +7,20 @@ namespace Tamana
     {
         public TPC_CombatAnimDataContainer lightAttack;
         public TPC_CombatAnimDataContainer heavyAttack;
+        private TPC_CombatHandler combatHandler;
 
         public TPC_CombatAnimDataContainer CurrentlyPlayingCombatAnimDataContainer { set; get; }
         public TPC_CombatAnimData CurrentlyPlayingCombatAnimData { get; set; }
-        public TPC_BodyTransform BodyTransform { get; private set; }
-        public TPC_CombatHandler CombatHandler { private set; get; }
+        public TPC_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(combatHandler);
+
+        private void OnValidate()
+        {
+            this.LogErrorIfComponentIsNull(CombatHandler);
+        }
 
         protected override void Awake()
         {
-            base.Awake();
-
-            BodyTransform = gameObject.AddComponent<TPC_BodyTransform>();
-            CombatHandler = gameObject.AddComponent<TPC_CombatHandler>();               
+            base.Awake();         
         }
 
         private void Start()
@@ -53,7 +55,7 @@ namespace Tamana
             var weaponTransform = GameManager.Player.Equipment.WeaponTransform;
             var weaponItem = GameManager.Player.Equipment.EquippedWeapon;
 
-            weaponTransform.SetParent(BodyTransform.HandR);
+            weaponTransform.SetParent(GameManager.Player.BodyTransform.HandR);
             weaponTransform.localPosition = weaponItem.EquipPostion;
             weaponTransform.localRotation = weaponItem.EquipRotation;
 
@@ -70,7 +72,7 @@ namespace Tamana
             var weaponTransform = GameManager.Player.Equipment.WeaponTransform;
             var weaponItem = GameManager.Player.Equipment.EquippedWeapon;
 
-            weaponTransform.SetParent(BodyTransform.Hips);
+            weaponTransform.SetParent(GameManager.Player.BodyTransform.Hips);
             weaponTransform.localPosition = weaponItem.HolsterPosition;
             weaponTransform.localRotation = weaponItem.HolsterRotation;
 

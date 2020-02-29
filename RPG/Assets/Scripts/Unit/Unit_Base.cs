@@ -8,6 +8,7 @@ namespace Tamana
     {
         private Unit_Inventory inventory;        
         private Unit_Equipment equipment;
+        private Unit_BodyTransform bodyTransform;
 
         public Unit_Inventory Inventory
         {
@@ -41,5 +42,7 @@ namespace Tamana
                 return equipment;
             }
         }
+
+        public Unit_BodyTransform BodyTransform => this.GetOrAddAndAssignComponent(bodyTransform);
     }
 }
