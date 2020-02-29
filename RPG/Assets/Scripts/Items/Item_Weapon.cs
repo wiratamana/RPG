@@ -54,6 +54,23 @@ namespace Tamana
             }
         }
 
+        public void SetWeaponTransformParent(bool isEquip)
+        {
+            var equipment = inventoryOwner.Owner.Equipment;
+            var bodyTransform = inventoryOwner.Owner.BodyTransform;
+
+            var weaponTransform = equipment.WeaponTransform;
+            var weaponItem = equipment.EquippedWeapon;
+
+            var parentTransform = isEquip ? bodyTransform.HandR : bodyTransform.Hips;
+            var position = isEquip ? weaponItem.EquipPostion : weaponItem.HolsterPosition;
+            var rotation = isEquip ? weaponItem.EquipRotation : weaponItem.HolsterRotation;    
+
+            weaponTransform.SetParent(parentTransform);
+            weaponTransform.localPosition = position;
+            weaponTransform.localRotation = rotation;
+        }
+
         [System.Serializable]
         public struct WeaponOverlapBox
         {

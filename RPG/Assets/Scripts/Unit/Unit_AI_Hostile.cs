@@ -2,17 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit_AI_Hostile : MonoBehaviour
+namespace Tamana
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Unit_AI_Hostile : Unit_Base
     {
-        
-    }
+        private AI_Enemy_Base ai;
+        public AI_Enemy_Base AI => this.GetOrAddAndAssignComponent(ai);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [SerializeField] private Item_Weapon weapon;
+
+        private void OnValidate()
+        {
+            this.LogErrorIfComponentIsNull(AI);
+        }
+
+        private void Awake()
+        {
+            Inventory.AddItem(Instantiate(weapon));
+            Equipment.EquipWeapon(Inventory.GetItemListAsReadOnly(x => x is Item_Weapon)[0] as Item_Weapon);
+        }
     }
 }

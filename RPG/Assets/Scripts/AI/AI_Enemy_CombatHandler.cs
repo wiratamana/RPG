@@ -23,12 +23,16 @@ namespace Tamana
         private void OnHolster()
         {
             Debug.Log("OnHolster - Enemy");
+
+            AI.Unit.Equipment.EquippedWeapon.SetWeaponTransformParent(false);
         }
 
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnEquip() 
         {
             Debug.Log("OnEquip - Enemy");
+
+            AI.Unit.Equipment.EquippedWeapon.SetWeaponTransformParent(true);
         }
 
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
