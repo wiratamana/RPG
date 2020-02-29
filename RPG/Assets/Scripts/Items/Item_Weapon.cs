@@ -30,29 +30,15 @@ namespace Tamana
         public override void Equip()
         {
             Debug.Log("Weapon - Equip");
-           
-            var weapon = Instantiate(Prefab, TPC_BodyTransform.Instance.Hips);
-            weapon.transform.localScale = new Vector3(100, 100, 100);
-            weapon.transform.localPosition = HolsterPosition;
-            weapon.transform.localRotation = HolsterRotation;
 
-            var weaponPreview = Instantiate(Prefab, Inventory_Menu_PlayerPortrait.Instance.Hips);
-            weaponPreview.transform.localScale = new Vector3(100, 100, 100);
-            weaponPreview.transform.localPosition = HolsterPosition;
-            weaponPreview.transform.localRotation = HolsterRotation;
-
-            Inventory_Menu_PlayerPortrait.Instance.WeaponTransform = weaponPreview;
-            Inventory_EquipmentManager.Instance.EquipWeapon(this, weapon);
+            inventoryOwner.Owner.Equipment.EquipWeapon(this);
         }
 
         public override void Unequip()
         {
             Debug.Log("Unequip");
-            var weapon = Inventory_EquipmentManager.Instance.WeaponTransform;
-            Destroy(weapon.gameObject);
 
-            Inventory_Menu_PlayerPortrait.Instance.WeaponTransform = null;
-            Inventory_EquipmentManager.Instance.UnequipWeapon();
+            inventoryOwner.Owner.Equipment.UnequipWeapon();
         }
 
         public override Item_ItemDetails ItemDetails

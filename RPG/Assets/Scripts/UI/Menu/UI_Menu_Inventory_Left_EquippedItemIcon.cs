@@ -76,7 +76,7 @@ namespace Tamana
                 return;
             }
 
-            if(Inventory_EquipmentManager.Instance.IsCurrentlyEquipped(equipment) == false)
+            if(GameManager.Player.Equipment.IsCurrentlyEquipped(equipment) == false)
             {
                 return;
             }

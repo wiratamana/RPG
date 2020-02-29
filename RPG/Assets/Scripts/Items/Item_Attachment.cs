@@ -36,12 +36,12 @@ namespace Tamana
 
         public override void Equip()
         {
-            Inventory_EquipmentManager.Instance.EquipModularPart(this);
+            inventoryOwner.Owner.Equipment.EquipModularPart(this);
         }
 
         public override void Unequip()
         {
-            Inventory_EquipmentManager.Instance.UnequipModularPart(this);
+            inventoryOwner.Owner.Equipment.UnequipModularPart(this);
         }
 
         public override Item_ItemDetails ItemDetails

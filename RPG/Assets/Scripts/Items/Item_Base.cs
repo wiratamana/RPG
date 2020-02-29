@@ -51,6 +51,13 @@ namespace Tamana
 
         public abstract Item_ItemDetails ItemDetails { get; }
 
+        protected Unit_Inventory inventoryOwner;
+
+        public void SetOwner(Unit_Inventory inventoryOwner)
+        {
+            this.inventoryOwner = inventoryOwner;
+        }
+
 #if UNITY_EDITOR
         public void SetItemName(string value)
         {

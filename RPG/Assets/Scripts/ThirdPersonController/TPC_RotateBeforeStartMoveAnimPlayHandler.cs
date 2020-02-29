@@ -20,7 +20,7 @@ namespace Tamana
 
             var lookRotation = Quaternion.LookRotation(cameraForward);
             //GameManager.Player.transform.rotation = Quaternion.Slerp(GameManager.Player.transform.rotation, lookRotation, 5 * Time.deltaTime);
-            GameManager.Player.transform.rotation = Quaternion.RotateTowards(GameManager.Player.transform.rotation, lookRotation, 1080 * Time.deltaTime);
+            GameManager.PlayerTransform.transform.rotation = Quaternion.RotateTowards(GameManager.PlayerTransform.transform.rotation, lookRotation, 1080 * Time.deltaTime);
 
             var camAngle = TPC_CameraMovementManager.Instance.CameraAngleFromPlayerForward;
             if (Mathf.Abs(camAngle) < 5.0f)

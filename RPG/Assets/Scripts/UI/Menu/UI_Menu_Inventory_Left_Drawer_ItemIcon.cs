@@ -96,7 +96,7 @@ namespace Tamana
 
         private void InstantiateItemIconBackground()
         {
-            var itemList = Item_Inventory.Instance.GetItemListAsReadOnly(x => 
+            var itemList = GameManager.Player.Inventory.GetItemListAsReadOnly(x => 
                 x.ItemType == UI_Menu.Instance.Inventory.Left.ItemTypeDrawer.CurrentlyActiveItemType);
             var itemCount = itemList.Count;
             var spacing = 10.0f;
