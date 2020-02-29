@@ -4,14 +4,16 @@ using UnityEngine;
 
 namespace Tamana
 {
-    public class AI_Neuron_PlayerDetector : AI_Neuron
+    public class AI_Neuron_PlayerDetector : AI_Neuron_Update
     {
         public EventManager OnPlayerEnteredHostileRange { private set; get; } = new EventManager();
         public EventManager OnPlayerExitedHostileRange { private set; get; } = new EventManager();
+        public EventManager<float> OnPlayerInsideHostileRange { private set; get; } = new EventManager<float>();
 
         private readonly float hostileRangeEnter;
         private readonly float hostileRangeExit;
         private bool isInsideHostileRange = false;
+        public float DistanceToPlayer { private set; get; }
 
         public AI_Neuron_PlayerDetector(AI_Brain brain, float hostileRangeEnter, float hostileRangeExit) : base(brain)
         {
@@ -21,18 +23,26 @@ namespace Tamana
 
         public override void Update()
         {
-            var playerDistance = Vector3.Distance(brain.AI.transform.position, GameManager.Player.position);
+            DistanceToPlayer = Vector3.Distance(brain.AI.transform.position, GameManager.Player.position);
 
-            if(isInsideHostileRange == false && playerDistance < hostileRangeEnter)
+            if(isInsideHostileRange == false && DistanceToPlayer < hostileRangeEnter)
             {
                 isInsideHostileRange = true;
                 OnPlayerEnteredHostileRange.Invoke();
             }
             
-            else if(isInsideHostileRange == true && playerDistance > hostileRangeExit)
+            else if(isInsideHostileRange == true)
             {
-                isInsideHostileRange = false;
-                OnPlayerExitedHostileRange.Invoke();
+                if(DistanceToPlayer > hostileRangeExit)
+                {
+                    isInsideHostileRange = false;
+                    OnPlayerExitedHostileRange.Invoke();
+                }
+
+                else
+                {
+                    OnPlayerInsideHostileRange.Invoke(DistanceToPlayer);
+                }
             }
         }
     }

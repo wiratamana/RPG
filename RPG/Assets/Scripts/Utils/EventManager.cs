@@ -20,7 +20,7 @@ namespace Tamana
             var key = GetCallbackKey(callback);
             if(string.IsNullOrEmpty(key) == true || callbacksDic.ContainsKey(key) == true)
             {
-                Debug.Log($"Already contain key. key : {key}");
+                Debug.Log($"Already contain key. key : {key}", Debug.LogType.Error);
                 return;
             }
 
@@ -32,7 +32,7 @@ namespace Tamana
             var key = $"{uniqueID}.{GetCallbackKey(callback)}";
             if (string.IsNullOrEmpty(key) == true || callbacksDic.ContainsKey(key) == true)
             {
-                Debug.Log($"Already contain key. key : {key}");
+                Debug.Log($"Already contain key. key : {key}", Debug.LogType.Error);
                 return;
             }
 

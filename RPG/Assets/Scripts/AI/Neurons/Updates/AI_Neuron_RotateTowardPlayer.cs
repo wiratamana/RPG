@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Tamana
 {
-    public class AI_Neuron_RotateTowardPlayer : AI_Neuron
+    public class AI_Neuron_RotateTowardPlayer : AI_Neuron_Update
     {
         private readonly float rotationSpeed;
 

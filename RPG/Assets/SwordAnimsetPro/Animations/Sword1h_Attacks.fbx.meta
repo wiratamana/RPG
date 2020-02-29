@@ -2610,15 +2610,15 @@ ModelImporter:
       curves: []
       events:
       - time: 0.2061657
-        functionName: SendEvent
-        data: toStrike
+        functionName: OnDoDamage
+        data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.50481695
-        functionName: SendEvent
-        data: toStrike
+        functionName: OnDoDamage
+        data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

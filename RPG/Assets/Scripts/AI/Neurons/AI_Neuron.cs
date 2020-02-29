@@ -5,7 +5,9 @@ namespace Tamana
 {
     public abstract class AI_Neuron
     {
-        public abstract void Update();
+        public EventManager OnNeuronStopped { private set; get; } = new EventManager();
+        public EventManager OnNeuronStarted { private set; get; } = new EventManager();
+
         protected AI_Brain brain;
 
         public AI_Neuron(AI_Brain brain)
@@ -17,11 +19,19 @@ namespace Tamana
         public void StopNeuron()
         {
             brain.RemoveNeuron(this);
+            OnNeuronStopped.Invoke();
         }
 
         public void ResumeNeuron()
         {
             brain.AddNeuron(this);
+            OnNeuronStarted.Invoke();
+        }
+
+        public string GetInstanceID()
+        {
+            var type = GetType();
+            return type.FullName;
         }
     }
 }

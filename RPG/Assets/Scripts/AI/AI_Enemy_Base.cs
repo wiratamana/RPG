@@ -7,63 +7,21 @@ namespace Tamana
     public class AI_Enemy_Base : MonoBehaviour
     {
         private Status_Main statusMain;
-        public Status_Main StatusMain
-        {
-            get
-            {
-                if (statusMain == null)
-                {
-                    statusMain = gameObject.GetOrAddComponent<Status_Main>();
-                }
-                
-                return statusMain;
-            }
-        }
-
         private Status_DamageHandler damageHandler;
-        public Status_DamageHandler DamageHandler
-        {
-            get
-            {
-                if (damageHandler == null)
-                {
-                    damageHandler = gameObject.GetOrAddComponent<Status_DamageHandler>();
-                }
-
-                return damageHandler;
-            }
-        }
-
         private AI_Enemy_Animator enemyAnimator;
-        public AI_Enemy_Animator EnemyAnimator
-        {
-            get
-            {
-                if(enemyAnimator == null)
-                {
-                    enemyAnimator = gameObject.GetOrAddComponent<AI_Enemy_Animator>();
-                }
-
-                return enemyAnimator;
-            }
-        }
-
         private AI_Enemy_CombatLogic combatLogic;
-        public AI_Enemy_CombatLogic CombatLogic
-        {
-            get
-            {
-                if (combatLogic == null)
-                {
-                    combatLogic = gameObject.GetOrAddComponent<AI_Enemy_CombatLogic>();
-                }
+        private AI_Enemy_CombatHandler combatHandler;
 
-                return combatLogic;
-            }
-        }
+        public Status_Main StatusMain => this.GetOrAddAndAssignComponent(statusMain);
+        public Status_DamageHandler DamageHandler => this.GetOrAddAndAssignComponent(damageHandler);
+        public AI_Enemy_Animator EnemyAnimator => this.GetOrAddAndAssignComponent(enemyAnimator);
+        public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(combatLogic);        
+        public AI_Enemy_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(combatHandler);
 
         protected virtual void Awake()
         {
+            Debug.Log($"Is CombatHandler.AI == null ? {CombatHandler.AI == null}");
+
             DamageHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
             StatusMain.OnDeadEvent.AddListener(OnDead);
         }
