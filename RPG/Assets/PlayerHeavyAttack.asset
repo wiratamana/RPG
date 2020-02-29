@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea789d10e1e270d4a973fb46a92bee8b, type: 3}
   m_Name: PlayerHeavyAttack
   m_EditorClassIdentifier: 
+  staminaCost: 33
   combatDatas:
   - myAnimStateName: Attack_Move_slow_whirl_L_2
     receivingInputStart: 0.4167

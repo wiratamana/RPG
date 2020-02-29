@@ -15,7 +15,7 @@ namespace Tamana
             Layer = layer;
             StateDic = new Dictionary<string, bool>();
 
-            foreach(var t in ClassManager.GetAttributes<TPC_Anim_AttributeBase>())
+            foreach(var t in ClassManager.GetAttributesFromClass<TPC_Anim_AttributeBase>())
             {
                 StateDic.Add(t.Name, false);
             }

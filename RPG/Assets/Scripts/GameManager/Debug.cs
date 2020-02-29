@@ -31,31 +31,35 @@ namespace Tamana
 
         public static void Log(object message, LogType logType = LogType.Message)
         {
+            string classColor = "<color=#093D00>";
             string fromOpenColor = "<color=black>";
             string fromCloseColor = "</color>";
             switch (logType)
             {
                 case LogType.Message:
-                    fromOpenColor = "<color=#1B5417>";
+                    fromOpenColor = "<color=#00318E>";
                     break;
                 case LogType.Warning:
                     fromOpenColor = "<color=#A86D00>";
                     break;
                 case LogType.Error:
-                    fromOpenColor = "<color=#DB0891>";
+                    fromOpenColor = "<color=#8A092A>";
                     break;
                 case LogType.ForceQuit:
-                    fromOpenColor = "<color=#CB0000>";
+                    fromOpenColor = "<color=#8A092A>";
                     break;
             }
 
             var stackTrace = new System.Diagnostics.StackTrace().ToString().Split(NewLine, System.StringSplitOptions.None);
             var methodName = new StringBuilder(stackTrace[1]);
             methodName.Remove(0, methodName.ToString().IndexOf('.') + 1);
-            var idx = methodName.ToString().IndexOf(')');
-            methodName.Remove(idx + 1, methodName.Length - idx - 1);
+            var idx = methodName.ToString().IndexOf('(');
+            methodName.Remove(idx - 1, methodName.Length - idx);
+            methodName.Insert(0, classColor);
+            methodName.Insert(methodName.ToString().IndexOf('.'), fromCloseColor);
 
-            UnityEngine.Debug.Log($"<b>{fromOpenColor}{methodName.ToString()} : {fromCloseColor}</b>{message}");
+
+            UnityEngine.Debug.Log($"<b>{fromOpenColor}{methodName.ToString()}⇒ {fromCloseColor}</b>{message}");
 
             if(Application.isPlaying == true && logType == LogType.ForceQuit)
             {

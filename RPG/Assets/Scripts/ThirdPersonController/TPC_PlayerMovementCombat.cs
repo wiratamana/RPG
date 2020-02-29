@@ -7,18 +7,20 @@ namespace Tamana
     {
         public TPC_CombatAnimDataContainer lightAttack;
         public TPC_CombatAnimDataContainer heavyAttack;
+        private TPC_CombatHandler combatHandler;
 
         public TPC_CombatAnimDataContainer CurrentlyPlayingCombatAnimDataContainer { set; get; }
         public TPC_CombatAnimData CurrentlyPlayingCombatAnimData { get; set; }
-        public TPC_BodyTransform BodyTransform { get; private set; }
-        public TPC_CombatHandler CombatHandler { private set; get; }
+        public TPC_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(combatHandler);
+
+        private void OnValidate()
+        {
+            this.LogErrorIfComponentIsNull(CombatHandler);
+        }
 
         protected override void Awake()
         {
-            base.Awake();
-
-            BodyTransform = gameObject.AddComponent<TPC_BodyTransform>();
-            CombatHandler = gameObject.AddComponent<TPC_CombatHandler>();            
+            base.Awake();         
         }
 
         private void Start()
@@ -28,7 +30,7 @@ namespace Tamana
 
         private void Equip()
         {
-            if (Inventory_EquipmentManager.Instance.IsEquippedWithWeapon() == false)
+            if (GameManager.Player.Equipment.IsEquippedWithWeapon() == false)
             {
                 return;
             }
@@ -50,12 +52,7 @@ namespace Tamana
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnEquip()
         {
-            var weaponTransform = Inventory_EquipmentManager.Instance.WeaponTransform;
-            var weaponItem = Inventory_EquipmentManager.Instance.EquippedWeapon;
-
-            weaponTransform.SetParent(BodyTransform.HandR);
-            weaponTransform.localPosition = weaponItem.EquipPostion;
-            weaponTransform.localRotation = weaponItem.EquipRotation;
+            GameManager.Player.Equipment.EquippedWeapon.SetWeaponTransformParent(true);
 
             InputEvent.Instance.Event_Equip.RemoveListener(Equip);
             InputEvent.Instance.Event_Holster.AddListener(Holster);
@@ -67,12 +64,7 @@ namespace Tamana
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnHolster()
         {
-            var weaponTransform = Inventory_EquipmentManager.Instance.WeaponTransform;
-            var weaponItem = Inventory_EquipmentManager.Instance.EquippedWeapon;
-
-            weaponTransform.SetParent(BodyTransform.Hips);
-            weaponTransform.localPosition = weaponItem.HolsterPosition;
-            weaponTransform.localRotation = weaponItem.HolsterRotation;
+            GameManager.Player.Equipment.EquippedWeapon.SetWeaponTransformParent(false);
 
             InputEvent.Instance.Event_Holster.RemoveListener(Holster);
             InputEvent.Instance.Event_Equip.AddListener(Equip);
@@ -83,11 +75,22 @@ namespace Tamana
 
         private void PlayAttackAnim(TPC_CombatAnimDataContainer attackType)
         {
+            if(attackType is null)
+            {
+                return;
+            }
+
+            if(attackType.StaminaCost > GameManager.PlayerStatus.ST.CurrentStamina)
+            {
+                return;
+            }
+
             if (CurrentlyPlayingCombatAnimDataContainer == null || CurrentlyPlayingCombatAnimDataContainer == attackType)
             {
                 if (attackType != null && CurrentlyPlayingCombatAnimData == null)
                 {
                     CurrentlyPlayingCombatAnimDataContainer = attackType;
+                    GameManager.PlayerStatus.ST.Attack(attackType.StaminaCost);
                     TPC_AnimController.Instance.PlayAnim(attackType.CombatDatas[0].MyAnimStateName);
                 }
 
@@ -95,6 +98,7 @@ namespace Tamana
                 {
                     if (CurrentlyPlayingCombatAnimData.IsCurrentlyReceivingInput == true)
                     {
+                        GameManager.PlayerStatus.ST.Attack(attackType.StaminaCost);
                         CurrentlyPlayingCombatAnimData.IsInputReceived = true;
                     }
                 }

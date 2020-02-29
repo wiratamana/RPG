@@ -48,18 +48,28 @@ namespace Tamana
 
         public override void Equip()
         {
-            Inventory_EquipmentManager.Instance.EquipModularPart(this);
+            inventoryOwner.Owner.Equipment.EquipModularPart(this);
         }
 
         public override void Unequip()
         {
-            var json = ResourcesLoader.Instance.LoadModularBodyMetadataJson();
-            var modularMetaData = JsonUtility.FromJson<ArrayObject<Item_ModularBodyPart_Metadata>>(json);
-            var myPart = System.Array.Find(modularMetaData.objs, x => x.ArmorType == Type && 
-                x.IsDefault == true && x.Gender == Gender.Male);
-
-            Inventory_EquipmentManager.Instance.UnequipModularPart(myPart);
+            inventoryOwner.Owner.Equipment.UnequipModularPart(this);
         }
+
+        public override Item_ItemDetails ItemDetails
+        {
+            get
+            {
+                return new Item_ItemDetails()
+                {
+                    ItemName = ItemName,
+                    ItemDescription = ItemDescription,
+                    ItemEffects = ItemEffects
+                };
+            }
+        }
+
+        public override ItemType ItemType => ItemType.Armor;
 
 #if UNITY_EDITOR
         public void SetType(ArmorPart value)

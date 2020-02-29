@@ -4,7 +4,7 @@ using System.Collections;
 namespace Tamana
 {
     [System.Serializable]
-    public class Item_ModularBodyPart_Metadata
+    public struct Item_ModularBodyPart_Metadata
     {
         [SerializeField] private string partLocation;
         [SerializeField] private int armorType;

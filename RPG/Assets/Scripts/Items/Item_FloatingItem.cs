@@ -13,6 +13,14 @@ namespace Tamana
         private UI_Navigator navigator;
         private MeshRenderer meshRenderer;
 
+        private void OnValidate()
+        {
+            if(item != null)
+            {
+                gameObject.name = $"{item.ItemType} - {item.ItemName}";
+            }
+        }
+
         private void Start()
         {
             StartCoroutine(SphereCast());
@@ -82,7 +90,7 @@ namespace Tamana
 
         public void PickUpItem()
         {
-            Item_Inventory.Instance.AddItem(item);
+            GameManager.Player.Inventory.AddItem(item);
             if (itemTransform != null)
             {
                 Destroy(itemTransform.gameObject);

@@ -4,50 +4,51 @@ using UnityEngine;
 
 namespace Tamana
 {
-    public abstract class AI_Enemy_Base : MonoBehaviour
+    public class AI_Enemy_Base : MonoBehaviour
     {
-        private Animator enemyAnimator;
-        public Animator EnemyAnimator
-        {
-            get
-            {
-                if(enemyAnimator == null)
-                {
-                    enemyAnimator = GetComponent<Animator>();
-                }
-
-                return enemyAnimator;
-            }
-        }
-
+        private Status_Main statusMain;
         private Status_DamageHandler damageHandler;
-        public Status_DamageHandler DamageHandler
-        {
-            get
-            {
-                if(damageHandler == null)
-                {
-                    damageHandler = GetComponent<Status_DamageHandler>();
-                }
+        private AI_Enemy_Animator enemyAnimator;
+        private AI_Enemy_CombatLogic combatLogic;
+        private AI_Enemy_CombatHandler combatHandler;
+        private Unit_AI_Hostile unit;
 
-                if(damageHandler == null)
-                {
-                    damageHandler = gameObject.AddComponent<Status_DamageHandler>();
-                }
-
-                return damageHandler;
-            }
-        }
+        public Status_Main StatusMain => this.GetOrAddAndAssignComponent(statusMain);
+        public Status_DamageHandler DamageHandler => this.GetOrAddAndAssignComponent(damageHandler);
+        public AI_Enemy_Animator EnemyAnimator => this.GetOrAddAndAssignComponent(enemyAnimator);
+        public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(combatLogic);        
+        public AI_Enemy_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(combatHandler);
+        public Unit_AI_Hostile Unit => this.GetOrAddAndAssignComponent(unit);
 
         protected virtual void Awake()
         {
+            Debug.Log($"Is CombatHandler.AI == null ? {CombatHandler.AI == null}");
+
             DamageHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
+            StatusMain.OnDeadEvent.AddListener(OnDead);
+        }
+
+        private void Start()
+        {
+            var brain = ScriptableObject.CreateInstance<AI_Brain_Enemy_Dummy>();
+            brain.name = nameof(AI_Brain_Enemy_Dummy);
+            brain.Init(this);
+            CombatLogic.InstallBrain(brain);
         }
 
         private void OnReceivedDamage(Status_DamageData receivedDamage)
         {
-            Debug.Log($"Damage Received : {receivedDamage.damagePoint}");
-            EnemyAnimator.Play("Sword1h_Hit_Torso_Front");
+            StatusMain.HP.Damage(receivedDamage);
+
+            if(StatusMain.IsDead == false)
+            {
+                EnemyAnimator.Play("Sword1h_Hit_Torso_Front");
+            }
+        }
+
+        private void OnDead()
+        {
+            EnemyAnimator.Play("Sword1h_Death_Front");
         }
     }
 }

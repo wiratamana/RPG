@@ -9,11 +9,16 @@ namespace Tamana
     {
         public TPC_RotateBeforeStartMoveAnimPlayHandler StartRotateAnimHandler { private set; get; }
 
+        public static EventManager OnPlayerMoveStart { private set; get; } = new EventManager();
+        public static EventManager OnPlayerMoveMoving { private set; get; } = new EventManager();
+        public static EventManager OnPlayerMoveStop { private set; get; } = new EventManager();
+        public static EventManager OnPlayerMoveIdle { private set; get; } = new EventManager();
+
         protected override void Awake()
         {
             base.Awake();
 
-            StartRotateAnimHandler = GameManager.Player.gameObject.AddComponent<TPC_RotateBeforeStartMoveAnimPlayHandler>();
+            StartRotateAnimHandler = GameManager.PlayerTransform.gameObject.AddComponent<TPC_RotateBeforeStartMoveAnimPlayHandler>();
         }
 
         private void Update()
@@ -23,6 +28,11 @@ namespace Tamana
 
         private void MoveForward()
         {
+            if(TPC_AnimController.Instance.AnimParams.IsMoving == false)
+            {
+                OnPlayerMoveIdle.Invoke();
+            }
+
             if (TPC_AnimController.Instance.AnimStateDic[nameof(TPC_Anim_AttributeDisableMovement)] == true)
             {
                 return;
@@ -36,7 +46,8 @@ namespace Tamana
                 TPC_AnimController.Instance.AnimParams.IsRotateBeforeMove = true;
             }
 
-            else if (KeyboardController.IsForwardPressed == false)
+            else if (KeyboardController.IsForwardPressed == false &&
+                TPC_AnimController.Instance.AnimParams.IsMoving == true)
             {
                 TPC_AnimController.Instance.PlayStopMoveAnimation();
                 TPC_AnimController.Instance.AnimParams.IsMoving = false;
@@ -44,12 +55,14 @@ namespace Tamana
 
             if (TPC_AnimController.Instance.AnimParams.IsMoving == true)
             {
+                OnPlayerMoveMoving.Invoke();
+
                 var cameraForward = GameManager.MainCamera.transform.forward;
                 cameraForward.y = 0;
                 cameraForward = cameraForward.normalized;
 
                 var lookRotation = Quaternion.LookRotation(cameraForward);
-                GameManager.Player.transform.rotation = Quaternion.Slerp(GameManager.Player.transform.rotation, lookRotation, 5 * Time.deltaTime);
+                GameManager.PlayerTransform.transform.rotation = Quaternion.Slerp(GameManager.PlayerTransform.transform.rotation, lookRotation, 5 * Time.deltaTime);
             }
         }
         
