@@ -22,6 +22,9 @@ namespace Tamana
             }
         }
 
+        public static bool IsForwardDown => Input.GetKeyDown(KeyCode.W);
+        public static bool IsForwardUp => Input.GetKeyUp(KeyCode.W);
+
         public static bool IsForwardPressed
         {
             get

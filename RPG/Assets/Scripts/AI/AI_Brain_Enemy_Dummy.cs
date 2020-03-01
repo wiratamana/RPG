@@ -57,11 +57,11 @@ namespace Tamana
         {
             base.Init(ai);
 
-            PlayerDetector.OnPlayerEnteredHostileRange.AddListener(AI.CombatHandler.PlayEquipAnimation);
+            PlayerDetector.OnPlayerEnteredHostileRange.AddListener(AI.Unit.CombatHandler.PlayEquipAnimation);
             PlayerDetector.OnPlayerEnteredHostileRange.AddListener(RotateTowardPlayer.ResumeNeuron, RotateTowardPlayer.GetInstanceID());
             PlayerDetector.OnPlayerEnteredHostileRange.AddListener(AttackHandler.ResumeNeuron, AttackHandler.GetInstanceID());
 
-            PlayerDetector.OnPlayerExitedHostileRange.AddListener(AI.CombatHandler.PlayHolsterAnimation);
+            PlayerDetector.OnPlayerExitedHostileRange.AddListener(AI.Unit.CombatHandler.PlayHolsterAnimation);
             PlayerDetector.OnPlayerExitedHostileRange.AddListener(RotateTowardPlayer.StopNeuron, RotateTowardPlayer.GetInstanceID());
             PlayerDetector.OnPlayerExitedHostileRange.AddListener(AttackHandler.StopNeuron, AttackHandler.GetInstanceID());
 

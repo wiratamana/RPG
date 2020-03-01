@@ -11,13 +11,20 @@ namespace Tamana
         private TPC_CombatAnimData animData => combatContainer.CombatDatas[index];
         private bool isCrossFading = false;
 
+        private Unit_Base unit;
+
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            if(unit == null)
+            {
+                unit = animator.GetComponent<Unit_Base>();
+            }
+
             isCrossFading = false;
             animData.IsInputReceived = false;
             animData.IsCurrentlyReceivingInput = false;
 
-            TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = false;
+            unit.UnitAnimator.Params.Param_IsTransitingToNextAttackAnimation = false;
             GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimData = animData;
         }
 
@@ -56,7 +63,7 @@ namespace Tamana
             // ===============================================================================================
             if (animData.IsInputReceived == true && isCrossFading == false)
             {
-                TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = true;
+                unit.UnitAnimator.Params.Param_IsTransitingToNextAttackAnimation = true;
                 isCrossFading = true;
                 return;
             }
@@ -71,7 +78,7 @@ namespace Tamana
 
                 GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimData = null;
                 GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimDataContainer = null;
-                TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = false;
+                unit.UnitAnimator.Params.Param_IsTransitingToNextAttackAnimation = false;
             }
         }
 
@@ -79,7 +86,7 @@ namespace Tamana
         {
             if (animData.IsLastAnimation == true)
             {
-                TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = false;
+                unit.UnitAnimator.Params.Param_IsTransitingToNextAttackAnimation = false;
                 GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimDataContainer = null;
                 GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimData = null;
             }

@@ -31,14 +31,14 @@ namespace Tamana
         {
             Debug.Log("Weapon - Equip");
 
-            inventoryOwner.Owner.Equipment.EquipWeapon(this);
+            inventoryOwner.Unit.Equipment.EquipWeapon(this);
         }
 
         public override void Unequip()
         {
             Debug.Log("Unequip");
 
-            inventoryOwner.Owner.Equipment.UnequipWeapon();
+            inventoryOwner.Unit.Equipment.UnequipWeapon();
         }
 
         public override Item_ItemDetails ItemDetails
@@ -56,8 +56,8 @@ namespace Tamana
 
         public void SetWeaponTransformParent(bool isEquip)
         {
-            var equipment = inventoryOwner.Owner.Equipment;
-            var bodyTransform = inventoryOwner.Owner.BodyTransform;
+            var equipment = inventoryOwner.Unit.Equipment;
+            var bodyTransform = inventoryOwner.Unit.CombatHandler.BodyTransform;
 
             var weaponTransform = equipment.WeaponTransform;
             var weaponItem = equipment.EquippedWeapon;

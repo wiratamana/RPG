@@ -8,7 +8,9 @@ namespace Tamana
 {
     public class Unit_Inventory
     {     
-        public Unit_Base Owner { private set; get; }
+        public Unit_Base Unit { private set; get; }
+        public Unit_Equipment Equipment => Unit.Equipment;
+
         private List<Item_Base> itemList = new List<Item_Base>();
 
         public int ItemCount
@@ -21,7 +23,7 @@ namespace Tamana
 
         public Unit_Inventory(Unit_Base owner)
         {
-            Owner = owner;
+            Unit = owner;
         }
 
         public ReadOnlyCollection<Item_Base> GetItemListAsReadOnly()

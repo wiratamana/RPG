@@ -9,20 +9,16 @@ namespace Tamana
         private Status_Main statusMain;
         private AI_Enemy_Animator enemyAnimator;
         private AI_Enemy_CombatLogic combatLogic;
-        private AI_Enemy_CombatHandler combatHandler;
         private Unit_AI_Hostile unit;
 
         public Status_Main StatusMain => this.GetOrAddAndAssignComponent(statusMain);
         public AI_Enemy_Animator EnemyAnimator => this.GetOrAddAndAssignComponent(enemyAnimator);
         public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(combatLogic);        
-        public AI_Enemy_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(combatHandler);
         public Unit_AI_Hostile Unit => this.GetOrAddAndAssignComponent(unit);
 
         protected virtual void Awake()
         {
-            Debug.Log($"Is CombatHandler.AI == null ? {CombatHandler.AI == null}");
-
-            Unit.DamageHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
+            Unit.CombatHandler.DamageHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
             StatusMain.OnDeadEvent.AddListener(OnDead);
         }
 

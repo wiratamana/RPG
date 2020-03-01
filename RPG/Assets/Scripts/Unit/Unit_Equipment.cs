@@ -6,8 +6,11 @@ namespace Tamana
 {
     public class Unit_Equipment
     {
-        public Unit_Base Owner { private set; get; }
-        public Transform OwnerTransform => Owner.transform;
+        public Unit_Base Unit { private set; get; }
+        public Unit_Inventory Inventory => Unit.Inventory;
+        public Unit_BodyTransform BodyTransform => Unit.CombatHandler.BodyTransform;
+
+        public Transform UnitTransform => Unit.transform;
         private Transform portraitTransform;
 
         private Dictionary<Item_Attachment.AttachmentPart, Item_Attachment> equippedAttachmentDic;
@@ -20,7 +23,7 @@ namespace Tamana
 
         public Unit_Equipment(Unit_Base owner, Transform portraitTransform)
         {
-            Owner = owner;
+            Unit = owner;
             this.portraitTransform = portraitTransform;
 
             equippedAttachmentDic = new Dictionary<Item_Attachment.AttachmentPart, Item_Attachment>();
@@ -115,7 +118,7 @@ namespace Tamana
             // Get the equip part by searching it through child
             // ===============================================================================================
             var portraitPart = portraitTransform;
-            var ownerPart = OwnerTransform;
+            var ownerPart = UnitTransform;
             while (split.Count > 0)
             {
                 portraitPart = GetChildTransformWithName(portraitPart, split[0]);
@@ -213,7 +216,7 @@ namespace Tamana
             // Get the equip part by searching it through child
             // ===============================================================================================
             var portraitPart = portraitTransform;
-            var ownerPart = OwnerTransform;
+            var ownerPart = UnitTransform;
 
             var defaultPortaitPart = portraitTransform;
             var defaultOwnerPart = ownerPart;
@@ -270,7 +273,7 @@ namespace Tamana
 
         public void EquipWeapon(Item_Weapon equippedWeapon)
         {
-            var weaponTransform = Object.Instantiate(equippedWeapon.Prefab, Owner.BodyTransform.Hips);
+            var weaponTransform = Object.Instantiate(equippedWeapon.Prefab, BodyTransform.Hips);
             weaponTransform.transform.localScale = new Vector3(100, 100, 100);
             weaponTransform.transform.localPosition = equippedWeapon.HolsterPosition;
             weaponTransform.transform.localRotation = equippedWeapon.HolsterRotation;

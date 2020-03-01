@@ -11,12 +11,10 @@ namespace Tamana
         [SerializeField] private float _offsetZ;
         [SerializeField] private float _cameraLookHeight;
 
-        private TPC_AnimController animController;
         private TPC_PlayerMovement playerMovement;
 
         public Camera Camera { private set; get; }
         public Transform CameraLookPoint { private set; get; }
-        public TPC_AnimController AnimController => this.GetOrAddAndAssignComponent(animController);
         public TPC_PlayerMovement PlayerMovement => this.GetOrAddAndAssignComponent(playerMovement);
 
         public float CameraAngleFromPlayerForward
@@ -34,7 +32,6 @@ namespace Tamana
 
         private void OnValidate()
         {
-            this.LogErrorIfComponentIsNull(AnimController);
             this.LogErrorIfComponentIsNull(PlayerMovement);
         }
 

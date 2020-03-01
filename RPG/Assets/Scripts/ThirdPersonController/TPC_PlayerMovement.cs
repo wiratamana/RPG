@@ -7,18 +7,18 @@ namespace Tamana
 {
     public class TPC_PlayerMovement : SingletonMonobehaviour<TPC_PlayerMovement>
     {
+        private Unit_Player unit;
+        public Unit_Player Unit => this.GetAndAssignComponent(unit);
         public TPC_RotateBeforeStartMoveAnimPlayHandler StartRotateAnimHandler { private set; get; }
 
-        public static EventManager OnPlayerMoveStart { private set; get; } = new EventManager();
-        public static EventManager OnPlayerMoveMoving { private set; get; } = new EventManager();
-        public static EventManager OnPlayerMoveStop { private set; get; } = new EventManager();
-        public static EventManager OnPlayerMoveIdle { private set; get; } = new EventManager();
+        private bool isRun = false;
 
         protected override void Awake()
         {
             base.Awake();
 
             StartRotateAnimHandler = GameManager.PlayerTransform.gameObject.AddComponent<TPC_RotateBeforeStartMoveAnimPlayHandler>();
+            StartRotateAnimHandler.OnRotateCompleted.AddListener(OnRotationCompleted);
         }
 
         private void Update()
@@ -28,34 +28,20 @@ namespace Tamana
 
         private void MoveForward()
         {
-            if(TPC_AnimController.Instance.AnimParams.IsMoving == false)
+            if(KeyboardController.IsForwardDown)
             {
-                OnPlayerMoveIdle.Invoke();
+                Unit.UnitAnimator.Params.Param_IsRotateBeforeMove = true;
+            }     
+            
+            if(KeyboardController.IsForwardUp)
+            {
+                isRun = false;
             }
 
-            if (TPC_AnimController.Instance.AnimStateDic[nameof(TPC_Anim_AttributeDisableMovement)] == true)
+            if(isRun == true)
             {
-                return;
-            }
-
-            if (KeyboardController.IsForwardPressed == true &&
-                TPC_AnimController.Instance.AnimParams.IsMoving == false &&
-                TPC_AnimController.Instance.AnimParams.IsRotateBeforeMove == false)
-            {
-                StartRotateAnimHandler.OnRotateCompleted.AddListener(TPC_AnimController.Instance.PlayStartMoveAnimation);
-                TPC_AnimController.Instance.AnimParams.IsRotateBeforeMove = true;
-            }
-
-            else if (KeyboardController.IsForwardPressed == false &&
-                TPC_AnimController.Instance.AnimParams.IsMoving == true)
-            {
-                TPC_AnimController.Instance.PlayStopMoveAnimation();
-                TPC_AnimController.Instance.AnimParams.IsMoving = false;
-            }
-
-            if (TPC_AnimController.Instance.AnimParams.IsMoving == true)
-            {
-                OnPlayerMoveMoving.Invoke();
+                var val = Unit.UnitAnimator.Params.Params_Movement;
+                Unit.UnitAnimator.Params.Params_Movement = Mathf.Min(1.0f, val + 5 * Time.deltaTime);
 
                 var cameraForward = GameManager.MainCamera.transform.forward;
                 cameraForward.y = 0;
@@ -64,16 +50,21 @@ namespace Tamana
                 var lookRotation = Quaternion.LookRotation(cameraForward);
                 GameManager.PlayerTransform.transform.rotation = Quaternion.Slerp(GameManager.PlayerTransform.transform.rotation, lookRotation, 5 * Time.deltaTime);
             }
+            else
+            {
+                var val = Unit.UnitAnimator.Params.Params_Movement;
+                Unit.UnitAnimator.Params.Params_Movement = Mathf.Max(0.0f, val - 5 * Time.deltaTime);
+            }
+        }
+
+        private void OnRotationCompleted()
+        {
+            isRun = true;            
         }
         
         public string GetStartMoveAnimationName(float angle)
         {
-            if(TPC_AnimController.Instance.GetLayerWeight(TPC_Anim_SwordAnimsetPro.LAYER) > 0.0f)
-            {
-                return TPC_Anim_SwordAnimsetPro.Sword1h_RunFwdLoop;
-            }
-
-            return TPC_Anim_RunAnimsetBasic.RunFwdLoop;
+            return null;
         }
     }
 }

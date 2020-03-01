@@ -1,40 +1,45 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Tamana
 {
     public class Unit_CombatHandler : MonoBehaviour
     {
+        private Unit_Base unit;
+        private Unit_DamageHandler damageHandler;
+        private Unit_BodyTransform bodyTransform;
+
         public TPC_CombatAnimDataContainer lightAttack;
         public TPC_CombatAnimDataContainer heavyAttack;
+
+        public Unit_Base Unit => this.GetAndAssignComponent(unit);
+        public Unit_DamageHandler DamageHandler => this.GetOrAddAndAssignComponent(damageHandler);
+        public Unit_BodyTransform BodyTransform => this.GetOrAddAndAssignComponent(bodyTransform);
+        public Unit_Animator Animator =>Unit.UnitAnimator;
 
         public TPC_CombatAnimDataContainer CurrentlyPlayingCombatAnimDataContainer { set; get; }
         public TPC_CombatAnimData CurrentlyPlayingCombatAnimData { get; set; }
 
-        private void Start()
+        private void OnValidate()
         {
-            InputEvent.Instance.Event_Equip.AddListener(Equip);
+            this.LogErrorIfComponentIsNull(DamageHandler);
+            this.LogErrorIfComponentIsNull(BodyTransform);
         }
 
-        private void Equip()
+        [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
+        private void OnHoster()
         {
-            if (GameManager.Player.Equipment.IsEquippedWithWeapon() == false)
+            GameManager.Player.Equipment.EquippedWeapon.SetWeaponTransformParent(false);
+
+            if(Unit.IsUnitPlayer == true)
             {
-                return;
+                InputEvent.Instance.Event_Holster.RemoveListener(PlayHolsterAnimation);
+                InputEvent.Instance.Event_Equip.AddListener(PlayEquipAnimation);
+
+                InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(PlayAttackAnim_Heavy);
+                InputEvent.Instance.Event_DoAttackLight.RemoveListener(PlayAttackAnim_Light);
             }
-
-            if (TPC_AnimController.Instance.AnimStateDic[nameof(TPC_Anim_AttributeIdle)] == false)
-            {
-                return;
-            }
-
-            TPC_AnimController.Instance.SetLayerWeight(TPC_Anim_SwordAnimsetPro.LAYER, 1.0f);
-            TPC_AnimController.Instance.PlayAnim(TPC_Anim_SwordAnimsetPro.Sword1h_Equip);
-        }
-
-        private void Holster()
-        {
-            TPC_AnimController.Instance.PlayAnim(TPC_Anim_SwordAnimsetPro.Sword1h_Holster);
         }
 
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
@@ -42,26 +47,26 @@ namespace Tamana
         {
             GameManager.Player.Equipment.EquippedWeapon.SetWeaponTransformParent(true);
 
-            InputEvent.Instance.Event_Equip.RemoveListener(Equip);
-            InputEvent.Instance.Event_Holster.AddListener(Holster);
+            if (Unit.IsUnitPlayer == true)
+            {
+                InputEvent.Instance.Event_Equip.RemoveListener(PlayEquipAnimation);
+                InputEvent.Instance.Event_Holster.AddListener(PlayHolsterAnimation);
 
-            InputEvent.Instance.Event_DoAttackHeavy.AddListener(PlayAttackAnim_Heavy);
-            InputEvent.Instance.Event_DoAttackLight.AddListener(PlayAttackAnim_Light);
+                InputEvent.Instance.Event_DoAttackHeavy.AddListener(PlayAttackAnim_Heavy);
+                InputEvent.Instance.Event_DoAttackLight.AddListener(PlayAttackAnim_Light);
+            }
         }
 
-        [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
-        private void OnHolster()
+        public void PlayEquipAnimation()
         {
-            GameManager.Player.Equipment.EquippedWeapon.SetWeaponTransformParent(false);
-
-            InputEvent.Instance.Event_Holster.RemoveListener(Holster);
-            InputEvent.Instance.Event_Equip.AddListener(Equip);
-
-            InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(PlayAttackAnim_Heavy);
-            InputEvent.Instance.Event_DoAttackLight.RemoveListener(PlayAttackAnim_Light);
+            Animator.Play(TPC_Anim_SwordAnimsetPro.Sword1h_Equip);
+        }
+        public void PlayHolsterAnimation()
+        {
+            Animator.Play(TPC_Anim_SwordAnimsetPro.Sword1h_Holster);
         }
 
-        private void PlayAttackAnim(TPC_CombatAnimDataContainer attackType)
+        private void PlayAttackAnimation(TPC_CombatAnimDataContainer attackType)
         {
             if (attackType is null)
             {
@@ -79,7 +84,7 @@ namespace Tamana
                 {
                     CurrentlyPlayingCombatAnimDataContainer = attackType;
                     GameManager.PlayerStatus.ST.Attack(attackType.StaminaCost);
-                    TPC_AnimController.Instance.PlayAnim(attackType.CombatDatas[0].MyAnimStateName);
+                    Animator.Play(attackType.CombatDatas[0].MyAnimStateName);
                 }
 
                 else if (CurrentlyPlayingCombatAnimData != null)
@@ -92,14 +97,13 @@ namespace Tamana
                 }
             }
         }
-
-        private void PlayAttackAnim_Light()
+        public void PlayAttackAnim_Light()
         {
-            PlayAttackAnim(lightAttack);
+            PlayAttackAnimation(lightAttack);
         }
-        private void PlayAttackAnim_Heavy()
+        public void PlayAttackAnim_Heavy()
         {
-            PlayAttackAnim(heavyAttack);
+            PlayAttackAnimation(heavyAttack);
         }
     }
 }
