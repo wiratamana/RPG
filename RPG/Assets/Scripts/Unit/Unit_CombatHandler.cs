@@ -30,7 +30,7 @@ namespace Tamana
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnHolster()
         {
-            GameManager.Player.Equipment.EquippedWeapon.SetWeaponTransformParent(false);
+            Unit.Equipment.EquippedWeapon.SetWeaponTransformParent(false);
 
             if(Unit.IsUnitPlayer == true)
             {
@@ -45,7 +45,7 @@ namespace Tamana
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnEquip()
         {
-            GameManager.Player.Equipment.EquippedWeapon.SetWeaponTransformParent(true);
+            Unit.Equipment.EquippedWeapon.SetWeaponTransformParent(true);
 
             if (Unit.IsUnitPlayer == true)
             {
