@@ -15,6 +15,12 @@ namespace Tamana
         public TPC_CombatAnimDataContainer CurrentlyPlayingCombatAnimDataContainer { set; get; }
         public TPC_CombatAnimData CurrentlyPlayingCombatAnimData { get; set; }
 
+        private void Awake()
+        {
+            CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(MakePlayerUnableToAttack);
+            CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(MakePlayerAbleToAttackAgain);
+        }
+
         private void PlayAttackAnimation(TPC_CombatAnimDataContainer attackType)
         {
             if (attackType is null)
@@ -53,6 +59,25 @@ namespace Tamana
         public void PlayAttackAnim_Heavy()
         {
             PlayAttackAnimation(heavyAttack);
+        }
+
+        private void MakePlayerUnableToAttack()
+        {
+            Debug.Log("MakePlayerUnableToAttack");
+
+            InputEvent.Instance.Event_DoAttackLight.RemoveListener(PlayAttackAnim_Heavy);
+            InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(PlayAttackAnim_Light);
+        }
+
+        private void MakePlayerAbleToAttackAgain()
+        {
+            Debug.Log("MakePlayerAbleToAttackAgain");
+
+            InputEvent.Instance.Event_DoAttackLight.AddListener(PlayAttackAnim_Heavy);
+            InputEvent.Instance.Event_DoAttackHeavy.AddListener(PlayAttackAnim_Light);
+
+            CurrentlyPlayingCombatAnimDataContainer = null;
+            CurrentlyPlayingCombatAnimData = null;
         }
     }
 }

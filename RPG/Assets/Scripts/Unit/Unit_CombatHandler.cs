@@ -22,6 +22,9 @@ namespace Tamana
         public Unit_BodyTransform BodyTransform => Unit.BodyTransform;
         public Unit_Animator UnitAnimator =>Unit.UnitAnimator;
 
+        public EventManager OnHolsterEvent { get; } = new EventManager();
+        public EventManager OnEquipEvent { get; } = new EventManager();
+
         private void OnValidate()
         {
             this.LogErrorIfComponentIsNull(DamageReceiveHandler);
@@ -36,8 +39,9 @@ namespace Tamana
         private void OnHolster()
         {
             Unit.Equipment.EquippedWeapon.SetWeaponTransformParent(false);
+            OnHolsterEvent.Invoke();
 
-            if(Unit.IsUnitPlayer == true)
+            if (Unit.IsUnitPlayer == true)
             {
                 InputEvent.Instance.Event_Holster.RemoveListener(Holster);
                 InputEvent.Instance.Event_Equip.AddListener(Equip);
@@ -52,6 +56,7 @@ namespace Tamana
         private void OnEquip()
         {
             Unit.Equipment.EquippedWeapon.SetWeaponTransformParent(true);
+            OnEquipEvent.Invoke();
 
             if (Unit.IsUnitPlayer == true)
             {

@@ -17,7 +17,6 @@ namespace Tamana
         protected virtual void Awake()
         {
             Unit.CombatHandler.DamageReceiveHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
-            StatusMain.OnDeadEvent.AddListener(OnDead);
         }
 
         private void Start()

@@ -43,6 +43,9 @@ namespace Tamana
         public EventManager OnAccelerating { get; } = new EventManager();
         public EventManager OnDecelerating { get; } = new EventManager();
 
+        public EventManager OnHitAnimationStarted { get; } = new EventManager();
+        public EventManager OnHitAnimationFinished { get; } = new EventManager();
+
         private Dictionary<string, bool> hitAnimationsStatusDic { get; } = new Dictionary<string, bool>();
 
         public void Play(string stateName)
@@ -71,6 +74,7 @@ namespace Tamana
                 hitAnimationsStatusDic[stateName] = true;
             }
 
+            OnHitAnimationStarted.Invoke();
             Params.IsTakingDamage = true;
             Play(stateName);
         }
@@ -95,6 +99,10 @@ namespace Tamana
                 }
             }
 
+            if(isTakingDamage == false)
+            {
+                OnHitAnimationFinished.Invoke();
+            }
             Params.IsTakingDamage = isTakingDamage;
             Debug.Log($"isTakingDamage = {Params.IsTakingDamage}");
         }
