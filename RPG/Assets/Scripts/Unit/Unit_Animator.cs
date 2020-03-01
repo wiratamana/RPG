@@ -40,6 +40,8 @@ namespace Tamana
         public float MoveAcceleration => 5 * Time.deltaTime;
         public EventManager OnReachMaximumVelocity { get; } = new EventManager();
         public EventManager OnReachZeroVelocity { get; } = new EventManager();
+        public EventManager OnAccelerating { get; } = new EventManager();
+        public EventManager OnDecelerating { get; } = new EventManager();
 
         public void Play(string stateName)
         {
@@ -51,8 +53,9 @@ namespace Tamana
             var movementValue = Params.Params_Movement;
             var maxVelocity = Unit_Animator_Params.MAX_VELOCITY;
             Params.Params_Movement = Mathf.Min(maxVelocity, movementValue + MoveAcceleration);
+            OnAccelerating.Invoke();
 
-            if(movementValue != maxVelocity && Params.Params_Movement == maxVelocity)
+            if (movementValue != maxVelocity && Params.Params_Movement == maxVelocity)
             {
                 OnReachMaximumVelocity.Invoke();
             }
@@ -63,6 +66,7 @@ namespace Tamana
             var movementValue = Params.Params_Movement;
             var minVelocity = Unit_Animator_Params.MIN_VELOCITY;
             Params.Params_Movement = Mathf.Max(minVelocity, movementValue - MoveAcceleration);
+            OnDecelerating.Invoke();
 
             if (movementValue != minVelocity && Params.Params_Movement == minVelocity)
             {

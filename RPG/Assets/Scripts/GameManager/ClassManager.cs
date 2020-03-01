@@ -6,9 +6,11 @@ namespace Tamana
 {
     public sealed class ClassManager : SingletonMonobehaviour<ClassManager>
     {
-        [RuntimeInitializeOnLoadMethod]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         private static void CreateInstance()
         {
+            Debug.Log($"RuntimeInitializeOnLoadMethod - {nameof(ClassManager)}");
+
             var go = new GameObject(nameof(ClassManager));
             go.AddComponent<ClassManager>();
             DontDestroyOnLoad(go);

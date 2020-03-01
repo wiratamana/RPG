@@ -5,9 +5,11 @@ namespace Tamana
 {
     public sealed class LayerManager : SingletonMonobehaviour<LayerManager>
     {
-        [RuntimeInitializeOnLoadMethod]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         private static void CreateInstance()
         {
+            Debug.Log($"RuntimeInitializeOnLoadMethod - {nameof(LayerManager)}");
+
             var go = new GameObject(nameof(LayerManager));
             var component = go.AddComponent<LayerManager>();
 

@@ -11,6 +11,8 @@ namespace Tamana
         public Unit_Player Unit => this.GetAndAssignComponent(ref unit);
         public TPC_RotateBeforeStartMoveAnimPlayHandler StartRotateAnimHandler { private set; get; }
 
+        private bool isButtonWPressed;
+
         protected override void Awake()
         {
             base.Awake();
@@ -20,38 +22,18 @@ namespace Tamana
 
             Unit.UnitAnimator.OnReachMaximumVelocity.AddListener(OnReachMaximumVelocity);
             Unit.UnitAnimator.OnReachZeroVelocity.AddListener(OnReachZeroVelocity);
-        }
 
-        private void OnReachMaximumVelocity()
-        {
-            Debug.Log("OnReachMaximumVelocity");
-            Unit.UnitAnimator.Params.IsAccelerating = false;
-        }
-
-        private void OnReachZeroVelocity()
-        {
-            Debug.Log("OnReachZeroVelocity");
-            unit.UnitAnimator.Params.IsDeceleratin = false;
-            Unit.UnitAnimator.Params.IsMoving = false;
+            InputEvent.Instance.Event_BeginMove.AddListener(OnBeginMove);
+            InputEvent.Instance.Event_StopMove.AddListener(OnStopMove);
         }
 
         private void Update()
         {
-            if (KeyboardController.IsForwardDown)
-            {
-                Unit.UnitAnimator.Params.IsRotateBeforeMove = true;
-            }
-
-            if (KeyboardController.IsForwardUp)
-            {
-                unit.UnitAnimator.Params.IsDeceleratin = true;
-            }
-
-            if (Unit.UnitAnimator.Params.IsAccelerating == true)
+            if(Unit.UnitAnimator.Params.IsAccelerating == true)
             {
                 Unit.UnitAnimator.Accelerate();
             }
-            
+
             if(Unit.UnitAnimator.Params.IsDeceleratin == true)
             {
                 Unit.UnitAnimator.Decelerate();
@@ -68,10 +50,40 @@ namespace Tamana
             }
         }
 
+        private void OnBeginMove()
+        {
+            isButtonWPressed = true;
+
+            Unit.UnitAnimator.Params.IsRotateBeforeMove = true;
+        }
+
+        private void OnStopMove()
+        {
+            isButtonWPressed = false;
+
+            Unit.UnitAnimator.Params.IsAccelerating = false; 
+            unit.UnitAnimator.Params.IsDeceleratin = true;
+        }
+
+        private void OnReachMaximumVelocity()
+        {
+            Unit.UnitAnimator.Params.IsAccelerating = false;
+        }
+
+        private void OnReachZeroVelocity()
+        {
+            Unit.UnitAnimator.Params.IsDeceleratin = false;
+            Unit.UnitAnimator.Params.IsMoving = false;
+        }
+
         private void OnRotationCompleted()
         {
-            Unit.UnitAnimator.Params.IsMoving = true;
-            Unit.UnitAnimator.Params.IsAccelerating = true;
+            if(isButtonWPressed == true)
+            {
+                Unit.UnitAnimator.Params.IsDeceleratin = false;
+                Unit.UnitAnimator.Params.IsMoving = true;
+                Unit.UnitAnimator.Params.IsAccelerating = true;
+            }            
         }            
     }
 }

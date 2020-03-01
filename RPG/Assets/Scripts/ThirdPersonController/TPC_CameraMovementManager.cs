@@ -38,7 +38,7 @@ namespace Tamana
         protected override void Awake()
         {
             base.Awake();
-
+            
             CreateThirdPersonCamera();
         }
 
