@@ -12,6 +12,7 @@ namespace Tamana
         private static readonly StringBuilder keyBuilder = new StringBuilder();
         private const string ADD_LISTENER = "ADD";
         private const string REMOVE_LISTENER = "REMOVE";
+        private bool isInvoking = false;
 
         public EventManager()
         {
@@ -33,7 +34,14 @@ namespace Tamana
                 return;
             }
 
-            listenerEditorQueue.Enqueue((ADD_LISTENER, key, callback));
+            if(isInvoking == true)
+            {
+                listenerEditorQueue.Enqueue((ADD_LISTENER, key, callback));
+            }
+            else
+            {
+                callbacksDic.Add(key, callback);
+            }
         }
 
         public void RemoveListener(UnityAction callback)
@@ -50,7 +58,14 @@ namespace Tamana
                 return;
             }
 
-            listenerEditorQueue.Enqueue((REMOVE_LISTENER, key, null));
+            if (isInvoking == true)
+            {
+                listenerEditorQueue.Enqueue((REMOVE_LISTENER, key, null));
+            }
+            else
+            {
+                callbacksDic.Remove(key);
+            }
         }
 
         public void RemoveAllListener()
@@ -63,6 +78,8 @@ namespace Tamana
 
         public void Invoke()
         {
+            isInvoking = true;
+
             while (listenerEditorQueue.Count > 0)
             {
                 var listener = listenerEditorQueue.Dequeue();
@@ -91,6 +108,8 @@ namespace Tamana
                     Debug.Log($"Stack Trace : {e.StackTrace}", Debug.LogType.Error);
                 }
             }
+
+            isInvoking = false;
         }
 
         private static string GetCallbackKey(UnityAction callback, object uniqueID = null)
@@ -125,6 +144,7 @@ namespace Tamana
         private static readonly StringBuilder keyBuilder = new StringBuilder();
         private const string ADD_LISTENER = "ADD";
         private const string REMOVE_LISTENER = "REMOVE";
+        private bool isInvoking = false;
 
         public EventManager()
         {
@@ -146,7 +166,14 @@ namespace Tamana
                 return;
             }
 
-            listenerEditorQueue.Enqueue((ADD_LISTENER, key, callback));
+            if (isInvoking == true)
+            {
+                listenerEditorQueue.Enqueue((ADD_LISTENER, key, callback));
+            }
+            else
+            {
+                callbacksDic.Add(key, callback);
+            }
         }
 
         public void RemoveListener(UnityAction<T> callback)
@@ -163,7 +190,14 @@ namespace Tamana
                 return;
             }
 
-            listenerEditorQueue.Enqueue((REMOVE_LISTENER, key, null));
+            if (isInvoking == true)
+            {
+                listenerEditorQueue.Enqueue((REMOVE_LISTENER, key, null));
+            }
+            else
+            {
+                callbacksDic.Remove(key);
+            }
         }
 
         public void RemoveAllListener()
@@ -176,6 +210,8 @@ namespace Tamana
 
         public void Invoke(T param)
         {
+            isInvoking = true;
+
             while (listenerEditorQueue.Count > 0)
             {
                 var listener = listenerEditorQueue.Dequeue();
@@ -204,6 +240,8 @@ namespace Tamana
                     Debug.Log($"Stack Trace : {e.StackTrace}", Debug.LogType.Error);
                 }
             }
+
+            isInvoking = false;
         }
 
         private static string GetCallbackKey(UnityAction<T> callback, object uniqueID = null)
@@ -238,6 +276,7 @@ namespace Tamana
         private static readonly StringBuilder keyBuilder = new StringBuilder();
         private const string ADD_LISTENER = "ADD";
         private const string REMOVE_LISTENER = "REMOVE";
+        private bool isInvoking = false;
 
         public EventManager()
         {
@@ -259,7 +298,14 @@ namespace Tamana
                 return;
             }
 
-            listenerEditorQueue.Enqueue((ADD_LISTENER, key, callback));
+            if (isInvoking == true)
+            {
+                listenerEditorQueue.Enqueue((ADD_LISTENER, key, callback));
+            }
+            else
+            {
+                callbacksDic.Add(key, callback);
+            }
         }
 
         public void RemoveListener(UnityAction<T0, T1> callback)
@@ -276,7 +322,14 @@ namespace Tamana
                 return;
             }
 
-            listenerEditorQueue.Enqueue((REMOVE_LISTENER, key, null));
+            if (isInvoking == true)
+            {
+                listenerEditorQueue.Enqueue((REMOVE_LISTENER, key, null));
+            }
+            else
+            {
+                callbacksDic.Remove(key);
+            }
         }
 
         public void RemoveAllListener()
@@ -289,6 +342,8 @@ namespace Tamana
 
         public void Invoke(T0 param0, T1 param1)
         {
+            isInvoking = true;
+
             while (listenerEditorQueue.Count > 0)
             {
                 var listener = listenerEditorQueue.Dequeue();
@@ -317,6 +372,8 @@ namespace Tamana
                     Debug.Log($"Stack Trace : {e.StackTrace}", Debug.LogType.Error);
                 }
             }
+
+            isInvoking = false;
         }
 
         private static string GetCallbackKey(UnityAction<T0, T1> callback, object uniqueID = null)
