@@ -8,10 +8,8 @@ namespace Tamana
     public class TPC_PlayerMovement : SingletonMonobehaviour<TPC_PlayerMovement>
     {
         private Unit_Player unit;
-        public Unit_Player Unit => this.GetAndAssignComponent(unit);
+        public Unit_Player Unit => this.GetAndAssignComponent(ref unit);
         public TPC_RotateBeforeStartMoveAnimPlayHandler StartRotateAnimHandler { private set; get; }
-
-        private bool isRun = false;
 
         protected override void Awake()
         {
@@ -19,52 +17,61 @@ namespace Tamana
 
             StartRotateAnimHandler = GameManager.PlayerTransform.gameObject.AddComponent<TPC_RotateBeforeStartMoveAnimPlayHandler>();
             StartRotateAnimHandler.OnRotateCompleted.AddListener(OnRotationCompleted);
+
+            Unit.UnitAnimator.OnReachMaximumVelocity.AddListener(OnReachMaximumVelocity);
+            Unit.UnitAnimator.OnReachZeroVelocity.AddListener(OnReachZeroVelocity);
+        }
+
+        private void OnReachMaximumVelocity()
+        {
+            Debug.Log("OnReachMaximumVelocity");
+            Unit.UnitAnimator.Params.IsAccelerating = false;
+        }
+
+        private void OnReachZeroVelocity()
+        {
+            Debug.Log("OnReachZeroVelocity");
+            unit.UnitAnimator.Params.IsDeceleratin = false;
+            Unit.UnitAnimator.Params.IsMoving = false;
         }
 
         private void Update()
         {
-            MoveForward();
-        }
-
-        private void MoveForward()
-        {
-            if(KeyboardController.IsForwardDown)
+            if (KeyboardController.IsForwardDown)
             {
-                Unit.UnitAnimator.Params.Param_IsRotateBeforeMove = true;
-            }     
-            
-            if(KeyboardController.IsForwardUp)
-            {
-                isRun = false;
+                Unit.UnitAnimator.Params.IsRotateBeforeMove = true;
             }
 
-            if(isRun == true)
+            if (KeyboardController.IsForwardUp)
             {
-                var val = Unit.UnitAnimator.Params.Params_Movement;
-                Unit.UnitAnimator.Params.Params_Movement = Mathf.Min(1.0f, val + 5 * Time.deltaTime);
+                unit.UnitAnimator.Params.IsDeceleratin = true;
+            }
 
+            if (Unit.UnitAnimator.Params.IsAccelerating == true)
+            {
+                Unit.UnitAnimator.Accelerate();
+            }
+            
+            if(Unit.UnitAnimator.Params.IsDeceleratin == true)
+            {
+                Unit.UnitAnimator.Decelerate();
+            }
+
+            if(Unit.UnitAnimator.Params.IsMoving == true)
+            {
                 var cameraForward = GameManager.MainCamera.transform.forward;
                 cameraForward.y = 0;
                 cameraForward = cameraForward.normalized;
 
                 var lookRotation = Quaternion.LookRotation(cameraForward);
-                GameManager.PlayerTransform.transform.rotation = Quaternion.Slerp(GameManager.PlayerTransform.transform.rotation, lookRotation, 5 * Time.deltaTime);
-            }
-            else
-            {
-                var val = Unit.UnitAnimator.Params.Params_Movement;
-                Unit.UnitAnimator.Params.Params_Movement = Mathf.Max(0.0f, val - 5 * Time.deltaTime);
+                Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, 5 * Time.deltaTime);
             }
         }
 
         private void OnRotationCompleted()
         {
-            isRun = true;            
-        }
-        
-        public string GetStartMoveAnimationName(float angle)
-        {
-            return null;
-        }
+            Unit.UnitAnimator.Params.IsMoving = true;
+            Unit.UnitAnimator.Params.IsAccelerating = true;
+        }            
     }
 }

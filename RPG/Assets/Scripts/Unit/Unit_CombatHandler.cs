@@ -13,9 +13,9 @@ namespace Tamana
         public TPC_CombatAnimDataContainer lightAttack;
         public TPC_CombatAnimDataContainer heavyAttack;
 
-        public Unit_Base Unit => this.GetAndAssignComponent(unit);
-        public Unit_DamageHandler DamageHandler => this.GetOrAddAndAssignComponent(damageHandler);
-        public Unit_BodyTransform BodyTransform => this.GetOrAddAndAssignComponent(bodyTransform);
+        public Unit_Base Unit => this.GetAndAssignComponent(ref unit);
+        public Unit_DamageHandler DamageHandler => this.GetOrAddAndAssignComponent(ref damageHandler);
+        public Unit_BodyTransform BodyTransform => this.GetOrAddAndAssignComponent(ref bodyTransform);
         public Unit_Animator Animator =>Unit.UnitAnimator;
 
         public TPC_CombatAnimDataContainer CurrentlyPlayingCombatAnimDataContainer { set; get; }

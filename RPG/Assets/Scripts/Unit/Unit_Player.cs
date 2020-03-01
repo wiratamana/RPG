@@ -8,7 +8,7 @@ namespace Tamana
     {
         private Status_Player status;
 
-        public Status_Player Status => this.GetOrAddAndAssignComponent(status);
+        public Status_Player Status => this.GetOrAddAndAssignComponent(ref status);
 
         protected override void OnValidate()
         {

@@ -24,7 +24,7 @@ namespace Tamana
             animData.IsInputReceived = false;
             animData.IsCurrentlyReceivingInput = false;
 
-            unit.UnitAnimator.Params.Param_IsTransitingToNextAttackAnimation = false;
+            unit.UnitAnimator.Params.IsTransitingToNextAttackAnimation = false;
             GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimData = animData;
         }
 
@@ -63,7 +63,7 @@ namespace Tamana
             // ===============================================================================================
             if (animData.IsInputReceived == true && isCrossFading == false)
             {
-                unit.UnitAnimator.Params.Param_IsTransitingToNextAttackAnimation = true;
+                unit.UnitAnimator.Params.IsTransitingToNextAttackAnimation = true;
                 isCrossFading = true;
                 return;
             }
@@ -78,7 +78,7 @@ namespace Tamana
 
                 GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimData = null;
                 GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimDataContainer = null;
-                unit.UnitAnimator.Params.Param_IsTransitingToNextAttackAnimation = false;
+                unit.UnitAnimator.Params.IsTransitingToNextAttackAnimation = false;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Tamana
         {
             if (animData.IsLastAnimation == true)
             {
-                unit.UnitAnimator.Params.Param_IsTransitingToNextAttackAnimation = false;
+                unit.UnitAnimator.Params.IsTransitingToNextAttackAnimation = false;
                 GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimDataContainer = null;
                 GameManager.Player.CombatHandler.CurrentlyPlayingCombatAnimData = null;
             }

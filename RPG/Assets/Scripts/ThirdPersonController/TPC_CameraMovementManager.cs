@@ -15,7 +15,7 @@ namespace Tamana
 
         public Camera Camera { private set; get; }
         public Transform CameraLookPoint { private set; get; }
-        public TPC_PlayerMovement PlayerMovement => this.GetOrAddAndAssignComponent(playerMovement);
+        public TPC_PlayerMovement PlayerMovement => this.GetOrAddAndAssignComponent(ref playerMovement);
 
         public float CameraAngleFromPlayerForward
         {

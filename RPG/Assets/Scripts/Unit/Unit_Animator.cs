@@ -34,13 +34,40 @@ namespace Tamana
         }
 
         private Unit_Base unit;
-        public Unit_Base Unit => this.GetAndAssignComponent(unit);
+        public Unit_Base Unit => this.GetAndAssignComponent(ref unit);
         public Unit_CombatHandler CombatHandler => Unit.CombatHandler;
 
+        public float MoveAcceleration => 5 * Time.deltaTime;
+        public EventManager OnReachMaximumVelocity { get; } = new EventManager();
+        public EventManager OnReachZeroVelocity { get; } = new EventManager();
 
         public void Play(string stateName)
         {
             Animator.Play(stateName);
+        }
+
+        public void Accelerate()
+        {
+            var movementValue = Params.Params_Movement;
+            var maxVelocity = Unit_Animator_Params.MAX_VELOCITY;
+            Params.Params_Movement = Mathf.Min(maxVelocity, movementValue + MoveAcceleration);
+
+            if(movementValue != maxVelocity && Params.Params_Movement == maxVelocity)
+            {
+                OnReachMaximumVelocity.Invoke();
+            }
+        }
+
+        public void Decelerate()
+        {
+            var movementValue = Params.Params_Movement;
+            var minVelocity = Unit_Animator_Params.MIN_VELOCITY;
+            Params.Params_Movement = Mathf.Max(minVelocity, movementValue - MoveAcceleration);
+
+            if (movementValue != minVelocity && Params.Params_Movement == minVelocity)
+            {
+                OnReachZeroVelocity.Invoke();
+            }
         }
     }
 }

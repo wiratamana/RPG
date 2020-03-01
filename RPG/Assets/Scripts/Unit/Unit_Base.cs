@@ -42,8 +42,8 @@ namespace Tamana
                 return equipment;
             }
         }
-        public Unit_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(combatHandler);
-        public Unit_Animator UnitAnimator => this.GetOrAddAndAssignComponent(animator);
+        public Unit_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(ref combatHandler);
+        public Unit_Animator UnitAnimator => this.GetOrAddAndAssignComponent(ref animator);
 
         public bool IsUnitPlayer => this is Unit_Player;
 

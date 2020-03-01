@@ -7,7 +7,7 @@ namespace Tamana
     public class Unit_DamageHandler : MonoBehaviour
     {
         private Unit_Base unit;
-        public Unit_Base Unit => this.GetAndAssignComponent(unit);
+        public Unit_Base Unit => this.GetAndAssignComponent(ref unit);
         public bool IsUnitPlayer => Unit is Unit_Player;
 
         public EventManager<Status_DamageData> OnReceivedDamageEvent { private set; get; } = new EventManager<Status_DamageData>();
