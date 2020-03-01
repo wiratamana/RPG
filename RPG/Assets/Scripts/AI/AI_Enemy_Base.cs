@@ -14,6 +14,13 @@ namespace Tamana
         public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(ref combatLogic);        
         public Unit_AI_Hostile Unit => this.GetOrAddAndAssignComponent(ref unit);
 
+        private void OnValidate()
+        {
+            this.LogErrorIfComponentIsNull(Unit);
+            this.LogErrorIfComponentIsNull(CombatLogic);
+            this.LogErrorIfComponentIsNull(StatusMain);
+        }
+
         protected virtual void Awake()
         {
             Unit.CombatHandler.DamageReceiveHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);

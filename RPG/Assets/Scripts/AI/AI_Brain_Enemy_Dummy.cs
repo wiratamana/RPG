@@ -66,6 +66,9 @@ namespace Tamana
             PlayerDetector.OnPlayerExitedHostileRange.AddListener(AttackHandler.StopNeuron, AttackHandler.GetInstanceID());
 
             PlayerDetector.OnPlayerInsideHostileRange.AddListener(AttackHandler.UpdateDistanceToPlayer, AttackHandler.GetInstanceID());
+
+            AI.Unit.CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(AttackHandler.StopNeuron);
+            AI.Unit.CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(AttackHandler.ResumeNeuron);
         }
 
         public override void Update()

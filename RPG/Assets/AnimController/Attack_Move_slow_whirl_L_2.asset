@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ea3198cfb12da4da2dca527e164596, type: 3}
   m_Name: Attack_Move_slow_whirl_L_2
   m_EditorClassIdentifier: 
-  hitAnimations_1H: []
+  hitAnimations_1H:
+  - Sword1h_Hit_Torso_Left
+  - Sword1h_Hit_Torso_Front
   hitAnimations_2H: []
