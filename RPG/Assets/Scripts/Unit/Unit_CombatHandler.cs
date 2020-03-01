@@ -59,7 +59,7 @@ namespace Tamana
 
         public void Equip()
         {
-            if(Unit.Equipment.EquippedWeapon == null)
+            if (Unit.Equipment.EquippedWeapon == null)
             {
                 return;
             }
