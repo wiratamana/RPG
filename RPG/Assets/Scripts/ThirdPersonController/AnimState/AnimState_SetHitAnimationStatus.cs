@@ -17,6 +17,7 @@ namespace Tamana
                 unit = animator.GetComponent<Unit_Base>();
             }
 
+            Debug.Log($"OnStateExit - {stateName}");
             unit.UnitAnimator.SetAnimationHitStatus(stateName, value);
         }
     }

@@ -71,6 +71,7 @@ namespace Tamana
                 hitAnimationsStatusDic[stateName] = true;
             }
 
+            Params.IsTakingDamage = true;
             Play(stateName);
         }
             
@@ -94,8 +95,8 @@ namespace Tamana
                 }
             }
 
-            Debug.Log($"isTakingDamage = {isTakingDamage}");
             Params.IsTakingDamage = isTakingDamage;
+            Debug.Log($"isTakingDamage = {Params.IsTakingDamage}");
         }
 
         public void Accelerate()

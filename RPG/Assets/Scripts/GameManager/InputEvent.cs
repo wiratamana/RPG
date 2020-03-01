@@ -29,6 +29,7 @@ namespace Tamana
 
         public EventManager Event_BeginMove { get; } = new EventManager();
         public EventManager Event_StopMove { get; } = new EventManager();
+        public EventManager Event_Parry { get; } = new EventManager();
 
         private void Update()
         {
@@ -66,6 +67,11 @@ namespace Tamana
             if(Input.GetKeyUp(KeyCode.W) == true)
             {
                 Event_StopMove.Invoke();
+            }
+
+            if(Input.GetKeyDown(KeyCode.LeftAlt) == true)
+            {
+                Event_Parry.Invoke();
             }
         }
     }

@@ -10,6 +10,7 @@ namespace Tamana
         private Unit_Equipment equipment;
         private Unit_CombatHandler combatHandler;
         private Unit_Animator animator;
+        private Unit_BodyTransform bodyTransform;
 
         public Unit_Inventory Inventory
         {
@@ -44,6 +45,7 @@ namespace Tamana
         }
         public Unit_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(ref combatHandler);
         public Unit_Animator UnitAnimator => this.GetOrAddAndAssignComponent(ref animator);
+        public Unit_BodyTransform BodyTransform => this.GetOrAddAndAssignComponent(ref bodyTransform);
 
         public bool IsUnitPlayer => this is Unit_Player;
 
@@ -51,6 +53,7 @@ namespace Tamana
         {
             this.LogErrorIfComponentIsNull(CombatHandler);
             this.LogErrorIfComponentIsNull(UnitAnimator);
+            this.LogErrorIfComponentIsNull(BodyTransform);
         }
     }
 }

@@ -4,29 +4,18 @@ using UnityEngine;
 
 namespace Tamana
 {
-    public class Unit_DamageHandler : MonoBehaviour
+    public class Unit_DamageSendHandler : MonoBehaviour
     {
-        private Unit_Base unit;
-        public Unit_Base Unit => this.GetAndAssignComponent(ref unit);
-        public bool IsUnitPlayer => Unit is Unit_Player;
-
-        public EventManager<Status_DamageData> OnReceivedDamageEvent { get; } = new EventManager<Status_DamageData>();        
-
-        public void DamageReceiver(Status_DamageData damage)
-        {
-            Debug.Log($"'{name}' received '{damage.damagePoint}' damage");
-            OnReceivedDamageEvent.Invoke(damage);
-
-            Unit.UnitAnimator.PlayHitAnimation(damage.hitsAnimation);
-        }
+        private Unit_CombatHandler combatHandler;
+        public Unit_CombatHandler CombatHandler => this.GetAndAssignComponent(ref combatHandler);
 
         private Collider[] OverlapWeapon()
         {
-            var boxCenter = Unit.Equipment.WeaponTransform.GetChild(0).position;
-            var boxHalfExtents = Unit.Equipment.EquippedWeapon.WeaponCollider.size * 0.5f;
+            var boxCenter = CombatHandler.Unit.Equipment.WeaponTransform.GetChild(0).position;
+            var boxHalfExtents = CombatHandler.Unit.Equipment.EquippedWeapon.WeaponCollider.size * 0.5f;
             int layer;
 
-            if (IsUnitPlayer == true)
+            if (CombatHandler.Unit.IsUnitPlayer == true)
             {
                 layer = LayerMask.GetMask(LayerManager.LAYER_ENEMY);
             }
@@ -35,7 +24,7 @@ namespace Tamana
                 layer = LayerMask.GetMask(LayerManager.LAYER_PLAYER);
             }
 
-            var colliders = Physics.OverlapBox(boxCenter, boxHalfExtents, Unit.Equipment.WeaponTransform.rotation, layer);
+            var colliders = Physics.OverlapBox(boxCenter, boxHalfExtents, CombatHandler.Unit.Equipment.WeaponTransform.rotation, layer);
 
             return colliders;
         }
@@ -54,7 +43,7 @@ namespace Tamana
             {
                 foreach (var c in colliders)
                 {
-                    var damageHandler = c.GetComponent<Unit_DamageHandler>();
+                    var damageHandler = c.GetComponent<Unit_DamageReceiveHandler>();
                     if (damageHandler == null)
                     {
                         continue;
@@ -64,6 +53,8 @@ namespace Tamana
                     damageHandler.DamageReceiver(new Status_DamageData()
                     {
                         damagePoint = 100,
+                        parryTiming = CombatHandler.ParryHandler.ChanceToParryTiming,
+                        damageTiming = Time.time,
                         hitsAnimation = damageObject.GetHitAnimations(AnimationState.Idle)
                     });
                 }
