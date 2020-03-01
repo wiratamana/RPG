@@ -25,6 +25,8 @@ namespace Tamana
         private const string ParamName_IsAccelerating = "IsAccelerating";
         private const string ParamName_IsTransitingToNextAttackAnimation = "IsTransitingToNextAttackAnimation";
         private const string ParamName_IsRotateBeforeMove = "IsRotateBeforeMove";
+        private const string ParamName_IsHolstering = "IsHolstering";
+        private const string ParamName_IsEquipping = "IsEquipping";
 
         public bool IsInCombatState => animator.GetBool(ParamName_IsInCombatState);
         public float Params_Movement
@@ -56,6 +58,16 @@ namespace Tamana
         {
             get => animator.GetBool(ParamName_IsAccelerating);
             set => animator.SetBool(ParamName_IsAccelerating, value);
+        }
+        public bool IsHolstering
+        {
+            get => animator.GetBool(ParamName_IsHolstering);
+            set => animator.SetBool(ParamName_IsHolstering, value);
+        }
+        public bool IsEquipping
+        {
+            get => animator.GetBool(ParamName_IsEquipping);
+            set => animator.SetBool(ParamName_IsEquipping, value);
         }
     }
 }

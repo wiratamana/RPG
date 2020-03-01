@@ -23,6 +23,8 @@ namespace Tamana
             Unit.UnitAnimator.OnReachMaximumVelocity.AddListener(OnReachMaximumVelocity);
             Unit.UnitAnimator.OnReachZeroVelocity.AddListener(OnReachZeroVelocity);
 
+            InputEvent.Instance.Event_Equip.AddListener(Unit.CombatHandler.Equip);
+
             InputEvent.Instance.Event_BeginMove.AddListener(OnBeginMove);
             InputEvent.Instance.Event_StopMove.AddListener(OnStopMove);
         }
