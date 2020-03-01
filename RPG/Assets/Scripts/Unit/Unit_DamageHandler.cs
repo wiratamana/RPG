@@ -10,12 +10,14 @@ namespace Tamana
         public Unit_Base Unit => this.GetAndAssignComponent(ref unit);
         public bool IsUnitPlayer => Unit is Unit_Player;
 
-        public EventManager<Status_DamageData> OnReceivedDamageEvent { private set; get; } = new EventManager<Status_DamageData>();
+        public EventManager<Status_DamageData> OnReceivedDamageEvent { get; } = new EventManager<Status_DamageData>();        
 
         public void DamageReceiver(Status_DamageData damage)
         {
             Debug.Log($"'{name}' received '{damage.damagePoint}' damage");
             OnReceivedDamageEvent.Invoke(damage);
+
+            Unit.UnitAnimator.PlayHitAnimation(damage.hitsAnimation);
         }
 
         private Collider[] OverlapWeapon()
@@ -39,7 +41,7 @@ namespace Tamana
         }
 
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
-        private void OnDoDamage()
+        private void OnDoDamage(Status_DamageObject damageObject)
         {
             Collider[] colliders = OverlapWeapon();
 
@@ -61,7 +63,8 @@ namespace Tamana
                     Debug.Log($"SendDamage form '{name}' to '{damageHandler.name}'");
                     damageHandler.DamageReceiver(new Status_DamageData()
                     {
-                        damagePoint = 100
+                        damagePoint = 100,
+                        hitsAnimation = damageObject.GetHitAnimations(AnimationState.Idle)
                     });
                 }
             }

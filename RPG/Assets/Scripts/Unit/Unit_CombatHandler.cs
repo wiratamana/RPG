@@ -57,6 +57,12 @@ namespace Tamana
             }
         }
 
+        [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
+        private void ChanceToParry()
+        {
+            Debug.Log("ChanceToParry");
+        }
+
         public void Equip()
         {
             if (Unit.Equipment.EquippedWeapon == null)

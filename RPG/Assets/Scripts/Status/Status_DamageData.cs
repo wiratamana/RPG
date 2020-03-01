@@ -8,5 +8,6 @@ namespace Tamana
     {
         public int damagePoint;
         public bool isIgnoreDefense;
+        public string[] hitsAnimation;
     }
 }

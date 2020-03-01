@@ -25,4 +25,11 @@ namespace Tamana
         AT, 
         DF
     }
+
+    public enum AnimationState
+    {
+        Idle,
+        Combat_1H,
+        Combat_2H
+    }
 }

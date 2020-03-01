@@ -43,9 +43,59 @@ namespace Tamana
         public EventManager OnAccelerating { get; } = new EventManager();
         public EventManager OnDecelerating { get; } = new EventManager();
 
+        private Dictionary<string, bool> hitAnimationsStatusDic { get; } = new Dictionary<string, bool>();
+
         public void Play(string stateName)
         {
             Animator.Play(stateName);
+        }
+
+        public void PlayHitAnimation(string[] statesName)
+        {
+            string stateName;
+
+            REPEAT:
+            stateName = statesName[Random.Range(0, statesName.Length)];
+
+            if(hitAnimationsStatusDic.ContainsKey(stateName) == false)
+            {
+                hitAnimationsStatusDic.Add(stateName, true);
+            }
+            else
+            {
+                if(hitAnimationsStatusDic[stateName] == true)
+                {
+                    goto REPEAT;
+                }
+
+                hitAnimationsStatusDic[stateName] = true;
+            }
+
+            Play(stateName);
+        }
+            
+        public void SetAnimationHitStatus(string stateName, bool value)
+        {
+            if (hitAnimationsStatusDic.ContainsKey(stateName) == false)
+            {
+                Debug.Log($"Key not exist !! Key : {stateName}", Debug.LogType.Error);
+                return;
+            }
+
+            hitAnimationsStatusDic[stateName] = value;
+
+            bool isTakingDamage = false;
+            foreach(var hit in hitAnimationsStatusDic)
+            {
+                if(hit.Value == true)
+                {
+                    isTakingDamage = true;
+                    break;
+                }
+            }
+
+            Debug.Log($"isTakingDamage = {isTakingDamage}");
+            Params.IsTakingDamage = isTakingDamage;
         }
 
         public void Accelerate()
