@@ -8,10 +8,13 @@ namespace Tamana
         [SerializeField] private Item_Base item;
         [SerializeField] private float colliderRadius;
 
+        private static readonly WaitForSeconds waitForHalfSecond = new WaitForSeconds(0.5f);
+
         private Transform itemTransform;
         private Transform prefab;
         private UI_Navigator navigator;
         private MeshRenderer meshRenderer;
+        private bool isOverlapping;
 
         private void OnValidate()
         {
@@ -23,7 +26,13 @@ namespace Tamana
 
         private void Start()
         {
-            StartCoroutine(SphereCast());
+            UI_Menu.OnBeforeOpen.AddListener(RemoveEventPickUpItem, GetInstanceID());
+            UI_Menu.OnBeforeOpen.AddListener(StopSphereCastCoroutine, GetInstanceID());
+
+            UI_Menu.OnAfterClose.AddListener(AddEventPickUpItem, GetInstanceID());
+            UI_Menu.OnAfterClose.AddListener(StartSphereCastCoroutine, GetInstanceID());
+
+            StartSphereCastCoroutine();
         }
 
         // Update is called once per frame
@@ -57,22 +66,53 @@ namespace Tamana
             }            
         }
 
+        private void AddEventPickUpItem()
+        {
+            if(isOverlapping == false)
+            {
+                return;
+            }
+
+            InputEvent.Instance.Event_PickUpItem.AddListener(PickUpItem, GetInstanceID());
+        }
+
+        private void RemoveEventPickUpItem()
+        {
+            if (isOverlapping == false)
+            {
+                return;
+            }
+
+            InputEvent.Instance.Event_PickUpItem.RemoveListener(PickUpItem, GetInstanceID());
+        }
+
+        private void StartSphereCastCoroutine()
+        {
+            StartCoroutine(SphereCast());
+        }
+
+        private void StopSphereCastCoroutine()
+        {
+            StopCoroutine(SphereCast());
+        }
+
         private IEnumerator SphereCast()
         {
-            var halfSecond = new WaitForSeconds(0.5f);
-
             while(true)
             {
                 var playerMask = LayerMask.GetMask(LayerManager.LAYER_PLAYER);
                 var overlap = Physics.OverlapSphere(transform.position, colliderRadius, playerMask);
-                if (overlap.Length > 0)
+                isOverlapping = overlap.Length > 0;
+
+                if (isOverlapping == true)
                 {
                     if(navigator == null)
                     {
                         navigator = UI_NavigatorManager.Instance.Add(item.ItemName, InputEvent.ACTION_PICK_UP_ITEM);
 
-                        InputEvent.Instance.Event_PickUpItem.AddListener(PickUpItem, GetInstanceID());
-                    }                    
+                        AddEventPickUpItem();
+                    }
+
                 }
                 else
                 {
@@ -81,11 +121,11 @@ namespace Tamana
                         UI_NavigatorManager.Instance.Remove(navigator);
                         navigator = null;
 
-                        InputEvent.Instance.Event_PickUpItem.RemoveListener(PickUpItem, GetInstanceID());
-                    }                    
+                        RemoveEventPickUpItem();
+                    }
                 }
 
-                yield return halfSecond;
+                yield return waitForHalfSecond;
             }
         }
 
@@ -97,12 +137,18 @@ namespace Tamana
                 Destroy(itemTransform.gameObject);
             }
 
-            Destroy(gameObject);
-
             UI_NavigatorManager.Instance.Remove(navigator);
             navigator = null;
 
-            InputEvent.Instance.Event_PickUpItem.RemoveListener(PickUpItem);
+            RemoveEventPickUpItem();
+
+            UI_Menu.OnBeforeOpen.RemoveListener(RemoveEventPickUpItem, GetInstanceID());
+            UI_Menu.OnBeforeOpen.RemoveListener(StopSphereCastCoroutine, GetInstanceID());
+
+            UI_Menu.OnAfterClose.RemoveListener(AddEventPickUpItem, GetInstanceID());
+            UI_Menu.OnAfterClose.RemoveListener(StartSphereCastCoroutine, GetInstanceID());
+
+            Destroy(gameObject);
         }
     }
 }
