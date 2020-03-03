@@ -63,14 +63,15 @@ namespace Tamana
 
             while(true)
             {
-                var overlap = Physics.OverlapSphere(transform.position, colliderRadius);
+                var playerMask = LayerMask.GetMask(LayerManager.LAYER_PLAYER);
+                var overlap = Physics.OverlapSphere(transform.position, colliderRadius, playerMask);
                 if (overlap.Length > 0)
                 {
                     if(navigator == null)
                     {
                         navigator = UI_NavigatorManager.Instance.Add(item.ItemName, InputEvent.ACTION_PICK_UP_ITEM);
 
-                        InputEvent.Instance.Event_PickUpItem.AddListener(PickUpItem);
+                        InputEvent.Instance.Event_PickUpItem.AddListener(PickUpItem, GetInstanceID());
                     }                    
                 }
                 else
@@ -80,7 +81,7 @@ namespace Tamana
                         UI_NavigatorManager.Instance.Remove(navigator);
                         navigator = null;
 
-                        InputEvent.Instance.Event_PickUpItem.RemoveListener(PickUpItem);
+                        InputEvent.Instance.Event_PickUpItem.RemoveListener(PickUpItem, GetInstanceID());
                     }                    
                 }
 
@@ -90,7 +91,7 @@ namespace Tamana
 
         public void PickUpItem()
         {
-            Item_Inventory.Instance.AddItem(item);
+            GameManager.Player.Inventory.AddItem(item);
             if (itemTransform != null)
             {
                 Destroy(itemTransform.gameObject);

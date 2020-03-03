@@ -56,7 +56,7 @@ namespace Tamana
 
         public int GetStatus(MainStatus status)
         {
-            var effects = Inventory_EquipmentManager.Instance.GetEquippedItemEffects();
+            var effects = GameManager.Player.Equipment.GetEquippedItemEffects();
             var filteredEffects = effects.Where(x => x.type == status);
             int totalAdditionalStatus = 0;
             foreach (var item in filteredEffects)

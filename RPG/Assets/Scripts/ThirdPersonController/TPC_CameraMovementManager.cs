@@ -11,11 +11,11 @@ namespace Tamana
         [SerializeField] private float _offsetZ;
         [SerializeField] private float _cameraLookHeight;
 
+        private TPC_PlayerMovement playerMovement;
+
         public Camera Camera { private set; get; }
         public Transform CameraLookPoint { private set; get; }
-        public TPC_AnimController AnimController { private set; get; }
-        public TPC_PlayerMovement PlayerMovement { private set; get; }
-        public TPC_PlayerMovementCombat PlayerMovementCombat { private set; get; }
+        public TPC_PlayerMovement PlayerMovement => this.GetOrAddAndAssignComponent(ref playerMovement);
 
         public float CameraAngleFromPlayerForward
         {
@@ -30,14 +30,16 @@ namespace Tamana
             }
         }
 
+        private void OnValidate()
+        {
+            this.LogErrorIfComponentIsNull(PlayerMovement);
+        }
+
         protected override void Awake()
         {
             base.Awake();
-
+            
             CreateThirdPersonCamera();
-            InstantiateAnimControllerOnPlayer();
-            InstantiatePlayerMovementOnPlayer();
-            InstantiatePlayerMovementCombatOnPlayer();
         }
 
         private void Update()
@@ -77,21 +79,6 @@ namespace Tamana
             Camera.transform.localPosition = new Vector3(0, _offsetY, _offsetZ);
             Camera.gameObject.AddComponent<TPC_CameraLookPlayer>();
             Camera.gameObject.tag = TagManager.TAG_MAIN_CAMERA;
-        }
-
-        private void InstantiateAnimControllerOnPlayer()
-        {
-            AnimController = gameObject.AddComponent<TPC_AnimController>();
-        }
-
-        private void InstantiatePlayerMovementOnPlayer()
-        {
-            PlayerMovement = gameObject.AddComponent<TPC_PlayerMovement>();
-        }
-
-        private void InstantiatePlayerMovementCombatOnPlayer()
-        {
-            PlayerMovementCombat = gameObject.AddComponent<TPC_PlayerMovementCombat>();
         }
     }
 }

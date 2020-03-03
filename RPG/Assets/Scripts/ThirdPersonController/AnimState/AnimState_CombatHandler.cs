@@ -11,14 +11,21 @@ namespace Tamana
         private TPC_CombatAnimData animData => combatContainer.CombatDatas[index];
         private bool isCrossFading = false;
 
+        private Unit_Base unit;
+
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            if(unit == null)
+            {
+                unit = animator.GetComponent<Unit_Base>();
+            }
+
             isCrossFading = false;
             animData.IsInputReceived = false;
             animData.IsCurrentlyReceivingInput = false;
 
-            TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = false;
-            TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = animData;
+            unit.UnitAnimator.Params.IsTransitingToNextAttackAnimation = false;
+            unit.CombatHandler.AttackHandler.CurrentlyPlayingCombatAnimData = animData;
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -30,16 +37,16 @@ namespace Tamana
             
             if (isCrossFading == true)
             {
-                if(TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData == animData)
+                if(unit.CombatHandler.AttackHandler.CurrentlyPlayingCombatAnimData == animData)
                 {
                     var nextAnimationIndex = index + 1;
                     if(nextAnimationIndex < combatContainer.CombatDatas.Length)
                     {
-                        TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = combatContainer.CombatDatas[nextAnimationIndex];
+                        unit.CombatHandler.AttackHandler.CurrentlyPlayingCombatAnimData = combatContainer.CombatDatas[nextAnimationIndex];
                     }
                     else
                     {
-                        TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = null;
+                        unit.CombatHandler.AttackHandler.CurrentlyPlayingCombatAnimData = null;
                     }
                 }
                 
@@ -56,7 +63,7 @@ namespace Tamana
             // ===============================================================================================
             if (animData.IsInputReceived == true && isCrossFading == false)
             {
-                TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = true;
+                unit.UnitAnimator.Params.IsTransitingToNextAttackAnimation = true;
                 isCrossFading = true;
                 return;
             }
@@ -69,9 +76,9 @@ namespace Tamana
                 animator.CrossFade(animData.IdleAnimStateName, animData.TransitionTimeIdle);
                 isCrossFading = true;
 
-                TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = null;
-                TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimDataContainer = null;
-                TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = false;
+                unit.CombatHandler.AttackHandler.CurrentlyPlayingCombatAnimData = null;
+                unit.CombatHandler.AttackHandler.CurrentlyPlayingCombatAnimDataContainer = null;
+                unit.UnitAnimator.Params.IsTransitingToNextAttackAnimation = false;
             }
         }
 
@@ -79,9 +86,9 @@ namespace Tamana
         {
             if (animData.IsLastAnimation == true)
             {
-                TPC_AnimController.Instance.AnimParams.IsTransitingToNextAttackAnimation = false;
-                TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimDataContainer = null;
-                TPC_PlayerMovementCombat.Instance.CurrentlyPlayingCombatAnimData = null;
+                unit.UnitAnimator.Params.IsTransitingToNextAttackAnimation = false;
+                unit.CombatHandler.AttackHandler.CurrentlyPlayingCombatAnimDataContainer = null;
+                unit.CombatHandler.AttackHandler.CurrentlyPlayingCombatAnimData = null;
             }
 
             animData.IsCurrentlyReceivingInput = false;

@@ -118,7 +118,7 @@ namespace Tamana
             // Register on equip callback
             // ===============================================================================================
             var equipment = ItemRenderer.ItemPreview.ItemBase as Item_Equipment;
-            var isEquipped = Inventory_EquipmentManager.Instance.IsCurrentlyEquipped(equipment);
+            var isEquipped = GameManager.Player.Equipment.IsCurrentlyEquipped(equipment);
             if (isEquipped == true)
             {
                 equip.Text.text = "Unequip";

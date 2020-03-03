@@ -4,65 +4,34 @@ using UnityEngine;
 
 namespace Tamana
 {
-    public abstract class AI_Enemy_Base : MonoBehaviour
+    public class AI_Enemy_Base : MonoBehaviour
     {
-        private Animator enemyAnimator;
-        public Animator EnemyAnimator
-        {
-            get
-            {
-                if(enemyAnimator == null)
-                {
-                    enemyAnimator = GetComponent<Animator>();
-                }
-
-                return enemyAnimator;
-            }
-        }
-
-        private Status_DamageHandler damageHandler;
-        public Status_DamageHandler DamageHandler
-        {
-            get
-            {
-                if(damageHandler == null)
-                {
-                    damageHandler = GetComponent<Status_DamageHandler>();
-                }
-
-                if(damageHandler == null)
-                {
-                    damageHandler = gameObject.AddComponent<Status_DamageHandler>();
-                }
-
-                return damageHandler;
-            }
-        }
-
         private Status_Main statusMain;
-        public Status_Main StatusMain
+        private AI_Enemy_CombatLogic combatLogic;
+        private Unit_AI_Hostile unit;
+
+        public Status_Main StatusMain => this.GetOrAddAndAssignComponent(ref statusMain);
+        public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(ref combatLogic);        
+        public Unit_AI_Hostile Unit => this.GetOrAddAndAssignComponent(ref unit);
+
+        private void OnValidate()
         {
-            get
-            {
-                if(statusMain == null)
-                {
-                    statusMain = GetComponent<Status_Main>();
-                }
-
-                if(statusMain == null)
-                {
-                    statusMain = gameObject.AddComponent<Status_Main>();
-                }
-
-                return statusMain;
-            }
+            this.LogErrorIfComponentIsNull(Unit);
+            this.LogErrorIfComponentIsNull(CombatLogic);
+            this.LogErrorIfComponentIsNull(StatusMain);
         }
-        
 
         protected virtual void Awake()
         {
-            DamageHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
-            StatusMain.OnDeadEvent.AddListener(OnDead);
+            Unit.CombatHandler.DamageReceiveHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
+        }
+
+        private void Start()
+        {
+            var brain = ScriptableObject.CreateInstance<AI_Brain_Enemy_Dummy>();
+            brain.name = nameof(AI_Brain_Enemy_Dummy);
+            brain.Init(this);
+            CombatLogic.InstallBrain(brain);
         }
 
         private void OnReceivedDamage(Status_DamageData receivedDamage)
@@ -71,13 +40,13 @@ namespace Tamana
 
             if(StatusMain.IsDead == false)
             {
-                EnemyAnimator.Play("Sword1h_Hit_Torso_Front");
+                //EnemyAnimator.Play("Sword1h_Hit_Torso_Front");
             }
         }
 
         private void OnDead()
         {
-            EnemyAnimator.Play("Sword1h_Death_Front");
+            //EnemyAnimator.Play("Sword1h_Death_Front");
         }
     }
 }

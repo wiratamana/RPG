@@ -7,20 +7,22 @@ namespace Tamana
 {
     public sealed class GameManager : SingletonMonobehaviour<GameManager>
     {
-        [RuntimeInitializeOnLoadMethod]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         private static void CreateInstance()
         {
+            Debug.Log($"RuntimeInitializeOnLoadMethod - {nameof(GameManager)}");
+
             var go = new GameObject(nameof(GameManager));
             go.AddComponent<GameManager>();
             DontDestroyOnLoad(go);
         }
 
-        private static Transform _player;
-        public static Transform Player
+        private static Transform _playerTransform;
+        public static Transform PlayerTransform
         {
             get
             {
-                if(_player == null)
+                if(_playerTransform == null)
                 {
                     var gameObjectWithPlayerTag = GameObject.FindGameObjectWithTag(TagManager.TAG_PLAYER);
                     if(gameObjectWithPlayerTag == null)
@@ -29,26 +31,14 @@ namespace Tamana
                         return null;
                     }
 
-                    _player = gameObjectWithPlayerTag.transform;
+                    _playerTransform = gameObjectWithPlayerTag.transform;
                 }
 
-                return _player;
+                return _playerTransform;
             }
         }
 
-        private static Status_Player _playerStatus;
-        public static Status_Player PlayerStatus
-        {
-            get
-            {
-                if(_playerStatus == null)
-                {
-                    _playerStatus = Player.gameObject.GetOrAddComponent<Status_Player>();
-                }
-
-                return _playerStatus;
-            }
-        }
+        public static Status_Player PlayerStatus => Player.Status;
 
         private static Transform _mainCamera;
         public static Transform MainCamera
@@ -67,6 +57,20 @@ namespace Tamana
                 }
 
                 return _mainCamera;
+            }
+        }
+
+        private static Unit_Player player;
+        public static Unit_Player Player
+        {
+            get
+            {
+                if(player == null)
+                {
+                    player = PlayerTransform.GetComponent<Unit_Player>();
+                }
+
+                return player;
             }
         }
 

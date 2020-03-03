@@ -19,19 +19,19 @@ MonoBehaviour:
     receivingInputFinish: 0.483
     transitionTimingToIdleAnim: 1.083
     transitionCrossFadeTimeIdle: 0.1875
-    idleAnimStateName: Sword1h_Idle
+    idleAnimStateName: Movement_1H
     isLastAnimation: 0
   - myAnimStateName: Attack_Place_fast_Lup_1
     receivingInputStart: 0.3333
     receivingInputFinish: 0.75
     transitionTimingToIdleAnim: 1.6
     transitionCrossFadeTimeIdle: 0.1272
-    idleAnimStateName: Sword1h_Idle
+    idleAnimStateName: Movement_1H
     isLastAnimation: 0
   - myAnimStateName: Attack_Place_slow_Rdown_1
     receivingInputStart: 0
     receivingInputFinish: 0
     transitionTimingToIdleAnim: 0
     transitionCrossFadeTimeIdle: 0
-    idleAnimStateName: Sword1h_Idle
+    idleAnimStateName: Movement_1H
     isLastAnimation: 1
