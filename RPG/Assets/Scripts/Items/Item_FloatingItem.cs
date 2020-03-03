@@ -63,7 +63,8 @@ namespace Tamana
 
             while(true)
             {
-                var overlap = Physics.OverlapSphere(transform.position, colliderRadius);
+                var playerMask = LayerMask.GetMask(LayerManager.LAYER_PLAYER);
+                var overlap = Physics.OverlapSphere(transform.position, colliderRadius, playerMask);
                 if (overlap.Length > 0)
                 {
                     if(navigator == null)
