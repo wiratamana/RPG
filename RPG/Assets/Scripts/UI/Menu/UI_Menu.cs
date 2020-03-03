@@ -93,10 +93,10 @@ namespace Tamana
 
         public UI_Menu_Inventory Inventory { private set; get; }
 
-        public EventManager OnBeforeOpen { private set; get; } = new EventManager();
-        public EventManager OnAfterOpen { private set; get; } = new EventManager();
-        public EventManager OnBeforeClose { private set; get; } = new EventManager();
-        public EventManager OnAfterClose { private set; get; } = new EventManager();
+        public static EventManager OnBeforeOpen { private set; get; } = new EventManager();
+        public static EventManager OnAfterOpen { private set; get; } = new EventManager();
+        public static EventManager OnBeforeClose { private set; get; } = new EventManager();
+        public static EventManager OnAfterClose { private set; get; } = new EventManager();
 
         protected override void Awake()
         {
