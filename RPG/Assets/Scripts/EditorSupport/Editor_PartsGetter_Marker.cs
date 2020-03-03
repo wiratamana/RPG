@@ -3,7 +3,6 @@ using System.Collections;
 
 namespace Tamana
 {
-#if UNITY_EDITOR
     public class Editor_PartsGetter_Marker : MonoBehaviour
     {
         [SerializeField] private bool isAttachment;
@@ -16,5 +15,4 @@ namespace Tamana
         public Item_Armor.ArmorPart ArmorPart { get { return armorPart; } }
         public Item_Attachment.AttachmentPart AttachmentPart { get { return attachmentPart; } }
     }
-#endif
 }
