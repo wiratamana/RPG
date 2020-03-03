@@ -7,73 +7,85 @@ namespace Tamana
 {
     public class TPC_PlayerMovement : SingletonMonobehaviour<TPC_PlayerMovement>
     {
+        private Unit_Player unit;
+        public Unit_Player Unit => this.GetAndAssignComponent(ref unit);
         public TPC_RotateBeforeStartMoveAnimPlayHandler StartRotateAnimHandler { private set; get; }
 
-        public static EventManager OnPlayerMoveStart { private set; get; } = new EventManager();
-        public static EventManager OnPlayerMoveMoving { private set; get; } = new EventManager();
-        public static EventManager OnPlayerMoveStop { private set; get; } = new EventManager();
-        public static EventManager OnPlayerMoveIdle { private set; get; } = new EventManager();
+        private bool isButtonWPressed;
 
         protected override void Awake()
         {
             base.Awake();
 
             StartRotateAnimHandler = GameManager.PlayerTransform.gameObject.AddComponent<TPC_RotateBeforeStartMoveAnimPlayHandler>();
+            StartRotateAnimHandler.OnRotateCompleted.AddListener(OnRotationCompleted);
+
+            Unit.UnitAnimator.OnReachMaximumVelocity.AddListener(OnReachMaximumVelocity);
+            Unit.UnitAnimator.OnReachZeroVelocity.AddListener(OnReachZeroVelocity);
+
+            InputEvent.Instance.Event_Equip.AddListener(Unit.CombatHandler.Equip);
+
+            InputEvent.Instance.Event_BeginMove.AddListener(OnBeginMove);
+            InputEvent.Instance.Event_StopMove.AddListener(OnStopMove);
         }
 
         private void Update()
         {
-            MoveForward();
-        }
-
-        private void MoveForward()
-        {
-            if(TPC_AnimController.Instance.AnimParams.IsMoving == false)
+            if(Unit.UnitAnimator.Params.IsAccelerating == true)
             {
-                OnPlayerMoveIdle.Invoke();
+                Unit.UnitAnimator.Accelerate();
             }
 
-            if (TPC_AnimController.Instance.AnimStateDic[nameof(TPC_Anim_AttributeDisableMovement)] == true)
+            if(Unit.UnitAnimator.Params.IsDeceleratin == true)
             {
-                return;
+                Unit.UnitAnimator.Decelerate();
             }
 
-            if (KeyboardController.IsForwardPressed == true &&
-                TPC_AnimController.Instance.AnimParams.IsMoving == false &&
-                TPC_AnimController.Instance.AnimParams.IsRotateBeforeMove == false)
+            if(Unit.UnitAnimator.Params.IsMoving == true)
             {
-                StartRotateAnimHandler.OnRotateCompleted.AddListener(TPC_AnimController.Instance.PlayStartMoveAnimation);
-                TPC_AnimController.Instance.AnimParams.IsRotateBeforeMove = true;
-            }
-
-            else if (KeyboardController.IsForwardPressed == false &&
-                TPC_AnimController.Instance.AnimParams.IsMoving == true)
-            {
-                TPC_AnimController.Instance.PlayStopMoveAnimation();
-                TPC_AnimController.Instance.AnimParams.IsMoving = false;
-            }
-
-            if (TPC_AnimController.Instance.AnimParams.IsMoving == true)
-            {
-                OnPlayerMoveMoving.Invoke();
-
                 var cameraForward = GameManager.MainCamera.transform.forward;
                 cameraForward.y = 0;
                 cameraForward = cameraForward.normalized;
 
                 var lookRotation = Quaternion.LookRotation(cameraForward);
-                GameManager.PlayerTransform.transform.rotation = Quaternion.Slerp(GameManager.PlayerTransform.transform.rotation, lookRotation, 5 * Time.deltaTime);
+                Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, 5 * Time.deltaTime);
             }
         }
-        
-        public string GetStartMoveAnimationName(float angle)
-        {
-            if(TPC_AnimController.Instance.GetLayerWeight(TPC_Anim_SwordAnimsetPro.LAYER) > 0.0f)
-            {
-                return TPC_Anim_SwordAnimsetPro.Sword1h_RunFwdLoop;
-            }
 
-            return TPC_Anim_RunAnimsetBasic.RunFwdLoop;
+        private void OnBeginMove()
+        {
+            isButtonWPressed = true;
+
+            Unit.UnitAnimator.Params.IsRotateBeforeMove = true;
         }
+
+        private void OnStopMove()
+        {
+            isButtonWPressed = false;
+
+            Unit.UnitAnimator.Params.IsAccelerating = false; 
+            unit.UnitAnimator.Params.IsDeceleratin = true;
+        }
+
+        private void OnReachMaximumVelocity()
+        {
+            Unit.UnitAnimator.Params.IsAccelerating = false;
+        }
+
+        private void OnReachZeroVelocity()
+        {
+            Unit.UnitAnimator.Params.IsDeceleratin = false;
+            Unit.UnitAnimator.Params.IsMoving = false;
+        }
+
+        private void OnRotationCompleted()
+        {
+            if(isButtonWPressed == true)
+            {
+                Unit.UnitAnimator.Params.IsDeceleratin = false;
+                Unit.UnitAnimator.Params.IsMoving = true;
+                Unit.UnitAnimator.Params.IsAccelerating = true;
+            }            
+        }            
     }
 }

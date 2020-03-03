@@ -5,11 +5,14 @@ namespace Tamana
 {
     public class TPC_RotateBeforeStartMoveAnimPlayHandler : MonoBehaviour
     {
+        private Unit_Base unit;
+        public Unit_Base Unit => this.GetAndAssignComponent(ref unit);
+
         public EventManager OnRotateCompleted { private set; get; } = new EventManager();
 
         private void Update()
         {
-            if(TPC_AnimController.Instance.AnimParams.IsRotateBeforeMove == false)
+            if(Unit.UnitAnimator.Params.IsRotateBeforeMove == false)
             {
                 return;
             }
@@ -19,15 +22,13 @@ namespace Tamana
             cameraForward = cameraForward.normalized;
 
             var lookRotation = Quaternion.LookRotation(cameraForward);
-            //GameManager.Player.transform.rotation = Quaternion.Slerp(GameManager.Player.transform.rotation, lookRotation, 5 * Time.deltaTime);
             GameManager.PlayerTransform.transform.rotation = Quaternion.RotateTowards(GameManager.PlayerTransform.transform.rotation, lookRotation, 1080 * Time.deltaTime);
 
             var camAngle = TPC_CameraMovementManager.Instance.CameraAngleFromPlayerForward;
             if (Mathf.Abs(camAngle) < 5.0f)
             {
-                TPC_AnimController.Instance.AnimParams.IsRotateBeforeMove = false;
+                Unit.UnitAnimator.Params.IsRotateBeforeMove = false;
                 OnRotateCompleted.Invoke();
-                OnRotateCompleted.RemoveAllListener();
             }
         }
     }

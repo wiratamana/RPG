@@ -6,9 +6,11 @@ namespace Tamana
 {
     public sealed class TagManager : SingletonMonobehaviour<TagManager>
     {
-        [RuntimeInitializeOnLoadMethod]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         private static void CreateInstance()
         {
+            Debug.Log($"RuntimeInitializeOnLoadMethod - {nameof(TagManager)}");
+
             var go = new GameObject(nameof(TagManager));
             var component = go.AddComponent<TagManager>();
 

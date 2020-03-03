@@ -2609,8 +2609,23 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.13078643
+        functionName: ChanceToParry
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.2061657
         functionName: OnDoDamage
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: 511c137a129fcbd42a9da08a97716372,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.41931936
+        functionName: ChanceToParry
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -2619,7 +2634,8 @@ ModelImporter:
       - time: 0.50481695
         functionName: OnDoDamage
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11400000, guid: 511c137a129fcbd42a9da08a97716372,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -7741,6 +7757,14 @@ ModelImporter:
       events:
       - time: 0.40462428
         functionName: OnDoDamage
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: 657a0c3c169cd624395e2f549a7857cc,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.1915493
+        functionName: ChanceToParry
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

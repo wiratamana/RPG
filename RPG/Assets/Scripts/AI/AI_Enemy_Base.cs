@@ -7,25 +7,23 @@ namespace Tamana
     public class AI_Enemy_Base : MonoBehaviour
     {
         private Status_Main statusMain;
-        private Status_DamageHandler damageHandler;
-        private AI_Enemy_Animator enemyAnimator;
         private AI_Enemy_CombatLogic combatLogic;
-        private AI_Enemy_CombatHandler combatHandler;
         private Unit_AI_Hostile unit;
 
-        public Status_Main StatusMain => this.GetOrAddAndAssignComponent(statusMain);
-        public Status_DamageHandler DamageHandler => this.GetOrAddAndAssignComponent(damageHandler);
-        public AI_Enemy_Animator EnemyAnimator => this.GetOrAddAndAssignComponent(enemyAnimator);
-        public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(combatLogic);        
-        public AI_Enemy_CombatHandler CombatHandler => this.GetOrAddAndAssignComponent(combatHandler);
-        public Unit_AI_Hostile Unit => this.GetOrAddAndAssignComponent(unit);
+        public Status_Main StatusMain => this.GetOrAddAndAssignComponent(ref statusMain);
+        public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(ref combatLogic);        
+        public Unit_AI_Hostile Unit => this.GetOrAddAndAssignComponent(ref unit);
+
+        private void OnValidate()
+        {
+            this.LogErrorIfComponentIsNull(Unit);
+            this.LogErrorIfComponentIsNull(CombatLogic);
+            this.LogErrorIfComponentIsNull(StatusMain);
+        }
 
         protected virtual void Awake()
         {
-            Debug.Log($"Is CombatHandler.AI == null ? {CombatHandler.AI == null}");
-
-            DamageHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
-            StatusMain.OnDeadEvent.AddListener(OnDead);
+            Unit.CombatHandler.DamageReceiveHandler.OnReceivedDamageEvent.AddListener(OnReceivedDamage);
         }
 
         private void Start()
@@ -42,13 +40,13 @@ namespace Tamana
 
             if(StatusMain.IsDead == false)
             {
-                EnemyAnimator.Play("Sword1h_Hit_Torso_Front");
+                //EnemyAnimator.Play("Sword1h_Hit_Torso_Front");
             }
         }
 
         private void OnDead()
         {
-            EnemyAnimator.Play("Sword1h_Death_Front");
+            //EnemyAnimator.Play("Sword1h_Death_Front");
         }
     }
 }
