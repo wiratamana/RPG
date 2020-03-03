@@ -49,6 +49,7 @@ namespace Tamana
                 InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(AttackHandler.PlayAttackAnim_Heavy);
                 InputEvent.Instance.Event_DoAttackLight.RemoveListener(AttackHandler.PlayAttackAnim_Light);
                 InputEvent.Instance.Event_Parry.RemoveListener(ParryHandler.Parry);
+                InputEvent.Instance.Event_Dodge.RemoveListener(DodgeHandler.Dodge);
             }
         }
 
@@ -66,6 +67,7 @@ namespace Tamana
                 InputEvent.Instance.Event_DoAttackHeavy.AddListener(AttackHandler.PlayAttackAnim_Heavy);
                 InputEvent.Instance.Event_DoAttackLight.AddListener(AttackHandler.PlayAttackAnim_Light);
                 InputEvent.Instance.Event_Parry.AddListener(ParryHandler.Parry);
+                InputEvent.Instance.Event_Dodge.AddListener(DodgeHandler.Dodge);
             }
         }
 

@@ -26,8 +26,42 @@ namespace Tamana
             else
             {
                 Debug.Log("Parry failed");
-                CombatHandler.UnitAnimator.PlayHitAnimation(damage.hitsAnimation);
+                PlayHitAnimation(damage.hitsAnimation);
             }
+        }
+
+        private void PlayHitAnimation(int[] statesName)
+        {
+            var animationHitData = CombatHandler.UnitAnimator.AnimStatus.GetAnimationHitData(statesName); ;
+
+            CombatHandler.UnitAnimator.OnHitAnimationStarted.Invoke();
+            CombatHandler.UnitAnimator.Params.IsTakingDamage = true;
+            CombatHandler.UnitAnimator.Params.AnimHit = animationHitData.paramValue;
+            CombatHandler.UnitAnimator.Play(animationHitData.stateName);
+        }
+
+        public void SetAnimationHitStatus<Enum>(Enum stateValue)
+            where Enum : System.Enum
+        {
+            CombatHandler.UnitAnimator.AnimStatus.SetToFalse(stateValue);
+
+            bool isTakingDamage = false;
+            foreach (var hit in CombatHandler.UnitAnimator.AnimStatus.HitDic_1H)
+            {
+                if (hit.Value == true)
+                {
+                    isTakingDamage = true;
+                    break;
+                }
+            }
+
+            if (isTakingDamage == false)
+            {
+                CombatHandler.UnitAnimator.OnHitAnimationFinished.Invoke();
+                CombatHandler.UnitAnimator.Params.AnimHit = 0;
+            }
+
+            CombatHandler.UnitAnimator.Params.IsTakingDamage = isTakingDamage;
         }
     }
 }

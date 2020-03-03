@@ -30,6 +30,7 @@ namespace Tamana
         public EventManager Event_BeginMove { get; } = new EventManager();
         public EventManager Event_StopMove { get; } = new EventManager();
         public EventManager Event_Parry { get; } = new EventManager();
+        public EventManager Event_Dodge { get; } = new EventManager();
 
         private void Update()
         {
@@ -51,12 +52,12 @@ namespace Tamana
 
             if(Input.GetKeyDown(KeyCode.Mouse0) == true)
             {
-                Event_DoAttackLight.Invoke();
+                Event_DoAttackHeavy.Invoke();
             }
 
             if(Input.GetKeyDown(KeyCode.Mouse1) == true)
             {
-                Event_DoAttackHeavy.Invoke();
+                Event_Parry.Invoke();
             }
 
             if(Input.GetKeyDown(KeyCode.W) == true)
@@ -71,7 +72,7 @@ namespace Tamana
 
             if(Input.GetKeyDown(KeyCode.LeftAlt) == true)
             {
-                Event_Parry.Invoke();
+                Event_Dodge.Invoke();
             }
         }
     }

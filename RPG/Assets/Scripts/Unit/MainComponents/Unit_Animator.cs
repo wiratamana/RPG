@@ -60,50 +60,10 @@ namespace Tamana
         public EventManager OnHitAnimationStarted { get; } = new EventManager();
         public EventManager OnHitAnimationFinished { get; } = new EventManager();
 
-        private void Awake()
-        {
-            Debug.Log(AnimStatus);
-        }
-
         public void Play(string stateName)
         {
             Animator.Play(stateName);
-        }
-
-        public void PlayHitAnimation(int[] statesName)
-        {
-            var animationHitData = AnimStatus.GetAnimationHitData(statesName); ;
-
-            OnHitAnimationStarted.Invoke();
-            Params.IsTakingDamage = true;
-            Params.AnimHit = animationHitData.paramValue;
-            Play(animationHitData.stateName);
-        }
-
-        public void SetAnimationHitStatus<Enum>(Enum stateValue)
-            where Enum : System.Enum
-        {
-            AnimStatus.SetToFalse(stateValue);
-
-            bool isTakingDamage = false;
-            int paramValue = Params.AnimHit;
-            foreach(var hit in AnimStatus.HitDic_1H)
-            {
-                if(hit.Value == true)
-                {
-                    isTakingDamage = true;
-                    break;
-                }
-            }
-
-            if(isTakingDamage == false)
-            {
-                OnHitAnimationFinished.Invoke();
-                Params.AnimHit = 0;
-            }
-            Params.IsTakingDamage = isTakingDamage;
-            Debug.Log($"isTakingDamage = {Params.IsTakingDamage}");
-        }
+        }        
 
         public void Accelerate()
         {

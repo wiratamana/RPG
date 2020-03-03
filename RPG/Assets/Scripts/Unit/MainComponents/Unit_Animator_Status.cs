@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 namespace Tamana
@@ -69,12 +70,45 @@ namespace Tamana
             return new Result(dicKey);
         }
 
+        public Result GetAnimationDodgeData()
+        {
+            var weaponType = UnitAnimator.Unit.Equipment.EquippedWeapon == null ?
+                WeaponType.OneHand : UnitAnimator.Unit.Equipment.EquippedWeapon.WeaponType;
+
+            object dicKey = null;
+
+            switch (weaponType)
+            {
+                case WeaponType.OneHand:
+                    dicKey = GetRandomDicKeyWithFalseValue<AnimDodge_1H, Dictionary<AnimDodge_1H, bool>>(ref dodgeDic_1H);
+                    break;
+
+                case WeaponType.TwoHand:
+                    dicKey = GetRandomDicKeyWithFalseValue<AnimDodge_2H, Dictionary<AnimDodge_2H, bool>>(ref dodgeDic_2H);
+                    break;
+            }
+
+            return new Result(dicKey);
+        }
+
         private Enum GetDicKeyWithFalseValue<Enum, Dictionary>(ref Dictionary dic, int[] statesName)
             where Enum : System.Enum
             where Dictionary : Dictionary<Enum, bool>
         {
             var filteredDic = dic.Where(x => x.Value == false &&
                                 System.Array.Exists(statesName, a => a == (int)(object)x.Key));
+
+            var val = filteredDic.ElementAt(Random.Range(0, filteredDic.Count())).Key;
+
+            dic[val] = true;
+            return val;
+        }
+
+        private Enum GetRandomDicKeyWithFalseValue<Enum, Dictionary>(ref Dictionary dic)
+            where Enum : System.Enum
+            where Dictionary : Dictionary<Enum, bool>
+        {
+            var filteredDic = dic.Where(x => x.Value == false);
 
             var val = filteredDic.ElementAt(Random.Range(0, filteredDic.Count())).Key;
 

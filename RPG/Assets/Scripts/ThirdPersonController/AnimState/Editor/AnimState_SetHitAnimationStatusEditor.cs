@@ -32,6 +32,7 @@ namespace Tamana
                 }
 
                 EditorGUILayout.PropertyField(animHit_1H);
+                EditorGUILayout.LabelField($"Value : {animHit_1H.intValue}");
             }
             else if (weaponType.intValue == (int)WeaponType.TwoHand)
             {

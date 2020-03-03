@@ -58,17 +58,15 @@ namespace Tamana
 
     public enum AnimDodge_1H
     {
-        Sword1h_ShortDodge_HighMid = 1 << 0,
-        Sword1h_Dodge = 1 << 1,
-        Sword1h_ShortDodge_Mid2 = 1 << 2,
-        Sword1h_ShortDodge_Mid = 1 << 3
+        Sword1h_Dodge = 1 << 0,
+        Sword1h_ShortDodge_Mid2 = 1 << 1,
+        Sword1h_ShortDodge_Mid = 1 << 2
     }
 
     public enum AnimDodge_2H
     {
-        Sword1h_ShortDodge_HighMid = 1 << 0,
-        Sword1h_Dodge = 1 << 1,
-        Sword1h_ShortDodge_Mid2 = 1 << 2,
-        Sword1h_ShortDodge_Mid = 1 << 3
+        Sword1h_Dodge = 1 << 0,
+        Sword1h_ShortDodge_Mid2 = 1 << 1,
+        Sword1h_ShortDodge_Mid = 1 << 2
     }
 }

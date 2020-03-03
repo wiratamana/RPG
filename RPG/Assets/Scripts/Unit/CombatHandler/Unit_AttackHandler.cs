@@ -63,7 +63,10 @@ namespace Tamana
 
         private void MakePlayerUnableToAttack()
         {
-            Debug.Log("MakePlayerUnableToAttack");
+            if(CombatHandler.UnitAnimator.Params.IsInBattleState == false)
+            {
+                return;
+            }
 
             InputEvent.Instance.Event_DoAttackLight.RemoveListener(PlayAttackAnim_Heavy);
             InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(PlayAttackAnim_Light);
@@ -71,13 +74,16 @@ namespace Tamana
 
         private void MakePlayerAbleToAttackAgain()
         {
-            Debug.Log("MakePlayerAbleToAttackAgain");
+            CurrentlyPlayingCombatAnimDataContainer = null;
+            CurrentlyPlayingCombatAnimData = null;
+
+            if (CombatHandler.UnitAnimator.Params.IsInBattleState == false)
+            {
+                return;
+            }
 
             InputEvent.Instance.Event_DoAttackLight.AddListener(PlayAttackAnim_Heavy);
             InputEvent.Instance.Event_DoAttackHeavy.AddListener(PlayAttackAnim_Light);
-
-            CurrentlyPlayingCombatAnimDataContainer = null;
-            CurrentlyPlayingCombatAnimData = null;
         }
     }
 }
