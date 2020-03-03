@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Tamana
 {
-#if UNITY_EDITOR
     public class Editor_PartsGetter_GenderMarker : MonoBehaviour
     {
         [SerializeField] private Gender gender;
@@ -16,5 +15,4 @@ namespace Tamana
             }
         }
     }
-#endif
 }
