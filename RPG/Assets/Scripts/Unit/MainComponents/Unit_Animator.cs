@@ -33,6 +33,20 @@ namespace Tamana
             }
         }
 
+        private Unit_Animator_Status animStatus;
+        public Unit_Animator_Status AnimStatus
+        {
+            get
+            {
+                if(animStatus == null)
+                {
+                    animStatus = new Unit_Animator_Status(this);
+                }
+
+                return animStatus;
+            }
+        }
+
         private Unit_Base unit;
         public Unit_Base Unit => this.GetAndAssignComponent(ref unit);
         public Unit_CombatHandler CombatHandler => Unit.CombatHandler;
@@ -46,51 +60,34 @@ namespace Tamana
         public EventManager OnHitAnimationStarted { get; } = new EventManager();
         public EventManager OnHitAnimationFinished { get; } = new EventManager();
 
-        private Dictionary<string, bool> hitAnimationsStatusDic { get; } = new Dictionary<string, bool>();
+        private void Awake()
+        {
+            Debug.Log(AnimStatus);
+        }
 
         public void Play(string stateName)
         {
             Animator.Play(stateName);
         }
 
-        public void PlayHitAnimation(string[] statesName)
+        public void PlayHitAnimation(int[] statesName)
         {
-            string stateName;
-
-            REPEAT:
-            stateName = statesName[Random.Range(0, statesName.Length)];
-
-            if(hitAnimationsStatusDic.ContainsKey(stateName) == false)
-            {
-                hitAnimationsStatusDic.Add(stateName, true);
-            }
-            else
-            {
-                if(hitAnimationsStatusDic[stateName] == true)
-                {
-                    goto REPEAT;
-                }
-
-                hitAnimationsStatusDic[stateName] = true;
-            }
+            var animationHitData = AnimStatus.GetAnimationHitData(statesName); ;
 
             OnHitAnimationStarted.Invoke();
             Params.IsTakingDamage = true;
-            Play(stateName);
+            Params.AnimHit = animationHitData.paramValue;
+            Play(animationHitData.stateName);
         }
-            
-        public void SetAnimationHitStatus(string stateName, bool value)
-        {
-            if (hitAnimationsStatusDic.ContainsKey(stateName) == false)
-            {
-                Debug.Log($"Key not exist !! Key : {stateName}", Debug.LogType.Error);
-                return;
-            }
 
-            hitAnimationsStatusDic[stateName] = value;
+        public void SetAnimationHitStatus<Enum>(Enum stateValue)
+            where Enum : System.Enum
+        {
+            AnimStatus.SetToFalse(stateValue);
 
             bool isTakingDamage = false;
-            foreach(var hit in hitAnimationsStatusDic)
+            int paramValue = Params.AnimHit;
+            foreach(var hit in AnimStatus.HitDic_1H)
             {
                 if(hit.Value == true)
                 {
@@ -102,6 +99,7 @@ namespace Tamana
             if(isTakingDamage == false)
             {
                 OnHitAnimationFinished.Invoke();
+                Params.AnimHit = 0;
             }
             Params.IsTakingDamage = isTakingDamage;
             Debug.Log($"isTakingDamage = {Params.IsTakingDamage}");

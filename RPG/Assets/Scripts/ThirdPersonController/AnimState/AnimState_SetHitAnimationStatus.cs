@@ -6,8 +6,10 @@ namespace Tamana
 {
     public class AnimState_SetHitAnimationStatus : StateMachineBehaviour
     {
-        [SerializeField] private string stateName;
-        [SerializeField] private bool value;
+        public WeaponType weaponType;
+        public AnimHit_1H animHit_1H;
+        public AnimHit_2H animHit_2H;
+
         private Unit_Base unit;
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -17,8 +19,16 @@ namespace Tamana
                 unit = animator.GetComponent<Unit_Base>();
             }
 
-            Debug.Log($"OnStateExit - {stateName}");
-            unit.UnitAnimator.SetAnimationHitStatus(stateName, value);
+            Debug.Log($"OnStateExit - {weaponType}");
+            switch (weaponType)
+            {
+                case WeaponType.OneHand:
+                    unit.UnitAnimator.SetAnimationHitStatus(animHit_1H);
+                    break;
+                case WeaponType.TwoHand:
+                    unit.UnitAnimator.SetAnimationHitStatus(animHit_2H);
+                    break;
+            }
         }
     }
 }

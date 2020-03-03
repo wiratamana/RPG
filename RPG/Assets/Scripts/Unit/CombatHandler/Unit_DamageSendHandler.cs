@@ -49,14 +49,17 @@ namespace Tamana
                         continue;
                     }
 
+                    WeaponType unitWeapon = CombatHandler.Unit.Equipment.EquippedWeapon.WeaponType;
+
                     Debug.Log($"SendDamage form '{name}' to '{damageHandler.name}'");
                     damageHandler.DamageReceiver(new Status_DamageData()
                     {
                         damagePoint = 100,
                         parryTiming = CombatHandler.ParryHandler.ChanceToParryTiming,
                         damageTiming = Time.time,
-                        hitsAnimation = damageObject.GetHitAnimations(AnimationState.Idle)
-                    });
+                        weaponType = unitWeapon,
+                        hitsAnimation = damageObject.GetHitAnimations(unitWeapon)
+                    });;
                 }
             }
         }

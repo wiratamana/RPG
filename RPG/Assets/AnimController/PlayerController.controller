@@ -99,8 +99,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016e2b77f3b6ce047bb0626c4c69872e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateName: Sword1h_Hit_Head_Right
-  value: 0
+  weaponType: 0
+  animHit_1H: 1
+  animHit_2H: 0
+--- !u!1102 &-8169171967164755387
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sword1h_ShortDodge_Mid
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400018, guid: 5b0b3a1e98b4d6a49b1f360b4b3f5576, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1101 &-8109522319828517808
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -298,8 +325,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016e2b77f3b6ce047bb0626c4c69872e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateName: Sword1h_Hit_Torso_Left
-  value: 0
+  weaponType: 0
+  animHit_1H: 8
+  animHit_2H: 0
 --- !u!206 &-5832098506253170395
 BlendTree:
   m_ObjectHideFlags: 3
@@ -819,7 +847,10 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -4079133544149351505}
     m_Position: {x: 390, y: 570, z: 0}
-  m_ChildStateMachines: []
+  m_ChildStateMachines:
+  - serializedVersion: 1
+    m_StateMachine: {fileID: -363086065974561385}
+    m_Position: {x: 842.6718, y: 225.62659, z: 0}
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
@@ -868,6 +899,32 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &-2400016808009109413
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sword1h_ShortDodge_Mid2
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400020, guid: 5b0b3a1e98b4d6a49b1f360b4b3f5576, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1101 &-2257007325985380658
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1010,8 +1067,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016e2b77f3b6ce047bb0626c4c69872e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateName: Sword1h_Hit_Torso_Front
-  value: 0
+  weaponType: 0
+  animHit_1H: 16
+  animHit_2H: 0
 --- !u!114 &-385916516508786614
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1026,6 +1084,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combatContainer: {fileID: 11400000, guid: 9a70c0d7248c8044d928355f02ac509e, type: 2}
   index: 1
+--- !u!1107 &-363086065974561385
+AnimatorStateMachine:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Dodge
+  m_ChildStates:
+  - serializedVersion: 1
+    m_State: {fileID: 5563817594542784306}
+    m_Position: {x: 30, y: 110, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -8169171967164755387}
+    m_Position: {x: 30, y: 230, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -2400016808009109413}
+    m_Position: {x: 30, y: 190, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 8471958446091418941}
+    m_Position: {x: 30, y: 150, z: 0}
+  m_ChildStateMachines: []
+  m_AnyStateTransitions: []
+  m_EntryTransitions: []
+  m_StateMachineTransitions: {}
+  m_StateMachineBehaviours: []
+  m_AnyStatePosition: {x: 50, y: 20, z: 0}
+  m_EntryPosition: {x: 50, y: 50, z: 0}
+  m_ExitPosition: {x: 50, y: -10, z: 0}
+  m_ParentStateMachinePosition: {x: 310, y: 160, z: 0}
+  m_DefaultState: {fileID: 5563817594542784306}
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -1103,6 +1192,18 @@ AnimatorController:
     m_Controller: {fileID: 0}
   - m_Name: IsTakingDamage
     m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: AnimDodge
+    m_Type: 3
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: AnimHit
+    m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -1194,8 +1295,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016e2b77f3b6ce047bb0626c4c69872e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateName: Sword1h_Hit_Head_RightDown
-  value: 0
+  weaponType: 0
+  animHit_1H: 2
+  animHit_2H: 0
 --- !u!1101 &761721071365270592
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1569,8 +1671,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016e2b77f3b6ce047bb0626c4c69872e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateName: Sword1h_Hit_Head_RightUp
-  value: 0
+  weaponType: 0
+  animHit_1H: 4
+  animHit_2H: 0
 --- !u!114 &4422022970441474454
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1809,6 +1912,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameterName: IsInBattleState
   value: 0
+--- !u!1102 &5563817594542784306
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sword1h_ShortDodge_HighMid
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400026, guid: 5b0b3a1e98b4d6a49b1f360b4b3f5576, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1101 &5763343311254266349
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2006,6 +2135,32 @@ BlendTree:
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 0
+--- !u!1102 &8471958446091418941
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sword1h_Dodge
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400032, guid: 5b0b3a1e98b4d6a49b1f360b4b3f5576, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &8592879924513206784
 AnimatorState:
   serializedVersion: 5
