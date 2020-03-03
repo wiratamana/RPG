@@ -70,7 +70,7 @@ namespace Tamana
                     {
                         navigator = UI_NavigatorManager.Instance.Add(item.ItemName, InputEvent.ACTION_PICK_UP_ITEM);
 
-                        InputEvent.Instance.Event_PickUpItem.AddListener(PickUpItem);
+                        InputEvent.Instance.Event_PickUpItem.AddListener(PickUpItem, GetInstanceID());
                     }                    
                 }
                 else
@@ -80,7 +80,7 @@ namespace Tamana
                         UI_NavigatorManager.Instance.Remove(navigator);
                         navigator = null;
 
-                        InputEvent.Instance.Event_PickUpItem.RemoveListener(PickUpItem);
+                        InputEvent.Instance.Event_PickUpItem.RemoveListener(PickUpItem, GetInstanceID());
                     }                    
                 }
 
