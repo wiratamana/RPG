@@ -34,21 +34,9 @@ namespace Tamana
         {
             eventTrigger = Ring.gameObject.AddComponent<EventTrigger>();
 
-            var pointerEnterEntry = new EventTrigger.Entry();
-            var pointerExitEntry = new EventTrigger.Entry();
-            var pointerClickEntry = new EventTrigger.Entry();
-
-            pointerEnterEntry.eventID = EventTriggerType.PointerEnter;
-            pointerExitEntry.eventID = EventTriggerType.PointerExit;
-            pointerClickEntry.eventID = EventTriggerType.PointerClick;
-
-            pointerEnterEntry.callback.AddListener(OnPointerEnter);
-            pointerExitEntry.callback.AddListener(OnPointerExit);
-            pointerClickEntry.callback.AddListener(OnPointerClick);
-
-            eventTrigger.triggers.Add(pointerEnterEntry);
-            eventTrigger.triggers.Add(pointerExitEntry);
-            eventTrigger.triggers.Add(pointerClickEntry);
+            eventTrigger.AddListener(EventTriggerType.PointerEnter, OnPointerEnter);
+            eventTrigger.AddListener(EventTriggerType.PointerExit, OnPointerExit);
+            eventTrigger.AddListener(EventTriggerType.PointerClick, OnPointerClick);
         }
 
         public static UI_Menu_Inventory_ItemOption_GenericMenu CreateGenericMenu(string name)
@@ -62,6 +50,7 @@ namespace Tamana
             var genericMenu = go.AddComponent<UI_Menu_Inventory_ItemOption_GenericMenu>();
 
             genericMenu.Ring = UI_Menu_Pool.Instance.GetImage(rt, width, height, nameof(Ring));
+            genericMenu.Ring.raycastTarget = true;
             genericMenu.Ring.sprite = UI_Menu.Instance.MenuResources.InventoryItemIconRing_Sprite;
             genericMenu.Ring.type = Image.Type.Sliced;
             genericMenu.Ring.rectTransform.anchorMin = Vector2.zero;

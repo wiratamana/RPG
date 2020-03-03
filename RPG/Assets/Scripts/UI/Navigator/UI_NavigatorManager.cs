@@ -8,6 +8,9 @@ namespace Tamana
     {
         [SerializeField] private UI_Navigator prefab;
 
+        private Canvas canvas;
+        public Canvas Canvas => this.GetAndAssignComponent(ref canvas);
+
         private Stack<UI_Navigator> navigatorPool;
         private Transform poolTransform;
 
@@ -21,6 +24,19 @@ namespace Tamana
             navigatorPool = new Stack<UI_Navigator>();
             poolTransform = new GameObject(nameof(navigatorPool)).transform;
             DontDestroyOnLoad(poolTransform.gameObject);
+
+            UI_Menu.OnBeforeOpen.AddListener(DisableCanvas);
+            UI_Menu.OnAfterClose.AddListener(EnableCanvas);
+        }
+
+        private void DisableCanvas()
+        {
+            Canvas.enabled = false;
+        }
+
+        private void EnableCanvas()
+        {
+            Canvas.enabled = true;
         }
 
         public void Remove(UI_Navigator navigator)

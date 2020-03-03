@@ -9,6 +9,7 @@ namespace Tamana
 
         private Dictionary<System.Type, GameObject> instantiatorDic;
         public const string ITEM_MODULAR_BODY_METADATA_PATH = "ItemModularBodyMetadata";
+        public const string PLAYER_BASE_STATUS = "PlayerBaseStatus";
 
         protected override void Awake()
         {
@@ -74,13 +75,23 @@ namespace Tamana
             return null;
         }
 
-        public string LoadModularBodyMetadataJson()
+        public ArrayObject<Item_ModularBodyPart_Metadata> LoadModularBodyMetadata()
         {
             var wira = Resources.Load(ITEM_MODULAR_BODY_METADATA_PATH) as TextAsset;
             var json = wira.text;
             Resources.UnloadAsset(wira);
 
-            return json;
+            var returnValue = JsonUtility.FromJson<ArrayObject<Item_ModularBodyPart_Metadata>>(json);
+            return returnValue;
+        }
+        
+        public Status_Information GetPlayerBaseStatus()
+        {
+            var playerBaseStatus = Resources.Load<Status_Information>(PLAYER_BASE_STATUS);
+            var newInstance = Instantiate(playerBaseStatus);
+            Resources.UnloadAsset(playerBaseStatus);
+
+            return newInstance;
         }
     }
 }

@@ -8,5 +8,9 @@ namespace Tamana
     {
         public int damagePoint;
         public bool isIgnoreDefense;
+        public WeaponType weaponType;
+        public int[] hitsAnimation;
+        public float parryTiming;
+        public float damageTiming;
     }
 }

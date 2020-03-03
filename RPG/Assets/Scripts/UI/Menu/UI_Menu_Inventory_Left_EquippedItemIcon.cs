@@ -68,7 +68,7 @@ namespace Tamana
             equippedWeapon = null;
         }
 
-        public static void SetItem(UI_Menu_Inventory_Left_ItemIcon itemIcon)
+        public static void MarkItemAsEquippedItem(UI_Menu_Inventory_Left_ItemIcon itemIcon)
         {
             var equipment = itemIcon.Item as Item_Equipment;
             if(equipment == null)
@@ -76,7 +76,7 @@ namespace Tamana
                 return;
             }
 
-            if(Inventory_EquipmentManager.Instance.IsCurrentlyEquipped(equipment) == false)
+            if(GameManager.Player.Equipment.IsCurrentlyEquipped(equipment) == false)
             {
                 return;
             }

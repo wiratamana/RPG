@@ -40,12 +40,15 @@ namespace Tamana
         private void Start()
         {
             UpdateColor();
+
+            UI_Menu.Instance.Inventory.Left.ItemTypeDrawer.OnActiveItemTypeValueChanged.AddListener(UpdateColor, GetInstanceID());
         }
 
-        public void UpdateColor()
+        public void UpdateColor(ItemType type)
         {
             var equipment = ItemIcon.Item as Item_Equipment;
-            if (equipment != null && Inventory_EquipmentManager.Instance.IsCurrentlyEquipped(equipment) == true)
+            if (equipment != null && equipment.ItemType == type &&
+                GameManager.Player.Equipment.IsCurrentlyEquipped(equipment) == true)
             {
                 Ring.color = Color.white;
             }
@@ -53,6 +56,24 @@ namespace Tamana
             {
                 Ring.color = NormalColor;
             }
+        }
+
+        public void UpdateColor()
+        {
+            var equipment = ItemIcon.Item as Item_Equipment;
+            if (equipment != null && GameManager.Player.Equipment.IsCurrentlyEquipped(equipment) == true)
+            {
+                Ring.color = Color.white;
+            }
+            else
+            {
+                Ring.color = NormalColor;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            UI_Menu.Instance.Inventory.Left.ItemTypeDrawer.OnActiveItemTypeValueChanged.RemoveListener(UpdateColor, GetInstanceID());
         }
     }
 }

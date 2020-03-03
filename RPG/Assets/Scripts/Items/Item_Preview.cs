@@ -7,28 +7,41 @@ namespace Tamana
     {
         private MeshRenderer renderer;
         private Material material;
-        [SerializeField] private Camera cam;
-        public Item_Base ItemBase { private set; get; }
+
+        public Item_Base ItemBase => ItemIcon.Item;
+        public UI_Menu_Inventory_Left_ItemIcon ItemIcon { private set; get; }
 
         private void Awake()
         {
             renderer = GetComponent<MeshRenderer>();
             material = renderer.material;
+
+            enabled = false;
         }
 
-        public void Update()
+        private void Update()
         {
-            material.SetVector("_CamDir", cam == null ? GameManager.MainCamera.forward : cam.transform.forward);
+            UpdateMaterial();
+            UpdateRotation();
+        }
+
+        public void UpdateMaterial()
+        {
+            var cam = UI_Menu.Instance.Inventory.Left.ItemIconDrawer.TextureRendererCamera;
+            material.SetVector("_CamDir", cam.transform.forward);
+        }
+
+        public void UpdateRotation()
+        {
             transform.Rotate(Vector3.up * 120 * Time.deltaTime);
         }
 
-        public void SetValue(Camera cam, Item_Base itemBase)
+        public void SetItemIcon(UI_Menu_Inventory_Left_ItemIcon itemIcon)
         {
-            this.cam = cam;
-            ItemBase = itemBase;
+            ItemIcon = itemIcon;
         }
 
-        public void ResetPosition()
+        public void ResetRotation()
         {
             if (ItemBase is Item_Weapon)
             {
@@ -39,6 +52,26 @@ namespace Tamana
             {
                 transform.rotation = Quaternion.Euler(0, 180, 0);
             }
+        }
+
+        public static Item_Preview InstantiateItemPrefab(UI_Menu_Inventory_Left_ItemIcon itemIcon, Vector2 positionOffset)
+        {
+            var itemBase = itemIcon.Item;
+            var item = Instantiate(itemBase.Prefab);
+
+            if (itemBase is Item_Armor || itemBase is Item_Attachment)
+            {
+                item.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+            }
+
+            item.gameObject.layer = LayerMask.NameToLayer(LayerManager.LAYER_ITEM_PROJECTION);
+            item.GetComponent<MeshRenderer>().sharedMaterial = GameManager.ItemMaterial;
+            item.gameObject.AddComponent<Item_Preview>().SetItemIcon(itemIcon);
+
+            item.position = new Vector3(0, 1000, 1) + (Vector3)positionOffset;
+            item.rotation = Quaternion.Euler(0, 180, 0);
+
+            return item.GetComponent<Item_Preview>();
         }
     }
 }

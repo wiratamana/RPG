@@ -13,8 +13,15 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   itemName: Iron Sword
-  itemDescription: A sword made with iron.
+  itemDescription: A sword once wielded by a hero in an ancient age. When grasped,
+    a strange sense of nostalgia washed over you. Take it when going alone would
+    otherwise be dangerous.
   prefab: {fileID: 4561571508225656, guid: 0c14f3ea30af4174ba288b3c2042f665, type: 3}
+  effects:
+  - type: 3
+    value: 50
+  - type: 2
+    value: 500
   holsterPosition: {x: -10.5, y: 12.3, z: 19.3}
   holsterRotation: {x: -137.548, y: -89.35199, z: -3.992004}
   equipPosition: {x: 6.74, y: 3.17, z: 0.65}
@@ -25,4 +32,4 @@ MonoBehaviour:
   customOrthoSize: 0.4
   weaponCollider:
     center: {x: 0.00001677684, y: 0.5708392, z: -0.00004446507}
-    size: {x: 0.03091071, y: 0.9426218, z: 0.1377233}
+    size: {x: 0.06135416, y: 0.9544305, z: 0.1255236}

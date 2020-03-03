@@ -55,6 +55,7 @@ namespace Tamana
                 var meshRenderer = weaponTransform.GetComponent<MeshRenderer>();
                 meshRenderer.sharedMaterial = new Material(GameManager.ItemMaterial);
                 meshRenderer.sharedMaterial.SetVector("_CamDir", PortraitCamera.transform.forward);
+                meshRenderer.sharedMaterial.SetFloat("_Intensity", 1.5f);
             }
         }
 
@@ -71,12 +72,12 @@ namespace Tamana
 
         private void ChangeMaterial()
         {
-            var meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>(true
-                );
+            var meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
             foreach(var mr in meshRenderers)
             {
                 mr.sharedMaterial = new Material(GameManager.ItemMaterial);
                 mr.sharedMaterial.SetVector("_CamDir", PortraitCamera.transform.forward);
+                mr.sharedMaterial.SetFloat("_Intensity", 1.5f);
             }
         }
 

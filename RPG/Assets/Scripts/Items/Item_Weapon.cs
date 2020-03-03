@@ -6,6 +6,7 @@ namespace Tamana
     [CreateAssetMenu(fileName = "New Weapon", menuName = "Item/Weapon", order = 1)]
     public class Item_Weapon : Item_Equipment
     {
+        [SerializeField] private WeaponType weaponType;
         [SerializeField] private Vector3 holsterPosition;
         [SerializeField] private Vector3 holsterRotation;
         [SerializeField] private Vector3 equipPosition;
@@ -15,7 +16,7 @@ namespace Tamana
         [SerializeField] private Vector3 menuCameraOffset;
         [SerializeField] private float customOrthoSize;
         [SerializeField] private WeaponOverlapBox weaponCollider;
-
+         
         public Vector3 HolsterPosition { get { return holsterPosition; } }
         public Quaternion HolsterRotation { get { return Quaternion.Euler(holsterRotation); } }
         public Vector3 EquipPostion { get { return equipPosition; } }
@@ -25,33 +26,51 @@ namespace Tamana
         public Vector3 MenuCameraOffset { get { return menuCameraOffset; } }
         public float CustomOrthoSize { get { return customOrthoSize; } }
         public WeaponOverlapBox WeaponCollider { get { return weaponCollider; } }
+        public override ItemType ItemType => ItemType.Weapon;
+        public WeaponType WeaponType => weaponType;
 
         public override void Equip()
         {
             Debug.Log("Weapon - Equip");
-           
-            var weapon = Instantiate(Prefab, TPC_BodyTransform.Instance.Hips);
-            weapon.transform.localScale = new Vector3(100, 100, 100);
-            weapon.transform.localPosition = HolsterPosition;
-            weapon.transform.localRotation = HolsterRotation;
 
-            var weaponPreview = Instantiate(Prefab, Inventory_Menu_PlayerPortrait.Instance.Hips);
-            weaponPreview.transform.localScale = new Vector3(100, 100, 100);
-            weaponPreview.transform.localPosition = HolsterPosition;
-            weaponPreview.transform.localRotation = HolsterRotation;
-
-            Inventory_Menu_PlayerPortrait.Instance.WeaponTransform = weaponPreview;
-            Inventory_EquipmentManager.Instance.EquipWeapon(this, weapon);
+            inventoryOwner.Unit.Equipment.EquipWeapon(this);
         }
 
         public override void Unequip()
         {
             Debug.Log("Unequip");
-            var weapon = Inventory_EquipmentManager.Instance.WeaponTransform;
-            Destroy(weapon.gameObject);
 
-            Inventory_Menu_PlayerPortrait.Instance.WeaponTransform = null;
-            Inventory_EquipmentManager.Instance.UnequipWeapon();
+            inventoryOwner.Unit.Equipment.UnequipWeapon();
+        }
+
+        public override Item_ItemDetails ItemDetails
+        {
+            get
+            {
+                return new Item_ItemDetails()
+                {
+                    ItemName = ItemName,
+                    ItemDescription = ItemDescription,
+                    ItemEffects = ItemEffects
+                };
+            }
+        }
+
+        public void SetWeaponTransformParent(bool isEquip)
+        {
+            var equipment = inventoryOwner.Unit.Equipment;
+            var bodyTransform = inventoryOwner.Unit.CombatHandler.BodyTransform;
+
+            var weaponTransform = equipment.WeaponTransform;
+            var weaponItem = equipment.EquippedWeapon;
+
+            var parentTransform = isEquip ? bodyTransform.HandR : bodyTransform.Hips;
+            var position = isEquip ? weaponItem.EquipPostion : weaponItem.HolsterPosition;
+            var rotation = isEquip ? weaponItem.EquipRotation : weaponItem.HolsterRotation;    
+
+            weaponTransform.SetParent(parentTransform);
+            weaponTransform.localPosition = position;
+            weaponTransform.localRotation = rotation;
         }
 
         [System.Serializable]

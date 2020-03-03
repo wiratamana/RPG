@@ -73,23 +73,44 @@ namespace Tamana
 
         public void RemoveImage(Image image)
         {
+            ResetRectTransform(image.rectTransform);
             image.transform.SetParent(transform);
+            image.type = Image.Type.Simple;
             image.sprite = null;
+            image.color = Color.white;
+            image.raycastTarget = false;
             imagesPool.Push(image);
         }
 
         public void RemoveRawImage(RawImage rawImage)
         {
+            if(rawImage.texture !=  null)
+            {
+                DestroyImmediate(rawImage.texture);
+            }
+
+            ResetRectTransform(rawImage.rectTransform);
             rawImage.transform.SetParent(transform);
             rawImage.texture = null;
+            rawImage.raycastTarget = false;
             rawImagesPool.Push(rawImage);
         }
 
         public void RemoveText(TextMeshProUGUI text)
         {
+            ResetRectTransform(text.rectTransform);
             text.transform.SetParent(transform);
+            text.fontSize = 36;
+            text.alignment = TextAlignmentOptions.Center;
             text.text = null;
+            text.raycastTarget = false;
             textsPool.Push(text);
+        }
+
+        private void ResetRectTransform(RectTransform rt)
+        {
+            rt.anchorMin = new Vector2(0.5f, 0.5f);
+            rt.anchorMax = new Vector2(0.5f, 0.5f);
         }
     }
 }

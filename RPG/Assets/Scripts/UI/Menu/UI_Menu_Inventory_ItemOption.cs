@@ -32,6 +32,8 @@ namespace Tamana
         public const int GENERIC_HEIGHT = 50;
         public const int GENERIC_WIDTH = WIDTH - 50;
 
+        public bool IsActive => gameObject.activeInHierarchy;
+
         protected override void Awake()
         {
             base.Awake();
@@ -106,7 +108,6 @@ namespace Tamana
             }
 
             genericMenusList.Clear();
-        }
+        }       
     }
-
 }

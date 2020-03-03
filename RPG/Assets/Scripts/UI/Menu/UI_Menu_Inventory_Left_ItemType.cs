@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Tamana
 {
-    public class UI_Menu_Inventory_Left_ItemType : SingletonMonobehaviour<UI_Menu_Inventory_Left_ItemType>
+    public class UI_Menu_Inventory_Left_ItemType : MonoBehaviour
     {
         private RectTransform _rectTransform;
         public RectTransform RectTransform
@@ -19,30 +19,71 @@ namespace Tamana
             }
         }
 
-        protected override void Awake()
-        {
-            base.Awake();
+        public const int PARENT_SIZE = 64;
+        public const int BACKGROUND_SIZE = 64;
+        public const int RING_SIZE = 60;
+        public const int ICON_SIZE = 48;
 
-            InstantiateItemTypeIcons();
+        public UI_Menu_Inventory_Left_ItemType_Background Background { private set; get; }
+        public UI_Menu_Inventory_Left_ItemType_Ring Ring { private set; get; }
+        public UI_Menu_Inventory_Left_ItemType_Icon Icon { private set; get; }
+
+        public ItemType ItemType
+        {
+            get
+            {
+                return (ItemType)System.Enum.Parse(typeof(ItemType), name);
+            }
         }
 
-        private void InstantiateItemTypeIcons()
+        private Color BackgroundColorInactive = Color.black;
+        private Color RingColorInactive = Color.white;
+        private Color IconColorInactive = Color.white;
+
+        private Color BackgroundColorActive = Color.white;
+        private Color RingColorActive = Color.black;
+        private Color IconColorActive = Color.black;
+
+        private void Awake()
         {
-            var itemTypeCount = System.Enum.GetNames(typeof(UI_Menu_Inventory.InventoryItemType)).Length;
-            var iconSize = 64;
-            var spacing = 15.0f;
+            var background = UI_Menu_Pool.Instance.GetImage(RectTransform, BACKGROUND_SIZE, BACKGROUND_SIZE, nameof(Background));
+            background.rectTransform.localPosition = Vector2.zero;
 
-            var drawerHorizontalSize = spacing * (itemTypeCount - 1) + (iconSize * itemTypeCount);
-            var position = new Vector3((drawerHorizontalSize * -0.5f) + (iconSize * 0.5f), 0.0f);
+            var ring = UI_Menu_Pool.Instance.GetImage(RectTransform, RING_SIZE, RING_SIZE, nameof(Ring));
+            ring.rectTransform.localPosition = Vector2.zero;
 
-            for(int i = 0; i < itemTypeCount; i++)
+            var icon = UI_Menu_Pool.Instance.GetImage(RectTransform, ICON_SIZE, ICON_SIZE, nameof(Icon));
+            icon.rectTransform.localPosition = Vector2.zero;
+
+            Background = background.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemType_Background>();
+            Ring = ring.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemType_Ring>();
+            Icon = icon.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemType_Icon>();
+
+            Background.OnPointerClickEvent.AddListener(OnClick);
+        }
+
+        public void Activate()
+        {
+            Background.Background.color = BackgroundColorActive;
+            Ring.Ring.color = RingColorActive;
+            Icon.Icon.color = IconColorActive;
+        }
+
+        public void Deactivate()
+        {
+            Background.Background.color = BackgroundColorInactive;
+            Ring.Ring.color = RingColorInactive;
+            Icon.Icon.color = IconColorInactive;
+        }
+
+        private void OnClick()
+        {
+            if(ItemType == UI_Menu.Instance.Inventory.Left.ItemTypeDrawer.CurrentlyActiveItemType)
             {
-                var img = UIManager.CreateImage(RectTransform, iconSize, iconSize, ((UI_Menu_Inventory.InventoryItemType)i).ToString());
-                img.rectTransform.localPosition = position;
-                img.sprite = UI_Menu.Instance.MenuResources.GetItemTypeSprites((UI_Menu_Inventory.InventoryItemType)i);
-
-                position += new Vector3(spacing + iconSize, 0.0f);
+                return;
             }
+
+            UI_Menu.Instance.Inventory.Left.ItemTypeDrawer.SetActive(ItemType, true);
         }
     }
 }
