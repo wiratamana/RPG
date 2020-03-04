@@ -34993,8 +34993,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1854fa4026c0a44966c4d9c2ebe23b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightAttack: {fileID: 11400000, guid: 9a70c0d7248c8044d928355f02ac509e, type: 2}
-  heavyAttack: {fileID: 11400000, guid: c0477bb4c35ed844a9790ac34a320e96, type: 2}
+  combatAnimDataContainer: {fileID: 11400000, guid: c0477bb4c35ed844a9790ac34a320e96,
+    type: 2}
 --- !u!114 &1321421753
 MonoBehaviour:
   m_ObjectHideFlags: 0

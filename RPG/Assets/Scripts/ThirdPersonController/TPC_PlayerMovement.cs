@@ -40,7 +40,7 @@ namespace Tamana
                 TPC.Unit.UnitAnimator.Accelerate();
             }
 
-            if(TPC.Unit.UnitAnimator.Params.IsDeceleratin == true)
+            if(TPC.Unit.UnitAnimator.Params.IsDecelerating == true)
             {
                 TPC.Unit.UnitAnimator.Decelerate();
             }
@@ -68,7 +68,7 @@ namespace Tamana
             isButtonWPressed = false;
 
             TPC.Unit.UnitAnimator.Params.IsAccelerating = false;
-            TPC.Unit.UnitAnimator.Params.IsDeceleratin = true;
+            TPC.Unit.UnitAnimator.Params.IsDecelerating = true;
         }
 
         private void OnReachMaximumVelocity()
@@ -78,7 +78,7 @@ namespace Tamana
 
         private void OnReachZeroVelocity()
         {
-            TPC.Unit.UnitAnimator.Params.IsDeceleratin = false;
+            TPC.Unit.UnitAnimator.Params.IsDecelerating = false;
             TPC.Unit.UnitAnimator.Params.IsMoving = false;
         }
 
@@ -86,7 +86,7 @@ namespace Tamana
         {
             if(isButtonWPressed == true)
             {
-                TPC.Unit.UnitAnimator.Params.IsDeceleratin = false;
+                TPC.Unit.UnitAnimator.Params.IsDecelerating = false;
                 TPC.Unit.UnitAnimator.Params.IsMoving = true;
                 TPC.Unit.UnitAnimator.Params.IsAccelerating = true;
             }            

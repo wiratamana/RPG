@@ -39,7 +39,6 @@ namespace Tamana
         public EventManager Event_PickUpItem { get; } = new EventManager();
         public EventManager Event_OpenOrCloseMenuInventory { private set; get; } = new EventManager();
 
-        public EventManager Event_DoAttackLight { get; } = new EventManager();
         public EventManager Event_DoAttackHeavy { get; } = new EventManager();
 
         public EventManager Event_Holster { get; } = new EventManager();

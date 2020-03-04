@@ -18,20 +18,20 @@ namespace Tamana
         public const float MAX_VELOCITY = 1.0f;
         public const float MIN_VELOCITY = 0.0f;
 
-        private const string ParamName_Movement = "Movement";
-        private const string ParamName_IsMoving = "IsMoving";
-        private const string ParamName_IsDecelerating = "IsDecelerating";
-        private const string ParamName_IsAccelerating = "IsAccelerating";
-        private const string ParamName_IsTransitingToNextAttackAnimation = "IsTransitingToNextAttackAnimation";
-        private const string ParamName_IsRotateBeforeMove = "IsRotateBeforeMove";
-        private const string ParamName_IsHolstering = "IsHolstering";
-        private const string ParamName_IsEquipping = "IsEquipping";
-        private const string ParamName_IsTakingDamage = "IsTakingDamage";
-        private const string Paramname_IsInCombatState = "IsInCombatState";
-        private const string Paramname_AnimDodge = "AnimDodge";
-        private const string Paramname_AnimHit = "AnimHit";
+        private const string ParamName_Movement = nameof(Movement);
+        private const string ParamName_IsMoving = nameof(IsMoving);
+        private const string ParamName_IsDecelerating = nameof(IsDecelerating);
+        private const string ParamName_IsAccelerating = nameof(IsAccelerating);
+        private const string ParamName_IsTransitingToNextAttackAnimation = nameof(IsTransitingToNextAttackAnimation);
+        private const string ParamName_IsRotateBeforeMove = nameof(IsRotateBeforeMove);
+        private const string ParamName_IsHolstering = nameof(IsHolstering);
+        private const string ParamName_IsEquipping = nameof(IsEquipping);
+        private const string ParamName_IsTakingDamage = nameof(IsTakingDamage);
+        private const string Paramname_IsInCombatState = nameof(IsInCombatState);
+        private const string Paramname_AnimDodge = nameof(AnimDodge);
+        private const string Paramname_AnimHit = nameof(AnimHit);
 
-        public float Params_Movement
+        public float Movement
         {
             get => animator.GetFloat(ParamName_Movement);
             set => animator.SetFloat(ParamName_Movement, value);
@@ -51,7 +51,7 @@ namespace Tamana
             get => animator.GetBool(ParamName_IsMoving);
             set => animator.SetBool(ParamName_IsMoving, value);
         }
-        public bool IsDeceleratin
+        public bool IsDecelerating
         {
             get => animator.GetBool(ParamName_IsDecelerating);
             set => animator.SetBool(ParamName_IsDecelerating, value);
