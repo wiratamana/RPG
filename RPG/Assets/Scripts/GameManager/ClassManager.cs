@@ -105,42 +105,6 @@ namespace Tamana
 
             return filteredTypesDefinedWith[nameofT];
         }
-
-        public static Dictionary<string, TPC_Anim_AnimInfo<bool>> GetAllConstValueFromStaticClass<Attribute>(System.Type sources)
-            where Attribute : System.Attribute
-        {
-            var constVars = sources.GetFields(BindingFlags.Public
-                | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-
-            var LAYER = "LAYER";
-            var layerField = System.Array.Find(constVars, x => x.Name == LAYER)?.GetValue(null).ToString();
-            if(string.IsNullOrEmpty(layerField))
-            {
-                Debug.Log($"Couldn't find const variable with name '{LAYER}' inside '{sources.FullName}' type.", Debug.LogType.ForceQuit);
-                return null;
-            }
-
-            var returnValue = new Dictionary<string, TPC_Anim_AnimInfo<bool>>();
-
-            foreach (var constVar in constVars)
-            {
-                if(constVar.IsDefined(typeof(TPC_Anim_AttributeNotAnim)) == true)
-                {
-                    continue;
-                }
-
-                var value = new TPC_Anim_AnimInfo<bool>(false, layerField);
-                foreach (var t in GetAttributesFromClass<Attribute>())
-                {
-                    value.StateDic[t.Name] = constVar.IsDefined(t);
-                }
-
-                var fieldName = constVar.GetValue(null).ToString();
-                returnValue.Add(fieldName, value);
-            }
-
-            return returnValue;
-        }
     }
 }
 
