@@ -5,25 +5,29 @@ using System.Reflection;
 
 namespace Tamana
 {
-    public class TPC_PlayerMovement : SingletonMonobehaviour<TPC_PlayerMovement>
+    public class TPC_PlayerMovement : MonoBehaviour
     {
-        private Unit_Player unit;
-        public Unit_Player Unit => this.GetAndAssignComponent(ref unit);
-        public TPC_RotateBeforeStartMoveAnimPlayHandler StartRotateAnimHandler { private set; get; }
+        private TPC_Main tpc;
+        public TPC_Main TPC => this.GetAndAssignComponent(ref tpc);
+
+        private TPC_RotateBeforeStartMoveAnimPlayHandler startRotateAnimHandler;
+        public TPC_RotateBeforeStartMoveAnimPlayHandler StartRotateAnimHandler => this.GetOrAddAndAssignComponent(ref startRotateAnimHandler);
 
         private bool isButtonWPressed;
 
-        protected override void Awake()
+        private void OnValidate()
         {
-            base.Awake();
+            this.LogErrorIfComponentIsNull(StartRotateAnimHandler);
+        }
 
-            StartRotateAnimHandler = GameManager.PlayerTransform.gameObject.AddComponent<TPC_RotateBeforeStartMoveAnimPlayHandler>();
+        private void Awake()
+        {
             StartRotateAnimHandler.OnRotateCompleted.AddListener(OnRotationCompleted);
 
-            Unit.UnitAnimator.OnReachMaximumVelocity.AddListener(OnReachMaximumVelocity);
-            Unit.UnitAnimator.OnReachZeroVelocity.AddListener(OnReachZeroVelocity);
+            TPC.Unit.UnitAnimator.OnReachMaximumVelocity.AddListener(OnReachMaximumVelocity);
+            TPC.Unit.UnitAnimator.OnReachZeroVelocity.AddListener(OnReachZeroVelocity);
 
-            InputEvent.Instance.Event_Equip.AddListener(Unit.CombatHandler.Equip);
+            InputEvent.Instance.Event_Equip.AddListener(TPC.Unit.CombatHandler.Equip);
 
             InputEvent.Instance.Event_BeginMove.AddListener(OnBeginMove);
             InputEvent.Instance.Event_StopMove.AddListener(OnStopMove);
@@ -31,24 +35,24 @@ namespace Tamana
 
         private void Update()
         {
-            if(Unit.UnitAnimator.Params.IsAccelerating == true)
+            if(TPC.Unit.UnitAnimator.Params.IsAccelerating == true)
             {
-                Unit.UnitAnimator.Accelerate();
+                TPC.Unit.UnitAnimator.Accelerate();
             }
 
-            if(Unit.UnitAnimator.Params.IsDeceleratin == true)
+            if(TPC.Unit.UnitAnimator.Params.IsDeceleratin == true)
             {
-                Unit.UnitAnimator.Decelerate();
+                TPC.Unit.UnitAnimator.Decelerate();
             }
 
-            if(Unit.UnitAnimator.Params.IsMoving == true)
+            if(TPC.Unit.UnitAnimator.Params.IsMoving == true)
             {
                 var cameraForward = GameManager.MainCamera.transform.forward;
                 cameraForward.y = 0;
                 cameraForward = cameraForward.normalized;
 
                 var lookRotation = Quaternion.LookRotation(cameraForward);
-                Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, 5 * Time.deltaTime);
+                TPC.Unit.transform.rotation = Quaternion.Slerp(TPC.Unit.transform.rotation, lookRotation, 5 * Time.deltaTime);
             }
         }
 
@@ -56,35 +60,35 @@ namespace Tamana
         {
             isButtonWPressed = true;
 
-            Unit.UnitAnimator.Params.IsRotateBeforeMove = true;
+            TPC.Unit.UnitAnimator.Params.IsRotateBeforeMove = true;
         }
 
         private void OnStopMove()
         {
             isButtonWPressed = false;
 
-            Unit.UnitAnimator.Params.IsAccelerating = false; 
-            unit.UnitAnimator.Params.IsDeceleratin = true;
+            TPC.Unit.UnitAnimator.Params.IsAccelerating = false;
+            TPC.Unit.UnitAnimator.Params.IsDeceleratin = true;
         }
 
         private void OnReachMaximumVelocity()
         {
-            Unit.UnitAnimator.Params.IsAccelerating = false;
+            TPC.Unit.UnitAnimator.Params.IsAccelerating = false;
         }
 
         private void OnReachZeroVelocity()
         {
-            Unit.UnitAnimator.Params.IsDeceleratin = false;
-            Unit.UnitAnimator.Params.IsMoving = false;
+            TPC.Unit.UnitAnimator.Params.IsDeceleratin = false;
+            TPC.Unit.UnitAnimator.Params.IsMoving = false;
         }
 
         private void OnRotationCompleted()
         {
             if(isButtonWPressed == true)
             {
-                Unit.UnitAnimator.Params.IsDeceleratin = false;
-                Unit.UnitAnimator.Params.IsMoving = true;
-                Unit.UnitAnimator.Params.IsAccelerating = true;
+                TPC.Unit.UnitAnimator.Params.IsDeceleratin = false;
+                TPC.Unit.UnitAnimator.Params.IsMoving = true;
+                TPC.Unit.UnitAnimator.Params.IsAccelerating = true;
             }            
         }            
     }
