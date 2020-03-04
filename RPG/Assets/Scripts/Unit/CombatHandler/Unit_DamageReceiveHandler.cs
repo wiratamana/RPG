@@ -34,8 +34,12 @@ namespace Tamana
         {
             var animationHitData = CombatHandler.UnitAnimator.AnimStatus.GetAnimationHitData(statesName); ;
 
-            CombatHandler.UnitAnimator.OnHitAnimationStarted.Invoke();
-            CombatHandler.UnitAnimator.Params.IsTakingDamage = true;
+            if(CombatHandler.UnitAnimator.Params.IsTakingDamage == false)
+            {
+                CombatHandler.UnitAnimator.OnHitAnimationStarted.Invoke();
+                CombatHandler.UnitAnimator.Params.IsTakingDamage = true;
+            }            
+
             CombatHandler.UnitAnimator.Params.AnimHit = animationHitData.paramValue;
             CombatHandler.UnitAnimator.Play(animationHitData.stateName);
         }

@@ -16,8 +16,11 @@ namespace Tamana
 
         private void Awake()
         {
-            CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(MakePlayerUnableToAttack);
-            CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(MakePlayerAbleToAttackAgain);
+            if(CombatHandler.Unit.IsUnitPlayer)
+            {
+                CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(MakePlayerUnableToAttack);
+                CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(MakePlayerAbleToAttackAgain);
+            }           
         }
 
         public void PlayAttackAnim()

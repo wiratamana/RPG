@@ -18,8 +18,11 @@ namespace Tamana
 
         private void Awake()
         {
-            CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(MakePlayerUnableToParry);
-            CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(MakePlayerAbleToParryAgain);
+            if (CombatHandler.Unit.IsUnitPlayer)
+            {
+                CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(MakePlayerUnableToParry);
+                CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(MakePlayerAbleToParryAgain);
+            }            
         }
 
         public void Parry()
