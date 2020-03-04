@@ -112,12 +112,16 @@ namespace Tamana
         {
             InputEvent.Instance.Event_OpenOrCloseMenuInventory.RemoveListener(OpenMenuInventory);
             InputEvent.Instance.Event_OpenOrCloseMenuInventory.AddListener(CloseMenuInventory);
+
+            InputEvent.Instance.SetCursorToVisible();
         }
 
         private void OnClosed()
         {
             InputEvent.Instance.Event_OpenOrCloseMenuInventory.RemoveListener(CloseMenuInventory);
             InputEvent.Instance.Event_OpenOrCloseMenuInventory.AddListener(OpenMenuInventory);
+
+            InputEvent.Instance.SetCursorToInvisible();
         }
 
         public enum MenuItem

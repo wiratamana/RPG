@@ -15,6 +15,24 @@ namespace Tamana
             go.AddComponent<InputEvent>();
         }
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            SetCursorToInvisible();
+        }
+
+        public void SetCursorToVisible()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        public void SetCursorToInvisible()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
         public const char ACTION_PICK_UP_ITEM = 'E';
         public const char ACTION_OPEN_MENU_INVENTORY = 'B';
 
