@@ -27,7 +27,7 @@ namespace Tamana
         private const string ParamName_IsHolstering = "IsHolstering";
         private const string ParamName_IsEquipping = "IsEquipping";
         private const string ParamName_IsTakingDamage = "IsTakingDamage";
-        private const string Paramname_IsInBattleState = "IsInBattleState";
+        private const string Paramname_IsInCombatState = "IsInCombatState";
         private const string Paramname_AnimDodge = "AnimDodge";
         private const string Paramname_AnimHit = "AnimHit";
 
@@ -76,10 +76,27 @@ namespace Tamana
             get => animator.GetBool(ParamName_IsTakingDamage);
             set => animator.SetBool(ParamName_IsTakingDamage, value);
         }
-        public bool IsInBattleState
+        public bool IsInCombatState
         {
-            get => animator.GetBool(Paramname_IsInBattleState);
-            set => animator.SetBool(Paramname_IsInBattleState, value);
+            get => animator.GetBool(Paramname_IsInCombatState);
+            set
+            {
+                if(IsInCombatState == value)
+                {
+                    return;
+                }
+
+                if(value == true)
+                {
+                    unitAnimator.OnStateChangedToCombatState.Invoke();
+                }
+                else
+                {
+                    unitAnimator.OnStateChangedToIdleState.Invoke();
+                }
+
+                animator.SetBool(Paramname_IsInCombatState, value);
+            }
         }
         public int AnimDodge
         {
