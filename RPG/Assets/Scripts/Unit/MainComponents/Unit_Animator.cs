@@ -60,6 +60,9 @@ namespace Tamana
         public EventManager OnHitAnimationStarted { get; } = new EventManager();
         public EventManager OnHitAnimationFinished { get; } = new EventManager();
 
+        public EventManager OnStateChangedToCombatState { get; } = new EventManager();
+        public EventManager OnStateChangedToIdleState { get; } = new EventManager();
+
         public void Play(string stateName)
         {
             Animator.Play(stateName);

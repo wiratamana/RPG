@@ -63,7 +63,7 @@ namespace Tamana
 
         private void MakePlayerUnableToAttack()
         {
-            if(CombatHandler.UnitAnimator.Params.IsInBattleState == false)
+            if(CombatHandler.UnitAnimator.Params.IsInCombatState == false)
             {
                 return;
             }
@@ -77,7 +77,7 @@ namespace Tamana
             CurrentlyPlayingCombatAnimDataContainer = null;
             CurrentlyPlayingCombatAnimData = null;
 
-            if (CombatHandler.UnitAnimator.Params.IsInBattleState == false)
+            if (CombatHandler.UnitAnimator.Params.IsInCombatState == false)
             {
                 return;
             }
