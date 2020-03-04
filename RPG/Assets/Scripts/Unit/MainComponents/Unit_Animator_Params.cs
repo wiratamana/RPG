@@ -108,5 +108,6 @@ namespace Tamana
             get => animator.GetInteger(Paramname_AnimHit);
             set => animator.SetInteger(Paramname_AnimHit, value);
         }
+        public bool IsInDodgingState => AnimDodge > 0;
     }
 }

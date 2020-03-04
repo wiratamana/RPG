@@ -24,7 +24,7 @@ namespace Tamana
         {
             get
             {
-                if(_params == null)
+                if (_params == null)
                 {
                     _params = new Unit_Animator_Params(this);
                 }
@@ -38,7 +38,7 @@ namespace Tamana
         {
             get
             {
-                if(animStatus == null)
+                if (animStatus == null)
                 {
                     animStatus = new Unit_Animator_Status(this);
                 }
@@ -59,6 +59,9 @@ namespace Tamana
 
         public EventManager OnHitAnimationStarted { get; } = new EventManager();
         public EventManager OnHitAnimationFinished { get; } = new EventManager();
+
+        public EventManager OnDodgeAnimationStarted { get; } = new EventManager();
+        public EventManager OnDodgeAnimationFinished { get; } = new EventManager();
 
         public EventManager OnStateChangedToCombatState { get; } = new EventManager();
         public EventManager OnStateChangedToIdleState { get; } = new EventManager();
