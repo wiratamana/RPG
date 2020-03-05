@@ -59,6 +59,16 @@ namespace Tamana
 
             return value;
         }
+        public static Transform GetChildWithNameFromParentAndAssign(this MonoBehaviour component, 
+            string childName, Transform parent, ref Transform value)
+        {
+            if (value == null)
+            {
+                value = GetChildWithNameRecursive(childName, parent);
+            }
+
+            return value;
+        }
 
         public static void LogErrorIfComponentIsNull<T>(this MonoBehaviour component, T value) where T : Component
         {
