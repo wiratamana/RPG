@@ -9,87 +9,21 @@ namespace Tamana
         private const string HIPS   = "Hips";
         private const string SPINE  = "Spine_01";
         private const string HAND_R = "Hand_R";
+        private const string HEAD   = "Head";
 
         private Transform root;
-        public Transform Root
-        {
-            get
-            {
-                if(root == null)
-                {
-                    root = GetChild(ROOT, transform);
-                }
-
-                return root;
-            }
-        }
+        public Transform Root => this.GetChildWithNameAndAssign(ROOT, ref root);
 
         private Transform hips;
-        public Transform Hips
-        {
-            get
-            {
-                if(hips == null)
-                {
-                    hips = GetChild(HIPS, Root);
-                }
-
-                return hips;
-            }
-        }
+        public Transform Hips => this.GetChildWithNameFromParentAndAssign(HIPS, Root, ref hips);
 
         private Transform spine;
-        public Transform Spine
-        {
-            get
-            {
-                if(spine == null)
-                {
-                    spine = GetChild(SPINE, Hips);
-                }
-
-                return spine;
-            }
-        }
+        public Transform Spine => this.GetChildWithNameFromParentAndAssign(SPINE, Hips, ref spine);
 
         private Transform handr;
-        public Transform HandR
-        {
-            get
-            {
-                if (handr == null)
-                {
-                    handr = TransformUtils.GetChildRecursive(HAND_R, Spine);
+        public Transform HandR => this.GetChildWithNameFromParentAndAssign(HAND_R, Spine, ref handr);
 
-                    if(handr == null)
-                    {
-                        Debug.Log($"Failed to get '{nameof(Transform)}' with name {HAND_R}", Debug.LogType.ForceQuit);
-                    }
-                }
-
-                return handr;
-            }
-        }
-
-        private Transform GetChild(string childName, Transform parent)
-        {
-            for (int i = 0; i < parent.childCount; i++)
-            {
-                var child = parent.GetChild(i);
-                if (child.name != childName)
-                {
-                    continue;
-                }
-
-                return child;
-            }
-
-            if (root == null)
-            {
-                Debug.Log($"Failed to get '{nameof(Transform)}' with name {childName}", Debug.LogType.ForceQuit);
-            }
-
-            return null;
-        }
+        private Transform head;
+        public Transform Head => this.GetChildWithNameFromParentAndAssign(HEAD, Spine, ref head);
     }
 }
