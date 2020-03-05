@@ -70,6 +70,11 @@ namespace Tamana
                 LayerMask.GetMask(LayerManager.LAYER_PLAYER);
             var radius = 5.0f;
             var overlap = Physics.OverlapSphere(transform.position, radius, layer);
+
+            if(overlap.Length == 0)
+            {
+                return;
+            }
             
             foreach(var t in overlap)
             {
