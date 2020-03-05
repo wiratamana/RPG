@@ -58,8 +58,9 @@ namespace Tamana
                         parryTiming = CombatHandler.ParryHandler.ChanceToParryTiming,
                         damageTiming = Time.time,
                         weaponType = unitWeapon,
-                        hitsAnimation = damageObject.GetHitAnimations(unitWeapon)
-                    });;
+                        hitsAnimation = damageObject.GetHitAnimations(unitWeapon),
+                        damageSenderPosition = transform.position
+                    });
                 }
             }
         }

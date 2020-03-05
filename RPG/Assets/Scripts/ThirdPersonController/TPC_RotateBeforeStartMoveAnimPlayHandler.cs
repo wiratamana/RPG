@@ -22,7 +22,7 @@ namespace Tamana
             cameraForward = cameraForward.normalized;
 
             var lookRotation = Quaternion.LookRotation(cameraForward);
-            GameManager.PlayerTransform.transform.rotation = Quaternion.RotateTowards(GameManager.PlayerTransform.transform.rotation, lookRotation, 1080 * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1080 * Time.deltaTime);
 
             var camAngle = PlayerMovement.TPC.CameraHandler.CameraAngleFromPlayerForward;
             if (Mathf.Abs(camAngle) < 5.0f)

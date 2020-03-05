@@ -28,6 +28,17 @@ namespace Tamana
                 Debug.Log("Parry failed");
                 PlayHitAnimation(damage.hitsAnimation);
             }
+
+            StartCoroutine(RotateTowardDamageSenderOnNextFrame(damage.damageSenderPosition));
+        }
+
+        private IEnumerator RotateTowardDamageSenderOnNextFrame(Vector3 damageSenderPosition)
+        {
+            yield return null;
+
+            var faceDirection = damageSenderPosition - transform.position;
+            var lookRotation = Quaternion.LookRotation(faceDirection.normalized, Vector3.up);
+            transform.rotation = lookRotation;
         }
 
         private void PlayHitAnimation(int[] statesName)
