@@ -28,6 +28,7 @@ namespace Tamana
         private const string ParamName_IsEquipping = nameof(IsEquipping);
         private const string ParamName_IsTakingDamage = nameof(IsTakingDamage);
         private const string Paramname_IsInCombatState = nameof(IsInCombatState);
+        private const string ParamName_IsInAttackingState = nameof(IsInAttackingState);
         private const string Paramname_AnimDodge = nameof(AnimDodge);
         private const string Paramname_AnimHit = nameof(AnimHit);
 
@@ -109,5 +110,10 @@ namespace Tamana
             set => animator.SetInteger(Paramname_AnimHit, value);
         }
         public bool IsInDodgingState => AnimDodge > 0;
+        public bool IsInAttackingState
+        {
+            get => animator.GetBool(ParamName_IsInAttackingState);
+            set => animator.SetBool(ParamName_IsInAttackingState, value);
+        }
     }
 }

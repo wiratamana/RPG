@@ -18,6 +18,12 @@ namespace Tamana
 
         private void Awake()
         {
+            if (Unit.IsUnitPlayer)
+            {
+                Unit.CombatHandler.AttackHandler.OnAttackAnimationStarted.AddListener(RotateTowardNearestEnemyEventListener);
+                Unit.CombatHandler.AttackHandler.OnConsecutiveAttack.AddListener(RotateTowardNearestEnemyEventListener);
+            }
+
             enabled = false;
         }
 
@@ -87,6 +93,11 @@ namespace Tamana
             }
 
             RotateToward(enemyPos, rotationSpeed);
+        }
+
+        private void RotateTowardNearestEnemyEventListener()
+        {
+            RotateTowardNearestEnemy(5.0f);
         }
     }
 }

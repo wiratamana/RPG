@@ -31,6 +31,11 @@ namespace Tamana
 
             InputEvent.Instance.Event_BeginMove.AddListener(OnBeginMove);
             InputEvent.Instance.Event_StopMove.AddListener(OnStopMove);
+
+            TPC.Unit.CombatHandler.AttackHandler.OnAttackAnimationStarted.AddListener(DisableMovement);
+            TPC.Unit.CombatHandler.AttackHandler.OnAttackAnimationStopped.AddListener(EnableMovement);
+            TPC.Unit.CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(DisableMovement);
+            TPC.Unit.CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(EnableMovement);
         }
 
         private void Update()
@@ -53,6 +58,26 @@ namespace Tamana
 
                 var lookRotation = Quaternion.LookRotation(cameraForward);
                 TPC.Unit.transform.rotation = Quaternion.Slerp(TPC.Unit.transform.rotation, lookRotation, 5 * Time.deltaTime);
+            }
+        }
+
+        private void DisableMovement()
+        {
+            InputEvent.Instance.Event_BeginMove.RemoveListener(OnBeginMove);
+            InputEvent.Instance.Event_StopMove.RemoveListener(OnStopMove);
+
+            TPC.Unit.UnitAnimator.SetMovementToZero();
+        }
+
+        private void EnableMovement()
+        {
+            InputEvent.Instance.Event_BeginMove.AddListener(OnBeginMove);
+            InputEvent.Instance.Event_StopMove.AddListener(OnStopMove);
+
+            if (KeyboardController.IsForwardPressed == true)
+            {
+                TPC.Unit.UnitAnimator.Params.IsMoving = true;
+                TPC.Unit.UnitAnimator.Params.IsAccelerating = true;
             }
         }
 

@@ -56,6 +56,7 @@ namespace Tamana
             this.LogErrorIfComponentIsNull(CombatHandler);
             this.LogErrorIfComponentIsNull(UnitAnimator);
             this.LogErrorIfComponentIsNull(BodyTransform);
+            this.LogErrorIfComponentIsNull(RotationHandler);
         }
     }
 }

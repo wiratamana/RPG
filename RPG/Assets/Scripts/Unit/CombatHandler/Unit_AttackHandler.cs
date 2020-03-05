@@ -14,13 +14,19 @@ namespace Tamana
         public TPC_CombatAnimDataContainer CurrentlyPlayingCombatAnimDataContainer { set; get; }
         public TPC_CombatAnimData CurrentlyPlayingCombatAnimData { get; set; }
 
+        public EventManager OnAttackAnimationStarted { get; } = new EventManager();
+        public EventManager OnConsecutiveAttack { get; } = new EventManager();
+        public EventManager OnAttackAnimationStopped { get; } = new EventManager();
+
         private void Awake()
         {
             if(CombatHandler.Unit.IsUnitPlayer)
             {
                 CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(MakePlayerUnableToAttack);
                 CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(MakePlayerAbleToAttackAgain);
-            }           
+            }
+
+            CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(SetAnimationStateToFalse);
         }
 
         public void PlayAttackAnim()
@@ -42,14 +48,12 @@ namespace Tamana
                     CurrentlyPlayingCombatAnimDataContainer = combatAnimDataContainer;
                     GameManager.PlayerStatus.ST.Attack(combatAnimDataContainer.StaminaCost);
                     CombatHandler.UnitAnimator.Play(combatAnimDataContainer.CombatDatas[0].MyAnimStateName);
-                    combatHandler.Unit.RotationHandler.RotateTowardNearestEnemy(5.0f);
                 }
 
                 else if (CurrentlyPlayingCombatAnimData != null)
                 {
                     if (CurrentlyPlayingCombatAnimData.IsCurrentlyReceivingInput == true)
                     {
-                        combatHandler.Unit.RotationHandler.RotateTowardNearestEnemy(5.0f);
                         GameManager.PlayerStatus.ST.Attack(combatAnimDataContainer.StaminaCost);
                         CurrentlyPlayingCombatAnimData.IsInputReceived = true;
                     }
@@ -78,6 +82,11 @@ namespace Tamana
             }
 
             InputEvent.Instance.Event_DoAttackHeavy.AddListener(PlayAttackAnim);
+        }
+
+        private void SetAnimationStateToFalse()
+        {
+            CombatHandler.UnitAnimator.Params.IsInAttackingState = false;
         }
     }
 }

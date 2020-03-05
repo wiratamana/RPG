@@ -96,5 +96,13 @@ namespace Tamana
                 OnReachZeroVelocity.Invoke();
             }
         }
+
+        public void SetMovementToZero()
+        {
+            Params.Movement = 0;
+            Unit.UnitAnimator.Params.IsDecelerating = false;
+            Unit.UnitAnimator.Params.IsAccelerating = false;
+            OnReachZeroVelocity.Invoke();
+        }
     }
 }
