@@ -4,36 +4,23 @@ using UnityEngine;
 
 namespace Tamana
 {
-    public class HPST : SingletonMonobehaviour<HPST>
+    public class UI_Battle_HPST : MonoBehaviour
     {
-        private HPST_Child hp;
-        public HPST_Child HP
+        private RectTransform rectTransform;
+        public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransform);
+
+        private UI_Battle uiBattle;
+        public UI_Battle UIBattle => this.GetAndAssignComponentInParent(ref uiBattle);
+
+        private UI_Battle_HPST_Child hp;
+        public UI_Battle_HPST_Child HP => this.GetFindAndAssignComponentFromChildren(ref hp, x => x.Status == MainStatus.HP);
+
+        private UI_Battle_HPST_Child st;
+        public UI_Battle_HPST_Child ST => this.GetFindAndAssignComponentFromChildren(ref st, x => x.Status == MainStatus.ST);
+
+        private void OnValidate()
         {
-            get
-            {
-                if(hp == null)
-                {
-                    var components = GetComponentsInChildren<HPST_Child>();
-                    hp = System.Array.Find(components, x => x.Status == MainStatus.HP);
-                }
-
-                return hp;
-            }
-        }
-
-        private HPST_Child st;
-        public HPST_Child ST
-        {
-            get
-            {
-                if(st is null)
-                {
-                    var components = GetComponentsInChildren<HPST_Child>();
-                    st = System.Array.Find(components, x => x.Status == MainStatus.ST);
-                }
-
-                return st;
-            }
+            RectTransform.SetSizeDeltaToCanvasParentCanvasSize(UIBattle.Canvas);
         }
 
         private void Start()
@@ -44,8 +31,7 @@ namespace Tamana
 
             GameManager.PlayerStatus.ST.OnStaminaReducedBecauseAttackingEvent
                 .AddListener(OnStaminaReducedBecauseAttackingEvent);
-            int a = 0x000;
-            a += 0;
+
             GameManager.PlayerStatus.ST.OnStaminaRegeneratingEvent
                 .AddListener(OnStaminaRegeneratingEvent);
 
