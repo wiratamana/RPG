@@ -18,7 +18,8 @@ namespace Tamana
 
             var parryValue = CombatHandler.ParryHandler.ParryTiming > damage.parryTiming &&
                 CombatHandler.ParryHandler.ParryTiming < damage.damageTiming;
-            if(parryValue == true)
+
+            if (parryValue == true)
             {
                 Debug.Log("Parry success");
                 CombatHandler.UnitAnimator.Play("Sword1h_Parry_T");
@@ -29,16 +30,7 @@ namespace Tamana
                 PlayHitAnimation(damage.hitsAnimation);
             }
 
-            StartCoroutine(RotateTowardDamageSenderOnNextFrame(damage.damageSenderPosition));
-        }
-
-        private IEnumerator RotateTowardDamageSenderOnNextFrame(Vector3 damageSenderPosition)
-        {
-            yield return null;
-
-            var faceDirection = damageSenderPosition - transform.position;
-            var lookRotation = Quaternion.LookRotation(faceDirection.normalized, Vector3.up);
-            transform.rotation = lookRotation;
+            CombatHandler.Unit.RotationHandler.RotateToward(damage.damageSenderPosition, 20.0f);
         }
 
         private void PlayHitAnimation(int[] statesName)

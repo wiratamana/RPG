@@ -42,12 +42,14 @@ namespace Tamana
                     CurrentlyPlayingCombatAnimDataContainer = combatAnimDataContainer;
                     GameManager.PlayerStatus.ST.Attack(combatAnimDataContainer.StaminaCost);
                     CombatHandler.UnitAnimator.Play(combatAnimDataContainer.CombatDatas[0].MyAnimStateName);
+                    combatHandler.Unit.RotationHandler.RotateTowardNearestEnemy(5.0f);
                 }
 
                 else if (CurrentlyPlayingCombatAnimData != null)
                 {
                     if (CurrentlyPlayingCombatAnimData.IsCurrentlyReceivingInput == true)
                     {
+                        combatHandler.Unit.RotationHandler.RotateTowardNearestEnemy(5.0f);
                         GameManager.PlayerStatus.ST.Attack(combatAnimDataContainer.StaminaCost);
                         CurrentlyPlayingCombatAnimData.IsInputReceived = true;
                     }
