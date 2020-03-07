@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Tamana
 {
     [CreateAssetMenu(fileName ="New Damage Object", menuName = "Create/Damage Object")]
-    public class Status_DamageObject : ScriptableObject
+    public class Unit_Status_DamageObject : ScriptableObject
     {
         [SerializeField] private AnimHit_1H[] hitAnimations_1H;
         [SerializeField] private AnimHit_2H[] hitAnimations_2H;

@@ -11,6 +11,7 @@ namespace Tamana
 
         public EventManager<Unit_AI_Hostile> OnEnemyCatched { get; } = new EventManager<Unit_AI_Hostile>();
         public EventManager OnCatchedEnemyReleased { get; } = new EventManager();
+        public EventManager OnCatchedNothing { get; } = new EventManager();
 
         public Unit_AI_Hostile UnitEnemy { get; private set; }
 
@@ -28,9 +29,10 @@ namespace Tamana
         {
             if(UnitEnemy != null)
             {
+                UnitEnemy.Status.HP.OnCurrentHealthUpdated.RemoveListener(OnEnemyDead);
+
                 UnitEnemy = null;
                 OnCatchedEnemyReleased.Invoke();
-                UnitPlayer.UnitAnimator.Params.IsStrafing = false;
                 return;
             }
 
@@ -40,7 +42,7 @@ namespace Tamana
             var colliders = Physics.OverlapSphere(transform.position, radius, layer);
             if (colliders.Length == 0)
             {
-                UnitPlayer.UnitAnimator.Params.IsStrafing = false;
+                OnCatchedNothing.Invoke();
                 return;
             }
 
@@ -62,7 +64,7 @@ namespace Tamana
                 Debug.Log("Unable to catch any enemy!!", Debug.LogType.Error);
             }
 
-            UnitPlayer.UnitAnimator.Params.IsStrafing = true;
+            UnitEnemy.Status.HP.OnCurrentHealthUpdated.AddListener(OnEnemyDead);
             OnEnemyCatched.Invoke(UnitEnemy);
         }
 
@@ -89,6 +91,15 @@ namespace Tamana
 
                 yield return fourTimesPerSeconds;
             }            
+        }
+
+        private void OnEnemyDead(float enemyCurrentHealthRate)
+        {
+            if(UnitEnemy.Status.IsDead == true)
+            {
+                UnitEnemy = null;
+                OnCatchedEnemyReleased.Invoke();
+            }
         }
     }
 }

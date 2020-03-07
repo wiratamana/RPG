@@ -14,7 +14,7 @@ namespace Tamana
 
         public override void Execute()
         {
-            brain.AI.Unit.UnitAnimator.Play(stateName);
+            brain.Unit.UnitAnimator.Play(stateName);
         }
     }
 }

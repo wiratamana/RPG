@@ -75,4 +75,13 @@ namespace Tamana
         Sword1h_ShortDodge_Mid2 = 1 << 1,
         Sword1h_ShortDodge_Mid = 1 << 2
     }
+
+    public enum AnimDeath_1H
+    {
+        Sword1h_Death_1 = 1 << 0,
+        Sword1h_Death_2 = 1 << 1,
+        Sword1h_Death_Front = 1 << 2,
+        Sword1h_Death_L = 1 << 3,
+        Sword1h_Death_R = 1 << 4
+    }
 }

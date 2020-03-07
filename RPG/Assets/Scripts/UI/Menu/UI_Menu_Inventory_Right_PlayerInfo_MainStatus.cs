@@ -31,7 +31,7 @@ namespace Tamana
 
         private void Awake()
         {
-            var mainStatus = Status_Information.GetMainStatusFieldsName();
+            var mainStatus = Unit_Status_Information.GetMainStatusFieldsName();
             MainStatus = new UI_Menu_Inventory_Right_PlayerInfo_MainStatus_Child[mainStatus.Length];
             var spacing = new float[] { SPACING, SPACING, SPACING };
             var index = 0;

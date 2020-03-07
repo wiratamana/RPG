@@ -10,7 +10,7 @@ namespace Tamana
         private const string REMOVE_NEURON = "REMOVE";
 
         private bool isInitialized = false;
-        public AI_Enemy_Base AI { protected set; get; }
+        public Unit_AI_Hostile Unit { protected set; get; }
 
         protected readonly Dictionary<string, AI_Neuron> neuronsDic = new Dictionary<string, AI_Neuron>();
         protected readonly Dictionary<string, AI_Neuron_Update> updatableNeuronDic = new Dictionary<string, AI_Neuron_Update>();
@@ -23,7 +23,7 @@ namespace Tamana
         protected AI_Neuron_RotateTowardPlayer rotateTowardPlayer;
         public abstract AI_Neuron_RotateTowardPlayer RotateTowardPlayer { get; }
 
-        public virtual void Init(AI_Enemy_Base ai)
+        public virtual void Initialize(Unit_AI_Hostile unit)
         {
             if(isInitialized == true)
             {
@@ -32,7 +32,7 @@ namespace Tamana
             }
         
             isInitialized = true;
-            AI = ai;
+            Unit = unit;
         }
 
         public abstract void Update();

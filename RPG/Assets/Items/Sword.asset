@@ -21,7 +21,8 @@ MonoBehaviour:
   - type: 3
     value: 50
   - type: 2
-    value: 500
+    value: 10
+  weaponType: 0
   holsterPosition: {x: -10.5, y: 12.3, z: 19.3}
   holsterRotation: {x: -137.548, y: -89.35199, z: -3.992004}
   equipPosition: {x: 6.74, y: 3.17, z: 0.65}

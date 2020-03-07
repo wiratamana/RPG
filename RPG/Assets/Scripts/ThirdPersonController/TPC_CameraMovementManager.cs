@@ -10,6 +10,12 @@ namespace Tamana
         private TPC_CameraHandler cameraHandler;
         public TPC_CameraHandler CameraHandler => this.GetAndAssignComponent(ref cameraHandler);
 
+        private void Awake()
+        {
+            UI_Menu.OnBeforeOpen.AddListener(Disable);
+            UI_Menu.OnAfterClose.AddListener(Enable);
+        }
+
         private void Update()
         {
             CameraHandler.CameraLookPoint.transform.position = Vector3.Lerp(CameraHandler.CameraLookPoint.transform.position, transform.position, 5 * Time.deltaTime);
@@ -24,6 +30,16 @@ namespace Tamana
             eulerAngle.y += KeyboardController.MouseHorizontal;
 
             CameraHandler.CameraLookPoint.transform.rotation = Quaternion.Euler(eulerAngle.x, eulerAngle.y, 0);
-        }      
+        }
+
+        private void Disable()
+        {
+            enabled = false;
+        }
+
+        private void Enable()
+        {
+            enabled = true;
+        }
     }
 }

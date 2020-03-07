@@ -4,9 +4,9 @@ using UnityEngine.Events;
 
 namespace Tamana
 {
-    public class Status_HP
+    public class Unit_Status_HP
     {
-        private Status_Information information;
+        private Unit_Status_Information information;
         public int MaxHealth
         {
             get
@@ -16,20 +16,19 @@ namespace Tamana
         }
 
         public int CurrentHealth { get; private set; }
-        private EventManager onDeadEvent;
-        private EventManager<Status_DamageData> onDamageReceivedEvent;
+        public float CurrentHealthRate => (float)CurrentHealth / MaxHealth;
+        public EventManager<float> OnCurrentHealthUpdated { get; } = new EventManager<float>();
 
-        public Status_HP(Status_Information information, EventManager onDeadListener, 
-            EventManager<Status_DamageData> onDamageReceivedListener)
+        public Unit_Status_HP(Unit_Status_Information information, 
+            EventManager<Unit_Status_DamageData> onDamageReceivedListener)
         {
             this.information = information;
             CurrentHealth = this.information.HP;
 
-            onDeadEvent = onDeadListener;
-            onDamageReceivedEvent = onDamageReceivedListener;
+            onDamageReceivedListener.AddListener(Damage);
         }
 
-        public void Damage(Status_DamageData damageData)
+        public void Damage(Unit_Status_DamageData damageData)
         {
             if(CurrentHealth == 0)
             {
@@ -37,7 +36,6 @@ namespace Tamana
                 return;
             }
 
-            onDamageReceivedEvent.Invoke(damageData);
             CurrentHealth = Mathf.Max(0, CurrentHealth - damageData.damagePoint);
 
             Debug.Log($"Damage Received : {damageData.damagePoint} | Remaining HP : {CurrentHealth}");
@@ -45,8 +43,9 @@ namespace Tamana
             if (CurrentHealth == 0)
             {
                 Debug.Log("Dead!!");
-                onDeadEvent.Invoke();
             }
+
+            OnCurrentHealthUpdated.Invoke(CurrentHealthRate);
         }
     }
 }
