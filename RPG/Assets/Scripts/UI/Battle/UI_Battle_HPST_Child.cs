@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tamana
 {
-    public class HPST_Child : MonoBehaviour
+    public class UI_Battle_HPST_Child : MonoBehaviour
     {
         [SerializeField] private MainStatus status;
         public MainStatus Status => status;

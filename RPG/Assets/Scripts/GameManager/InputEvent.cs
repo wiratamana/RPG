@@ -39,7 +39,6 @@ namespace Tamana
         public EventManager Event_PickUpItem { get; } = new EventManager();
         public EventManager Event_OpenOrCloseMenuInventory { private set; get; } = new EventManager();
 
-        public EventManager Event_DoAttackLight { get; } = new EventManager();
         public EventManager Event_DoAttackHeavy { get; } = new EventManager();
 
         public EventManager Event_Holster { get; } = new EventManager();
@@ -49,6 +48,8 @@ namespace Tamana
         public EventManager Event_StopMove { get; } = new EventManager();
         public EventManager Event_Parry { get; } = new EventManager();
         public EventManager Event_Dodge { get; } = new EventManager();
+
+        public EventManager Event_CatchEnemy { get; } = new EventManager();
 
         private void Update()
         {
@@ -91,6 +92,11 @@ namespace Tamana
             if(Input.GetKeyDown(KeyCode.LeftAlt) == true)
             {
                 Event_Dodge.Invoke();
+            }
+
+            if(Input.GetKeyDown(KeyCode.Mouse2) == true)
+            {
+                Event_CatchEnemy.Invoke();
             }
         }
     }

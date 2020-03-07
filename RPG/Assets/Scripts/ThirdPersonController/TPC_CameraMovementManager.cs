@@ -10,14 +10,6 @@ namespace Tamana
         private TPC_CameraHandler cameraHandler;
         public TPC_CameraHandler CameraHandler => this.GetAndAssignComponent(ref cameraHandler);
 
-        [SerializeField] private float _offsetY;
-        [SerializeField] private float _offsetZ;
-        [SerializeField] private float _cameraLookHeight;
-
-        public float OffsetY => _offsetY;
-        public float OffsetZ => _offsetZ;
-        public float CameraLookHeight => _cameraLookHeight;
-
         private void Update()
         {
             CameraHandler.CameraLookPoint.transform.position = Vector3.Lerp(CameraHandler.CameraLookPoint.transform.position, transform.position, 5 * Time.deltaTime);

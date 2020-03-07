@@ -61,7 +61,7 @@ namespace Tamana
                 itemTransform.position = transform.position + new Vector3(0, Mathf.PingPong(Time.time * 0.1f, 0.1f), 0);
                 itemTransform.Rotate(Vector3.up * 120 * Time.deltaTime);
 
-                meshRenderer.sharedMaterial.SetVector("_CamDir", GameManager.MainCamera.forward);
+                meshRenderer.sharedMaterial.SetVector("_CamDir", GameManager.MainCameraTransform.forward);
                 meshRenderer.sharedMaterial.SetFloat("_Intensity", 2.0f);
             }            
         }
