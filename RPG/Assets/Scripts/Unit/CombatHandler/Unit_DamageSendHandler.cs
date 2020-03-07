@@ -49,7 +49,7 @@ namespace Tamana
                         continue;
                     }
 
-                    WeaponType unitWeapon = CombatHandler.Unit.Equipment.EquippedWeapon.WeaponType;
+                    WeaponType unitWeapon = damageHandler.CombatHandler.Unit.Equipment.EquippedWeapon.WeaponType;
 
                     Debug.Log($"SendDamage form '{name}' to '{damageHandler.name}'");
                     damageHandler.DamageReceiver(new Unit_Status_DamageData()

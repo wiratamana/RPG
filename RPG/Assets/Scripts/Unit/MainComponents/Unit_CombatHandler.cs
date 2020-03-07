@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Tamana
 {
@@ -51,6 +49,8 @@ namespace Tamana
                 Unit.UnitAnimator.OnEquippingAnimationStarted.AddListener(RemoveEquip);
                 Unit.UnitAnimator.OnEquippingAnimationFinished.AddListener(AddHolster);
             }
+
+            Unit.Equipment.OnEquippedEvent.AddListener(OnWeaponEquipped);
         }
 
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
@@ -159,6 +159,16 @@ namespace Tamana
             {
                 InputEvent.Instance.Event_Equip.AddListener(Equip);
             }            
+        }
+
+        private void OnWeaponEquipped(Item_Equipment oldWeapon, Item_Equipment newWeapon)
+        {
+            if(newWeapon is Item_Weapon == false)
+            {
+                return;
+            }
+
+            Unit.UnitAnimator.Params.Is2H = (newWeapon as Item_Weapon).WeaponType == WeaponType.TwoHand;
         }
     }
 }
