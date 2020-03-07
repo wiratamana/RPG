@@ -17,16 +17,14 @@ namespace Tamana
 
         public int CurrentHealth { get; private set; }
         public float CurrentHealthRate => (float)CurrentHealth / MaxHealth;
-        private EventManager onDeadEvent;
         public EventManager<float> OnCurrentHealthUpdated { get; } = new EventManager<float>();
 
-        public Unit_Status_HP(Unit_Status_Information information, EventManager onDeadListener, 
+        public Unit_Status_HP(Unit_Status_Information information, 
             EventManager<Unit_Status_DamageData> onDamageReceivedListener)
         {
             this.information = information;
             CurrentHealth = this.information.HP;
 
-            onDeadEvent = onDeadListener;
             onDamageReceivedListener.AddListener(Damage);
         }
 
@@ -45,7 +43,6 @@ namespace Tamana
             if (CurrentHealth == 0)
             {
                 Debug.Log("Dead!!");
-                onDeadEvent.Invoke();
             }
 
             OnCurrentHealthUpdated.Invoke(CurrentHealthRate);

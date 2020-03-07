@@ -41,8 +41,6 @@ namespace Tamana
             }
         }
 
-        public EventManager OnDeadEvent { private set; get; } = new EventManager();
-
         private Unit_Status_HP hp;
         public Unit_Status_HP HP
         {
@@ -50,7 +48,7 @@ namespace Tamana
             {
                 if (hp == null)
                 {
-                    hp = new Unit_Status_HP(mainStatus, OnDeadEvent, Unit.CombatHandler.DamageReceiveHandler.OnReceivedDamageEvent);
+                    hp = new Unit_Status_HP(mainStatus, Unit.CombatHandler.DamageReceiveHandler.OnReceivedDamageEvent);
                 }
 
                 return hp;

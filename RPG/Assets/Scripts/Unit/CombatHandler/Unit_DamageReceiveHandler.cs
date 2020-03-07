@@ -14,7 +14,6 @@ namespace Tamana
         public void DamageReceiver(Unit_Status_DamageData damage)
         {
             Debug.Log($"'{name}' received '{damage.damagePoint}' damage");
-            OnReceivedDamageEvent.Invoke(damage);
 
             var parryValue = CombatHandler.ParryHandler.ParryTiming > damage.parryTiming &&
                 CombatHandler.ParryHandler.ParryTiming < damage.damageTiming;
@@ -27,7 +26,16 @@ namespace Tamana
             else
             {
                 Debug.Log("Parry failed");
-                PlayHitAnimation(damage.hitsAnimation);
+                OnReceivedDamageEvent.Invoke(damage);
+
+                if(CombatHandler.Unit.Status.IsDead == true)
+                {
+                    CombatHandler.UnitAnimator.Play("Sword1h_Death_1");
+                }
+                else
+                {
+                    PlayHitAnimation(damage.hitsAnimation);
+                }                
             }
 
             CombatHandler.Unit.RotationHandler.RotateToward(damage.damageSenderPosition, 20.0f);
