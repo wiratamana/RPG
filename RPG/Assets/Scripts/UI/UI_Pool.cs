@@ -30,6 +30,7 @@ namespace Tamana
             img.rectTransform.SetParent(parent);
             img.rectTransform.sizeDelta = new Vector2(width, height);
             img.gameObject.name = objName;
+            img.enabled = true;
 
             return img;
         }
@@ -45,6 +46,7 @@ namespace Tamana
             img.rectTransform.SetParent(parent);
             img.rectTransform.sizeDelta = new Vector2(width, height);
             img.gameObject.name = objName;
+            img.enabled = true;
 
             return img;
         }
@@ -67,6 +69,7 @@ namespace Tamana
             t.rectTransform.sizeDelta = new Vector2(width, height);
             t.gameObject.name = objName;
             t.text = text;
+            t.enabled = true;
 
             return t;
         }
@@ -79,6 +82,7 @@ namespace Tamana
             image.sprite = null;
             image.color = Color.white;
             image.raycastTarget = false;
+            image.enabled = false;
             imagesPool.Push(image);
         }
 
@@ -93,6 +97,7 @@ namespace Tamana
             rawImage.transform.SetParent(transform);
             rawImage.texture = null;
             rawImage.raycastTarget = false;
+            rawImage.enabled = false;
             rawImagesPool.Push(rawImage);
         }
 
@@ -105,13 +110,16 @@ namespace Tamana
             text.color = Color.white;
             text.text = null;
             text.raycastTarget = false;
+            text.enabled = false;
             textsPool.Push(text);
         }
 
         private void ResetRectTransform(RectTransform rt)
         {
-            rt.anchorMin = new Vector2(0.5f, 0.5f);
-            rt.anchorMax = new Vector2(0.5f, 0.5f);
+            var vec2half = new Vector2(0.5f, 0.5f);
+            rt.anchorMin = vec2half;
+            rt.anchorMax = vec2half;
+            rt.pivot = vec2half;
         }
     }
 }

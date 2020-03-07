@@ -4,9 +4,9 @@ using UnityEngine.Events;
 
 namespace Tamana
 {
-    public class Status_HP
+    public class Unit_Status_HP
     {
-        private Status_Information information;
+        private Unit_Status_Information information;
         public int MaxHealth
         {
             get
@@ -17,10 +17,10 @@ namespace Tamana
 
         public int CurrentHealth { get; private set; }
         private EventManager onDeadEvent;
-        private EventManager<Status_DamageData> onDamageReceivedEvent;
+        private EventManager<Unit_Status_DamageData> onDamageReceivedEvent;
 
-        public Status_HP(Status_Information information, EventManager onDeadListener, 
-            EventManager<Status_DamageData> onDamageReceivedListener)
+        public Unit_Status_HP(Unit_Status_Information information, EventManager onDeadListener, 
+            EventManager<Unit_Status_DamageData> onDamageReceivedListener)
         {
             this.information = information;
             CurrentHealth = this.information.HP;
@@ -29,7 +29,7 @@ namespace Tamana
             onDamageReceivedEvent = onDamageReceivedListener;
         }
 
-        public void Damage(Status_DamageData damageData)
+        public void Damage(Unit_Status_DamageData damageData)
         {
             if(CurrentHealth == 0)
             {

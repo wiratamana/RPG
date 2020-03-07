@@ -7,8 +7,8 @@ namespace Tamana
 {
     public class Unit_Status : MonoBehaviour
     {
-        [SerializeField] protected Status_Information mainStatus;
-        [SerializeField] protected List<Status_Information> additionalStatus;
+        [SerializeField] protected Unit_Status_Information mainStatus;
+        [SerializeField] protected List<Unit_Status_Information> additionalStatus;
         private Unit_Base unit;
         public Unit_Base Unit => this.GetAndAssignComponent(ref unit);
 
@@ -40,31 +40,30 @@ namespace Tamana
             }
         }
 
-        public EventManager<Status_DamageData> OnDamageReceived { private set; get; } = new EventManager<Status_DamageData>();
         public EventManager OnDeadEvent { private set; get; } = new EventManager();
 
-        private Status_HP hp;
-        public Status_HP HP
+        private Unit_Status_HP hp;
+        public Unit_Status_HP HP
         {
             get
             {
                 if (hp == null)
                 {
-                    hp = new Status_HP(mainStatus, OnDeadEvent, OnDamageReceived);
+                    hp = new Unit_Status_HP(mainStatus, OnDeadEvent, Unit.CombatHandler.DamageReceiveHandler.OnReceivedDamageEvent);
                 }
 
                 return hp;
             }
         }
 
-        private Status_ST st;
-        public Status_ST ST
+        private Unit_Status_ST st;
+        public Unit_Status_ST ST
         {
             get
             {
                 if (st == null)
                 {
-                    st = new Status_ST(mainStatus);
+                    st = new Unit_Status_ST(mainStatus);
                 }
 
                 return st;

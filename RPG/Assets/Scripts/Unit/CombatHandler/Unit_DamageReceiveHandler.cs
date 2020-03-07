@@ -9,9 +9,9 @@ namespace Tamana
         private Unit_CombatHandler combatHandler;
         public Unit_CombatHandler CombatHandler => this.GetAndAssignComponent(ref combatHandler);
 
-        public EventManager<Status_DamageData> OnReceivedDamageEvent { get; } = new EventManager<Status_DamageData>();
+        public EventManager<Unit_Status_DamageData> OnReceivedDamageEvent { get; } = new EventManager<Unit_Status_DamageData>();
 
-        public void DamageReceiver(Status_DamageData damage)
+        public void DamageReceiver(Unit_Status_DamageData damage)
         {
             Debug.Log($"'{name}' received '{damage.damagePoint}' damage");
             OnReceivedDamageEvent.Invoke(damage);

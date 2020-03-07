@@ -3,9 +3,9 @@ using System.Collections;
 
 namespace Tamana
 {
-    public class Status_ST
+    public class Unit_Status_ST
     {
-        private Status_Information information;
+        private Unit_Status_Information information;
         public int MaxStamina
         {
             get
@@ -32,7 +32,7 @@ namespace Tamana
         private readonly float waitingTimeBeforeStaminaStartToRegenerateInSeconds = 2.0f;
         private WaitForSeconds waitTimeInSeconds;
 
-        public Status_ST(Status_Information information)
+        public Unit_Status_ST(Unit_Status_Information information)
         {
             this.information = information;
 

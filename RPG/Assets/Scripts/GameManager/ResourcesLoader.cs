@@ -85,9 +85,9 @@ namespace Tamana
             return returnValue;
         }
         
-        public Status_Information GetPlayerBaseStatus()
+        public Unit_Status_Information GetPlayerBaseStatus()
         {
-            var playerBaseStatus = Resources.Load<Status_Information>(PLAYER_BASE_STATUS);
+            var playerBaseStatus = Resources.Load<Unit_Status_Information>(PLAYER_BASE_STATUS);
             var newInstance = Instantiate(playerBaseStatus);
             Resources.UnloadAsset(playerBaseStatus);
 

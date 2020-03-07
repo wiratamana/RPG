@@ -5,7 +5,7 @@ namespace Tamana
 {
     [CreateAssetMenu(fileName = "New Status", menuName = "NewStatus", order = 1)]
     [System.Serializable]
-    public class Status_Information : ScriptableObject
+    public class Unit_Status_Information : ScriptableObject
     {
         [Status_Attribute_MainStatus(MainStatus.HP)]
         public int HP;
@@ -23,10 +23,10 @@ namespace Tamana
             var retVal = new string[length];
             var index = 0;
 
-            var fields = System.Array.Find(ClassManager.Types, x => x.Name == nameof(Status_Information)).GetFields();
+            var fields = System.Array.Find(ClassManager.Types, x => x.Name == nameof(Unit_Status_Information)).GetFields();
             if (fields.Length != length)
             {
-                Debug.Log($"The number fields in '{nameof(Status_Information)}' type not same with length of '{nameof(MainStatus)}' enum!", 
+                Debug.Log($"The number fields in '{nameof(Unit_Status_Information)}' type not same with length of '{nameof(MainStatus)}' enum!", 
                     Debug.LogType.ForceQuit);
                 return null;
             }

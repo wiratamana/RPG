@@ -34,7 +34,7 @@ namespace Tamana
             CombatLogic.InstallBrain(brain);
         }
 
-        private void OnReceivedDamage(Status_DamageData receivedDamage)
+        private void OnReceivedDamage(Unit_Status_DamageData receivedDamage)
         {
             StatusMain.HP.Damage(receivedDamage);
 

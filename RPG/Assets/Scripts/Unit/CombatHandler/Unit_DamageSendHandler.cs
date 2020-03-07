@@ -30,7 +30,7 @@ namespace Tamana
         }
 
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
-        private void OnDoDamage(Status_DamageObject damageObject)
+        private void OnDoDamage(Unit_Status_DamageObject damageObject)
         {
             Collider[] colliders = OverlapWeapon();
 
@@ -52,7 +52,7 @@ namespace Tamana
                     WeaponType unitWeapon = CombatHandler.Unit.Equipment.EquippedWeapon.WeaponType;
 
                     Debug.Log($"SendDamage form '{name}' to '{damageHandler.name}'");
-                    damageHandler.DamageReceiver(new Status_DamageData()
+                    damageHandler.DamageReceiver(new Unit_Status_DamageData()
                     {
                         damagePoint = 100,
                         parryTiming = CombatHandler.ParryHandler.ChanceToParryTiming,
