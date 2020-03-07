@@ -28,15 +28,7 @@ namespace Tamana
         {
             var playerStatus = GameManager.PlayerStatus;
 
-            GameManager.PlayerStatus.ST.OnStaminaReducedBecauseAttackingEvent
-                .AddListener(OnStaminaReducedBecauseAttackingEvent);
-
-            GameManager.PlayerStatus.ST.OnStaminaRegeneratingEvent
-                .AddListener(OnStaminaRegeneratingEvent);
-
-            GameManager.PlayerStatus.ST.OnStaminaFullyRegeneratedEvent
-                .AddListener(OnStaminaFullyRegenerated);
-
+            GameManager.PlayerStatus.ST.OnCurrentStaminaUpdated.AddListener(OnPlayerCurrentStaminaUpdated);
             GameManager.PlayerStatus.HP.OnCurrentHealthUpdated.AddListener(OnPlayerCurrentHealthUpdated);
         }
 
@@ -45,19 +37,9 @@ namespace Tamana
             HP.SetFillRate(currentHPRate);
         }
 
-        private void OnStaminaReducedBecauseAttackingEvent(int staminaUsage)
+        private void OnPlayerCurrentStaminaUpdated(float currentHPRate)
         {
-            ST.SetFillRate(GameManager.PlayerStatus.ST.StaminaFillRate);
-        }
-
-        private void OnStaminaRegeneratingEvent(int regenerationRate)
-        {
-            ST.SetFillRate(GameManager.PlayerStatus.ST.StaminaFillRate);
-        }
-
-        private void OnStaminaFullyRegenerated()
-        {
-            ST.SetFillRate(GameManager.PlayerStatus.ST.StaminaFillRate);
+            ST.SetFillRate(currentHPRate);
         }
     }
 }

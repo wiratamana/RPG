@@ -15,12 +15,15 @@ namespace Tamana
         {
             Debug.Log($"'{name}' received '{damage.damagePoint}' damage");
 
+            var staminaCostToParry = damage.damagePoint * 0.5f;
             var parryValue = CombatHandler.ParryHandler.ParryTiming > damage.parryTiming &&
-                CombatHandler.ParryHandler.ParryTiming < damage.damageTiming;
+                CombatHandler.ParryHandler.ParryTiming < damage.damageTiming &&
+                CombatHandler.Unit.Status.ST.CurrentStamina > staminaCostToParry;
 
             if (parryValue == true)
             {
                 Debug.Log("Parry success");
+                CombatHandler.Unit.Status.ST.Parry((int)staminaCostToParry);
                 CombatHandler.UnitAnimator.Play("Sword1h_Parry_T");
             }
             else

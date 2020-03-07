@@ -23,6 +23,7 @@ namespace Tamana
         public EventManager<int> OnStaminaRegeneratingEvent { private set; get; }
         public EventManager OnStaminaFullyRegeneratedEvent { private set; get; }
         public EventManager<int> OnStaminaHealedEvent { private set; get; }
+        public EventManager<float> OnCurrentStaminaUpdated { get; } = new EventManager<float>();
 
         public bool IsStaminaFull => CurrentStamina == MaxStamina;
         public float StaminaFillRate => CurrentStamina / (float)MaxStamina;
@@ -53,6 +54,7 @@ namespace Tamana
         {
             CurrentStamina = Mathf.Max(CurrentStamina - staminaUsage, 0);
             OnStaminaReducedBecauseAttackingEvent.Invoke(staminaUsage);
+            OnCurrentStaminaUpdated.Invoke(StaminaFillRate);
 
             if (CurrentStamina == 0)
             {
@@ -66,6 +68,7 @@ namespace Tamana
         {
             CurrentStamina = Mathf.Max(CurrentStamina - staminaUsage, 0);
             OnStaminaReducedBecauseParryingEvent.Invoke(staminaUsage);
+            OnCurrentStaminaUpdated.Invoke(StaminaFillRate);
 
             if (CurrentStamina == 0)
             {
@@ -86,6 +89,7 @@ namespace Tamana
             CurrentStamina = Mathf.Min(CurrentStamina + regeneratiOnRate, MaxStamina);
 
             OnStaminaRegeneratingEvent.Invoke(CurrentStamina - lastStamina);
+            OnCurrentStaminaUpdated.Invoke(StaminaFillRate);
 
             if (CurrentStamina == MaxStamina)
             {
@@ -97,6 +101,7 @@ namespace Tamana
         {
             CurrentStamina = Mathf.Min(CurrentStamina + healAmount, MaxStamina);
             OnStaminaHealedEvent.Invoke(healAmount);
+            OnCurrentStaminaUpdated.Invoke(StaminaFillRate);
 
             if (CurrentStamina == MaxStamina)
             {
