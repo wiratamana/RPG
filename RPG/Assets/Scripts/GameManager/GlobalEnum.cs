@@ -38,6 +38,13 @@ namespace Tamana
         TwoHand
     }
 
+    public enum StateMachineBehaviourPosition
+    {
+        OnStateEnter,
+        OnStateUpdate,
+        OnStateExit
+    }
+
     public enum AnimHit_1H
     {
         Sword1h_Hit_Head_Right = 1 << 0,

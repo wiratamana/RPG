@@ -36,6 +36,22 @@ namespace Tamana
             runningWindow = new Dictionary<string, UI_WindowBase>();
 
             InputEvent.Instance.Event_OpenOrCloseMenuInventory.AddListener(UI_Menu.OpenMenuInventory);
+
+            GameManager.Player.UnitAnimator.OnHolsteringAnimationStarted.AddListener(RemoveOpenMenuInventory);
+            GameManager.Player.UnitAnimator.OnEquippingAnimationStarted.AddListener(RemoveOpenMenuInventory);
+
+            GameManager.Player.UnitAnimator.OnHolsteringAnimationFinished.AddListener(AddOpenMenuInventory);
+            GameManager.Player.UnitAnimator.OnEquippingAnimationFinished.AddListener(AddOpenMenuInventory);
+        }
+
+        private void RemoveOpenMenuInventory()
+        {
+             InputEvent.Instance.Event_OpenOrCloseMenuInventory.RemoveListener(UI_Menu.OpenMenuInventory);
+        }
+
+        private void AddOpenMenuInventory()
+        {
+            InputEvent.Instance.Event_OpenOrCloseMenuInventory.AddListener(UI_Menu.OpenMenuInventory);
         }
 
         public void RegisterWindow(UI_WindowBase window)

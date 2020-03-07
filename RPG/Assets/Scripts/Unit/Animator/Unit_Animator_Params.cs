@@ -83,12 +83,46 @@ namespace Tamana
         public bool IsHolstering
         {
             get => animator.GetBool(ParamName_IsHolstering);
-            set => animator.SetBool(ParamName_IsHolstering, value);
+            set
+            {
+                if(IsHolstering == value)
+                {
+                    return;
+                }
+
+                if(value == true)
+                {
+                    unitAnimator.OnHolsteringAnimationStarted.Invoke();
+                }
+                else
+                {
+                    unitAnimator.OnHolsteringAnimationFinished.Invoke();
+                }
+
+                animator.SetBool(ParamName_IsHolstering, value);
+            }
         }
         public bool IsEquipping
         {
             get => animator.GetBool(ParamName_IsEquipping);
-            set => animator.SetBool(ParamName_IsEquipping, value);
+            set
+            {
+                if(IsEquipping == value)
+                {
+                    return;
+                }
+
+                if(value == true)
+                {
+                    unitAnimator.OnEquippingAnimationStarted.Invoke();
+                }
+                else
+                {
+                    unitAnimator.OnEquippingAnimationFinished.Invoke();
+                }
+
+                animator.SetBool(ParamName_IsEquipping, value);
+            }
         }
         public bool IsTakingDamage
         {

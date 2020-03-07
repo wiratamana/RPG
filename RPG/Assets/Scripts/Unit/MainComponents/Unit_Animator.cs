@@ -66,6 +66,12 @@ namespace Tamana
         public EventManager OnStateChangedToCombatState { get; } = new EventManager();
         public EventManager OnStateChangedToIdleState { get; } = new EventManager();
 
+        public EventManager OnHolsteringAnimationStarted { get; } = new EventManager();
+        public EventManager OnHolsteringAnimationFinished { get; } = new EventManager();
+
+        public EventManager OnEquippingAnimationStarted { get; } = new EventManager();
+        public EventManager OnEquippingAnimationFinished { get; } = new EventManager();
+
         public void Play(string stateName)
         {
             Animator.Play(stateName);
