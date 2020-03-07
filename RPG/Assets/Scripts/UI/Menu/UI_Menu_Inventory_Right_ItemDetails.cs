@@ -78,6 +78,8 @@ namespace Tamana
             Description.InitPosition(true);
 
             Deactivate();
+
+            UI_Menu_Inventory.OnMenuInventoryClosed.AddListener(Deactivate);
         }
 
         public void Activate(Item_Base item)
