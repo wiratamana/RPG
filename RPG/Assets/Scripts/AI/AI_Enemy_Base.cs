@@ -6,11 +6,11 @@ namespace Tamana
 {
     public class AI_Enemy_Base : MonoBehaviour
     {
-        private Status_Main statusMain;
+        private Unit_Status statusMain;
         private AI_Enemy_CombatLogic combatLogic;
         private Unit_AI_Hostile unit;
 
-        public Status_Main StatusMain => this.GetOrAddAndAssignComponent(ref statusMain);
+        public Unit_Status StatusMain => this.GetOrAddAndAssignComponent(ref statusMain);
         public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(ref combatLogic);        
         public Unit_AI_Hostile Unit => this.GetOrAddAndAssignComponent(ref unit);
 

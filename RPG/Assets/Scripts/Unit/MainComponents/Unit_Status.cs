@@ -1,27 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
+using System.Linq;
 
 namespace Tamana
 {
-    public class Status_Player : Status_Main
+    public class Unit_Status : MonoBehaviour
     {
+        [SerializeField] protected Status_Information mainStatus;
+        [SerializeField] protected List<Status_Information> additionalStatus;
+        private Unit_Base unit;
+        public Unit_Base Unit => this.GetAndAssignComponent(ref unit);
+
         private Dictionary<MainStatus, FieldInfo> statusDic;
         private Dictionary<MainStatus, FieldInfo> StatusDic
         {
             get
             {
-                if(statusDic == null || statusDic.Count == 0)
+                if (statusDic == null || statusDic.Count == 0)
                 {
                     statusDic = new Dictionary<MainStatus, FieldInfo>();
 
                     var type = mainStatus.GetType();
                     var fields = type.GetFields();
 
-                    foreach(var f in fields)
+                    foreach (var f in fields)
                     {
-                        if(f.IsDefined(typeof(Status_Attribute_MainStatus)) == false)
+                        if (f.IsDefined(typeof(Status_Attribute_MainStatus)) == false)
                         {
                             continue;
                         }
@@ -35,12 +40,29 @@ namespace Tamana
             }
         }
 
+        public EventManager<Status_DamageData> OnDamageReceived { private set; get; } = new EventManager<Status_DamageData>();
+        public EventManager OnDeadEvent { private set; get; } = new EventManager();
+
+        private Status_HP hp;
+        public Status_HP HP
+        {
+            get
+            {
+                if (hp == null)
+                {
+                    hp = new Status_HP(mainStatus, OnDeadEvent, OnDamageReceived);
+                }
+
+                return hp;
+            }
+        }
+
         private Status_ST st;
         public Status_ST ST
         {
             get
             {
-                if(st == null)
+                if (st == null)
                 {
                     st = new Status_ST(mainStatus);
                 }
@@ -49,14 +71,17 @@ namespace Tamana
             }
         }
 
-        private void Awake()
+        public bool IsDead
         {
-            mainStatus = ResourcesLoader.Instance.GetPlayerBaseStatus();
+            get
+            {
+                return HP.CurrentHealth == 0.0f;
+            }
         }
 
         public int GetStatus(MainStatus status)
         {
-            var effects = GameManager.Player.Equipment.GetEquippedItemEffects();
+            var effects = Unit.Equipment.GetEquippedItemEffects();
             var filteredEffects = effects.Where(x => x.type == status);
             int totalAdditionalStatus = 0;
             foreach (var item in filteredEffects)
