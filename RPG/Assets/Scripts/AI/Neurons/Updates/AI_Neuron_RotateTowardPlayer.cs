@@ -16,7 +16,7 @@ namespace Tamana
         {
             var playerPos = GameManager.PlayerTransform.position;
 
-            var myTransform = brain.AI.transform;
+            var myTransform = brain.Unit.transform;
             var myPosition = myTransform.position;
             var myRotation = myTransform.rotation;
 

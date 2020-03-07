@@ -24,7 +24,7 @@ namespace Tamana
         {
             get
             {
-                if(_params == null)
+                if (_params == null)
                 {
                     _params = new Unit_Animator_Params(this);
                 }
@@ -38,7 +38,7 @@ namespace Tamana
         {
             get
             {
-                if(animStatus == null)
+                if (animStatus == null)
                 {
                     animStatus = new Unit_Animator_Status(this);
                 }
@@ -60,6 +60,18 @@ namespace Tamana
         public EventManager OnHitAnimationStarted { get; } = new EventManager();
         public EventManager OnHitAnimationFinished { get; } = new EventManager();
 
+        public EventManager OnDodgeAnimationStarted { get; } = new EventManager();
+        public EventManager OnDodgeAnimationFinished { get; } = new EventManager();
+
+        public EventManager OnStateChangedToCombatState { get; } = new EventManager();
+        public EventManager OnStateChangedToIdleState { get; } = new EventManager();
+
+        public EventManager OnHolsteringAnimationStarted { get; } = new EventManager();
+        public EventManager OnHolsteringAnimationFinished { get; } = new EventManager();
+
+        public EventManager OnEquippingAnimationStarted { get; } = new EventManager();
+        public EventManager OnEquippingAnimationFinished { get; } = new EventManager();
+
         public void Play(string stateName)
         {
             Animator.Play(stateName);
@@ -67,12 +79,12 @@ namespace Tamana
 
         public void Accelerate()
         {
-            var movementValue = Params.Params_Movement;
+            var movementValue = Params.Movement;
             var maxVelocity = Unit_Animator_Params.MAX_VELOCITY;
-            Params.Params_Movement = Mathf.Min(maxVelocity, movementValue + MoveAcceleration);
+            Params.Movement = Mathf.Min(maxVelocity, movementValue + MoveAcceleration);
             OnAccelerating.Invoke();
 
-            if (movementValue != maxVelocity && Params.Params_Movement == maxVelocity)
+            if (movementValue != maxVelocity && Params.Movement == maxVelocity)
             {
                 OnReachMaximumVelocity.Invoke();
             }
@@ -80,15 +92,33 @@ namespace Tamana
 
         public void Decelerate()
         {
-            var movementValue = Params.Params_Movement;
+            var movementValue = Params.Movement;
             var minVelocity = Unit_Animator_Params.MIN_VELOCITY;
-            Params.Params_Movement = Mathf.Max(minVelocity, movementValue - MoveAcceleration);
+            Params.Movement = Mathf.Max(minVelocity, movementValue - MoveAcceleration);
             OnDecelerating.Invoke();
 
-            if (movementValue != minVelocity && Params.Params_Movement == minVelocity)
+            if (movementValue != minVelocity && Params.Movement == minVelocity)
             {
                 OnReachZeroVelocity.Invoke();
             }
+        }
+
+        public void SetMovementToZero()
+        {
+            Params.Movement = 0;
+            Unit.UnitAnimator.Params.IsDecelerating = false;
+            Unit.UnitAnimator.Params.IsAccelerating = false;
+            OnReachZeroVelocity.Invoke();
+        }
+
+        public void DisableStrafing()
+        {
+            Params.IsStrafing = false;
+        }
+
+        public void EnableStrafing()
+        {
+            Params.IsStrafing = true;
         }
     }
 }

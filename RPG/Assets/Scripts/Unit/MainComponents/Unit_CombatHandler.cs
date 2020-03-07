@@ -35,22 +35,29 @@ namespace Tamana
             this.LogErrorIfComponentIsNull(BodyTransform);
         }
 
+        private void Awake()
+        {
+            if(Unit.IsUnitPlayer == true)
+            {
+                Unit.UnitAnimator.OnStateChangedToCombatState.AddListener(AddCombatEventsToListeners);
+                Unit.UnitAnimator.OnStateChangedToIdleState.AddListener(RemoveCombatEventsFromListeners);
+
+                UI_Menu.OnBeforeOpen.AddListener(TemporarilyDisableCombatEvents);
+                UI_Menu.OnAfterClose.AddListener(ReenableCombatEvents);
+
+                Unit.UnitAnimator.OnHolsteringAnimationStarted.AddListener(RemoveHolster);
+                Unit.UnitAnimator.OnHolsteringAnimationFinished.AddListener(AddEquip);
+
+                Unit.UnitAnimator.OnEquippingAnimationStarted.AddListener(RemoveEquip);
+                Unit.UnitAnimator.OnEquippingAnimationFinished.AddListener(AddHolster);
+            }
+        }
+
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
         private void OnHolster()
         {
             Unit.Equipment.EquippedWeapon.SetWeaponTransformParent(false);
             OnHolsterEvent.Invoke();
-
-            if (Unit.IsUnitPlayer == true)
-            {
-                InputEvent.Instance.Event_Holster.RemoveListener(Holster);
-                InputEvent.Instance.Event_Equip.AddListener(Equip);
-
-                InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(AttackHandler.PlayAttackAnim_Heavy);
-                InputEvent.Instance.Event_DoAttackLight.RemoveListener(AttackHandler.PlayAttackAnim_Light);
-                InputEvent.Instance.Event_Parry.RemoveListener(ParryHandler.Parry);
-                InputEvent.Instance.Event_Dodge.RemoveListener(DodgeHandler.Dodge);
-            }
         }
 
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
@@ -58,16 +65,49 @@ namespace Tamana
         {
             Unit.Equipment.EquippedWeapon.SetWeaponTransformParent(true);
             OnEquipEvent.Invoke();
+        }
 
-            if (Unit.IsUnitPlayer == true)
+        private void AddCombatEventsToListeners()
+        {
+            Debug.Log("AddCombatEventsToListeners");
+
+            InputEvent.Instance.Event_DoAttackHeavy.AddListener(AttackHandler.PlayAttackAnim);
+            InputEvent.Instance.Event_Parry.AddListener(ParryHandler.Parry);
+            InputEvent.Instance.Event_Dodge.AddListener(DodgeHandler.Dodge);
+        }
+
+        private void RemoveCombatEventsFromListeners()
+        {
+            Debug.Log("RemoveCombatEventsFromListeners");
+
+            InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(AttackHandler.PlayAttackAnim);
+            InputEvent.Instance.Event_Parry.RemoveListener(ParryHandler.Parry);
+            InputEvent.Instance.Event_Dodge.RemoveListener(DodgeHandler.Dodge);
+        }
+
+        private void TemporarilyDisableCombatEvents()
+        {
+            if(Unit.UnitAnimator.Params.IsInCombatState == true)
             {
-                InputEvent.Instance.Event_Equip.RemoveListener(Equip);
-                InputEvent.Instance.Event_Holster.AddListener(Holster);
+                RemoveCombatEventsFromListeners();
+                RemoveHolster();
+            }
+            else
+            {
+                RemoveEquip();
+            }
+        }
 
-                InputEvent.Instance.Event_DoAttackHeavy.AddListener(AttackHandler.PlayAttackAnim_Heavy);
-                InputEvent.Instance.Event_DoAttackLight.AddListener(AttackHandler.PlayAttackAnim_Light);
-                InputEvent.Instance.Event_Parry.AddListener(ParryHandler.Parry);
-                InputEvent.Instance.Event_Dodge.AddListener(DodgeHandler.Dodge);
+        private void ReenableCombatEvents()
+        {
+            if (Unit.UnitAnimator.Params.IsInCombatState == true)
+            {
+                AddCombatEventsToListeners();
+                AddHolster();
+            }
+            else
+            {
+                AddEquip();
             }
         }
 
@@ -94,5 +134,31 @@ namespace Tamana
 
             UnitAnimator.Params.IsHolstering = true;
         } 
+
+        private void RemoveHolster()
+        {
+            InputEvent.Instance.Event_Holster.RemoveListener(Holster);
+        }
+
+        private void RemoveEquip()
+        {
+            InputEvent.Instance.Event_Equip.RemoveListener(Equip);
+        }
+
+        private void AddHolster()
+        {
+            if (UI_Menu.Instance?.gameObject.activeInHierarchy == false)
+            {
+                InputEvent.Instance.Event_Holster.AddListener(Holster);
+            }         
+        }
+
+        private void AddEquip()
+        {
+            if(UI_Menu.Instance?.gameObject.activeInHierarchy == false)
+            {
+                InputEvent.Instance.Event_Equip.AddListener(Equip);
+            }            
+        }
     }
 }

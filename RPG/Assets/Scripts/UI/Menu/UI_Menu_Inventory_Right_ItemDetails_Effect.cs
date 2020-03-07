@@ -38,6 +38,8 @@ namespace Tamana
         private void Start()
         {
             UI_Menu.Instance.Inventory.Right.ItemDescription.OnBecomeDeactiveEvent.AddListener(CleanUp, GetInstanceID());
+
+            UI_Menu_Inventory.OnMenuInventoryClosed.AddListener(CleanUp);
         }
 
         public void SetEffects(Item_Equipment_Effect[] effects)

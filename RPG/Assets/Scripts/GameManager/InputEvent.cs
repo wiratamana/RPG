@@ -15,13 +15,30 @@ namespace Tamana
             go.AddComponent<InputEvent>();
         }
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            SetCursorToInvisible();
+        }
+
+        public void SetCursorToVisible()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        public void SetCursorToInvisible()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
         public const char ACTION_PICK_UP_ITEM = 'E';
         public const char ACTION_OPEN_MENU_INVENTORY = 'B';
 
         public EventManager Event_PickUpItem { get; } = new EventManager();
         public EventManager Event_OpenOrCloseMenuInventory { private set; get; } = new EventManager();
 
-        public EventManager Event_DoAttackLight { get; } = new EventManager();
         public EventManager Event_DoAttackHeavy { get; } = new EventManager();
 
         public EventManager Event_Holster { get; } = new EventManager();
@@ -31,6 +48,8 @@ namespace Tamana
         public EventManager Event_StopMove { get; } = new EventManager();
         public EventManager Event_Parry { get; } = new EventManager();
         public EventManager Event_Dodge { get; } = new EventManager();
+
+        public EventManager Event_CatchEnemy { get; } = new EventManager();
 
         private void Update()
         {
@@ -73,6 +92,11 @@ namespace Tamana
             if(Input.GetKeyDown(KeyCode.LeftAlt) == true)
             {
                 Event_Dodge.Invoke();
+            }
+
+            if(Input.GetKeyDown(KeyCode.Mouse2) == true)
+            {
+                Event_CatchEnemy.Invoke();
             }
         }
     }

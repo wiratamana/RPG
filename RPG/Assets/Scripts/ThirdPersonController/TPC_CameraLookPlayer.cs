@@ -4,37 +4,52 @@ using UnityEngine;
 
 namespace Tamana
 {
-    public class TPC_CameraLookPlayer : SingletonMonobehaviour<TPC_CameraLookPlayer>
+    public class TPC_CameraLookPlayer : MonoBehaviour
     {
-        private Transform _playerCameraLookPoint;
-        public Transform PlayerCameraLookPoint
+        private TPC_CameraHandler cameraHandler;
+        public TPC_CameraHandler CameraHandler => this.GetAndAssignComponent(ref cameraHandler);
+
+        private Transform playerSpine;
+
+        private void OnValidate()
         {
-            get
-            {
-                if(_playerCameraLookPoint == null)
-                {
-                    var gameObjectWithPlayerTag = GameObject.FindGameObjectWithTag(TagManager.TAG_PLAYER_CAMERA_LOOK_POINT);
-                    if(gameObjectWithPlayerTag == null)
-                    {
-                        Debug.Log($"GameObject with tag '{TagManager.TAG_PLAYER_CAMERA_LOOK_POINT}' doesn't exist", Debug.LogType.ForceQuit);
-                        return null;
-                    }
-
-                    _playerCameraLookPoint = gameObjectWithPlayerTag.transform;
-                }
-
-                return _playerCameraLookPoint;
-            }
+            playerSpine = CameraHandler.TPC.UnitPlayer.BodyTransform.Spine;
         }
 
         // Update is called once per frame
         void Update()
         {
-            var playerPosition = PlayerCameraLookPoint.transform.position;
-            var directionToPlayer = (playerPosition - transform.position).normalized;
+            var playerPosition = playerSpine.position;
+            var directionToPlayer = (playerPosition - CameraHandler.MainCamera.transform.position).normalized;
 
             var lookRotation = Quaternion.LookRotation(directionToPlayer);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 4 * Time.deltaTime);
+            CameraHandler.MainCamera.transform.rotation = Quaternion.Slerp(CameraHandler.MainCamera.transform.rotation, lookRotation, 4 * Time.deltaTime);
+        }
+
+        public void SetCameraLocalPositionToZero()
+        {
+            StartCoroutine(ReturnCameraLocalPositionToZero());
+        }
+
+        private IEnumerator ReturnCameraLocalPositionToZero()
+        {
+            var cameraTransform = CameraHandler.MainCamera.transform;
+            var speed = 1.5f;
+            var baseLocalPos = new Vector3(0, 0, CameraHandler.OffsetZ);
+
+            while (true)
+            {
+                var camPos = cameraTransform.localPosition;
+                camPos = Vector3.MoveTowards(camPos, baseLocalPos, speed * Time.deltaTime);
+                cameraTransform.localPosition = camPos;
+
+                if(camPos == baseLocalPos)
+                {
+                    yield break;
+                }
+
+                yield return null;
+            }
         }
     }
 }

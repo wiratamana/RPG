@@ -6,8 +6,7 @@ namespace Tamana
 {
     public class Unit_AttackHandler : MonoBehaviour
     {
-        [SerializeField] private TPC_CombatAnimDataContainer lightAttack;
-        [SerializeField] private TPC_CombatAnimDataContainer heavyAttack;
+        [SerializeField] private TPC_CombatAnimDataContainer combatAnimDataContainer;
 
         private Unit_CombatHandler combatHandler;
         public Unit_CombatHandler CombatHandler => this.GetAndAssignComponent(ref combatHandler);
@@ -15,61 +14,61 @@ namespace Tamana
         public TPC_CombatAnimDataContainer CurrentlyPlayingCombatAnimDataContainer { set; get; }
         public TPC_CombatAnimData CurrentlyPlayingCombatAnimData { get; set; }
 
+        public EventManager OnAttackAnimationStarted { get; } = new EventManager();
+        public EventManager OnConsecutiveAttack { get; } = new EventManager();
+        public EventManager OnAttackAnimationStopped { get; } = new EventManager();
+
         private void Awake()
         {
-            CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(MakePlayerUnableToAttack);
-            CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(MakePlayerAbleToAttackAgain);
+            if(CombatHandler.Unit.IsUnitPlayer)
+            {
+                CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(MakePlayerUnableToAttack);
+                CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(MakePlayerAbleToAttackAgain);
+            }
+
+            CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(SetAnimationStateToFalse);
         }
 
-        private void PlayAttackAnimation(TPC_CombatAnimDataContainer attackType)
+        public void PlayAttackAnim()
         {
-            if (attackType is null)
+            if (combatAnimDataContainer is null)
             {
                 return;
             }
 
-            if (attackType.StaminaCost > GameManager.PlayerStatus.ST.CurrentStamina)
+            if (combatAnimDataContainer.StaminaCost > GameManager.PlayerStatus.ST.CurrentStamina)
             {
                 return;
             }
 
-            if (CurrentlyPlayingCombatAnimDataContainer == null || CurrentlyPlayingCombatAnimDataContainer == attackType)
+            if (CurrentlyPlayingCombatAnimDataContainer == null || CurrentlyPlayingCombatAnimDataContainer == combatAnimDataContainer)
             {
-                if (attackType != null && CurrentlyPlayingCombatAnimData == null)
+                if (combatAnimDataContainer != null && CurrentlyPlayingCombatAnimData == null)
                 {
-                    CurrentlyPlayingCombatAnimDataContainer = attackType;
-                    GameManager.PlayerStatus.ST.Attack(attackType.StaminaCost);
-                    CombatHandler.UnitAnimator.Play(attackType.CombatDatas[0].MyAnimStateName);
+                    CurrentlyPlayingCombatAnimDataContainer = combatAnimDataContainer;
+                    GameManager.PlayerStatus.ST.Attack(combatAnimDataContainer.StaminaCost);
+                    CombatHandler.UnitAnimator.Play(combatAnimDataContainer.CombatDatas[0].MyAnimStateName);
                 }
 
                 else if (CurrentlyPlayingCombatAnimData != null)
                 {
                     if (CurrentlyPlayingCombatAnimData.IsCurrentlyReceivingInput == true)
                     {
-                        GameManager.PlayerStatus.ST.Attack(attackType.StaminaCost);
+                        GameManager.PlayerStatus.ST.Attack(combatAnimDataContainer.StaminaCost);
                         CurrentlyPlayingCombatAnimData.IsInputReceived = true;
                     }
                 }
             }
         }
-        public void PlayAttackAnim_Light()
-        {
-            PlayAttackAnimation(lightAttack);
-        }
-        public void PlayAttackAnim_Heavy()
-        {
-            PlayAttackAnimation(heavyAttack);
-        }
 
         private void MakePlayerUnableToAttack()
         {
-            if(CombatHandler.UnitAnimator.Params.IsInBattleState == false)
+            if(CombatHandler.UnitAnimator.Params.IsInCombatState == false)
             {
                 return;
             }
 
-            InputEvent.Instance.Event_DoAttackLight.RemoveListener(PlayAttackAnim_Heavy);
-            InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(PlayAttackAnim_Light);
+            InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(PlayAttackAnim);
         }
 
         private void MakePlayerAbleToAttackAgain()
@@ -77,13 +76,17 @@ namespace Tamana
             CurrentlyPlayingCombatAnimDataContainer = null;
             CurrentlyPlayingCombatAnimData = null;
 
-            if (CombatHandler.UnitAnimator.Params.IsInBattleState == false)
+            if (CombatHandler.UnitAnimator.Params.IsInCombatState == false)
             {
                 return;
             }
 
-            InputEvent.Instance.Event_DoAttackLight.AddListener(PlayAttackAnim_Heavy);
-            InputEvent.Instance.Event_DoAttackHeavy.AddListener(PlayAttackAnim_Light);
+            InputEvent.Instance.Event_DoAttackHeavy.AddListener(PlayAttackAnim);
+        }
+
+        private void SetAnimationStateToFalse()
+        {
+            CombatHandler.UnitAnimator.Params.IsInAttackingState = false;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Tamana
 
         public override void Update()
         {
-            DistanceToPlayer = Vector3.Distance(brain.AI.transform.position, GameManager.PlayerTransform.position);
+            DistanceToPlayer = Vector3.Distance(brain.Unit.transform.position, GameManager.PlayerTransform.position);
 
             if(isInsideHostileRange == false && DistanceToPlayer < hostileRangeEnter)
             {

@@ -109,6 +109,21 @@ namespace Tamana
                 }
             }
 
+            while (listenerEditorQueue.Count > 0)
+            {
+                var listener = listenerEditorQueue.Dequeue();
+
+                if (listener.Item1 == ADD_LISTENER)
+                {
+                    callbacksDic.Add(listener.Item2, listener.Item3);
+                }
+
+                else if (listener.Item1 == REMOVE_LISTENER)
+                {
+                    callbacksDic.Remove(listener.Item2);
+                }
+            }
+
             isInvoking = false;
         }
 
@@ -241,6 +256,21 @@ namespace Tamana
                 }
             }
 
+            while (listenerEditorQueue.Count > 0)
+            {
+                var listener = listenerEditorQueue.Dequeue();
+
+                if (listener.Item1 == ADD_LISTENER)
+                {
+                    callbacksDic.Add(listener.Item2, listener.Item3);
+                }
+
+                else if (listener.Item1 == REMOVE_LISTENER)
+                {
+                    callbacksDic.Remove(listener.Item2);
+                }
+            }
+
             isInvoking = false;
         }
 
@@ -370,6 +400,21 @@ namespace Tamana
                     Debug.Log($"Key : {listener.Key}", Debug.LogType.Error);
                     Debug.Log($"Message : {e.Message}", Debug.LogType.Error);
                     Debug.Log($"Stack Trace : {e.StackTrace}", Debug.LogType.Error);
+                }
+            }
+
+            while (listenerEditorQueue.Count > 0)
+            {
+                var listener = listenerEditorQueue.Dequeue();
+
+                if (listener.Item1 == ADD_LISTENER)
+                {
+                    callbacksDic.Add(listener.Item2, listener.Item3);
+                }
+
+                else if (listener.Item1 == REMOVE_LISTENER)
+                {
+                    callbacksDic.Remove(listener.Item2);
                 }
             }
 
