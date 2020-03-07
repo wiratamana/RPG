@@ -1,0 +1,63 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
+
+namespace Tamana
+{
+    public class TPC_Movement : MonoBehaviour
+    {
+        private TPC_Main tpc;
+        public TPC_Main TPC => this.GetAndAssignComponent(ref tpc);
+
+        private TPC_Movement_Normal normal;
+        private TPC_Movement_Strafe strafe;
+
+        public TPC_Movement_Normal Normal => this.GetOrAddAndAssignComponent(ref normal);
+        public TPC_Movement_Strafe Strafe => this.GetOrAddAndAssignComponent(ref strafe);
+
+        public EventManager<MovementType> OnMovementTypeChanged { get; } = new EventManager<MovementType>();
+
+        private void OnValidate()
+        {
+            this.LogErrorIfComponentIsNull(Normal);
+            this.LogErrorIfComponentIsNull(Strafe);
+
+            SetMovementType(MovementType.Normal);
+        }
+
+        private void Awake()
+        {
+            TPC.UnitPlayer.EnemyCatcher.OnEnemyCatched.AddListener(SetMovementTypeToStrafe);
+            TPC.UnitPlayer.EnemyCatcher.OnCatchedEnemyReleased.AddListener(SetMovementTypeToNormal);
+        }
+
+        private void SetMovementType(MovementType movementType)
+        {
+            switch (movementType)
+            {
+                case MovementType.Normal:
+                    Strafe.enabled = false;
+                    Normal.enabled = true;
+                    break;
+
+                case MovementType.Strafe:
+                    Normal.enabled = false;
+                    Strafe.enabled = true;
+                    break;
+            }
+
+            OnMovementTypeChanged.Invoke(movementType);
+        }
+
+        private void SetMovementTypeToStrafe(Unit_AI_Hostile enemy)
+        {
+            SetMovementType(MovementType.Strafe);
+        }
+
+        private void SetMovementTypeToNormal()
+        {
+            SetMovementType(MovementType.Normal);
+        }
+    }
+}

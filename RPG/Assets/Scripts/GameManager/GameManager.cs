@@ -40,7 +40,7 @@ namespace Tamana
 
         public static Status_Player PlayerStatus => Player.Status;
 
-        public static Transform MainCamera => Player.TPC.CameraHandler.MainCamera.transform;
+        public static Transform MainCameraTransform => Player.TPC.CameraHandler.MainCamera.transform;
 
         private static Unit_Player player;
         public static Unit_Player Player

@@ -11,9 +11,19 @@ namespace Tamana
 
         private TPC_CameraLookPlayer cameraLookPlayer;
         private TPC_CameraMovementManager cameraMovement;
+        private TPC_CameraCombatHandler cameraCombatHandler;
 
         public TPC_CameraLookPlayer CameraLookPlayer => this.GetOrAddAndAssignComponent(ref cameraLookPlayer);
         public TPC_CameraMovementManager CameraMovement => this.GetOrAddAndAssignComponent(ref cameraMovement);
+        public TPC_CameraCombatHandler CameraCombatHandler => this.GetOrAddAndAssignComponent(ref cameraCombatHandler);
+
+        [SerializeField] private float _offsetY;
+        [SerializeField] private float _offsetZ;
+        [SerializeField] private float _cameraLookHeight;
+
+        public float OffsetY => _offsetY;
+        public float OffsetZ => _offsetZ;
+        public float CameraLookHeight => _cameraLookHeight;
 
         public float CameraAngleFromPlayerForward
         {
@@ -46,7 +56,7 @@ namespace Tamana
 
                     mainCamera = new GameObject(nameof(MainCamera)).AddComponent<Camera>();
                     mainCamera.transform.SetParent(CameraLookPoint.transform);
-                    mainCamera.transform.localPosition = new Vector3(0, 0, CameraMovement.OffsetZ);
+                    mainCamera.transform.localPosition = new Vector3(0, 0, OffsetZ);
                     mainCamera.gameObject.tag = TagManager.TAG_MAIN_CAMERA;
                 }
 
@@ -73,13 +83,13 @@ namespace Tamana
                     }
 
                     cameraLookPointTransform = new GameObject(nameof(CameraLookPoint)).transform;
-                    cameraLookPointTransform.localPosition = new Vector3(0, CameraMovement.CameraLookHeight, 0);
+                    cameraLookPointTransform.localPosition = new Vector3(0, CameraLookHeight, 0);
                     cameraLookPointTransform.gameObject.tag = TagManager.TAG_PLAYER_CAMERA_LOOK_POINT;
 
                     var playerForwardPosition = transform.position + Vector3.forward - transform.position;
                     playerForwardPosition.y = 0;
 
-                    var defaultCameraPosition = transform.position + new Vector3(0, CameraMovement.OffsetY, CameraMovement.OffsetZ);
+                    var defaultCameraPosition = transform.position + new Vector3(0, OffsetY, OffsetZ);
                     var defaultCameraLookDirection = transform.position - defaultCameraPosition;
 
                     cameraLookPointTransform.rotation = Quaternion.LookRotation(defaultCameraLookDirection.normalized);
@@ -93,6 +103,30 @@ namespace Tamana
         {
             this.LogErrorIfComponentIsNull(CameraLookPlayer);
             this.LogErrorIfComponentIsNull(CameraMovement);
+            this.LogErrorIfComponentIsNull(CameraCombatHandler);
+        }
+
+        private void Awake()
+        {
+            TPC.UnitPlayer.EnemyCatcher.OnEnemyCatched.AddListener(SetActiveCameraCombatHandler);
+            TPC.UnitPlayer.EnemyCatcher.OnCatchedEnemyReleased.AddListener(SetActiveCameraNormal);
+        }
+
+        private void SetActiveCameraCombatHandler(Unit_AI_Hostile enemy)
+        {
+            CameraLookPlayer.enabled = false;
+            CameraMovement.enabled = false;
+            CameraCombatHandler.enabled = true;
+        }
+
+        private void SetActiveCameraNormal()
+        {
+
+            CameraLookPlayer.enabled = true;
+            CameraMovement.enabled = true;
+            CameraCombatHandler.enabled = false;
+
+            CameraLookPlayer.SetCameraLocalPositionToZero();
         }
     }
 }

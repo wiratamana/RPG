@@ -18,6 +18,9 @@ namespace Tamana
         public const float MAX_VELOCITY = 1.0f;
         public const float MIN_VELOCITY = 0.0f;
 
+        private const string ParamName_StrafeHorizontal = nameof(StrafeHorizontal);
+        private const string ParamName_StrafeVertical = nameof(StrafeVertical);
+        private const string ParamName_IsStrafing = nameof(IsStrafing);
         private const string ParamName_Movement = nameof(Movement);
         private const string ParamName_IsMoving = nameof(IsMoving);
         private const string ParamName_IsDecelerating = nameof(IsDecelerating);
@@ -32,6 +35,21 @@ namespace Tamana
         private const string Paramname_AnimDodge = nameof(AnimDodge);
         private const string Paramname_AnimHit = nameof(AnimHit);
 
+        public float StrafeHorizontal
+        {
+            get => animator.GetFloat(ParamName_StrafeHorizontal);
+            set => animator.SetFloat(ParamName_StrafeHorizontal, value);
+        }
+        public float StrafeVertical
+        {
+            get => animator.GetFloat(ParamName_StrafeVertical);
+            set => animator.SetFloat(ParamName_StrafeVertical, value);
+        }
+        public bool IsStrafing
+        {
+            get => animator.GetBool(ParamName_IsStrafing);
+            set => animator.SetBool(ParamName_IsStrafing, value);
+        }
         public float Movement
         {
             get => animator.GetFloat(ParamName_Movement);

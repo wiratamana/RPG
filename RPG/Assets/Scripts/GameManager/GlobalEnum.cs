@@ -26,6 +26,12 @@ namespace Tamana
         DF
     }
 
+    public enum MovementType
+    {
+        Normal,
+        Strafe,
+    }
+
     public enum WeaponType
     {
         OneHand,

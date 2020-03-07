@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_Battle_EnemyLock_TargetHP : MonoBehaviour
+public class UI_Battle_TargetHP_Child : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

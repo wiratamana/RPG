@@ -8,5 +8,8 @@ namespace Tamana
     {
         private Canvas canvas;
         public Canvas Canvas => this.GetAndAssignComponent(ref canvas);
+
+        private UI_Battle_EnemyLock enemyLock;
+        public UI_Battle_EnemyLock EnemyLock => this.GetAndAssignComponentInChildren(ref enemyLock);
     }
 }

@@ -49,6 +49,8 @@ namespace Tamana
         public EventManager Event_Parry { get; } = new EventManager();
         public EventManager Event_Dodge { get; } = new EventManager();
 
+        public EventManager Event_CatchEnemy { get; } = new EventManager();
+
         private void Update()
         {
             if(Input.GetKeyDown(KeyCode.E) == true)
@@ -90,6 +92,11 @@ namespace Tamana
             if(Input.GetKeyDown(KeyCode.LeftAlt) == true)
             {
                 Event_Dodge.Invoke();
+            }
+
+            if(Input.GetKeyDown(KeyCode.Mouse2) == true)
+            {
+                Event_CatchEnemy.Invoke();
             }
         }
     }
