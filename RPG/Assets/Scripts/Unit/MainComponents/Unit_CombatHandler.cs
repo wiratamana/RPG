@@ -96,6 +96,11 @@ namespace Tamana
             if(Unit.UnitAnimator.Params.IsInCombatState == true)
             {
                 RemoveCombatEventsFromListeners();
+                InputEvent.Instance.Event_Holster.RemoveListener(Holster);
+            }
+            else
+            {
+                InputEvent.Instance.Event_Equip.RemoveListener(Equip);
             }
         }
 
@@ -104,6 +109,11 @@ namespace Tamana
             if (Unit.UnitAnimator.Params.IsInCombatState == true)
             {
                 AddCombatEventsToListeners();
+                InputEvent.Instance.Event_Holster.AddListener(Holster);
+            }
+            else
+            {
+                InputEvent.Instance.Event_Equip.AddListener(Equip);
             }
         }
 
