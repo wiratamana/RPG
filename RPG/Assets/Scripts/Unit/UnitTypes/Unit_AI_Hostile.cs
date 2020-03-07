@@ -22,13 +22,13 @@ namespace Tamana
             Inventory.AddItem(Instantiate(weapon));
             Equipment.EquipWeapon(Inventory.GetItemListAsReadOnly(x => x is Item_Weapon)[0] as Item_Weapon);
 
-            var brain = ScriptableObject.CreateInstance<AI_Brain_Enemy_Dummy>();
-            brain.Initialize(this);
-            CombatLogic.InstallBrain(brain);
-
             var status = Resources.Load<Unit_Status_Information>("DummyStatus");
             Status.Initialize(Instantiate(status));
             Resources.UnloadAsset(status);
+
+            var brain = ScriptableObject.CreateInstance<AI_Brain_Enemy_Dummy>();
+            brain.Initialize(this);
+            CombatLogic.InstallBrain(brain);
         }
     }
 }

@@ -4,13 +4,21 @@ using System.Collections;
 namespace Tamana
 {
     public class AI_Enemy_CombatLogic : MonoBehaviour
-    {    
+    {
+        private Unit_AI_Hostile unitEnemy;
+        public Unit_AI_Hostile UnitEnemy => this.GetAndAssignComponent(ref unitEnemy);
+
         private AI_Brain brain;
         public bool IsBrainInstalled => brain != null;
 
         private void OnValidate()
         {
             enabled = IsBrainInstalled;
+        }
+
+        private void Awake()
+        {
+            UnitEnemy.Status.HP.OnCurrentHealthUpdated.AddListener(OnCurrentHealthUpdated);            
         }
 
         private void Update()
@@ -29,6 +37,15 @@ namespace Tamana
             Debug.Log($"Brain was installed!! Brain name is '{brain.name}'");
             this.brain = brain;
             enabled = true;
+        }
+
+        private void OnCurrentHealthUpdated(float currentHP)
+        {
+            if(UnitEnemy.Status.IsDead == true)
+            {
+                enabled = false;
+                Debug.Log("Brain was shut down!");
+            }
         }
     }
 }
