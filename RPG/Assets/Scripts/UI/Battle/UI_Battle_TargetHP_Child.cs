@@ -72,6 +72,11 @@ namespace Tamana
 
         private void SetFillRate(float rate)
         {
+            if (enemy.Status.IsDead == true)
+            {
+                Destroy(gameObject);
+            }
+
             var sizeDelta = fill.rectTransform.sizeDelta;
             sizeDelta.x = width * rate;
             fill.rectTransform.sizeDelta = sizeDelta;

@@ -10,16 +10,20 @@ namespace Tamana
         public TPC_CameraHandler CameraHandler => this.GetAndAssignComponent(ref cameraHandler);
 
         private Unit_AI_Hostile unitBase;
+        private Transform playerRootTransform;
         private Transform playerSpineTransform;
         private Transform enemySpineTransform;
         private Transform mainCamera;
+        private Transform cameraLookTransform;
 
         private void OnValidate()
         {
-            Deactivate();
-
+            playerRootTransform = CameraHandler.TPC.UnitPlayer.transform;
             playerSpineTransform = CameraHandler.TPC.UnitPlayer.BodyTransform.Spine;
             mainCamera = CameraHandler.MainCamera.transform;
+            cameraLookTransform = CameraHandler.CameraLookPoint;
+
+            Deactivate();
         }
 
         private void Awake()
@@ -51,18 +55,24 @@ namespace Tamana
 
             mainCamera.transform.position = camCurrentPos;
             mainCamera.transform.rotation = camCurrentRot;
+            cameraLookTransform.transform.position = playerRootTransform.position;
+            cameraLookTransform.transform.rotation = camCurrentRot;
         }
 
         private void Activate(Unit_AI_Hostile unitBase)
         {
             this.unitBase = unitBase;
             enemySpineTransform = unitBase.BodyTransform.Spine;
+
+            mainCamera.transform.SetParent(null);
         }
 
         private void Deactivate()
         {
             unitBase = null;
             enemySpineTransform = null;
+
+            mainCamera.transform.SetParent(cameraLookTransform);
         }
     }
 }

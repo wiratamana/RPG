@@ -18,6 +18,8 @@ namespace Tamana
 
         public EventManager<MovementType> OnMovementTypeChanged { get; } = new EventManager<MovementType>();
 
+        public MovementType MovementType { get; private set; }
+
         private void OnValidate()
         {
             this.LogErrorIfComponentIsNull(Normal);
@@ -34,19 +36,27 @@ namespace Tamana
 
         private void SetMovementType(MovementType movementType)
         {
+            if(MovementType == movementType)
+            {
+                return;
+            }
+
             switch (movementType)
             {
                 case MovementType.Normal:
                     Strafe.enabled = false;
                     Normal.enabled = true;
+                    TPC.UnitPlayer.UnitAnimator.DisableStrafing();
                     break;
 
                 case MovementType.Strafe:
                     Normal.enabled = false;
                     Strafe.enabled = true;
+                    TPC.UnitPlayer.UnitAnimator.EnableStrafing();
                     break;
             }
 
+            MovementType = movementType;
             OnMovementTypeChanged.Invoke(movementType);
         }
 

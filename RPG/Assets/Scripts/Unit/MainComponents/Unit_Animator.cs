@@ -104,5 +104,15 @@ namespace Tamana
             Unit.UnitAnimator.Params.IsAccelerating = false;
             OnReachZeroVelocity.Invoke();
         }
+
+        public void DisableStrafing()
+        {
+            Params.IsStrafing = false;
+        }
+
+        public void EnableStrafing()
+        {
+            Params.IsStrafing = true;
+        }
     }
 }
