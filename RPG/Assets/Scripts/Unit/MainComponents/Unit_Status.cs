@@ -7,8 +7,9 @@ namespace Tamana
 {
     public class Unit_Status : MonoBehaviour
     {
-        [SerializeField] protected Unit_Status_Information mainStatus;
-        [SerializeField] protected List<Unit_Status_Information> additionalStatus;
+        private Unit_Status_Information mainStatus;
+        private List<Unit_Status_Information> additionalStatus;
+
         private Unit_Base unit;
         public Unit_Base Unit => this.GetAndAssignComponent(ref unit);
 
@@ -89,6 +90,17 @@ namespace Tamana
             }
 
             return (int)StatusDic[status].GetValue(mainStatus) + totalAdditionalStatus;
+        }
+
+        public void Initialize(Unit_Status_Information mainStatus)
+        {
+            if(this.mainStatus != null)
+            {
+                Debug.Log("This component was already initialized", Debug.LogType.Warning);
+                return;
+            }
+
+            this.mainStatus = mainStatus;
         }
     }
 }

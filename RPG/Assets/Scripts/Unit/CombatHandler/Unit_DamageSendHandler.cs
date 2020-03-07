@@ -54,7 +54,7 @@ namespace Tamana
                     Debug.Log($"SendDamage form '{name}' to '{damageHandler.name}'");
                     damageHandler.DamageReceiver(new Unit_Status_DamageData()
                     {
-                        damagePoint = 100,
+                        damagePoint = CombatHandler.Unit.Status.GetStatus(MainStatus.AT),
                         parryTiming = CombatHandler.ParryHandler.ChanceToParryTiming,
                         damageTiming = Time.time,
                         weaponType = unitWeapon,

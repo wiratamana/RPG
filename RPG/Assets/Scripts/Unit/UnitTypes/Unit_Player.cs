@@ -18,8 +18,10 @@ namespace Tamana
 
             this.LogErrorIfComponentIsNull(TPC);
             this.LogErrorIfComponentIsNull(EnemyCatcher);
+
+            var statusInfo = Resources.Load<Unit_Status_Information>("PlayerBaseStatus");
+            Status.Initialize(Instantiate(statusInfo));
+            Resources.UnloadAsset(statusInfo);
         }
-
-
     }
 }

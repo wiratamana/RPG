@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,8 +27,6 @@ namespace Tamana
         private void Start()
         {
             var playerStatus = GameManager.PlayerStatus;
-            var bonus = playerStatus.HP.MaxHealth * 0.5f;
-            HP.SetWidth(bonus);
 
             GameManager.PlayerStatus.ST.OnStaminaReducedBecauseAttackingEvent
                 .AddListener(OnStaminaReducedBecauseAttackingEvent);
@@ -37,6 +36,13 @@ namespace Tamana
 
             GameManager.PlayerStatus.ST.OnStaminaFullyRegeneratedEvent
                 .AddListener(OnStaminaFullyRegenerated);
+
+            GameManager.PlayerStatus.HP.OnCurrentHealthUpdated.AddListener(OnPlayerCurrentHealthUpdated);
+        }
+
+        private void OnPlayerCurrentHealthUpdated(float currentHPRate)
+        {
+            HP.SetFillRate(currentHPRate);
         }
 
         private void OnStaminaReducedBecauseAttackingEvent(int staminaUsage)

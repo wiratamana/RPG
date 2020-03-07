@@ -53,22 +53,22 @@ namespace Tamana
             }
         }
 
-        public override void Init(AI_Enemy_Base ai)
+        public override void Initialize(Unit_AI_Hostile ai)
         {
-            base.Init(ai);
+            base.Initialize(ai);
 
-            PlayerDetector.OnPlayerEnteredHostileRange.AddListener(AI.Unit.CombatHandler.Equip);
+            PlayerDetector.OnPlayerEnteredHostileRange.AddListener(Unit.CombatHandler.Equip);
             PlayerDetector.OnPlayerEnteredHostileRange.AddListener(RotateTowardPlayer.ResumeNeuron, RotateTowardPlayer.GetInstanceID());
             PlayerDetector.OnPlayerEnteredHostileRange.AddListener(AttackHandler.ResumeNeuron, AttackHandler.GetInstanceID());
 
-            PlayerDetector.OnPlayerExitedHostileRange.AddListener(AI.Unit.CombatHandler.Holster);
+            PlayerDetector.OnPlayerExitedHostileRange.AddListener(Unit.CombatHandler.Holster);
             PlayerDetector.OnPlayerExitedHostileRange.AddListener(RotateTowardPlayer.StopNeuron, RotateTowardPlayer.GetInstanceID());
             PlayerDetector.OnPlayerExitedHostileRange.AddListener(AttackHandler.StopNeuron, AttackHandler.GetInstanceID());
 
             PlayerDetector.OnPlayerInsideHostileRange.AddListener(AttackHandler.UpdateDistanceToPlayer, AttackHandler.GetInstanceID());
 
-            AI.Unit.CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(AttackHandler.StopNeuron);
-            AI.Unit.CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(AttackHandler.ResumeNeuron);
+            Unit.CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(AttackHandler.StopNeuron);
+            Unit.CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(AttackHandler.ResumeNeuron);
         }
 
         public override void Update()

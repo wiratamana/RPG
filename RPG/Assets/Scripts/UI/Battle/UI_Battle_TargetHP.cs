@@ -32,7 +32,7 @@ namespace Tamana
             targetHP.AddComponent<RectTransform>();
             targetHP.transform.SetParent(transform);
             var comp = targetHP.gameObject.AddComponent<UI_Battle_TargetHP_Child>();
-            comp.Init(enemy, Deregister);
+            comp.Initialize(enemy, Deregister);
         }
 
         private void Deregister(int instanceID)

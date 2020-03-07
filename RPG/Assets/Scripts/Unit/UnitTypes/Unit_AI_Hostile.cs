@@ -6,20 +6,29 @@ namespace Tamana
 {
     public class Unit_AI_Hostile : Unit_Base
     {
-        private AI_Enemy_Base ai;
-        public AI_Enemy_Base AI => this.GetOrAddAndAssignComponent(ref ai);
-
         [SerializeField] private Item_Weapon weapon;
+        private AI_Enemy_CombatLogic combatLogic;
+        public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(ref combatLogic);
 
         protected override void OnValidate()
         {
-            this.LogErrorIfComponentIsNull(AI);
+            base.OnValidate();
+
+            this.LogErrorIfComponentIsNull(CombatLogic);
         }
 
         private void Awake()
         {
             Inventory.AddItem(Instantiate(weapon));
             Equipment.EquipWeapon(Inventory.GetItemListAsReadOnly(x => x is Item_Weapon)[0] as Item_Weapon);
+
+            var brain = ScriptableObject.CreateInstance<AI_Brain_Enemy_Dummy>();
+            brain.Initialize(this);
+            CombatLogic.InstallBrain(brain);
+
+            var status = Resources.Load<Unit_Status_Information>("DummyStatus");
+            Status.Initialize(Instantiate(status));
+            Resources.UnloadAsset(status);
         }
     }
 }

@@ -16,8 +16,9 @@ namespace Tamana
         }
 
         public int CurrentHealth { get; private set; }
+        public float CurrentHealthRate => (float)CurrentHealth / MaxHealth;
         private EventManager onDeadEvent;
-        private EventManager<Unit_Status_DamageData> onDamageReceivedEvent;
+        public EventManager<float> OnCurrentHealthUpdated { get; } = new EventManager<float>();
 
         public Unit_Status_HP(Unit_Status_Information information, EventManager onDeadListener, 
             EventManager<Unit_Status_DamageData> onDamageReceivedListener)
@@ -26,7 +27,7 @@ namespace Tamana
             CurrentHealth = this.information.HP;
 
             onDeadEvent = onDeadListener;
-            onDamageReceivedEvent = onDamageReceivedListener;
+            onDamageReceivedListener.AddListener(Damage);
         }
 
         public void Damage(Unit_Status_DamageData damageData)
@@ -37,7 +38,6 @@ namespace Tamana
                 return;
             }
 
-            onDamageReceivedEvent.Invoke(damageData);
             CurrentHealth = Mathf.Max(0, CurrentHealth - damageData.damagePoint);
 
             Debug.Log($"Damage Received : {damageData.damagePoint} | Remaining HP : {CurrentHealth}");
@@ -47,6 +47,8 @@ namespace Tamana
                 Debug.Log("Dead!!");
                 onDeadEvent.Invoke();
             }
+
+            OnCurrentHealthUpdated.Invoke(CurrentHealthRate);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,8 +19,9 @@ namespace Tamana
         private Image frame;
         private Image fill;
         private Vector3 offset = new Vector3(0, Screen.height * 0.05f, 0);
+        private float width = 200.0f;
 
-        public void Init(Unit_AI_Hostile enemy, UnityAction<int> deregisterOnDestroyAction)
+        public void Initialize(Unit_AI_Hostile enemy, UnityAction<int> deregisterOnDestroyAction)
         {
             if (isInitialized == true)
             {
@@ -34,6 +36,7 @@ namespace Tamana
             enemyTransform = enemy.BodyTransform.Head;
             rt = GetComponent<RectTransform>();
             rt.sizeDelta = new Vector2(202, 18);
+            enemy.Status.HP.OnCurrentHealthUpdated.AddListener(SetFillRate);
 
             frame = UI_Pool.Instance.GetImage(transform, 202, 18, nameof(frame));
             frame.rectTransform.sizeDelta = rt.sizeDelta;
@@ -42,7 +45,7 @@ namespace Tamana
             frame.type = Image.Type.Sliced;
             frame.enabled = true;
 
-            fill = UI_Pool.Instance.GetImage(transform, 200, 16, nameof(fill));
+            fill = UI_Pool.Instance.GetImage(transform, (int)width, 16, nameof(fill));
             fill.color = Color.red;
             fill.sprite = UI_Battle.Instance.TargetHP.HPST_Sprite;
             fill.type = Image.Type.Sliced;
@@ -52,12 +55,13 @@ namespace Tamana
             fill.rectTransform.anchorMin = new Vector2(0.0f, 0.5f);
             fill.enabled = true;
 
+            SetFillRate(enemy.Status.HP.CurrentHealthRate);
             isInitialized = true;
         }
 
         private void Update()
         {
-            if(enemyTransform.IsInsideCameraFrustum(mainCamera) == false)
+            if (enemyTransform.IsInsideCameraFrustum(mainCamera) == false)
             {
                 Destroy(gameObject);
                 return;
@@ -66,10 +70,19 @@ namespace Tamana
             rt.position = mainCamera.WorldToScreenPoint(enemyTransform.position) + offset;
         }
 
+        private void SetFillRate(float rate)
+        {
+            var sizeDelta = fill.rectTransform.sizeDelta;
+            sizeDelta.x = width * rate;
+            fill.rectTransform.sizeDelta = sizeDelta;
+        }
+
+
         private void OnDestroy()
         {
             UI_Pool.Instance.RemoveImage(fill);
             UI_Pool.Instance.RemoveImage(frame);
+            enemy.Status.HP.OnCurrentHealthUpdated.RemoveListener(SetFillRate);
 
             deregisterOnDestroyAction.Invoke(enemyInstanceID);
         }

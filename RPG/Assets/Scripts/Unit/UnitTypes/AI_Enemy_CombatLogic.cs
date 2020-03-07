@@ -8,6 +8,16 @@ namespace Tamana
         private AI_Brain brain;
         public bool IsBrainInstalled => brain != null;
 
+        private void OnValidate()
+        {
+            enabled = IsBrainInstalled;
+        }
+
+        private void Update()
+        {
+            brain.Update();
+        }
+
         public void InstallBrain(AI_Brain brain)
         {
             if (IsBrainInstalled == true)
@@ -18,11 +28,7 @@ namespace Tamana
 
             Debug.Log($"Brain was installed!! Brain name is '{brain.name}'");
             this.brain = brain;
-        }
-
-        private void Update()
-        {
-            brain.Update();
+            enabled = true;
         }
     }
 }
