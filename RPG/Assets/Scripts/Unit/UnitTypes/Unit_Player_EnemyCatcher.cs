@@ -19,6 +19,11 @@ namespace Tamana
             InputEvent.Instance.Event_CatchEnemy.AddListener(SphereCastEnemy);
         }
 
+        private void Start()
+        {
+            StartCoroutine(PassiveEnemyCatcher());
+        }
+
         private void SphereCastEnemy()
         {
             if(UnitEnemy != null)
@@ -59,6 +64,31 @@ namespace Tamana
 
             UnitPlayer.UnitAnimator.Params.IsStrafing = true;
             OnEnemyCatched.Invoke(UnitEnemy);
+        }
+
+        private IEnumerator PassiveEnemyCatcher()
+        {
+            var fourTimesPerSeconds = new WaitForSeconds(0.25f);
+            var mainCamera = UnitPlayer.TPC.CameraHandler.MainCamera;   
+
+            while(true)
+            {
+                var radius = 25.0f;
+                var layer = LayerMask.GetMask(LayerManager.LAYER_ENEMY);
+
+                var colliders = Physics.OverlapSphere(transform.position, radius, layer);
+                foreach (var c in colliders)
+                {
+                    if(c.transform.IsInsideCameraFrustum(mainCamera) == false)
+                    {
+                        continue;
+                    }
+
+                    UI_Battle.Instance.TargetHP.RegisterEnemy(c.GetComponent<Unit_AI_Hostile>());
+                }
+
+                yield return fourTimesPerSeconds;
+            }            
         }
     }
 }

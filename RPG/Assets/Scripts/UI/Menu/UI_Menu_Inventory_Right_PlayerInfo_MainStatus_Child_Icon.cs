@@ -39,11 +39,11 @@ namespace Tamana
             var sprite = UI_Menu.Instance.MenuResources.GetMainStatusSprites((MainStatus)System.Enum.Parse(typeof(MainStatus),
                 transform.parent.name));
 
-            Background = UI_Menu_Pool.Instance.GetImage(RectTransform, (int)backgroundSize.x, (int)backgroundSize.y, nameof(Background));
+            Background = UI_Pool.Instance.GetImage(RectTransform, (int)backgroundSize.x, (int)backgroundSize.y, nameof(Background));
             Background.rectTransform.localPosition = Vector3.zero;
             Background.color = Color.white;
 
-            Icon = UI_Menu_Pool.Instance.GetImage(RectTransform, (int)iconSize.x, (int)iconSize.y, nameof(Icon));
+            Icon = UI_Pool.Instance.GetImage(RectTransform, (int)iconSize.x, (int)iconSize.y, nameof(Icon));
             Icon.rectTransform.localPosition = Vector3.zero;
             Icon.color = Color.white;
             Icon.sprite = sprite;
@@ -51,8 +51,8 @@ namespace Tamana
 
         private void ReturnToPool()
         {
-            UI_Menu_Pool.Instance.RemoveImage(Background);
-            UI_Menu_Pool.Instance.RemoveImage(Icon);
+            UI_Pool.Instance.RemoveImage(Background);
+            UI_Pool.Instance.RemoveImage(Icon);
 
             Background = null;
             Icon = null;

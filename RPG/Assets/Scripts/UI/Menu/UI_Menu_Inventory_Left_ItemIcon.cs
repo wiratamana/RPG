@@ -45,7 +45,7 @@ namespace Tamana
             // ===============================================================================================
             // Create Background
             // ===============================================================================================
-            var backgroundImg = UI_Menu_Pool.Instance.GetImage(RectTransform, iconSize, iconSize, nameof(Background));
+            var backgroundImg = UI_Pool.Instance.GetImage(RectTransform, iconSize, iconSize, nameof(Background));
             backgroundImg.rectTransform.localPosition = Vector2.zero;
             backgroundImg.raycastTarget = false;
             Background = backgroundImg.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemIcon_Background>();
@@ -53,7 +53,7 @@ namespace Tamana
             // ===============================================================================================
             // Create Ring
             // ===============================================================================================
-            var ringImg = UI_Menu_Pool.Instance.GetImage(RectTransform, ringSize, ringSize, nameof(Ring));
+            var ringImg = UI_Pool.Instance.GetImage(RectTransform, ringSize, ringSize, nameof(Ring));
             ringImg.rectTransform.localPosition = Vector2.zero;
             ringImg.sprite = UI_Menu.Instance.MenuResources.InventoryItemIconRing_Sprite;
             ringImg.raycastTarget = false;
@@ -62,7 +62,7 @@ namespace Tamana
             // ===============================================================================================
             // Create RawTexture to render the item
             // ===============================================================================================
-            var itemImage = UI_Menu_Pool.Instance.GetRawImage(RectTransform, rawImageSize, rawImageSize, nameof(ItemRenderer));
+            var itemImage = UI_Pool.Instance.GetRawImage(RectTransform, rawImageSize, rawImageSize, nameof(ItemRenderer));
             itemImage.rectTransform.localPosition = Vector2.zero;
             itemImage.color = Color.white;
             itemImage.raycastTarget = true;
@@ -94,9 +94,9 @@ namespace Tamana
             Destroy(ItemRenderer);
             Destroy(Ring);
 
-            UI_Menu_Pool.Instance.RemoveImage(Background.Background);
-            UI_Menu_Pool.Instance.RemoveImage(Ring.Ring);
-            UI_Menu_Pool.Instance.RemoveRawImage(ItemRenderer.RawImage);
+            UI_Pool.Instance.RemoveImage(Background.Background);
+            UI_Pool.Instance.RemoveImage(Ring.Ring);
+            UI_Pool.Instance.RemoveRawImage(ItemRenderer.RawImage);
 
             Destroy(gameObject);
         }
@@ -131,10 +131,22 @@ namespace Tamana
                 equip.OnMouseLeftClick.AddListener(RegisterThisItemIcon);
             }
 
-            equip.OnMouseLeftClick.AddListener(Ring.UpdateColor);
-            equip.OnMouseLeftClick.AddListener(Background.UpdateColor);
-            equip.OnMouseLeftClick.AddListener(UI_Menu_Inventory_ItemOption.Instance.Close);
-            equip.OnMouseLeftClick.AddListener(equip.OnMouseLeftClick.RemoveAllListener);
+            if(GameManager.Player.UnitAnimator.Params.IsInCombatState == false)
+            {
+                equip.OnMouseLeftClick.AddListener(Ring.UpdateColor);
+                equip.OnMouseLeftClick.AddListener(Background.UpdateColor);
+                equip.OnMouseLeftClick.AddListener(UI_Menu_Inventory_ItemOption.Instance.Close);
+                equip.OnMouseLeftClick.AddListener(equip.OnMouseLeftClick.RemoveAllListener);
+            }      
+            
+            else
+            {
+                equip.OnMouseLeftClick.RemoveListener(equipment.Unequip);
+                equip.OnMouseLeftClick.RemoveListener(equipment.Equip);
+
+                equip.Text.color = Color.red;
+                equip.Ring.color = Color.red;
+            }
 
             // ===============================================================================================
             // Register on cancel callback
