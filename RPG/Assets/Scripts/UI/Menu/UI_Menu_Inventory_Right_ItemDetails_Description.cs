@@ -47,7 +47,7 @@ namespace Tamana
 
         private void Init()
         {
-            ItemDescription = UI_Menu_Pool.Instance.GetText(RectTransform, 0, 0, "", nameof(ItemDescription));
+            ItemDescription = UI_Pool.Instance.GetText(RectTransform, 0, 0, "", nameof(ItemDescription));
             ItemDescription.rectTransform.localPosition = Vector3.zero;
             ItemDescription.rectTransform.anchorMax = Vector2.one;
             ItemDescription.rectTransform.anchorMin = Vector2.zero;
@@ -59,7 +59,7 @@ namespace Tamana
 
         public void ReturnToPool()
         {
-            UI_Menu_Pool.Instance.RemoveText(ItemDescription);
+            UI_Pool.Instance.RemoveText(ItemDescription);
 
             ItemDescription = null;
         }

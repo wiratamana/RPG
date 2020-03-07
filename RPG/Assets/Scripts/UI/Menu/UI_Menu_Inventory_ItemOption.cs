@@ -39,7 +39,7 @@ namespace Tamana
             base.Awake();
 
             RectTransform.sizeDelta = new Vector2(WIDTH, 100);
-            background = UI_Menu_Pool.Instance.GetImage(RectTransform, (int)RectTransform.sizeDelta.x, (int)RectTransform.sizeDelta.y, nameof(background));
+            background = UI_Pool.Instance.GetImage(RectTransform, (int)RectTransform.sizeDelta.x, (int)RectTransform.sizeDelta.y, nameof(background));
             background.rectTransform.localPosition = Vector2.zero;
             background.rectTransform.anchorMin = Vector2.zero;
             background.rectTransform.anchorMax = Vector2.one;
@@ -47,7 +47,7 @@ namespace Tamana
             background.rectTransform.offsetMax = Vector2.zero;
             background.color = BackgroundNormalColor;
 
-            ring = UI_Menu_Pool.Instance.GetImage(RectTransform, (int)RectTransform.sizeDelta.x, (int)RectTransform.sizeDelta.y, nameof(ring));
+            ring = UI_Pool.Instance.GetImage(RectTransform, (int)RectTransform.sizeDelta.x, (int)RectTransform.sizeDelta.y, nameof(ring));
             ring.rectTransform.localPosition = Vector2.zero;
             ring.rectTransform.anchorMin = Vector2.zero;
             ring.rectTransform.anchorMax = Vector2.one;
@@ -101,8 +101,8 @@ namespace Tamana
         {
             foreach(var g in genericMenusList)
             {
-                UI_Menu_Pool.Instance.RemoveImage(g.Ring);
-                UI_Menu_Pool.Instance.RemoveText(g.Text);
+                UI_Pool.Instance.RemoveImage(g.Ring);
+                UI_Pool.Instance.RemoveText(g.Text);
 
                 Destroy(g.gameObject);
             }

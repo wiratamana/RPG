@@ -27,7 +27,7 @@ namespace Tamana
             Image img = null;
             if(instance == null)
             {
-                img = UI_Menu_Pool.Instance.GetImage(parent, (int)parent.sizeDelta.x, (int)parent.sizeDelta.y, nameof(UI_Menu_Selection));
+                img = UI_Pool.Instance.GetImage(parent, (int)parent.sizeDelta.x, (int)parent.sizeDelta.y, nameof(UI_Menu_Selection));
 
                 var selection = img.gameObject.AddComponent<UI_Menu_Selection>();
                 selection.maxExpand = maxExpand;
@@ -57,7 +57,7 @@ namespace Tamana
         public static void DestroyInstance()
         {
             Destroy(instance);
-            UI_Menu_Pool.Instance.RemoveImage(instance.SelectionImage);
+            UI_Pool.Instance.RemoveImage(instance.SelectionImage);
             instance = null;
         }
 

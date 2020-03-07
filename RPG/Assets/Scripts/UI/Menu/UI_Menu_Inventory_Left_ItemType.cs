@@ -46,13 +46,13 @@ namespace Tamana
 
         private void Awake()
         {
-            var background = UI_Menu_Pool.Instance.GetImage(RectTransform, BACKGROUND_SIZE, BACKGROUND_SIZE, nameof(Background));
+            var background = UI_Pool.Instance.GetImage(RectTransform, BACKGROUND_SIZE, BACKGROUND_SIZE, nameof(Background));
             background.rectTransform.localPosition = Vector2.zero;
 
-            var ring = UI_Menu_Pool.Instance.GetImage(RectTransform, RING_SIZE, RING_SIZE, nameof(Ring));
+            var ring = UI_Pool.Instance.GetImage(RectTransform, RING_SIZE, RING_SIZE, nameof(Ring));
             ring.rectTransform.localPosition = Vector2.zero;
 
-            var icon = UI_Menu_Pool.Instance.GetImage(RectTransform, ICON_SIZE, ICON_SIZE, nameof(Icon));
+            var icon = UI_Pool.Instance.GetImage(RectTransform, ICON_SIZE, ICON_SIZE, nameof(Icon));
             icon.rectTransform.localPosition = Vector2.zero;
 
             Background = background.gameObject.AddComponent<UI_Menu_Inventory_Left_ItemType_Background>();
