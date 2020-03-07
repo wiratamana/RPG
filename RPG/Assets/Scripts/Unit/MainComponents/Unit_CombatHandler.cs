@@ -44,6 +44,12 @@ namespace Tamana
 
                 UI_Menu.OnBeforeOpen.AddListener(TemporarilyDisableCombatEvents);
                 UI_Menu.OnAfterClose.AddListener(ReenableCombatEvents);
+
+                Unit.UnitAnimator.OnHolsteringAnimationStarted.AddListener(RemoveHolster);
+                Unit.UnitAnimator.OnHolsteringAnimationFinished.AddListener(AddEquip);
+
+                Unit.UnitAnimator.OnEquippingAnimationStarted.AddListener(RemoveEquip);
+                Unit.UnitAnimator.OnEquippingAnimationFinished.AddListener(AddHolster);
             }
         }
 
@@ -52,12 +58,6 @@ namespace Tamana
         {
             Unit.Equipment.EquippedWeapon.SetWeaponTransformParent(false);
             OnHolsterEvent.Invoke();
-
-            if (Unit.IsUnitPlayer == true)
-            {
-                InputEvent.Instance.Event_Holster.RemoveListener(Holster);
-                InputEvent.Instance.Event_Equip.AddListener(Equip);
-            }
         }
 
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
@@ -65,12 +65,6 @@ namespace Tamana
         {
             Unit.Equipment.EquippedWeapon.SetWeaponTransformParent(true);
             OnEquipEvent.Invoke();
-
-            if (Unit.IsUnitPlayer == true)
-            {
-                InputEvent.Instance.Event_Equip.RemoveListener(Equip);
-                InputEvent.Instance.Event_Holster.AddListener(Holster);
-            }
         }
 
         private void AddCombatEventsToListeners()
@@ -96,11 +90,11 @@ namespace Tamana
             if(Unit.UnitAnimator.Params.IsInCombatState == true)
             {
                 RemoveCombatEventsFromListeners();
-                InputEvent.Instance.Event_Holster.RemoveListener(Holster);
+                RemoveHolster();
             }
             else
             {
-                InputEvent.Instance.Event_Equip.RemoveListener(Equip);
+                RemoveEquip();
             }
         }
 
@@ -109,11 +103,11 @@ namespace Tamana
             if (Unit.UnitAnimator.Params.IsInCombatState == true)
             {
                 AddCombatEventsToListeners();
-                InputEvent.Instance.Event_Holster.AddListener(Holster);
+                AddHolster();
             }
             else
             {
-                InputEvent.Instance.Event_Equip.AddListener(Equip);
+                AddEquip();
             }
         }
 
@@ -140,5 +134,31 @@ namespace Tamana
 
             UnitAnimator.Params.IsHolstering = true;
         } 
+
+        private void RemoveHolster()
+        {
+            InputEvent.Instance.Event_Holster.RemoveListener(Holster);
+        }
+
+        private void RemoveEquip()
+        {
+            InputEvent.Instance.Event_Equip.RemoveListener(Equip);
+        }
+
+        private void AddHolster()
+        {
+            if (UI_Menu.Instance?.gameObject.activeInHierarchy == false)
+            {
+                InputEvent.Instance.Event_Holster.AddListener(Holster);
+            }         
+        }
+
+        private void AddEquip()
+        {
+            if(UI_Menu.Instance?.gameObject.activeInHierarchy == false)
+            {
+                InputEvent.Instance.Event_Equip.AddListener(Equip);
+            }            
+        }
     }
 }
