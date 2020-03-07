@@ -40,25 +40,7 @@ namespace Tamana
 
         public static Status_Player PlayerStatus => Player.Status;
 
-        private static Transform _mainCamera;
-        public static Transform MainCamera
-        {
-            get
-            {
-                if (_mainCamera == null)
-                {
-                    var gameObjectWithMainCameraTag = GameObject.FindGameObjectWithTag(TagManager.TAG_MAIN_CAMERA);
-                    if (gameObjectWithMainCameraTag == null)
-                    {
-                        Debug.Log($"Cannot find gameObject with '{TagManager.TAG_MAIN_CAMERA}' tag.", Debug.LogType.ForceQuit);
-                    }
-
-                    _mainCamera = gameObjectWithMainCameraTag.transform;
-                }
-
-                return _mainCamera;
-            }
-        }
+        public static Transform MainCameraTransform => Player.TPC.CameraHandler.MainCamera.transform;
 
         private static Unit_Player player;
         public static Unit_Player Player

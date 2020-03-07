@@ -6,12 +6,24 @@ namespace Tamana
 {
     public class Unit_ParryHandler : MonoBehaviour
     {
+        private Unit_CombatHandler combatHandler;
+        public Unit_CombatHandler CombatHandler => this.GetAndAssignComponent(ref combatHandler);
+
         public float ParryTiming { private set; get; }
         public float ChanceToParryTiming { private set; get; }
         public bool IsAbleToParry => parryDelayCoroutine == null;
 
         private readonly WaitForSeconds secondsToWaitBeforeAbleToParryAgain = new WaitForSeconds(0.5f);
         private Coroutine parryDelayCoroutine;
+
+        private void Awake()
+        {
+            if (CombatHandler.Unit.IsUnitPlayer)
+            {
+                CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(MakePlayerUnableToParry);
+                CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(MakePlayerAbleToParryAgain);
+            }            
+        }
 
         public void Parry()
         {
@@ -37,6 +49,26 @@ namespace Tamana
         {
             yield return secondsToWaitBeforeAbleToParryAgain;
             parryDelayCoroutine = null;
+        }
+
+        private void MakePlayerUnableToParry()
+        {
+            if (CombatHandler.UnitAnimator.Params.IsInCombatState == false)
+            {
+                return;
+            }
+
+            InputEvent.Instance.Event_Parry.RemoveListener(Parry);
+        }
+
+        private void MakePlayerAbleToParryAgain()
+        {
+            if (CombatHandler.UnitAnimator.Params.IsInCombatState == false)
+            {
+                return;
+            }
+
+            InputEvent.Instance.Event_Parry.AddListener(Parry);
         }
     }
 }

@@ -77,8 +77,7 @@ namespace Tamana
         {
             Debug.Log("AddCombatEventsToListeners");
 
-            InputEvent.Instance.Event_DoAttackHeavy.AddListener(AttackHandler.PlayAttackAnim_Heavy);
-            InputEvent.Instance.Event_DoAttackLight.AddListener(AttackHandler.PlayAttackAnim_Light);
+            InputEvent.Instance.Event_DoAttackHeavy.AddListener(AttackHandler.PlayAttackAnim);
             InputEvent.Instance.Event_Parry.AddListener(ParryHandler.Parry);
             InputEvent.Instance.Event_Dodge.AddListener(DodgeHandler.Dodge);
         }
@@ -87,8 +86,7 @@ namespace Tamana
         {
             Debug.Log("RemoveCombatEventsFromListeners");
 
-            InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(AttackHandler.PlayAttackAnim_Heavy);
-            InputEvent.Instance.Event_DoAttackLight.RemoveListener(AttackHandler.PlayAttackAnim_Light);
+            InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(AttackHandler.PlayAttackAnim);
             InputEvent.Instance.Event_Parry.RemoveListener(ParryHandler.Parry);
             InputEvent.Instance.Event_Dodge.RemoveListener(DodgeHandler.Dodge);
         }
@@ -98,6 +96,11 @@ namespace Tamana
             if(Unit.UnitAnimator.Params.IsInCombatState == true)
             {
                 RemoveCombatEventsFromListeners();
+                InputEvent.Instance.Event_Holster.RemoveListener(Holster);
+            }
+            else
+            {
+                InputEvent.Instance.Event_Equip.RemoveListener(Equip);
             }
         }
 
@@ -106,6 +109,11 @@ namespace Tamana
             if (Unit.UnitAnimator.Params.IsInCombatState == true)
             {
                 AddCombatEventsToListeners();
+                InputEvent.Instance.Event_Holster.AddListener(Holster);
+            }
+            else
+            {
+                InputEvent.Instance.Event_Equip.AddListener(Equip);
             }
         }
 

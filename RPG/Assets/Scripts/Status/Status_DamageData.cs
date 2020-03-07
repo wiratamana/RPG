@@ -12,5 +12,6 @@ namespace Tamana
         public int[] hitsAnimation;
         public float parryTiming;
         public float damageTiming;
+        public Vector3 damageSenderPosition;
     }
 }
