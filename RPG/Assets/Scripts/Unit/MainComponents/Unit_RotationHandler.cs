@@ -40,7 +40,7 @@ namespace Tamana
 
             var playerForward = VectorHelper.GetForward2DWithZ0(transform.forward);
             var dirToTarget = VectorHelper.GetForward2DWithZ0(directionToTarget);
-            var cameraAngle = Vector2.SignedAngle(playerForward, dirToTarget);
+            var cameraAngle = Vector2.Angle(playerForward, dirToTarget);
 
             if(cameraAngle < 5.0f)
             {
