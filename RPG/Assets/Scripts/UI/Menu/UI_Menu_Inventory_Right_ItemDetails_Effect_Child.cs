@@ -50,8 +50,8 @@ namespace Tamana
             // ===============================================================================================
             // Instantiate IconBackground and Icon
             // ===============================================================================================
-            retval.IconBackground = UI_Menu_Pool.Instance.GetImage(rt, (int)iconSizeBG.y, (int)iconSizeBG.x, nameof(IconBackground));
-            retval.Icon = UI_Menu_Pool.Instance.GetImage(retval.IconBackground.rectTransform,
+            retval.IconBackground = UI_Pool.Instance.GetImage(rt, (int)iconSizeBG.y, (int)iconSizeBG.x, nameof(IconBackground));
+            retval.Icon = UI_Pool.Instance.GetImage(retval.IconBackground.rectTransform,
                 (int)iconSize.x, (int)iconSize.y, nameof(Icon));
             retval.Icon.rectTransform.localPosition = Vector3.zero;
             retval.Icon.sprite = UI_Menu.Instance.MenuResources.GetMainStatusSprites(effect.type);
@@ -60,7 +60,7 @@ namespace Tamana
             // Instantiate text, and get prefered width from the text. 
             // After that, instantiate text background, and calculate size of text, and textbackground.
             // ===============================================================================================
-            retval.Text = UI_Menu_Pool.Instance.GetText(null, 0, 0, effect.value.ToString(), nameof(Text));
+            retval.Text = UI_Pool.Instance.GetText(null, 0, 0, effect.value.ToString(), nameof(Text));
             textSizeBG.x = retval.Text.preferredWidth + textHorizontalSpacing;
             textSize.x = retval.Text.preferredWidth;
             retval.TextBackground = new GameObject(nameof(TextBackground)).AddComponent<RectTransform>();
@@ -90,9 +90,9 @@ namespace Tamana
 
         public void ReturnToPool()
         {
-            UI_Menu_Pool.Instance.RemoveImage(IconBackground);
-            UI_Menu_Pool.Instance.RemoveImage(Icon);
-            UI_Menu_Pool.Instance.RemoveText(Text);
+            UI_Pool.Instance.RemoveImage(IconBackground);
+            UI_Pool.Instance.RemoveImage(Icon);
+            UI_Pool.Instance.RemoveText(Text);
 
             IconBackground = null;
             Icon = null;

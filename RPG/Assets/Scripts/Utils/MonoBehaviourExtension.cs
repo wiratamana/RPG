@@ -127,56 +127,12 @@ namespace Tamana
             return values;
         }
 
-        public static Transform GetChildWithNameAndAssign(this MonoBehaviour component, string childName, ref Transform value)
-        {
-            if (value == null)
-            {
-                value = GetChildWithNameRecursive(childName, component.transform);
-            }
-
-            return value;
-        }
-        public static Transform GetChildWithNameFromParentAndAssign(this MonoBehaviour component,
-            string childName, Transform parent, ref Transform value)
-        {
-            if (value == null)
-            {
-                value = GetChildWithNameRecursive(childName, parent);
-            }
-
-            return value;
-        }
-
         public static void LogErrorIfComponentIsNull<T>(this MonoBehaviour component, T value) where T : Component
         {
             if (value == null)
             {
                 Debug.Log($"Component '{typeof(T).Name}' is not exist on GameObject with name '{component.name}'.", Debug.LogType.Error);
             }
-        }
-
-        private static Transform GetChildWithNameRecursive(string childName, Transform parent)
-        {
-            for (int i = 0; i < parent.childCount; i++)
-            {
-                var child = parent.GetChild(i);
-                if (child.name != childName)
-                {
-                    child = GetChildWithNameRecursive(childName, child);
-                }
-
-                if (child == null)
-                {
-                    continue;
-                }
-
-                if (child.name == childName)
-                {
-                    return child;
-                }
-            }
-
-            return null;
         }
     }
 }

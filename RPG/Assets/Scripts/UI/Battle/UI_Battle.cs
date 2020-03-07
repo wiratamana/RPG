@@ -11,5 +11,8 @@ namespace Tamana
 
         private UI_Battle_EnemyLock enemyLock;
         public UI_Battle_EnemyLock EnemyLock => this.GetAndAssignComponentInChildren(ref enemyLock);
+
+        private UI_Battle_TargetHP targetHP;
+        public UI_Battle_TargetHP TargetHP => this.GetAndAssignComponentInChildren(ref targetHP);
     }
 }

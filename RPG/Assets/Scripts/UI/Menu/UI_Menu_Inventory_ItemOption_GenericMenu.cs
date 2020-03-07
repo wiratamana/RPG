@@ -49,7 +49,7 @@ namespace Tamana
             rt.sizeDelta = new Vector2(width, height);
             var genericMenu = go.AddComponent<UI_Menu_Inventory_ItemOption_GenericMenu>();
 
-            genericMenu.Ring = UI_Menu_Pool.Instance.GetImage(rt, width, height, nameof(Ring));
+            genericMenu.Ring = UI_Pool.Instance.GetImage(rt, width, height, nameof(Ring));
             genericMenu.Ring.raycastTarget = true;
             genericMenu.Ring.sprite = UI_Menu.Instance.MenuResources.InventoryItemIconRing_Sprite;
             genericMenu.Ring.type = Image.Type.Sliced;
@@ -58,7 +58,7 @@ namespace Tamana
             genericMenu.Ring.rectTransform.offsetMin = Vector2.zero;
             genericMenu.Ring.rectTransform.offsetMax = Vector2.zero;
 
-            genericMenu.Text = UI_Menu_Pool.Instance.GetText(rt, width, height, name, nameof(Text));
+            genericMenu.Text = UI_Pool.Instance.GetText(rt, width, height, name, nameof(Text));
             genericMenu.Text.fontSize = 28;
             genericMenu.Text.rectTransform.anchorMin = Vector2.zero;
             genericMenu.Text.rectTransform.anchorMax = Vector2.one;

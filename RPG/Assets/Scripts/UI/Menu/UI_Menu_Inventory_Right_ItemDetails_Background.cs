@@ -49,7 +49,7 @@ namespace Tamana
 
         private void Init()
         {
-            Background = UI_Menu_Pool.Instance.GetImage(RectTransform, 0, 0, nameof(Background));
+            Background = UI_Pool.Instance.GetImage(RectTransform, 0, 0, nameof(Background));
             Background.rectTransform.localPosition = Vector3.zero;
             Background.rectTransform.anchorMax = Vector2.one;
             Background.rectTransform.anchorMin = Vector2.zero;
@@ -57,7 +57,7 @@ namespace Tamana
             Background.rectTransform.offsetMin = new Vector2(5, 5);
             Background.color = BackgroundColor;
 
-            Ring = UI_Menu_Pool.Instance.GetImage(RectTransform, 0, 0, nameof(Ring));
+            Ring = UI_Pool.Instance.GetImage(RectTransform, 0, 0, nameof(Ring));
             Ring.rectTransform.localPosition = Vector3.zero;
             Ring.rectTransform.anchorMax = Vector2.one;
             Ring.rectTransform.anchorMin = Vector2.zero;
@@ -70,8 +70,8 @@ namespace Tamana
 
         public void ReturnToPool()
         {
-            UI_Menu_Pool.Instance.RemoveImage(Ring);
-            UI_Menu_Pool.Instance.RemoveImage(Background);
+            UI_Pool.Instance.RemoveImage(Ring);
+            UI_Pool.Instance.RemoveImage(Background);
 
             Background = null;
             Ring = null;

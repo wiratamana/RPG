@@ -5,14 +5,14 @@ using TMPro;
 
 namespace Tamana
 {
-    public class UI_Menu_Pool : SingletonMonobehaviour<UI_Menu_Pool>
+    public sealed class UI_Pool : SingletonMonobehaviour<UI_Pool>
     {
         [RuntimeInitializeOnLoadMethod]
         private static void CreateInstance()
         {
-            var go = new GameObject(nameof(UI_Menu_Pool));
+            var go = new GameObject(nameof(UI_Pool));
             DontDestroyOnLoad(go);
-            go.AddComponent<UI_Menu_Pool>();
+            go.AddComponent<UI_Pool>();
         }
 
         private Stack<Image> imagesPool = new Stack<Image>();        
