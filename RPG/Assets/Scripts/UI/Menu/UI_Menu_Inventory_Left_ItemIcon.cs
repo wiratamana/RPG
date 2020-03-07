@@ -131,10 +131,22 @@ namespace Tamana
                 equip.OnMouseLeftClick.AddListener(RegisterThisItemIcon);
             }
 
-            equip.OnMouseLeftClick.AddListener(Ring.UpdateColor);
-            equip.OnMouseLeftClick.AddListener(Background.UpdateColor);
-            equip.OnMouseLeftClick.AddListener(UI_Menu_Inventory_ItemOption.Instance.Close);
-            equip.OnMouseLeftClick.AddListener(equip.OnMouseLeftClick.RemoveAllListener);
+            if(GameManager.Player.UnitAnimator.Params.IsInCombatState == false)
+            {
+                equip.OnMouseLeftClick.AddListener(Ring.UpdateColor);
+                equip.OnMouseLeftClick.AddListener(Background.UpdateColor);
+                equip.OnMouseLeftClick.AddListener(UI_Menu_Inventory_ItemOption.Instance.Close);
+                equip.OnMouseLeftClick.AddListener(equip.OnMouseLeftClick.RemoveAllListener);
+            }      
+            
+            else
+            {
+                equip.OnMouseLeftClick.RemoveListener(equipment.Unequip);
+                equip.OnMouseLeftClick.RemoveListener(equipment.Equip);
+
+                equip.Text.color = Color.red;
+                equip.Ring.color = Color.red;
+            }
 
             // ===============================================================================================
             // Register on cancel callback

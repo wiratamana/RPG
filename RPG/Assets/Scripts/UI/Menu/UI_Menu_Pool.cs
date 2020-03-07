@@ -102,6 +102,7 @@ namespace Tamana
             text.transform.SetParent(transform);
             text.fontSize = 36;
             text.alignment = TextAlignmentOptions.Center;
+            text.color = Color.white;
             text.text = null;
             text.raycastTarget = false;
             textsPool.Push(text);
