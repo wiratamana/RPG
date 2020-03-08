@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: 2xAttack_Move_med_whirl_Rhi_Rhi_1
   m_EditorClassIdentifier: 
   hitAnimations_1H: 010000000200000004000000
-  hitAnimations_2H: 
+  hitAnimations_2H: 010000000200000004000000

@@ -56,7 +56,9 @@ namespace Tamana
 
     public enum AnimHit_2H
     {
-
+        Longs_Hit_R = 1 << 0,
+        Longs_Hit_R2 = 1 << 1,
+        Longs_Hit_U = 1 << 2
     }
 
     public enum AnimParry_1H
