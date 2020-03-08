@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Tamana
 {
     public class Unit_AttackHandler : MonoBehaviour
     {
         [SerializeField] private TPC_CombatAnimDataContainer combatAnimDataContainer;
+        [SerializeField] private TPC_CombatAnimDataContainer combatAnimDataContainer2H;
+
+        private TPC_CombatAnimDataContainer currentCombatAnimDataContainer;
 
         private Unit_CombatHandler combatHandler;
         public Unit_CombatHandler CombatHandler => this.GetAndAssignComponent(ref combatHandler);
@@ -24,37 +25,56 @@ namespace Tamana
             {
                 CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(MakePlayerUnableToAttack);
                 CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(MakePlayerAbleToAttackAgain);
+
+                CombatHandler.Unit.Equipment.OnEquippedEvent.AddListener(OnEquippedWeapon);
             }
 
             CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(SetAnimationStateToFalse);
         }
 
+        private void OnEquippedWeapon(Item_Equipment oldWeapon, Item_Equipment newWeapon)
+        {
+            if(newWeapon is Item_Weapon == false)
+            {
+                return;
+            }
+
+            if((newWeapon as Item_Weapon).WeaponType == WeaponType.TwoHand)
+            {
+                currentCombatAnimDataContainer = combatAnimDataContainer2H;
+            }
+            else
+            {
+                currentCombatAnimDataContainer = combatAnimDataContainer;
+            }
+        }
+
         public void PlayAttackAnim()
         {
-            if (combatAnimDataContainer is null)
+            if (currentCombatAnimDataContainer is null)
             {
                 return;
             }
 
-            if (combatAnimDataContainer.StaminaCost > GameManager.PlayerStatus.ST.CurrentStamina)
+            if (currentCombatAnimDataContainer.StaminaCost > GameManager.PlayerStatus.ST.CurrentStamina)
             {
                 return;
             }
 
-            if (CurrentlyPlayingCombatAnimDataContainer == null || CurrentlyPlayingCombatAnimDataContainer == combatAnimDataContainer)
+            if (CurrentlyPlayingCombatAnimDataContainer == null || CurrentlyPlayingCombatAnimDataContainer == currentCombatAnimDataContainer)
             {
-                if (combatAnimDataContainer != null && CurrentlyPlayingCombatAnimData == null)
+                if (currentCombatAnimDataContainer != null && CurrentlyPlayingCombatAnimData == null)
                 {
-                    CurrentlyPlayingCombatAnimDataContainer = combatAnimDataContainer;
-                    GameManager.PlayerStatus.ST.Attack(combatAnimDataContainer.StaminaCost);
-                    CombatHandler.UnitAnimator.Play(combatAnimDataContainer.CombatDatas[0].MyAnimStateName);
+                    CurrentlyPlayingCombatAnimDataContainer = currentCombatAnimDataContainer;
+                    GameManager.PlayerStatus.ST.Attack(currentCombatAnimDataContainer.StaminaCost);
+                    CombatHandler.UnitAnimator.Play(currentCombatAnimDataContainer.CombatDatas[0].MyAnimStateName);
                 }
 
                 else if (CurrentlyPlayingCombatAnimData != null)
                 {
                     if (CurrentlyPlayingCombatAnimData.IsCurrentlyReceivingInput == true)
                     {
-                        GameManager.PlayerStatus.ST.Attack(combatAnimDataContainer.StaminaCost);
+                        GameManager.PlayerStatus.ST.Attack(currentCombatAnimDataContainer.StaminaCost);
                         CurrentlyPlayingCombatAnimData.IsInputReceived = true;
                     }
                 }

@@ -273,6 +273,27 @@ namespace Tamana
 
         public void EquipWeapon(Item_Weapon equippedWeapon)
         {
+            // ===============================================================================================
+            // Destroy old weapon if exist
+            // ===============================================================================================
+            var oldUnitWeapon = EquippedWeapon;            
+            if (oldUnitWeapon != null)
+            {                
+                var oldUserWeaponTransform = WeaponTransform;
+                Object.Destroy(oldUserWeaponTransform.gameObject);
+                WeaponTransform = null;
+
+                if(Unit.IsUnitPlayer == true)
+                {
+                    var oldPortraitWeaponTransform = Inventory_Menu_PlayerPortrait.Instance.WeaponTransform;
+                    Object.Destroy(oldPortraitWeaponTransform.gameObject);
+                    Inventory_Menu_PlayerPortrait.Instance.WeaponTransform = null;
+                }                
+            }
+
+            // ===============================================================================================
+            // Instantiate weapon prefab
+            // ===============================================================================================
             var weaponTransform = Object.Instantiate(equippedWeapon.Prefab, BodyTransform.Hips);
             weaponTransform.transform.localScale = new Vector3(100, 100, 100);
             weaponTransform.transform.localPosition = equippedWeapon.HolsterPosition;
@@ -288,14 +309,13 @@ namespace Tamana
                 Inventory_Menu_PlayerPortrait.Instance.WeaponTransform = weaponPreview;
             }
 
-            var oldWeapon = EquippedWeapon;
             EquippedWeapon = equippedWeapon;
             WeaponTransform = weaponTransform;
 
             // ===============================================================================================
             // Fire on equipped event (left hand is old, right hand is new)
             // ===============================================================================================
-            OnEquippedEvent.Invoke(oldWeapon, equippedWeapon);
+            OnEquippedEvent.Invoke(oldUnitWeapon, equippedWeapon);
         }
 
         public void UnequipWeapon()

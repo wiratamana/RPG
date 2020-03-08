@@ -49,7 +49,13 @@ namespace Tamana
                         continue;
                     }
 
-                    WeaponType unitWeapon = CombatHandler.Unit.Equipment.EquippedWeapon.WeaponType;
+                    if(damageHandler.CombatHandler.Unit.Status.IsDead == true)
+                    {
+                        continue;
+                    }
+
+                    WeaponType? receiverWeapon = damageHandler.CombatHandler.Unit.Equipment.EquippedWeapon?.WeaponType;
+                    WeaponType senderWeapon = CombatHandler.Unit.Equipment.EquippedWeapon.WeaponType;
 
                     Debug.Log($"SendDamage form '{name}' to '{damageHandler.name}'");
                     damageHandler.DamageReceiver(new Unit_Status_DamageData()
@@ -57,8 +63,8 @@ namespace Tamana
                         damagePoint = CombatHandler.Unit.Status.GetStatus(MainStatus.AT),
                         parryTiming = CombatHandler.ParryHandler.ChanceToParryTiming,
                         damageTiming = Time.time,
-                        weaponType = unitWeapon,
-                        hitsAnimation = damageObject.GetHitAnimations(unitWeapon),
+                        weaponType = senderWeapon,
+                        hitsAnimation = damageObject.GetHitAnimations(receiverWeapon),
                         damageSenderPosition = transform.position
                     });
                 }

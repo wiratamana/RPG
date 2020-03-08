@@ -40,7 +40,7 @@ namespace Tamana
 
                 if (animDodge_2H.intValue == 0)
                 {
-                    animDodge_2H.intValue = (int)AnimDodge_2H.Sword1h_Dodge;
+                    animDodge_2H.intValue = (int)AnimDodge_2H.Longs_Dodge_Bwd;
                 }
             }
 

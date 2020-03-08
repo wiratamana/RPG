@@ -3,7 +3,6 @@ using System.Collections;
 
 namespace Tamana
 {
-    [CreateAssetMenu(fileName = "New Armor", menuName = "Item/Weapon", order = 1)]
     public class Item_Armor : Item_ModularBodyPart
     {
         public enum ArmorPart

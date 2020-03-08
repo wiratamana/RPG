@@ -56,7 +56,9 @@ namespace Tamana
 
     public enum AnimHit_2H
     {
-
+        Longs_Hit_R = 1 << 0,
+        Longs_Hit_R2 = 1 << 1,
+        Longs_Hit_U = 1 << 2
     }
 
     public enum AnimParry_1H
@@ -78,9 +80,8 @@ namespace Tamana
 
     public enum AnimDodge_2H
     {
-        Sword1h_Dodge = 1 << 0,
-        Sword1h_ShortDodge_Mid2 = 1 << 1,
-        Sword1h_ShortDodge_Mid = 1 << 2
+        Longs_Dodge_Bwd = 1 << 0,
+        Longs_Dodge_Bwd2 = 1 << 1,
     }
 
     public enum AnimDeath_1H
@@ -90,5 +91,13 @@ namespace Tamana
         Sword1h_Death_Front = 1 << 2,
         Sword1h_Death_L = 1 << 3,
         Sword1h_Death_R = 1 << 4
+    }
+
+    public enum AnimDeath_2H
+    {
+        Longs_KO_1 = 1 << 0,
+        Longs_KO_2 = 1 << 1,
+        Longs_KO_Air = 1 << 2,
+        Longs_KO_AirStrong = 1 << 3,
     }
 }
