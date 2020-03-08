@@ -4946,7 +4946,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.16619718
+        functionName: OnDoDamage
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: d0b04eed9a944fd48af98e2d6ab9dca4,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.45633805
+        functionName: OnDoDamage
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: d0b04eed9a944fd48af98e2d6ab9dca4,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
