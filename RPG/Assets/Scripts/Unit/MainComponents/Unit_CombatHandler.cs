@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Tamana
 {
@@ -12,6 +10,7 @@ namespace Tamana
         private Unit_ParryHandler parryHandler;
         private Unit_DodgeHandler dodgeHandler;
         private Unit_AttackHandler attackHandler;
+        private Unit_DeathHandler deathHandler;
 
         public Unit_Base Unit => this.GetAndAssignComponent(ref unit);
         public Unit_DamageReceiveHandler DamageReceiveHandler => this.GetOrAddAndAssignComponent(ref damageReceiveHandler);
@@ -21,6 +20,7 @@ namespace Tamana
         public Unit_AttackHandler AttackHandler => this.GetOrAddAndAssignComponent(ref attackHandler);
         public Unit_BodyTransform BodyTransform => Unit.BodyTransform;
         public Unit_Animator UnitAnimator =>Unit.UnitAnimator;
+        public Unit_DeathHandler DeathHandler => this.GetOrAddAndAssignComponent(ref deathHandler);
 
         public EventManager OnHolsterEvent { get; } = new EventManager();
         public EventManager OnEquipEvent { get; } = new EventManager();
@@ -33,6 +33,7 @@ namespace Tamana
             this.LogErrorIfComponentIsNull(DodgeHandler);
             this.LogErrorIfComponentIsNull(AttackHandler);
             this.LogErrorIfComponentIsNull(BodyTransform);
+            this.LogErrorIfComponentIsNull(DeathHandler);
         }
 
         private void Awake()
@@ -51,6 +52,8 @@ namespace Tamana
                 Unit.UnitAnimator.OnEquippingAnimationStarted.AddListener(RemoveEquip);
                 Unit.UnitAnimator.OnEquippingAnimationFinished.AddListener(AddHolster);
             }
+
+            Unit.Equipment.OnEquippedEvent.AddListener(OnWeaponEquipped);
         }
 
         [TPC_AnimClip_AttributeWillBeInvokeByAnimationEvent]
@@ -159,6 +162,16 @@ namespace Tamana
             {
                 InputEvent.Instance.Event_Equip.AddListener(Equip);
             }            
+        }
+
+        private void OnWeaponEquipped(Item_Equipment oldWeapon, Item_Equipment newWeapon)
+        {
+            if(newWeapon is Item_Weapon == false)
+            {
+                return;
+            }
+
+            Unit.UnitAnimator.Params.Is2H = (newWeapon as Item_Weapon).WeaponType == WeaponType.TwoHand;
         }
     }
 }

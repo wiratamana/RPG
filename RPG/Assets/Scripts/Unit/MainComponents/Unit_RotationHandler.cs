@@ -84,6 +84,12 @@ namespace Tamana
             
             foreach(var t in overlap)
             {
+                var unit = t.GetComponent<Unit_Base>();
+                if(unit.Status.IsDead == true)
+                {
+                    continue;
+                }
+
                 var tPos = t.transform.position;
                 var curDist = Vector3.Distance(myPos, tPos);
                 if(curDist < distance)

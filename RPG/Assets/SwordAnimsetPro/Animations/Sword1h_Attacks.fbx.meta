@@ -2825,7 +2825,8 @@ ModelImporter:
       - time: 0.33916909
         functionName: OnDoDamage
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11400000, guid: 6f666a7e89392c74f8cc5cb1de92d2cf,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -9856,7 +9857,8 @@ ModelImporter:
       - time: 0.3211515
         functionName: OnDoDamage
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11400000, guid: ba109b2320e0ff5499fa1c3755a08ce9,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

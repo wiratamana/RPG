@@ -10,7 +10,7 @@ namespace Tamana
         [SerializeField] private AnimHit_1H[] hitAnimations_1H;
         [SerializeField] private AnimHit_2H[] hitAnimations_2H;
 
-        public int[] GetHitAnimations(WeaponType weaponType)
+        public int[] GetHitAnimations(WeaponType? weaponType)
         {
             switch (weaponType)
             {
@@ -20,7 +20,7 @@ namespace Tamana
                 case WeaponType.TwoHand: 
                     return GetIntArrayFromEnumArray(hitAnimations_2H);
 
-                default: return null;
+                default: return GetIntArrayFromEnumArray(hitAnimations_1H);
             }
         }
 

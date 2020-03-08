@@ -36,13 +36,13 @@ namespace Tamana
             CombatHandler.UnitAnimator.Play(animationDodgeData.stateName);
         }
 
-        public void SetDodgeAnimationStatus<Enum>(Enum stateValue)
+        public void SetDodgeAnimationStatus<Enum>(Enum stateValue, IReadOnlyDictionary<Enum, bool> statusDic)
             where Enum : System.Enum
         {
             CombatHandler.UnitAnimator.AnimStatus.SetToFalse(stateValue);
 
             bool isDodging = false;
-            foreach (var dodge in CombatHandler.UnitAnimator.AnimStatus.DodgeDic_1H)
+            foreach (var dodge in statusDic)
             {
                 if (dodge.Value == true)
                 {

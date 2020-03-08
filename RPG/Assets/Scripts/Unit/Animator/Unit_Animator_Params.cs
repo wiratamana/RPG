@@ -34,6 +34,7 @@ namespace Tamana
         private const string ParamName_IsInAttackingState = nameof(IsInAttackingState);
         private const string Paramname_AnimDodge = nameof(AnimDodge);
         private const string Paramname_AnimHit = nameof(AnimHit);
+        private const string ParamName_Is2H = nameof(Is2H);
 
         public float StrafeHorizontal
         {
@@ -166,6 +167,11 @@ namespace Tamana
         {
             get => animator.GetBool(ParamName_IsInAttackingState);
             set => animator.SetBool(ParamName_IsInAttackingState, value);
+        }
+        public bool Is2H
+        {
+            get => animator.GetBool(ParamName_Is2H);
+            set => animator.SetBool(ParamName_Is2H, value);
         }
     }
 }
