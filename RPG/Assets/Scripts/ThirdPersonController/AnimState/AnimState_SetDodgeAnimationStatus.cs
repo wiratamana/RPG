@@ -8,7 +8,7 @@ namespace Tamana
     {
         public WeaponType weaponType;
         public AnimDodge_1H animDodge_1H;
-        public AnimDodge_1H animDodge_2H;
+        public AnimDodge_2H animDodge_2H;
 
         private Unit_Base unit;
 
@@ -22,10 +22,10 @@ namespace Tamana
             switch (weaponType)
             {
                 case WeaponType.OneHand:
-                    unit.CombatHandler.DodgeHandler.SetDodgeAnimationStatus(animDodge_1H);
+                    unit.CombatHandler.DodgeHandler.SetDodgeAnimationStatus(animDodge_1H, unit.UnitAnimator.AnimStatus.DodgeDic_1H);
                     break;
                 case WeaponType.TwoHand:
-                    unit.CombatHandler.DodgeHandler.SetDodgeAnimationStatus(animDodge_2H);
+                    unit.CombatHandler.DodgeHandler.SetDodgeAnimationStatus(animDodge_2H, unit.UnitAnimator.AnimStatus.DodgeDic_2H);
                     break;
             }
         }

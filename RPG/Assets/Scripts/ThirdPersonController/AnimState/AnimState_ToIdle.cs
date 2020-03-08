@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tamana
 {
-    public class AnimState_Hit2Idle : StateMachineBehaviour
+    public class AnimState_ToIdle : StateMachineBehaviour
     {
         private Unit_Base unit;
         private WeaponType? currentWeapon;
@@ -18,6 +18,8 @@ namespace Tamana
             currentWeapon = unit.Equipment.EquippedWeapon?.WeaponType;
             transitionTiming = stateInfo.length * 0.9f;
             isInCombatState = unit.UnitAnimator.Params.IsInCombatState;
+
+            isTransition2IdleMotion = false;
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -80,9 +80,8 @@ namespace Tamana
 
     public enum AnimDodge_2H
     {
-        Sword1h_Dodge = 1 << 0,
-        Sword1h_ShortDodge_Mid2 = 1 << 1,
-        Sword1h_ShortDodge_Mid = 1 << 2
+        Longs_Dodge_Bwd = 1 << 0,
+        Longs_Dodge_Bwd2 = 1 << 1,
     }
 
     public enum AnimDeath_1H
