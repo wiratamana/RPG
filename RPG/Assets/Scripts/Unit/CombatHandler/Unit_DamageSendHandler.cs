@@ -49,6 +49,11 @@ namespace Tamana
                         continue;
                     }
 
+                    if(damageHandler.CombatHandler.Unit.Status.IsDead == true)
+                    {
+                        continue;
+                    }
+
                     WeaponType? receiverWeapon = damageHandler.CombatHandler.Unit.Equipment.EquippedWeapon?.WeaponType;
                     WeaponType senderWeapon = CombatHandler.Unit.Equipment.EquippedWeapon.WeaponType;
 

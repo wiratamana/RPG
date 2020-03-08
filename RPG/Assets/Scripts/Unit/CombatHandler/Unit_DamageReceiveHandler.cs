@@ -10,6 +10,7 @@ namespace Tamana
         public Unit_CombatHandler CombatHandler => this.GetAndAssignComponent(ref combatHandler);
 
         public EventManager<Unit_Status_DamageData> OnReceivedDamageEvent { get; } = new EventManager<Unit_Status_DamageData>();
+        public EventManager OnPostReceivedDamageEvent { get; } = new EventManager();
 
         public void DamageReceiver(Unit_Status_DamageData damage)
         {
@@ -30,12 +31,9 @@ namespace Tamana
             {
                 Debug.Log("Parry failed");
                 OnReceivedDamageEvent.Invoke(damage);
+                OnPostReceivedDamageEvent.Invoke();
 
-                if(CombatHandler.Unit.Status.IsDead == true)
-                {
-                    CombatHandler.UnitAnimator.Play("Sword1h_Death_1");
-                }
-                else
+                if(CombatHandler.Unit.Status.IsDead == false)
                 {
                     PlayHitAnimation(damage.hitsAnimation);
                 }                

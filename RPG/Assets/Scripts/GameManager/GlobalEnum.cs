@@ -92,4 +92,12 @@ namespace Tamana
         Sword1h_Death_L = 1 << 3,
         Sword1h_Death_R = 1 << 4
     }
+
+    public enum AnimDeath_2H
+    {
+        Longs_KO_1 = 1 << 0,
+        Longs_KO_2 = 1 << 1,
+        Longs_KO_Air = 1 << 2,
+        Longs_KO_AirStrong = 1 << 3,
+    }
 }
