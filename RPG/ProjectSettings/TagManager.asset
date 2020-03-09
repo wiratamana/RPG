@@ -9,6 +9,7 @@ TagManager:
   - PlayerMenuPortrait
   - PlayerMenuPortraitCamera
   - FloatingItemParent
+  - NotCollideWithCamera
   layers:
   - Default
   - TransparentFX
