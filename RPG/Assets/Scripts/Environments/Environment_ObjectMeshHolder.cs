@@ -12,9 +12,7 @@ namespace Tamana
             if(mesh == null)
             {
                 mesh = gameObject.GetComponent<MeshFilter>().sharedMesh;
-            }
-
-            gameObject.layer = LayerMask.NameToLayer(LayerManager.LAYER_ENVIRONMENT);
+            }         
         }
     }
 }

@@ -9,11 +9,6 @@ namespace Tamana
         private TPC_CameraHandler cameraHandler;
         public TPC_CameraHandler CameraHandler => this.GetAndAssignComponent(ref cameraHandler);
 
-        private void Awake()
-        {
-            
-        }
-
         private void Update()
         {
             var lookPosition = CameraHandler.CameraLookPlayer.CameraLookTargetTransform.position;
