@@ -19,7 +19,7 @@ namespace Tamana
 
             Physics.Raycast(lookPosition, dirToCam, out RaycastHit info, 20, layer);
 
-            if(info.transform != null)
+            if(info.transform != null && info.transform.tag != TagManager.TAG_NOT_COLLIDE_WITH_CAMERA)
             {
                 var distanceToHitPoint = Vector3.Distance(lookPosition, info.point);
                 if(distanceToHitPoint > distanceToCam)

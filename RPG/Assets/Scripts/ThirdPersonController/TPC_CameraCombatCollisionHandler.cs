@@ -18,7 +18,7 @@ namespace Tamana
 
             GameManager.MainCameraTransform.transform.rotation = camData.CameraRotation;
 
-            if(hitInfo.transform != null)
+            if(hitInfo.transform != null && hitInfo.transform.tag != TagManager.TAG_NOT_COLLIDE_WITH_CAMERA)
             {
                 var camPos = GameManager.MainCameraTransform.transform.position;
                 var dirToHitInfoPoint = (GameManager.PlayerTransform.position - hitInfo.point).normalized;
