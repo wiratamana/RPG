@@ -12,10 +12,12 @@ namespace Tamana
         private TPC_CameraLookPlayer cameraLookPlayer;
         private TPC_CameraMovementManager cameraMovement;
         private TPC_CameraCombatHandler cameraCombatHandler;
+        private TPC_CameraCollisionHandler cameraCollisionHandler;
 
         public TPC_CameraLookPlayer CameraLookPlayer => this.GetOrAddAndAssignComponent(ref cameraLookPlayer);
         public TPC_CameraMovementManager CameraMovement => this.GetOrAddAndAssignComponent(ref cameraMovement);
         public TPC_CameraCombatHandler CameraCombatHandler => this.GetOrAddAndAssignComponent(ref cameraCombatHandler);
+        public TPC_CameraCollisionHandler CameraCollisionHandler => this.GetOrAddAndAssignComponent(ref cameraCollisionHandler);
 
         [SerializeField] private float _offsetY;
         [SerializeField] private float _offsetZ;
@@ -40,6 +42,7 @@ namespace Tamana
 
         private Transform cameraLookPointTransform;
         private Camera mainCamera;
+        private Transform cameraDefaultPositionTransform;
 
         public Camera MainCamera
         {
@@ -56,13 +59,28 @@ namespace Tamana
 
                     mainCamera = new GameObject(nameof(MainCamera)).AddComponent<Camera>();
                     mainCamera.transform.SetParent(CameraLookPoint.transform);
-                    mainCamera.transform.localPosition = new Vector3(0, 0, OffsetZ);
+                    mainCamera.transform.position = CameraDefaultPositionTransform.position;
                     mainCamera.gameObject.tag = TagManager.TAG_MAIN_CAMERA;
                 }
 
                 return mainCamera;
             }
         }
+        public Transform CameraDefaultPositionTransform
+        {
+            get
+            {
+                if(cameraDefaultPositionTransform == null)
+                {
+                    cameraDefaultPositionTransform = new GameObject(nameof(CameraDefaultPositionTransform)).transform;
+                    cameraDefaultPositionTransform.SetParent(CameraLookPoint.transform);
+                    cameraDefaultPositionTransform.transform.localPosition = new Vector3(0, 0, OffsetZ);
+                }
+
+                return cameraDefaultPositionTransform;
+            }
+        }
+
         public Transform CameraLookPoint
         {
             get
@@ -104,6 +122,7 @@ namespace Tamana
             this.LogErrorIfComponentIsNull(CameraLookPlayer);
             this.LogErrorIfComponentIsNull(CameraMovement);
             this.LogErrorIfComponentIsNull(CameraCombatHandler);
+            this.LogErrorIfComponentIsNull(CameraCollisionHandler);
         }
 
         private void Awake()

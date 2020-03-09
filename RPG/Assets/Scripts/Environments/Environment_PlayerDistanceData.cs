@@ -4,10 +4,10 @@ namespace Tamana
 {
     public struct Environment_PlayerDistanceData
     {
-        private float distanceToPlayer;
-        private readonly Vector3 myPos;
-        private readonly Vector3 playerPos;
-        private readonly int objectInstanceID;
+        private float distanceToPlayer; // 4 bytes
+        private readonly Vector3 myPos; // 12 bytes
+        private readonly Vector3 playerPos; // 12 bytes
+        private readonly int objectInstanceID; // 4 bytes
 
         public Environment_PlayerDistanceData(Vector3 myPos, Vector3 playerPos, int objectInstanceID)
         {

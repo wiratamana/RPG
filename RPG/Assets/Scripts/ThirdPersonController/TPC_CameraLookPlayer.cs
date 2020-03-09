@@ -9,17 +9,17 @@ namespace Tamana
         private TPC_CameraHandler cameraHandler;
         public TPC_CameraHandler CameraHandler => this.GetAndAssignComponent(ref cameraHandler);
 
-        private Transform playerSpine;
+        public Transform CameraLookTargetTransform { get; private set; }
 
         private void OnValidate()
         {
-            playerSpine = CameraHandler.TPC.UnitPlayer.BodyTransform.Spine;
+            CameraLookTargetTransform = CameraHandler.TPC.UnitPlayer.BodyTransform.Spine;
         }
 
         // Update is called once per frame
         void Update()
         {
-            var playerPosition = playerSpine.position;
+            var playerPosition = CameraLookTargetTransform.position;
             var directionToPlayer = (playerPosition - CameraHandler.MainCamera.transform.position).normalized;
 
             var lookRotation = Quaternion.LookRotation(directionToPlayer);
