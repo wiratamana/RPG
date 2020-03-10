@@ -6,6 +6,20 @@ namespace Tamana
 {
     public class TPC_CameraCombatHandler : MonoBehaviour
     {
+        public struct DataInfo
+        {
+            public readonly Vector3 CameraLookPosition;
+            public readonly Vector3 CameraPosition;
+            public readonly Quaternion CameraRotation;
+
+            public DataInfo(Vector3 cameraLookPosition, Vector3 cameraPosition, Quaternion cameraRotation)
+            {
+                CameraLookPosition = cameraLookPosition;
+                CameraPosition = cameraPosition;
+                CameraRotation = cameraRotation;
+            }
+        }
+
         private TPC_CameraHandler cameraHandler;
         public TPC_CameraHandler CameraHandler => this.GetAndAssignComponent(ref cameraHandler);
 
@@ -15,6 +29,8 @@ namespace Tamana
         private Transform enemySpineTransform;
         private Transform mainCamera;
         private Transform cameraLookTransform;
+
+        public DataInfo CameraCombatData { get; private set; }
 
         private void OnValidate()
         {
@@ -38,25 +54,26 @@ namespace Tamana
             var enemyPos = enemySpineTransform.position;
             var halfDistance = Vector3.Distance(playerPos, enemyPos) * 0.5f;
             var dirToEnemy = (enemyPos - playerPos).normalized;
-            var cameraFacePoint = playerSpineTransform.position + (dirToEnemy * halfDistance);
+            var cameraLookPosition = playerSpineTransform.position + (dirToEnemy * halfDistance);
             var deltaTime = Time.deltaTime;
 
             var dirToCameraPos = (Quaternion.AngleAxis(20, Vector3.up) * -dirToEnemy).normalized * (halfDistance + 2.0f);
             dirToCameraPos.y = 0.0f;
 
-            var camNextPos = cameraFacePoint + dirToCameraPos;
+            var camNextPos = cameraLookPosition + dirToCameraPos;
             camNextPos.y += 1.5f;
             var camCurrentPos = mainCamera.position;
             camCurrentPos = Vector3.Lerp(camCurrentPos, camNextPos, 5.0f * deltaTime);
 
-            var lookRotation = Quaternion.LookRotation((cameraFacePoint - camCurrentPos).normalized, Vector3.up);
+            var cameraLookDir = (cameraLookPosition - camCurrentPos).normalized;
+            var lookRotation = Quaternion.LookRotation(cameraLookDir, Vector3.up);
             var camCurrentRot = mainCamera.rotation;
             camCurrentRot = Quaternion.Slerp(camCurrentRot, lookRotation, 5.0f * deltaTime);
 
-            mainCamera.transform.position = camCurrentPos;
-            mainCamera.transform.rotation = camCurrentRot;
             cameraLookTransform.transform.position = playerRootTransform.position;
             cameraLookTransform.transform.rotation = camCurrentRot;
+
+            CameraCombatData = new DataInfo(cameraLookPosition, camCurrentPos, camCurrentRot);
         }
 
         private void Activate(Unit_AI_Hostile unitBase)

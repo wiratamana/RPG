@@ -9,6 +9,7 @@ namespace Tamana
         [SerializeField] private float colliderRadius;
 
         private static readonly WaitForSeconds waitForHalfSecond = new WaitForSeconds(0.5f);
+        private static Transform floatingItemParentTransform;
 
         private Transform itemTransform;
         private Transform prefab;
@@ -21,6 +22,16 @@ namespace Tamana
             if(item != null)
             {
                 gameObject.name = $"{item.ItemType} - {item.ItemName}";
+            }
+
+            if(floatingItemParentTransform == null)
+            {
+                floatingItemParentTransform = GameObject.FindWithTag(TagManager.TAG_FLOATING_ITEM_PARENT).transform;
+            }
+
+            if (transform.parent != floatingItemParentTransform)
+            {
+                transform.SetParent(floatingItemParentTransform);
             }
         }
 
