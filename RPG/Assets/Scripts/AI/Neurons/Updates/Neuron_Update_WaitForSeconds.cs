@@ -2,21 +2,21 @@
 using System.Collections;
 using UnityEngine.Events;
 
-namespace Tamana
+namespace Tamana.AI
 {
-    public class AI_Neuron_WaitForSeconds : AI_Neuron_Update
+    public class Neuron_Update_WaitForSeconds : AI_Neuron_Update
     {
         private readonly AI_Neuron afterWait;
         private readonly UnityAction afterWaitAction;
         private float waitForSeconds;
 
-        public AI_Neuron_WaitForSeconds(AI_Brain brain, float waitForSeconds, AI_Neuron afterWait) : base(brain)
+        public Neuron_Update_WaitForSeconds(AI_Brain brain, float waitForSeconds, AI_Neuron afterWait) : base(brain)
         {
             this.afterWait = afterWait;
             this.waitForSeconds = waitForSeconds;
         }
 
-        public AI_Neuron_WaitForSeconds(AI_Brain brain, float waitForSeconds, UnityAction afterWaitAction) : base(brain)
+        public Neuron_Update_WaitForSeconds(AI_Brain brain, float waitForSeconds, UnityAction afterWaitAction) : base(brain)
         {
             this.afterWaitAction = afterWaitAction;
             this.waitForSeconds = waitForSeconds;

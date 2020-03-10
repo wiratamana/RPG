@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tamana
+namespace Tamana.AI
 {
-    public class AI_Neuron_PlayerDetector : AI_Neuron_Update
+    public class Neuron_Update_PlayerDetector : AI_Neuron_Update
     {
         public EventManager OnPlayerEnteredHostileRange { private set; get; } = new EventManager();
         public EventManager OnPlayerExitedHostileRange { private set; get; } = new EventManager();
@@ -15,7 +15,7 @@ namespace Tamana
         private bool isInsideHostileRange = false;
         public float DistanceToPlayer { private set; get; }
 
-        public AI_Neuron_PlayerDetector(AI_Brain brain, float hostileRangeEnter, float hostileRangeExit) : base(brain)
+        public Neuron_Update_PlayerDetector(AI_Brain brain, float hostileRangeEnter, float hostileRangeExit) : base(brain)
         {
             this.hostileRangeEnter = hostileRangeEnter;
             this.hostileRangeExit = hostileRangeExit;

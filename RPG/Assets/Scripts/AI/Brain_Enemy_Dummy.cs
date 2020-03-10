@@ -1,50 +1,50 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.Events;
 
-namespace Tamana
+namespace Tamana.AI
 {
-    public class AI_Brain_Enemy_Dummy_2H : AI_Brain
+    public class AI_Brain_Enemy_Dummy : AI_Brain
     {
-        public override AI_Neuron_PlayerDetector PlayerDetector
+        public override Neuron_Update_PlayerDetector PlayerDetector
         {
             get
             {
-                if (playerDetector == null)
+                if(playerDetector == null)
                 {
-                    playerDetector = new AI_Neuron_PlayerDetector(this, 7.0f, 9.0f);
+                    playerDetector = new Neuron_Update_PlayerDetector(this, 7.0f, 9.0f);
                 }
 
                 return playerDetector;
             }
         }
 
-        public override AI_Neuron_RotateTowardPlayer RotateTowardPlayer
+        public override Neuron_Update_RotateTowardPlayer RotateTowardPlayer
         {
             get
             {
                 if (rotateTowardPlayer == null)
                 {
-                    rotateTowardPlayer = new AI_Neuron_RotateTowardPlayer(this, 5.0f);
+                    rotateTowardPlayer = new Neuron_Update_RotateTowardPlayer(this, 5.0f);
                     rotateTowardPlayer.StopNeuron();
                 }
-
+        
                 return rotateTowardPlayer;
             }
         }
 
-        private AI_Neuron_AttackHandler attackHandler;
-        public AI_Neuron_AttackHandler AttackHandler
+        private Neuron_Update_AttackHandler attackHandler;
+        public Neuron_Update_AttackHandler AttackHandler
         {
             get
             {
-                if (attackHandler == null)
+                if(attackHandler == null)
                 {
-                    attackHandler = new AI_Neuron_AttackHandler(
-                        brain: this,
-                        stateName: "Longs_Attack_DoubleRR",
-                        cooldown: 5.0f,
-                        minimumRangeToAttack: 1.25f);
+                    attackHandler = new Neuron_Update_AttackHandler(
+                        brain                : this, 
+                        stateName            : "2xAttack_Move_med_whirl_Rhi_Rhi_1",
+                        cooldown             : 5.0f,
+                        minimumRangeToAttack : 1.25f);
 
                     attackHandler.StopNeuron();
                 }
@@ -77,3 +77,4 @@ namespace Tamana
         }
     }
 }
+

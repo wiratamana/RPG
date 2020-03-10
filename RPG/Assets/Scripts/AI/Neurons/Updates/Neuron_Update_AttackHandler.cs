@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Tamana
+namespace Tamana.AI
 {
-    public class AI_Neuron_AttackHandler : AI_Neuron_Update
+    public class Neuron_Update_AttackHandler : AI_Neuron_Update
     {
         private readonly string stateName;
         private readonly float cooldown;
@@ -11,7 +11,7 @@ namespace Tamana
         private float currentDistanceToPlayer;
         private float waitingTime;
 
-        public AI_Neuron_AttackHandler(AI_Brain brain, string stateName, float cooldown, 
+        public Neuron_Update_AttackHandler(AI_Brain brain, string stateName, float cooldown, 
             float minimumRangeToAttack) : base(brain)
         {
             this.stateName = stateName;
@@ -38,7 +38,7 @@ namespace Tamana
 
             if (waitingTime == 0.0f)
             {
-                var playAnimation = new AI_Neuron_PlayAnimation(brain, stateName);
+                var playAnimation = new Neuron_Trigger_PlayAnimation(brain, stateName);
                 playAnimation.Execute();
                 playAnimation.StopNeuron();
 

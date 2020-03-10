@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tamana
+namespace Tamana.AI
 {
     public abstract class AI_Neuron_Update : AI_Neuron
     {
