@@ -20,6 +20,7 @@ namespace Tamana
         public const string LAYER_PLAYER = "Player";
         public const string LAYER_ITEM_PROJECTION = "ItemProjection";
         public const string LAYER_ENEMY = "Enemy";
+        public const string LAYER_ENVIRONMENT = "Environment";
     }
 
 }

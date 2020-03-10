@@ -8,6 +8,8 @@ TagManager:
   - UIManager
   - PlayerMenuPortrait
   - PlayerMenuPortraitCamera
+  - FloatingItemParent
+  - NotCollideWithCamera
   layers:
   - Default
   - TransparentFX
@@ -22,7 +24,7 @@ TagManager:
   - ItemProjection
   - Enemy
   - PostProcess
-  - 
+  - Environment
   - 
   - 
   - 
