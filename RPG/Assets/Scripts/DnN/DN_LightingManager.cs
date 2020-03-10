@@ -8,12 +8,13 @@ namespace Tamana
     public class DN_LightingManager : MonoBehaviour
     {
         [SerializeField] private DN_LightingPreset LightingPreset;
-        [SerializeField] private TextMeshProUGUI dateUI;
         private Light directionalLight;
         private DN_Main main;
         public DN_Main Main => this.GetAndAssignComponent(ref main);
         private int dateDay = 0;
         private float TimeOfDay = 8;
+
+        public DN_Date Date { get; private set; }
 
         private void OnValidate()
         {
@@ -30,7 +31,7 @@ namespace Tamana
             }
             var dateHour = (int)day;
             var dateMinute = (day - dateHour) * 60.0f;
-            dateUI.text = new DN_Date(dateDay, dateHour, (int)dateMinute).ToString();
+            Date = new DN_Date(dateDay, dateHour, (int)dateMinute);
 
             TimeOfDay = day;
             UpdateLighting(TimeOfDay / 24.0f);
