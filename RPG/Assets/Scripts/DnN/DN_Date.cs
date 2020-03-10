@@ -4,9 +4,9 @@ using UnityEngine;
 
 public struct DN_Date
 {
-    public int Day { get; }
-    public int Hour { get; }
-    public int Minute { get; }
+    public readonly int Day;
+    public readonly int Hour;
+    public readonly int Minute;
 
     public DN_Date(int day, int hour, int minute)
     {
