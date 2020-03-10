@@ -81,7 +81,11 @@ namespace Tamana
                 var colliders = Physics.OverlapSphere(transform.position, radius, layer);
                 foreach (var c in colliders)
                 {
-                    if(c.transform.IsInsideCameraFrustum(mainCamera) == false)
+                    var camForward = mainCamera.transform.forward;
+                    var dirToEnemy = (c.transform.position - mainCamera.transform.position).normalized;
+                    var dotProduct = Vector3.Dot(camForward, dirToEnemy);
+
+                    if(dotProduct < 0.9f || c.transform.IsInsideCameraFrustum(mainCamera) == false)
                     {
                         continue;
                     }
