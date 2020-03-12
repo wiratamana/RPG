@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Tamana.AI
 {
-    [CreateAssetMenu(fileName = "New Brain", menuName = "Create New Brain")]
     public abstract class AI_Brain : ScriptableObject
     {
         private const string ADD_NEURON = "ADD";
@@ -16,12 +15,6 @@ namespace Tamana.AI
         protected readonly Dictionary<string, AI_Neuron_Update> updatableNeuronDic = new Dictionary<string, AI_Neuron_Update>();
 
         private readonly Queue<(string, AI_Neuron)> queue = new Queue<(string, AI_Neuron)>();
-
-        protected Neuron_Update_PlayerDetector playerDetector;
-        public abstract Neuron_Update_PlayerDetector PlayerDetector { get; }
-
-        protected Neuron_Update_RotateTowardPlayer rotateTowardPlayer;
-        public abstract Neuron_Update_RotateTowardPlayer RotateTowardPlayer { get; }
 
         public virtual void Initialize(Unit_AI_Hostile unit)
         {

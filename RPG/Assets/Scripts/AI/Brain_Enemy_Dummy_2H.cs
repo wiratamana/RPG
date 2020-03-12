@@ -4,9 +4,11 @@ using UnityEngine;
 
 namespace Tamana.AI
 {
+    [CreateAssetMenu(fileName = "Dummy AI 2H", menuName = "Create/Brain/Dummy AI 2H")]
     public class AI_Brain_Enemy_Dummy_2H : AI_Brain
     {
-        public override Neuron_Update_PlayerDetector PlayerDetector
+        private Neuron_Update_PlayerDetector playerDetector;
+        public Neuron_Update_PlayerDetector PlayerDetector
         {
             get
             {
@@ -19,7 +21,8 @@ namespace Tamana.AI
             }
         }
 
-        public override Neuron_Update_RotateTowardPlayer RotateTowardPlayer
+        public Neuron_Update_RotateTowardPlayer rotateTowardPlayer;
+        public Neuron_Update_RotateTowardPlayer RotateTowardPlayer
         {
             get
             {
