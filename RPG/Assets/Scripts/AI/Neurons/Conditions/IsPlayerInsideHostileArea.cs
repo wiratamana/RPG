@@ -8,9 +8,9 @@ namespace Tamana.AI.Neuron
     {
         public readonly bool Result;
 
-        public IsPlayerInsideHostileArea(float distanceToPlayer, float radius)
+        public IsPlayerInsideHostileArea(Data data)
         {
-            Result = distanceToPlayer < radius;
+            Result = data.DistanceFromPlayerToIdlePosition < data.HostileAreaRadius;
         }
     }
 }

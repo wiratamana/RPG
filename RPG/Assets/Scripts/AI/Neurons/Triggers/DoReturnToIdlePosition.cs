@@ -8,66 +8,57 @@ namespace Tamana.AI.Neuron
     {
         private const AIState AI_STATE = AIState.Return;
 
-        public DoReturnToIdlePosition(ref DataPacket packet, ref Quaternion myRotation
-             , Vector3 myPosition, Vector3 idlePosition, float rotationSpeed
-             , float movementVelocity, float distanceToIdlePosition, float distanceStop
-             , PF_Node nodeParent, float distanceToNodeParent)
+        public DoReturnToIdlePosition(Data data)
         {
-            packet.State = AI_STATE;
-            if(packet.destination == Vector3.zero)
+            data.State = AI_STATE;
+            if(data.NextDestination == Vector3.zero)
             {
-                packet.destination = nodeParent.transform.position;
+                data.NextDestination = data.NodeParentPosition;
             }
 
-            var distanceToNextDestination = Vector3.Distance(packet.destination, myPosition);
-            var distanceFromNodeParentToIdlePosition = Vector3.Distance(nodeParent.transform.position, idlePosition);
+            var distanceToNextDestination = Vector3.Distance(data.NextDestination, data.MyPosition);
+            var distanceFromNodeParentToIdlePosition = Vector3.Distance(data.NodeParentPosition, data.IdlePosition);
 
             if(distanceToNextDestination < 1.5f)
             {
-                foreach (var n in nodeParent.neighbours)
+                foreach (var n in data.NeighbourNodes)
                 {
                     if (n == null)
                     {
                         continue;
                     }
 
-                    var distanceFromNeighbourNodeToIdlePosition = Vector3.Distance(n.transform.position, idlePosition);
+                    var distanceFromNeighbourNodeToIdlePosition = Vector3.Distance(n.transform.position, data.IdlePosition);
                     if (distanceFromNeighbourNodeToIdlePosition < distanceFromNodeParentToIdlePosition)
                     {
                         distanceFromNodeParentToIdlePosition = distanceFromNeighbourNodeToIdlePosition;
-                        packet.destination = n.transform.position;
+                        data.NextDestination = n.transform.position;
                     }
                 }
             }
 
-            if (distanceToIdlePosition < distanceToNextDestination)
+            if (data.DistanceToIdlePosition < distanceToNextDestination)
             {
-                packet.destination = idlePosition;
+                data.NextDestination = data.IdlePosition;
             }
 
-            UnityEngine.Debug.DrawLine(myPosition, packet.destination, Color.cyan);
+            UnityEngine.Debug.DrawLine(data.MyPosition, data.NextDestination, Color.cyan);
             
+            var directionTowardDestination = Vector3.Normalize(data.NextDestination - data.MyPosition);
+            new DoRotateToward(ref data.MyRotation, directionTowardDestination, data.RotationSpeed);
 
-            //if(destination == nodeParent.transform.position && distanceToNodeParent < 0.5f)
-            //{
-            //    destination = idlePosition;
-            //}
-
-            var directionTowardDestination = Vector3.Normalize(packet.destination - myPosition);
-            new DoRotateToward(ref myRotation, directionTowardDestination, rotationSpeed);
-
-            if (distanceToIdlePosition > distanceStop)
+            if (data.DistanceToIdlePosition > data.DistanceStop)
             {
-                new DoAccelerate(packet.Params, movementVelocity);
+                new DoAccelerate(data.Params, data.MovementVelocity);
             }
             else
             {
-                new DoDecelerate(packet.Params, movementVelocity);
+                new DoDecelerate(data.Params, data.MovementVelocity);
 
-                if (packet.Params.Movement == 0.0f)
+                if (data.Params.Movement == 0.0f)
                 {
-                    packet.IsAlert = false;
-                    packet.State = AIState.Idle;
+                    data.IsAlert = false;
+                    data.State = AIState.Idle;
                 }
             }
         }

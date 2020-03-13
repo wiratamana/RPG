@@ -8,25 +8,23 @@ namespace Tamana.AI.Neuron
     {
         private const AIState AI_STATE = AIState.Chase;
 
-        public DoMoveTowardPlayerPosition(ref DataPacket packet, ref Quaternion myRotation
-            , Vector3 directionTowardPlayer, float rotationSpeed, float movementVelocity, float distanceToPlayer
-            , float distanceStop)
+        public DoMoveTowardPlayerPosition(Data data)
         {
-            packet.State = AI_STATE;
+            data.State = AI_STATE;
 
-            new DoRotateTowardPlayer(ref myRotation, directionTowardPlayer, rotationSpeed);
+            new DoRotateTowardPlayer(ref data.MyRotation, data.DirectionTowardPlayer, data.RotationSpeed);
 
-            if(distanceToPlayer > distanceStop)
+            if(data.DistanceToPlayer > data.DistanceStop)
             {
-                new DoAccelerate(packet.Params, movementVelocity);
+                new DoAccelerate(data.Params, data.MovementVelocity);
             }
             else
             {
-                new DoDecelerate(packet.Params, movementVelocity); 
+                new DoDecelerate(data.Params, data.MovementVelocity); 
 
-                if(packet.Params.Movement == 0.0f)
+                if(data.Params.Movement == 0.0f)
                 {
-                    packet.State = AIState.Idle;
+                    data.State = AIState.Idle;
                 }
             }
         }

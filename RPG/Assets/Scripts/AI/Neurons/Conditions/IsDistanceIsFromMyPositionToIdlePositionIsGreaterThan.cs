@@ -8,9 +8,9 @@ namespace Tamana.AI.Neuron
     {
         public readonly bool Result;
 
-        public IsDistanceIsFromMyPositionToIdlePositionIsGreaterThan(ref DataMyself myData, float distanceLimit)
+        public IsDistanceIsFromMyPositionToIdlePositionIsGreaterThan(Data data)
         {
-            Result = myData.DistanceToIdlePosition > distanceLimit;
+            Result = data.DistanceToIdlePosition > data.MaximumDistanceToIdlePosition;
         }
     }
 }
