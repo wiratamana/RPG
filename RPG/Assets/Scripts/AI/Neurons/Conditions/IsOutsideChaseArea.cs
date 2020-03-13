@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Tamana.AI.Neuron
 {
-    public struct IsDistanceIsFromMyPositionToIdlePositionIsGreaterThan
+    public struct IsOutsideChaseArea
     {
         public readonly bool Result;
 
-        public IsDistanceIsFromMyPositionToIdlePositionIsGreaterThan(Data data)
+        public IsOutsideChaseArea(Data data)
         {
             Result = data.DistanceToIdlePosition > data.MaximumDistanceToIdlePosition;
         }

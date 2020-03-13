@@ -43,7 +43,7 @@ namespace Tamana.AI
             {
                 data.UpdateNode();
 
-                if (data.State == AIState.Return || new IsDistanceIsFromMyPositionToIdlePositionIsGreaterThan(data).Result)
+                if (data.State == AIState.Return || new IsOutsideChaseArea(data).Result)
                 {
                     new DoReturnToIdlePosition(data);
                 }
