@@ -11,8 +11,9 @@ namespace Tamana.AI
         public readonly float DistanceStop = 1.6f;
         public readonly Unit_Animator_Params Params;
 
-        private Unit_AI_Hostile myself;
-        private Unit_Player player;
+        public Unit_AI_Hostile Myself { get; private set; }
+        public Unit_Player Player { get; private set; }
+        public Unit_Animator_Params PlayerParams { get; private set; }
         private PF_Unit unitpf;
 
         public IReadOnlyCollection<PF_Node> NeighbourNodes => unitpf.nodeParent.neighbours;
@@ -29,6 +30,7 @@ namespace Tamana.AI
         public float DistanceToNodeParent { get; private set; }
         public Vector3 IdlePosition { get; private set; }
         public Vector3 DirectionTowardPlayer { get; private set; }
+        public float DotProductTowardPlayer { get; private set; }
 
         public Vector3 NextDestination;
         public Quaternion MyRotation;
@@ -37,8 +39,9 @@ namespace Tamana.AI
 
         public Data(Unit_AI_Hostile myself)
         {
-            this.myself = myself;
-            player = GameManager.Player;
+            this.Myself = myself;
+            Player = GameManager.Player;
+            PlayerParams = Player.UnitAnimator.Params;
             unitpf = myself.PF;
             IdlePosition = myself.transform.position;
 
@@ -47,10 +50,11 @@ namespace Tamana.AI
 
         public void Update()
         {
-            PlayerPosition = player.transform.position;
-            PlayerForward = player.transform.forward;
-            MyPosition = myself.transform.position;
-            MyForward = myself.transform.forward;
+            PlayerPosition = Player.transform.position;
+            PlayerForward = Player.transform.forward;
+            MyPosition = Myself.transform.position;
+            MyForward = Myself.transform.forward;
+            DotProductTowardPlayer = Vector3.Dot(MyForward, PlayerForward);
 
             DistanceToPlayer = Vector3.Distance(PlayerPosition, MyPosition);
             DistanceFromPlayerToIdlePosition = Vector3.Distance(PlayerPosition, IdlePosition);
@@ -63,7 +67,7 @@ namespace Tamana.AI
 
             NodeParentPosition = unitpf.nodeParent.transform.position;
             DistanceToNodeParent = Vector3.Distance(MyPosition, NodeParentPosition);
-            MyRotation = myself.transform.rotation;
+            MyRotation = Myself.transform.rotation;
         }
 
         public void UpdateNode()

@@ -45,10 +45,25 @@ namespace Tamana.AI
 
                 if (data.State == AIState.Return || new IsOutsideChaseArea(data).Result)
                 {
+                    if (new IsWeaponEquipped(data).Result == true)
+                    {
+                        new DoHolsterWeapon(data);
+                    }
+
                     new DoReturnToIdlePosition(data);
                 }
                 else if (data.State == AIState.Idle || data.State == AIState.Chase)
                 {
+                    if (new IsWeaponEquipped(data).Result == false)
+                    {
+                        new DoDrawWeapon(data);
+                    }
+
+                    if(new IsPlayerAttackingMe(data).Result)
+                    {
+                        new DoDodge(data);
+                    }
+
                     new DoMoveTowardPlayerPosition(data);
                 }                
             }
