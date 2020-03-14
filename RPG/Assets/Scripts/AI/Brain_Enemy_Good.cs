@@ -37,15 +37,15 @@ namespace Tamana.AI
 
             if (data.IsAlert == false)
             {
-                data.IsAlert = new IsPlayerInsideHostileArea(data).Result;
+                data.IsAlert = new IsPlayerInsideHostileArea(data);
             }
             else
             {
                 data.UpdateNode();
 
-                if (data.State == AIState.Return || new IsOutsideChaseArea(data).Result)
+                if (data.State == AIState.Return || new IsOutsideChaseArea(data))
                 {
-                    if (new IsWeaponEquipped(data).Result == true)
+                    if (new IsWeaponEquipped(data) == true)
                     {
                         new DoHolsterWeapon(data);
                     }
@@ -54,16 +54,21 @@ namespace Tamana.AI
                 }
                 else if (data.State == AIState.Idle || data.State == AIState.Chase)
                 {
-                    if(new IsTakingDamage(data).Result == false)
+                    if(new IsTakingDamage(data) == false)
                     {
-                        if (new IsWeaponEquipped(data).Result == false)
+                        if (new IsWeaponEquipped(data) == false)
                         {
                             new DoDrawWeapon(data);
                         }
 
-                        if (new IsPlayerAttackingMe(data).Result)
+                        else if (new IsPlayerAttackingMe(data))
                         {
                             new DoDodge(data);
+                        }
+
+                        else if(new IsPlayerInsideAttackRange(data, 2.0f))
+                        {
+                            new DoAttack(data, "AI_Good_Attack");
                         }
 
                         new DoMoveTowardPlayerPosition(data);

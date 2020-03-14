@@ -45416,7 +45416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c319c9d3edbd34f844966f994e5928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 11400000, guid: 31f3b2fbf8e0cf44ea6f8f5e5f1003e8, type: 2}
+  weapon: {fileID: 11400000, guid: 6138bdfbbbf42f14295e0cbab4d3dbb4, type: 2}
   brain: {fileID: 11400000, guid: 49d973098696cec43af814fbe596d90f, type: 2}
 --- !u!114 &1193880298
 MonoBehaviour:

@@ -5,7 +5,7 @@ namespace Tamana.AI
 {
     public class Data
     {
-        public readonly float HostileAreaRadius = 10.0f;
+        public readonly float HostileAreaRadius = 5.0f;
         public readonly float MinimumDistanceToIdlePosition = 0.5f;
         public readonly float MaximumDistanceToIdlePosition = 35.0f;
         public readonly float DistanceStop = 1.6f;
