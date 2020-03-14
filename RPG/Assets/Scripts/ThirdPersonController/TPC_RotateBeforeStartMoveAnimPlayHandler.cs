@@ -10,26 +10,52 @@ namespace Tamana
 
         public EventManager OnRotateCompleted { private set; get; } = new EventManager();
 
+        private Direction direction;
+
+        private void Awake()
+        {
+            enabled = false;
+        }
+
         private void Update()
         {
-            if(PlayerMovement.TPC.UnitPlayer.UnitAnimator.Params.IsRotateBeforeMove == false)
+            var moveDirection = Vector3.zero;
+
+            switch (direction)
             {
-                return;
+                case Direction.Forward:
+                    moveDirection = GameManager.MainCameraTransform.forward;
+                    break;
+                case Direction.Backward:
+                    moveDirection = -GameManager.MainCameraTransform.forward;
+                    break;
+                case Direction.Left:
+                    moveDirection = -GameManager.MainCameraTransform.right;
+                    break;
+                case Direction.Right:
+                    moveDirection = GameManager.MainCameraTransform.right;
+                    break;
             }
 
-            var cameraForward = GameManager.MainCameraTransform.transform.forward;
-            cameraForward.y = 0;
-            cameraForward = cameraForward.normalized;
+            moveDirection.y = 0;
+            moveDirection = moveDirection.normalized;
 
-            var lookRotation = Quaternion.LookRotation(cameraForward);
+            var lookRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1080 * Time.deltaTime);
 
-            var camAngle = PlayerMovement.TPC.CameraHandler.CameraAngleFromPlayerForward;
+            var camAngle = PlayerMovement.TPC.CameraHandler.GetCameraAngleFromPlayerForward(direction);
             if (Mathf.Abs(camAngle) < 5.0f)
             {
                 PlayerMovement.TPC.UnitPlayer.UnitAnimator.Params.IsRotateBeforeMove = false;
                 OnRotateCompleted.Invoke();
+                enabled = false;
             }
+        }
+
+        public void SetActive(Direction direction)
+        {
+            this.direction = direction;
+            enabled = true;
         }
     }
 }

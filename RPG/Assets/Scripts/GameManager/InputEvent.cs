@@ -44,8 +44,8 @@ namespace Tamana
         public EventManager Event_Holster { get; } = new EventManager();
         public EventManager Event_Equip { get; } = new EventManager();
 
-        public EventManager Event_BeginMove { get; } = new EventManager();
-        public EventManager Event_StopMove { get; } = new EventManager();
+        public EventManager<Direction> Event_BeginMove { get; } = new EventManager<Direction>();
+        public EventManager<Direction> Event_StopMove { get; } = new EventManager<Direction>();
         public EventManager Event_Parry { get; } = new EventManager();
         public EventManager Event_Dodge { get; } = new EventManager();
 
@@ -81,15 +81,45 @@ namespace Tamana
 
             if(Input.GetKeyDown(KeyCode.W) == true)
             {
-                Event_BeginMove.Invoke();
+                Event_BeginMove.Invoke(Direction.Forward);
             }
 
             if(Input.GetKeyUp(KeyCode.W) == true)
             {
-                Event_StopMove.Invoke();
+                Event_StopMove.Invoke(Direction.Forward);
             }
 
-            if(Input.GetKeyDown(KeyCode.LeftAlt) == true)
+            if (Input.GetKeyDown(KeyCode.S) == true)
+            {
+                Event_BeginMove.Invoke(Direction.Backward);
+            }
+
+            if (Input.GetKeyUp(KeyCode.S) == true)
+            {
+                Event_StopMove.Invoke(Direction.Backward);
+            }
+
+            if (Input.GetKeyDown(KeyCode.A) == true)
+            {
+                Event_BeginMove.Invoke(Direction.Left);
+            }
+
+            if (Input.GetKeyUp(KeyCode.A) == true)
+            {
+                Event_StopMove.Invoke(Direction.Left);
+            }
+
+            if (Input.GetKeyDown(KeyCode.D) == true)
+            {
+                Event_BeginMove.Invoke(Direction.Right);
+            }
+
+            if (Input.GetKeyUp(KeyCode.D) == true)
+            {
+                Event_StopMove.Invoke(Direction.Right);
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftAlt) == true)
             {
                 Event_Dodge.Invoke();
             }
