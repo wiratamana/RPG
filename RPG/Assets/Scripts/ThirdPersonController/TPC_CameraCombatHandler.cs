@@ -44,6 +44,13 @@ namespace Tamana
 
         private void Awake()
         {
+            playerRootTransform = CameraHandler.TPC.UnitPlayer.transform;
+            playerSpineTransform = CameraHandler.TPC.UnitPlayer.BodyTransform.Spine;
+            mainCamera = CameraHandler.MainCamera.transform;
+            cameraLookTransform = CameraHandler.CameraLookPoint;
+
+            Deactivate();
+
             CameraHandler.TPC.UnitPlayer.EnemyCatcher.OnEnemyCatched.AddListener(Activate);
             CameraHandler.TPC.UnitPlayer.EnemyCatcher.OnCatchedEnemyReleased.AddListener(Deactivate);
         }

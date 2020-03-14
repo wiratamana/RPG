@@ -23,6 +23,9 @@ namespace Tamana
 
         private void Update()
         {
+            param = Movement.TPC.UnitPlayer.UnitAnimator.Params;
+            this.LogErrorIfComponentIsNull(RotateTowardEnemyHandler);
+
             var strafeHorizontal = param.StrafeHorizontal;
             var strafeVertical = param.StrafeVertical;
             var deltaTime = Time.deltaTime;

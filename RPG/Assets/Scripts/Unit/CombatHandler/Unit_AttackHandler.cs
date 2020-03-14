@@ -26,13 +26,14 @@ namespace Tamana
                 CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(MakePlayerUnableToAttack);
                 CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(MakePlayerAbleToAttackAgain);
 
+                CombatHandler.UnitAnimator.OnDodgeAnimationStarted.AddListener(MakePlayerUnableToAttack);
+                CombatHandler.UnitAnimator.OnDodgeAnimationFinished.AddListener(MakePlayerAbleToAttackAgain);
+
                 CombatHandler.Unit.Equipment.OnEquippedEvent.AddListener(OnEquippedWeapon);
             }
 
             CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(SetAnimationStateToFalse);
             CombatHandler.UnitAnimator.OnDodgeAnimationStarted.AddListener(SetAnimationStateToFalse);
-            CombatHandler.UnitAnimator.OnDodgeAnimationStarted.AddListener(MakePlayerUnableToAttack);
-            CombatHandler.UnitAnimator.OnDodgeAnimationFinished.AddListener(MakePlayerAbleToAttackAgain);
         }
 
         private void OnEquippedWeapon(Item_Equipment oldWeapon, Item_Equipment newWeapon)
@@ -54,8 +55,9 @@ namespace Tamana
 
         public void PlayAttackAnim()
         {
-            if (currentCombatAnimDataContainer is null)
+            if (currentCombatAnimDataContainer == null)
             {
+                Debug.Log("currentCombatAnimDataContainer is null");
                 return;
             }
 
@@ -64,6 +66,7 @@ namespace Tamana
                 return;
             }
 
+            Debug.Log($"{CurrentlyPlayingCombatAnimDataContainer == null} - {CurrentlyPlayingCombatAnimDataContainer == currentCombatAnimDataContainer}");
             if (CurrentlyPlayingCombatAnimDataContainer == null || CurrentlyPlayingCombatAnimDataContainer == currentCombatAnimDataContainer)
             {
                 if (currentCombatAnimDataContainer != null && CurrentlyPlayingCombatAnimData == null)
@@ -75,6 +78,7 @@ namespace Tamana
 
                 else if (CurrentlyPlayingCombatAnimData != null)
                 {
+                    Debug.Log(CurrentlyPlayingCombatAnimData.IsCurrentlyReceivingInput);
                     if (CurrentlyPlayingCombatAnimData.IsCurrentlyReceivingInput == true)
                     {
                         GameManager.PlayerStatus.ST.Attack(currentCombatAnimDataContainer.StaminaCost);

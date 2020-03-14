@@ -8,6 +8,8 @@ namespace Tamana
     public class TPC_RotateTowardEnemyHandler : MonoBehaviour
     {
         private Unit_AI_Hostile enemy;
+        private TPC_Movement movement;
+        public TPC_Movement Movement => this.GetOrAddAndAssignComponent(ref movement);
 
         private void OnValidate()
         {
@@ -16,12 +18,19 @@ namespace Tamana
 
         private void Awake()
         {
+            enabled = false;
+
             GameManager.Player.EnemyCatcher.OnEnemyCatched.AddListener(OnEnemyCatched);
             GameManager.Player.EnemyCatcher.OnCatchedEnemyReleased.AddListener(OnCatchedEnemyReleased);
         }
 
         private void Update()
         {
+            if(Movement.TPC.UnitPlayer.UnitAnimator.Params.IsInDodgingState == true)
+            {
+                return;
+            }
+
             var myRot = transform.rotation;
             var myPos = transform.position;
             var enemyPos = enemy.transform.position;

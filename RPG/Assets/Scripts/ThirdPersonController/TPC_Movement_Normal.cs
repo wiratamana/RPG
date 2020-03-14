@@ -48,6 +48,8 @@ namespace Tamana
 
         private void Awake()
         {
+            this.LogErrorIfComponentIsNull(StartRotateAnimHandler);
+
             StartRotateAnimHandler.OnRotateCompleted.AddListener(OnRotationCompleted);
 
             Movement.TPC.UnitPlayer.UnitAnimator.OnReachMaximumVelocity.AddListener(OnReachMaximumVelocity);

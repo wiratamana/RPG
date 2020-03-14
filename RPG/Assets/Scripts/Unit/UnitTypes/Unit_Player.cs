@@ -23,5 +23,17 @@ namespace Tamana
             Status.Initialize(Instantiate(statusInfo));
             Resources.UnloadAsset(statusInfo);
         }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            this.LogErrorIfComponentIsNull(TPC);
+            this.LogErrorIfComponentIsNull(EnemyCatcher);
+
+            var statusInfo = Resources.Load<Unit_Status_Information>("PlayerBaseStatus");
+            Status.Initialize(Instantiate(statusInfo));
+            Resources.UnloadAsset(statusInfo);
+        }
     }
 }

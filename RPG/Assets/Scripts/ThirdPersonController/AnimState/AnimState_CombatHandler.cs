@@ -70,6 +70,8 @@ namespace Tamana
             animData.IsCurrentlyReceivingInput = currentPosition > animData.ReceivingInputStart &&
                 currentPosition < animData.ReceivingInputFinish;
 
+            //Debug.Log($"StateName = {combatContainer.CombatDatas[index].MyAnimStateName} | IsCurrentlyReceivingInput = {animData.IsCurrentlyReceivingInput}");
+
             // ===============================================================================================
             // Transiting to next attack animation
             // ===============================================================================================

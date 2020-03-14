@@ -35,6 +35,24 @@ namespace Tamana
             }
         }
 
+        private void Awake()
+        {
+            if (item != null)
+            {
+                gameObject.name = $"{item.ItemType} - {item.ItemName}";
+            }
+
+            if (floatingItemParentTransform == null)
+            {
+                floatingItemParentTransform = GameObject.FindWithTag(TagManager.TAG_FLOATING_ITEM_PARENT).transform;
+            }
+
+            if (transform.parent != floatingItemParentTransform)
+            {
+                transform.SetParent(floatingItemParentTransform);
+            }
+        }
+
         private void Start()
         {
             UI_Menu.OnBeforeOpen.AddListener(RemoveEventPickUpItem, GetInstanceID());

@@ -16,9 +16,19 @@ namespace Tamana
             CameraLookTargetTransform = CameraHandler.TPC.UnitPlayer.BodyTransform.Spine;
         }
 
+        private void Awake()
+        {
+            CameraLookTargetTransform = CameraHandler.TPC.UnitPlayer.BodyTransform.Spine;
+        }
+
         // Update is called once per frame
         void Update()
         {
+            var a = InputEvent.Instance;
+            var b = GameManager.Instance;
+            var c = TagManager.Instance;
+            var d = LayerManager.Instance;
+
             var playerPosition = CameraLookTargetTransform.position;
             var directionToPlayer = (playerPosition - CameraHandler.MainCamera.transform.position).normalized;
 

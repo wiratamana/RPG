@@ -30,6 +30,11 @@ namespace Tamana
 
         private void Awake()
         {
+            this.LogErrorIfComponentIsNull(Normal);
+            this.LogErrorIfComponentIsNull(Strafe);
+
+            SetMovementType(MovementType.Normal);
+
             TPC.UnitPlayer.EnemyCatcher.OnEnemyCatched.AddListener(SetMovementTypeToStrafe);
             TPC.UnitPlayer.EnemyCatcher.OnCatchedEnemyReleased.AddListener(SetMovementTypeToNormal);
         }

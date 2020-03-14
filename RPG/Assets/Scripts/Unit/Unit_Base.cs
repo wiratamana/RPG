@@ -61,5 +61,14 @@ namespace Tamana
             this.LogErrorIfComponentIsNull(Status);
             this.LogErrorIfComponentIsNull(RotationHandler);
         }
+
+        protected virtual void Awake()
+        {
+            this.LogErrorIfComponentIsNull(CombatHandler);
+            this.LogErrorIfComponentIsNull(UnitAnimator);
+            this.LogErrorIfComponentIsNull(BodyTransform);
+            this.LogErrorIfComponentIsNull(Status);
+            this.LogErrorIfComponentIsNull(RotationHandler);
+        }
     }
 }

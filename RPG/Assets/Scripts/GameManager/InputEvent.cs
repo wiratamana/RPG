@@ -3,23 +3,32 @@ using System.Collections;
 
 namespace Tamana
 {
-    public class InputEvent : SingletonMonobehaviour<InputEvent>
+    public class InputEvent : MonoBehaviour
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
-        private static void CreateInstance()
+        private static InputEvent instance;
+        public static InputEvent Instance
         {
-            Debug.Log($"RuntimeInitializeOnLoadMethod - {nameof(InputEvent)}");
+            get
+            {
+                if(instance == null)
+                {
+                    var go = new GameObject(nameof(InputEvent));
+                    DontDestroyOnLoad(go);
+                    instance = go.AddComponent<InputEvent>();
+                }
 
-            var go = new GameObject(nameof(InputEvent));
-            DontDestroyOnLoad(go);
-            go.AddComponent<InputEvent>();
+                return instance;
+            }
         }
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
-
             SetCursorToInvisible();
+        }
+
+        private void Start()
+        {
+            var wira = Instance;
         }
 
         public void SetCursorToVisible()
@@ -128,6 +137,11 @@ namespace Tamana
             {
                 Event_CatchEnemy.Invoke();
             }
+        }
+
+        private void OnDestroy()
+        {
+            bool a = false;
         }
     }
 }

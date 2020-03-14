@@ -116,6 +116,11 @@ namespace Tamana
 
         private void Awake()
         {
+            this.LogErrorIfComponentIsNull(CameraLookPlayer);
+            this.LogErrorIfComponentIsNull(CameraMovement);
+            this.LogErrorIfComponentIsNull(CameraCombatHandler);
+            this.LogErrorIfComponentIsNull(CameraCollisionHandler);
+
             TPC.UnitPlayer.EnemyCatcher.OnEnemyCatched.AddListener(SetActiveCameraCombatHandler);
             TPC.UnitPlayer.EnemyCatcher.OnCatchedEnemyReleased.AddListener(SetActiveCameraNormal);
         }
