@@ -81,7 +81,14 @@ namespace Tamana
                     }
                     else
                     {
-                        cameraForward = Quaternion.AngleAxis(45, Vector3.up) * cameraForward;
+                        if(pressedMovementButton[(int)Direction.Forward])
+                        {
+                            cameraForward = Quaternion.AngleAxis(45, Vector3.up) * cameraForward;
+                        }
+                        else if (pressedMovementButton[(int)Direction.Backward])
+                        {
+                            cameraForward = Quaternion.AngleAxis(-45, Vector3.up) * cameraForward;
+                        }
                     }                    
                 }
                 else if(pressedMovementButton[(int)Direction.Left])
@@ -92,7 +99,14 @@ namespace Tamana
                     }
                     else
                     {
-                        cameraForward = Quaternion.AngleAxis(-45, Vector3.up) * cameraForward;
+                        if(pressedMovementButton[(int)Direction.Forward])
+                        {
+                            cameraForward = Quaternion.AngleAxis(-45, Vector3.up) * cameraForward;
+                        }
+                        else if(pressedMovementButton[(int)Direction.Backward])
+                        {
+                            cameraForward = Quaternion.AngleAxis(45, Vector3.up) * cameraForward;
+                        }
                     }                    
                 }
 
