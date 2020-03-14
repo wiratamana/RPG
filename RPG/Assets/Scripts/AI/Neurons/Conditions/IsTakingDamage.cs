@@ -12,5 +12,10 @@ namespace Tamana.AI.Neuron
         {
             Result = data.Params.IsTakingDamage;
         }
+
+        public static implicit operator bool(IsTakingDamage result)
+        {
+            return result.Result;
+        }
     }
 }

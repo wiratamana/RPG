@@ -12,5 +12,10 @@ namespace Tamana.AI.Neuron
         {
             Result = data.DistanceFromPlayerToIdlePosition < data.HostileAreaRadius;
         }
+
+        public static implicit operator bool(IsPlayerInsideHostileArea result)
+        {
+            return result.Result;
+        }
     }
 }

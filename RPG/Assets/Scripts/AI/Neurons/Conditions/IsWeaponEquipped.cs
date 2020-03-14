@@ -12,5 +12,10 @@ namespace Tamana.AI.Neuron
         {
             Result = data.Params.IsInCombatState;
         }
+
+        public static implicit operator bool(IsWeaponEquipped result)
+        {
+            return result.Result;
+        }
     }
 }

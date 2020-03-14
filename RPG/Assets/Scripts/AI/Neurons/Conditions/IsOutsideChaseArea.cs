@@ -12,5 +12,10 @@ namespace Tamana.AI.Neuron
         {
             Result = data.DistanceToIdlePosition > data.MaximumDistanceToIdlePosition;
         }
+
+        public static implicit operator bool(IsOutsideChaseArea result)
+        {
+            return result.Result;
+        }
     }
 }
