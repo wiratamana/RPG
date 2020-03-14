@@ -384,7 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionTimingMultiplier: 0.3
+  transitionTimingMultiplier: 0.45
   normalizedTransitionDuration: 0.1
 --- !u!114 &-6193711791099627442
 MonoBehaviour:
@@ -3010,7 +3010,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Longs_Dodge_Bwd
-  m_Speed: 1
+  m_Speed: 1.3
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours:
