@@ -45,6 +45,14 @@ namespace Tamana
         OnStateExit
     }
 
+    public enum Direction
+    {
+        Forward,
+        Backward,
+        Left,
+        Right,
+    }
+
     public enum AnimHit_1H
     {
         Sword1h_Hit_Head_Right = 1 << 0,
@@ -81,7 +89,6 @@ namespace Tamana
     public enum AnimDodge_2H
     {
         Longs_Dodge_Bwd = 1 << 0,
-        Longs_Dodge_Bwd2 = 1 << 1,
     }
 
     public enum AnimDeath_1H

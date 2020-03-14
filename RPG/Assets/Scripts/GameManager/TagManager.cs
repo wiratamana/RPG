@@ -6,7 +6,7 @@ namespace Tamana
 {
     public sealed class TagManager : SingletonMonobehaviour<TagManager>
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+        [RuntimeInitializeOnLoadMethod]
         private static void CreateInstance()
         {
             Debug.Log($"RuntimeInitializeOnLoadMethod - {nameof(TagManager)}");

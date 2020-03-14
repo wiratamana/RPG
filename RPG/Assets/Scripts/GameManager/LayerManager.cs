@@ -5,7 +5,7 @@ namespace Tamana
 {
     public sealed class LayerManager : SingletonMonobehaviour<LayerManager>
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+        [RuntimeInitializeOnLoadMethod]
         private static void CreateInstance()
         {
             Debug.Log($"RuntimeInitializeOnLoadMethod - {nameof(LayerManager)}");

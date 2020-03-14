@@ -12,7 +12,12 @@ namespace Tamana
             if(mesh == null)
             {
                 mesh = gameObject.GetComponent<MeshFilter>().sharedMesh;
-            }         
+            }
+
+            if(GetComponent<MeshCollider>() == null)
+            {
+                gameObject.AddComponent<MeshCollider>();
+            }
         }
     }
 }

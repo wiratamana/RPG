@@ -31,6 +31,10 @@ namespace Tamana
 
         public static void Log(object message, LogType logType = LogType.Message)
         {
+#if UNITY_EDITOR == false
+            return;
+#endif
+
             string classColor = "<color=#093D00>";
             string fromOpenColor = "<color=black>";
             string fromCloseColor = "</color>";

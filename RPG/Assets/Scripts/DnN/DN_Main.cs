@@ -17,5 +17,13 @@ namespace Tamana
             this.LogErrorIfComponentIsNull(LightingManager);
             this.LogErrorIfComponentIsNull(Clock);
         }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            this.LogErrorIfComponentIsNull(LightingManager);
+            this.LogErrorIfComponentIsNull(Clock);
+        }
     }
 }

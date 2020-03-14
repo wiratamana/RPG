@@ -19,6 +19,8 @@ namespace Tamana
 
         private void Awake()
         {
+            enabled = IsBrainInstalled;
+
             UnitEnemy.Status.HP.OnCurrentHealthUpdated.AddListener(OnCurrentHealthUpdated);            
         }
 

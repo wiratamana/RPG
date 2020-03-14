@@ -38,7 +38,15 @@ namespace Tamana
 
         private void Awake()
         {
-            if(Unit.IsUnitPlayer == true)
+            this.LogErrorIfComponentIsNull(DamageReceiveHandler);
+            this.LogErrorIfComponentIsNull(DamageSendHandler);
+            this.LogErrorIfComponentIsNull(ParryHandler);
+            this.LogErrorIfComponentIsNull(DodgeHandler);
+            this.LogErrorIfComponentIsNull(AttackHandler);
+            this.LogErrorIfComponentIsNull(BodyTransform);
+            this.LogErrorIfComponentIsNull(DeathHandler);
+
+            if (Unit.IsUnitPlayer == true)
             {
                 Unit.UnitAnimator.OnStateChangedToCombatState.AddListener(AddCombatEventsToListeners);
                 Unit.UnitAnimator.OnStateChangedToIdleState.AddListener(RemoveCombatEventsFromListeners);

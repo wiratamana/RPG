@@ -26,6 +26,8 @@ namespace Tamana
 
         private void Start()
         {
+            RectTransform.SetSizeDeltaToCanvasParentCanvasSize(UIBattle.Canvas);
+
             var playerStatus = GameManager.PlayerStatus;
 
             GameManager.PlayerStatus.ST.OnCurrentStaminaUpdated.AddListener(OnPlayerCurrentStaminaUpdated);

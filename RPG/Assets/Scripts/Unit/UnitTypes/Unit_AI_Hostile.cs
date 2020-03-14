@@ -22,8 +22,12 @@ namespace Tamana
             this.LogErrorIfComponentIsNull(CombatLogic);
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
+            this.LogErrorIfComponentIsNull(CombatLogic);
+
             Inventory.AddItem(Instantiate(weapon));
             Equipment.EquipWeapon(Inventory.GetItemListAsReadOnly(x => x is Item_Weapon)[0] as Item_Weapon);
 

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Tamana
 {
@@ -12,7 +10,36 @@ namespace Tamana
         private TPC_RotateBeforeStartMoveAnimPlayHandler startRotateAnimHandler;
         public TPC_RotateBeforeStartMoveAnimPlayHandler StartRotateAnimHandler => this.GetOrAddAndAssignComponent(ref startRotateAnimHandler);
 
-        private bool isButtonWPressed;
+        private bool[] pressedMovementButton = new bool[] { false, false, false, false };
+        private bool isMoveButtonPressed
+        {
+            get
+            {
+                for (int i = 0; i < pressedMovementButton.Length; i++)
+                {
+                    if (pressedMovementButton[i] == true)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            set
+            {
+                if(value == true)
+                {
+                    Debug.Log("You cannot assign trus value to this variable!", Debug.LogType.Warning);
+                    return;
+                }
+
+                for (int i = 0; i < pressedMovementButton.Length; i++)
+                {
+                    pressedMovementButton[i] = false;
+                }
+            }
+        }
 
         private void OnValidate()
         {
@@ -21,6 +48,8 @@ namespace Tamana
 
         private void Awake()
         {
+            this.LogErrorIfComponentIsNull(StartRotateAnimHandler);
+
             StartRotateAnimHandler.OnRotateCompleted.AddListener(OnRotationCompleted);
 
             Movement.TPC.UnitPlayer.UnitAnimator.OnReachMaximumVelocity.AddListener(OnReachMaximumVelocity);
@@ -55,8 +84,52 @@ namespace Tamana
 
             if (Movement.TPC.UnitPlayer.UnitAnimator.Params.IsMoving == true)
             {
-                var cameraForward = GameManager.MainCameraTransform.transform.forward;
-                cameraForward.y = 0;
+                var cameraForward = pressedMovementButton[(int)Direction.Forward] ? GameManager.MainCameraTransform.forward:
+                    pressedMovementButton[(int)Direction.Backward] ? -GameManager.MainCameraTransform.forward : Vector3.zero;
+
+                if(pressedMovementButton[(int)Direction.Right])
+                {
+                    if(cameraForward == Vector3.zero)
+                    {
+                        cameraForward = GameManager.MainCameraTransform.right;
+                    }
+                    else
+                    {
+                        if(pressedMovementButton[(int)Direction.Forward])
+                        {
+                            cameraForward = Quaternion.AngleAxis(45, Vector3.up) * cameraForward;
+                        }
+                        else if (pressedMovementButton[(int)Direction.Backward])
+                        {
+                            cameraForward = Quaternion.AngleAxis(-45, Vector3.up) * cameraForward;
+                        }
+                    }                    
+                }
+                else if(pressedMovementButton[(int)Direction.Left])
+                {
+                    if(cameraForward == Vector3.zero)
+                    {
+                        cameraForward = -GameManager.MainCameraTransform.right;
+                    }
+                    else
+                    {
+                        if(pressedMovementButton[(int)Direction.Forward])
+                        {
+                            cameraForward = Quaternion.AngleAxis(-45, Vector3.up) * cameraForward;
+                        }
+                        else if(pressedMovementButton[(int)Direction.Backward])
+                        {
+                            cameraForward = Quaternion.AngleAxis(45, Vector3.up) * cameraForward;
+                        }
+                    }                    
+                }
+
+                if (cameraForward == Vector3.zero)
+                {
+                    cameraForward = GameManager.MainCameraTransform.forward;
+                    cameraForward.y = 0;
+                }
+
                 cameraForward = cameraForward.normalized;
 
                 var lookRotation = Quaternion.LookRotation(cameraForward);
@@ -69,6 +142,7 @@ namespace Tamana
             InputEvent.Instance.Event_BeginMove.RemoveListener(OnBeginMove);
             InputEvent.Instance.Event_StopMove.RemoveListener(OnStopMove);
 
+            isMoveButtonPressed = false;
             Movement.TPC.UnitPlayer.UnitAnimator.SetMovementToZero();
         }
 
@@ -77,26 +151,40 @@ namespace Tamana
             InputEvent.Instance.Event_BeginMove.AddListener(OnBeginMove);
             InputEvent.Instance.Event_StopMove.AddListener(OnStopMove);
 
-            if (KeyboardController.IsForwardPressed == true)
+            if (KeyboardController.IsWASDPressed(out bool[] output))
             {
+                System.Array.Copy(output, pressedMovementButton, output.Length);
+
                 Movement.TPC.UnitPlayer.UnitAnimator.Params.IsMoving = true;
                 Movement.TPC.UnitPlayer.UnitAnimator.Params.IsAccelerating = true;
             }
         }
 
-        private void OnBeginMove()
+        private void OnBeginMove(Direction direction)
         {
-            isButtonWPressed = true;
+            if(pressedMovementButton[(int)direction] == true)
+            {
+                return;
+            }
 
-            Movement.TPC.UnitPlayer.UnitAnimator.Params.IsRotateBeforeMove = true;
+            if(isMoveButtonPressed == false)
+            {
+                StartRotateAnimHandler.SetActive(direction);
+                Movement.TPC.UnitPlayer.UnitAnimator.Params.IsRotateBeforeMove = true;
+            }
+
+            pressedMovementButton[(int)direction] = true;
         }
 
-        private void OnStopMove()
+        private void OnStopMove(Direction direction)
         {
-            isButtonWPressed = false;
+            pressedMovementButton[(int)direction] = false;
 
-            Movement.TPC.UnitPlayer.UnitAnimator.Params.IsAccelerating = false;
-            Movement.TPC.UnitPlayer.UnitAnimator.Params.IsDecelerating = true;
+            if (isMoveButtonPressed == false)
+            {
+                Movement.TPC.UnitPlayer.UnitAnimator.Params.IsAccelerating = false;
+                Movement.TPC.UnitPlayer.UnitAnimator.Params.IsDecelerating = true;
+            }            
         }
 
         private void OnReachMaximumVelocity()
@@ -111,8 +199,8 @@ namespace Tamana
         }
 
         private void OnRotationCompleted()
-        {
-            if (isButtonWPressed == true)
+        {  
+            if (isMoveButtonPressed == true)
             {
                 Movement.TPC.UnitPlayer.UnitAnimator.Params.IsDecelerating = false;
                 Movement.TPC.UnitPlayer.UnitAnimator.Params.IsMoving = true;
@@ -120,5 +208,4 @@ namespace Tamana
             }
         }
     }
-
 }

@@ -78,7 +78,15 @@ namespace Tamana
 
         protected virtual void Awake()
         {
-            if(UIManager.Instance.IsWindowRunning(this) == true)
+            if (RectTransform != null)
+            {
+                RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, height);
+                Body.RectTransform.sizeDelta = new Vector2(Body.RectTransform.sizeDelta.x, height - UI_WindowHeader.HEIGHT);
+            }
+
+            Header.HeaderName = transform.parent.name;
+
+            if (UIManager.Instance.IsWindowRunning(this) == true)
             {
                 Close();
             }

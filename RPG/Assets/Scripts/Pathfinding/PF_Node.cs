@@ -34,7 +34,6 @@ namespace Tamana
                     i--;
                     continue;
                 }
-
             }
         }
 
