@@ -30,6 +30,9 @@ namespace Tamana
             }
 
             CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(SetAnimationStateToFalse);
+            CombatHandler.UnitAnimator.OnDodgeAnimationStarted.AddListener(SetAnimationStateToFalse);
+            CombatHandler.UnitAnimator.OnDodgeAnimationStarted.AddListener(MakePlayerUnableToAttack);
+            CombatHandler.UnitAnimator.OnDodgeAnimationFinished.AddListener(MakePlayerAbleToAttackAgain);
         }
 
         private void OnEquippedWeapon(Item_Equipment oldWeapon, Item_Equipment newWeapon)

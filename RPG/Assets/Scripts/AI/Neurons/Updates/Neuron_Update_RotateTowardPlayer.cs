@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Tamana
+namespace Tamana.AI
 {
-    public class AI_Neuron_RotateTowardPlayer : AI_Neuron_Update
+    public class Neuron_Update_RotateTowardPlayer : AI_Neuron_Update
     {
         private readonly float rotationSpeed;
 
-        public AI_Neuron_RotateTowardPlayer(AI_Brain brain, float rotationSpeed) : base(brain)
+        public Neuron_Update_RotateTowardPlayer(AI_Brain brain, float rotationSpeed) : base(brain)
         {
             this.rotationSpeed = rotationSpeed;
         }

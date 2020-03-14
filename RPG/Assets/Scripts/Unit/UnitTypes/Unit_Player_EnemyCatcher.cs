@@ -46,22 +46,37 @@ namespace Tamana
                 return;
             }
 
+            var mainCamera = GameManager.MainCamera;
+
             UnitEnemy = null;
             var distance = float.MaxValue;
             var myPos = transform.position;
             foreach(var c in colliders)
             {
+                if(c.transform.IsInsideCameraFrustum(mainCamera) == false)
+                {
+                    continue;
+                }
+
+                var unitEnemy = c.GetComponent<Unit_AI_Hostile>();
+                if(unitEnemy.Status.IsDead == true)
+                {
+                    continue;
+                }
+
                 var dist = Vector3.Distance(myPos, c.transform.position);
                 if(dist < distance)
                 {
                     distance = dist;
-                    UnitEnemy = c.GetComponent<Unit_AI_Hostile>();
+                    UnitEnemy = unitEnemy;
                 }
             }
 
             if(UnitEnemy == null)
             {
                 Debug.Log("Unable to catch any enemy!!", Debug.LogType.Error);
+                OnCatchedNothing.Invoke();
+                return;
             }
 
             UnitEnemy.Status.HP.OnCurrentHealthUpdated.AddListener(OnEnemyDead);
@@ -81,7 +96,11 @@ namespace Tamana
                 var colliders = Physics.OverlapSphere(transform.position, radius, layer);
                 foreach (var c in colliders)
                 {
-                    if(c.transform.IsInsideCameraFrustum(mainCamera) == false)
+                    var camForward = mainCamera.transform.forward;
+                    var dirToEnemy = (c.transform.position - mainCamera.transform.position).normalized;
+                    var dotProduct = Vector3.Dot(camForward, dirToEnemy);
+
+                    if(dotProduct < 0.9f || c.transform.IsInsideCameraFrustum(mainCamera) == false)
                     {
                         continue;
                     }

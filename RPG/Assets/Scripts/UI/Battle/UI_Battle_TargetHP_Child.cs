@@ -61,7 +61,11 @@ namespace Tamana
 
         private void Update()
         {
-            if (enemyTransform.IsInsideCameraFrustum(mainCamera) == false)
+            var camForward = mainCamera.transform.forward;
+            var dirToEnemy = (enemy.transform.position - mainCamera.transform.position).normalized;
+            var dotProduct = Vector3.Dot(camForward, dirToEnemy);
+
+            if (dotProduct < 0.9f || enemyTransform.IsInsideCameraFrustum(mainCamera) == false)
             {
                 Destroy(gameObject);
                 return;

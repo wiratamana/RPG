@@ -2,30 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tamana
+namespace Tamana.AI
 {
+    [CreateAssetMenu(fileName = "Dummy AI 2H", menuName = "Create/Brain/Dummy AI 2H")]
     public class AI_Brain_Enemy_Dummy_2H : AI_Brain
     {
-        public override AI_Neuron_PlayerDetector PlayerDetector
+        private Neuron_Update_PlayerDetector playerDetector;
+        public Neuron_Update_PlayerDetector PlayerDetector
         {
             get
             {
                 if (playerDetector == null)
                 {
-                    playerDetector = new AI_Neuron_PlayerDetector(this, 7.0f, 9.0f);
+                    playerDetector = new Neuron_Update_PlayerDetector(this, 7.0f, 9.0f);
                 }
 
                 return playerDetector;
             }
         }
 
-        public override AI_Neuron_RotateTowardPlayer RotateTowardPlayer
+        public Neuron_Update_RotateTowardPlayer rotateTowardPlayer;
+        public Neuron_Update_RotateTowardPlayer RotateTowardPlayer
         {
             get
             {
                 if (rotateTowardPlayer == null)
                 {
-                    rotateTowardPlayer = new AI_Neuron_RotateTowardPlayer(this, 5.0f);
+                    rotateTowardPlayer = new Neuron_Update_RotateTowardPlayer(this, 5.0f);
                     rotateTowardPlayer.StopNeuron();
                 }
 
@@ -33,14 +36,14 @@ namespace Tamana
             }
         }
 
-        private AI_Neuron_AttackHandler attackHandler;
-        public AI_Neuron_AttackHandler AttackHandler
+        private Neuron_Update_AttackHandler attackHandler;
+        public Neuron_Update_AttackHandler AttackHandler
         {
             get
             {
                 if (attackHandler == null)
                 {
-                    attackHandler = new AI_Neuron_AttackHandler(
+                    attackHandler = new Neuron_Update_AttackHandler(
                         brain: this,
                         stateName: "Longs_Attack_DoubleRR",
                         cooldown: 5.0f,

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tamana
+namespace Tamana.AI
 {
-    public class AI_Neuron_DebugLog : AI_Neuron_Trigger
+    public class Neuron_Trigger_DebugLog : AI_Neuron_Trigger
     {
         private readonly string message;
 
-        public AI_Neuron_DebugLog(AI_Brain brain, string message) : base(brain)
+        public Neuron_Trigger_DebugLog(AI_Brain brain, string message) : base(brain)
         {
             this.message = message;
         }

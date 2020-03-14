@@ -33,8 +33,12 @@ namespace Tamana
 
             Movement.TPC.UnitPlayer.CombatHandler.AttackHandler.OnAttackAnimationStarted.AddListener(DisableMovement);
             Movement.TPC.UnitPlayer.CombatHandler.AttackHandler.OnAttackAnimationStopped.AddListener(EnableMovement);
+
             Movement.TPC.UnitPlayer.CombatHandler.UnitAnimator.OnHitAnimationStarted.AddListener(DisableMovement);
             Movement.TPC.UnitPlayer.CombatHandler.UnitAnimator.OnHitAnimationFinished.AddListener(EnableMovement);
+
+            Movement.TPC.UnitPlayer.CombatHandler.UnitAnimator.OnDodgeAnimationStarted.AddListener(DisableMovement);
+            Movement.TPC.UnitPlayer.CombatHandler.UnitAnimator.OnDodgeAnimationFinished.AddListener(EnableMovement);
         }
 
         private void Update()
