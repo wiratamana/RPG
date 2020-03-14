@@ -74,6 +74,7 @@ namespace Tamana
                     }
 
                     itemMaterial = new Material(materialFromResources);
+                    Resources.UnloadAsset(materialFromResources);
                 }
 
                 return itemMaterial;
