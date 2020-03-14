@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Tamana
+namespace Tamana.AI
 {
-    public class AI_Neuron_PlayAnimation : AI_Neuron_Trigger
+    public class Neuron_Trigger_PlayAnimation : AI_Neuron_Trigger
     {
         private readonly string stateName;
 
-        public AI_Neuron_PlayAnimation(AI_Brain brain, string stateName) : base(brain)
+        public Neuron_Trigger_PlayAnimation(AI_Brain brain, string stateName) : base(brain)
         {
             this.stateName = stateName;
         }
