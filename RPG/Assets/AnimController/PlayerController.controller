@@ -119,6 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.37
+  normalizedTransitionDuration: 0.1
 --- !u!1102 &-8581393072786211644
 AnimatorState:
   serializedVersion: 5
@@ -382,6 +384,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.3
+  normalizedTransitionDuration: 0.1
 --- !u!114 &-6193711791099627442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -589,6 +593,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.44
+  normalizedTransitionDuration: 0.1
 --- !u!114 &-5704107682021242711
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -784,6 +790,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.3
+  normalizedTransitionDuration: 0.1
 --- !u!114 &-4528984941571329663
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -796,6 +804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.45
+  normalizedTransitionDuration: 0.1
 --- !u!1101 &-4352284930016713223
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -976,6 +986,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.47
+  normalizedTransitionDuration: 0.1
 --- !u!1101 &-3484335779691255112
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1311,6 +1323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.3
+  normalizedTransitionDuration: 0.1
 --- !u!1102 &-2400016808009109413
 AnimatorState:
   serializedVersion: 5
@@ -1734,6 +1748,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.44
+  normalizedTransitionDuration: 0.1
 --- !u!114 &525876887037961908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1823,6 +1839,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.44
+  normalizedTransitionDuration: 0.1
 --- !u!1102 &888301120545631614
 AnimatorState:
   serializedVersion: 5
@@ -2111,9 +2129,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.22743773
   m_TransitionOffset: 0
-  m_ExitTime: 0.8770492
+  m_ExitTime: 0.5241922
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -2216,6 +2234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.55
+  normalizedTransitionDuration: 0.1
 --- !u!114 &3048413939909255144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2588,6 +2608,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.3
+  normalizedTransitionDuration: 0.1
 --- !u!114 &4084235119511063056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2600,6 +2622,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.5
+  normalizedTransitionDuration: 0.1
 --- !u!1101 &4369175266248026866
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3032,6 +3056,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.47
+  normalizedTransitionDuration: 0.1
 --- !u!1102 &7016702541003486913
 AnimatorState:
   serializedVersion: 5
@@ -3505,3 +3531,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.3
+  normalizedTransitionDuration: 0.1

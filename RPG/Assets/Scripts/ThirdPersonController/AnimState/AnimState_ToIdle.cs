@@ -6,6 +6,9 @@ namespace Tamana
 {
     public class AnimState_ToIdle : StateMachineBehaviour
     {
+        [SerializeField] [Range(0.01f, 1.0f)] private float transitionTimingMultiplier = 0.3f;
+        [SerializeField] [Range(0.01f, 0.2f)] private float normalizedTransitionDuration = 0.1f;
+
         private Unit_Base unit;
         private WeaponType? currentWeapon;
         private float transitionTiming;
@@ -16,7 +19,7 @@ namespace Tamana
         {
             unit = animator.GetComponent<Unit_Base>();
             currentWeapon = unit.Equipment.EquippedWeapon?.WeaponType;
-            transitionTiming = stateInfo.length * 0.9f;
+            transitionTiming = (stateInfo.length * transitionTimingMultiplier) - normalizedTransitionDuration;
             isInCombatState = unit.UnitAnimator.Params.IsInCombatState;
 
             isTransition2IdleMotion = false;
@@ -38,11 +41,11 @@ namespace Tamana
                 if(currentWeapon.HasValue == true && isInCombatState == true)
                 {
                     var stateName = currentWeapon.Value == WeaponType.OneHand ? "Movement_1H" : "Movement_2H";
-                    animator.CrossFade(stateName, 0.1f);
+                    animator.CrossFade(stateName, normalizedTransitionDuration);
                 }
                 else
                 {
-                    animator.CrossFade("Movement_Basic", 0.1f);
+                    animator.CrossFade("Movement_Basic", normalizedTransitionDuration);
                 }
             }
             

@@ -54,6 +54,11 @@ namespace Tamana
 
         public void SetActive(Direction direction)
         {
+            if(PlayerMovement.MovementType == MovementType.Strafe)
+            {
+                return;
+            }
+
             this.direction = direction;
             enabled = true;
         }
