@@ -21,6 +21,11 @@ namespace Tamana
             directionalLight = GetComponentInChildren<Light>();
         }
 
+        private void Awake()
+        {
+            directionalLight = GetComponentInChildren<Light>();
+        }
+
         private void Update()
         {
             TimeOfDay += Time.deltaTime / 60.0f;

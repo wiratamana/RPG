@@ -28,6 +28,28 @@ namespace Tamana
             }
         }
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                var node = transform.GetChild(i).GetComponent<PF_Node>();
+
+                if (node == null)
+                {
+                    node = transform.GetChild(i).gameObject.AddComponent<PF_Node>();
+                }
+
+                if (nodes.Contains(node))
+                {
+                    continue;
+                }
+
+                nodes.Add(node);
+            }
+        }
+
         public PF_Node GetNearestNode(Vector3 position)
         {
             PF_Node retval = null;

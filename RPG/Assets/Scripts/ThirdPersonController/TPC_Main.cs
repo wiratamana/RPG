@@ -19,5 +19,11 @@ namespace Tamana
             this.LogErrorIfComponentIsNull(PlayerMovement);
             this.LogErrorIfComponentIsNull(CameraHandler);
         }
+
+        private void Awake()
+        {
+            this.LogErrorIfComponentIsNull(PlayerMovement);
+            this.LogErrorIfComponentIsNull(CameraHandler);
+        }
     }
 }

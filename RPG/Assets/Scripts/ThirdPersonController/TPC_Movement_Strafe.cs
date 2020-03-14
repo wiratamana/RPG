@@ -13,8 +13,8 @@ namespace Tamana
 
         private Unit_Animator_Params param;
         private float acceleration = 5.0f;
-        private const float MAX_VAL = 0.7071068f;
        
+        private const float MAX_VAL = 1.0f;
         private void OnValidate()
         {
             param = Movement.TPC.UnitPlayer.UnitAnimator.Params;
@@ -23,6 +23,9 @@ namespace Tamana
 
         private void Update()
         {
+            param = Movement.TPC.UnitPlayer.UnitAnimator.Params;
+            this.LogErrorIfComponentIsNull(RotateTowardEnemyHandler);
+
             var strafeHorizontal = param.StrafeHorizontal;
             var strafeVertical = param.StrafeVertical;
             var deltaTime = Time.deltaTime;
@@ -59,8 +62,18 @@ namespace Tamana
                 strafeHorizontal = Mathf.MoveTowards(strafeHorizontal, 0.0f, acc);
             }
 
-            param.StrafeHorizontal = strafeHorizontal;
-            param.StrafeVertical = strafeVertical;
+            if(strafeHorizontal == MAX_VAL || strafeVertical == MAX_VAL)
+            {
+                Vector2 direction = new Vector2(strafeHorizontal, strafeVertical).normalized;
+
+                param.StrafeHorizontal = direction.x;
+                param.StrafeVertical = direction.y;
+            }
+            else
+            {
+                param.StrafeHorizontal = strafeHorizontal;
+                param.StrafeVertical = strafeVertical;
+            }
         }
     }
 }

@@ -29,19 +29,6 @@ namespace Tamana
         public float OffsetZ => _offsetZ;
         public float CameraLookHeight => _cameraLookHeight;
 
-        public float CameraAngleFromPlayerForward
-        {
-            get
-            {
-                var cameraForward = VectorHelper.GetForward2DWithZ0(MainCamera.transform.forward);
-                var playerForward = VectorHelper.GetForward2DWithZ0(transform.forward);
-
-                var cameraAngle = Vector2.SignedAngle(playerForward, cameraForward);
-
-                return cameraAngle;
-            }
-        }
-
         private Transform cameraLookPointTransform;
         private Camera mainCamera;
         private Transform cameraDefaultPositionTransform;
@@ -129,8 +116,39 @@ namespace Tamana
 
         private void Awake()
         {
+            this.LogErrorIfComponentIsNull(CameraLookPlayer);
+            this.LogErrorIfComponentIsNull(CameraMovement);
+            this.LogErrorIfComponentIsNull(CameraCombatHandler);
+            this.LogErrorIfComponentIsNull(CameraCollisionHandler);
+
             TPC.UnitPlayer.EnemyCatcher.OnEnemyCatched.AddListener(SetActiveCameraCombatHandler);
             TPC.UnitPlayer.EnemyCatcher.OnCatchedEnemyReleased.AddListener(SetActiveCameraNormal);
+        }
+
+        public float GetCameraAngleFromPlayerForward(Direction direction)
+        {
+            var playerForward = VectorHelper.GetForward2DWithZ0(transform.forward);
+            var cameraForward = Vector2.zero;
+
+            switch (direction)
+            {
+                case Direction.Forward:
+                    cameraForward = VectorHelper.GetForward2DWithZ0(MainCamera.transform.forward);
+                    break;
+                case Direction.Backward:
+                    cameraForward = VectorHelper.GetForward2DWithZ0(-MainCamera.transform.forward);
+                    break;
+                case Direction.Left:
+                    cameraForward = VectorHelper.GetForward2DWithZ0(-MainCamera.transform.right);
+                    break;
+                case Direction.Right:
+                    cameraForward = VectorHelper.GetForward2DWithZ0(MainCamera.transform.right);
+                    break;
+            }
+
+            var cameraAngle = Vector2.SignedAngle(playerForward, cameraForward);
+
+            return cameraAngle;
         }
 
         private void SetActiveCameraCombatHandler(Unit_AI_Hostile enemy)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Tamana
             }
         }
 
-        public void Dodge()
+        public async void Dodge()
         {
             if(CombatHandler.UnitAnimator.Params.IsInDodgingState == true)
             {
@@ -32,7 +33,22 @@ namespace Tamana
                 CombatHandler.UnitAnimator.OnDodgeAnimationStarted.Invoke();
             }
 
+            if(KeyboardController.IsWASDPressed(out bool[] output))
+            {
+                if(output[(int)Direction.Right])
+                {
+                    transform.rotation = Quaternion.LookRotation(-transform.right, Vector3.up);
+                }
+                else if(output[(int)Direction.Left])
+                {
+                    transform.rotation = Quaternion.LookRotation(transform.right, Vector3.up);
+                }
+            }
+
             CombatHandler.UnitAnimator.Params.AnimDodge = animationDodgeData.paramValue;
+
+            await AsyncManager.WaitForFrame(1);
+
             CombatHandler.UnitAnimator.Play(animationDodgeData.stateName);
         }
 

@@ -10,7 +10,7 @@ namespace Tamana
 
         private static List<AsyncAwaiter> frameAwaiterList;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+        [RuntimeInitializeOnLoadMethod]
         private static void Initialize()
         {
             var A = new GameObject(nameof(AsyncManager)).AddComponent<AsyncManager>();

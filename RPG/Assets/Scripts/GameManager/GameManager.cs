@@ -7,7 +7,7 @@ namespace Tamana
 {
     public sealed class GameManager : SingletonMonobehaviour<GameManager>
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+        [RuntimeInitializeOnLoadMethod]
         private static void CreateInstance()
         {
             Debug.Log($"RuntimeInitializeOnLoadMethod - {nameof(GameManager)}");
@@ -74,6 +74,7 @@ namespace Tamana
                     }
 
                     itemMaterial = new Material(materialFromResources);
+                    Resources.UnloadAsset(materialFromResources);
                 }
 
                 return itemMaterial;

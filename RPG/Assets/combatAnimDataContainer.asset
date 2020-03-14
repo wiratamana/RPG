@@ -17,15 +17,15 @@ MonoBehaviour:
   - myAnimStateName: Attack_Move_slow_whirl_L_2
     receivingInputStart: 0.4167
     receivingInputFinish: 0.9167
-    transitionTimingToIdleAnim: 1.633
-    transitionCrossFadeTimeIdle: 0.125
+    transitionTimingToIdleAnim: 0.9167
+    transitionCrossFadeTimeIdle: 0.15
     idleAnimStateName: Movement_1H
     isLastAnimation: 0
   - myAnimStateName: Attack_Move_strong_Rdown_1
     receivingInputStart: 0.6667
     receivingInputFinish: 1.3333
-    transitionTimingToIdleAnim: 2.1167
-    transitionCrossFadeTimeIdle: 0.1063
+    transitionTimingToIdleAnim: 1.3333
+    transitionCrossFadeTimeIdle: 0.15
     idleAnimStateName: Movement_1H
     isLastAnimation: 0
   - myAnimStateName: Attack_Jump_T

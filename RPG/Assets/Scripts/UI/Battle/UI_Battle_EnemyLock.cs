@@ -25,6 +25,8 @@ namespace Tamana
 
         private void Awake()
         {
+            Deactivate();
+
             GameManager.Player.EnemyCatcher.OnEnemyCatched.AddListener(Activate);
             GameManager.Player.EnemyCatcher.OnCatchedEnemyReleased.AddListener(Deactivate);
         }

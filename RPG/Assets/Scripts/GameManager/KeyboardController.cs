@@ -56,5 +56,20 @@ namespace Tamana
                 return Input.GetKey(KeyCode.D);
             }
         }
+
+        public static bool IsWASDPressed(out bool[] output)
+        {
+            output = new bool[] { IsForwardPressed, IsBackwardPressed, IsLeftPressed, IsRightPressed };
+
+            for(int i = 0; i < output.Length; i++)
+            {
+                if(output[i] == true)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
