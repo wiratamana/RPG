@@ -54,17 +54,20 @@ namespace Tamana.AI
                 }
                 else if (data.State == AIState.Idle || data.State == AIState.Chase)
                 {
-                    if (new IsWeaponEquipped(data).Result == false)
+                    if(new IsTakingDamage(data).Result == false)
                     {
-                        new DoDrawWeapon(data);
-                    }
+                        if (new IsWeaponEquipped(data).Result == false)
+                        {
+                            new DoDrawWeapon(data);
+                        }
 
-                    if(new IsPlayerAttackingMe(data).Result)
-                    {
-                        new DoDodge(data);
-                    }
+                        if (new IsPlayerAttackingMe(data).Result)
+                        {
+                            new DoDodge(data);
+                        }
 
-                    new DoMoveTowardPlayerPosition(data);
+                        new DoMoveTowardPlayerPosition(data);
+                    }                    
                 }                
             }
 
