@@ -73,6 +73,7 @@ namespace Tamana.AI
 
             Unit.transform.rotation = data.MyRotation;
             Benchmarker.Stop($"State = {data.State} | IsAlert = {data.IsAlert}");
+            data.ResetOnAttackAnimationStarted();
         }        
     }
 }

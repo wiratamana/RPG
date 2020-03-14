@@ -31,6 +31,7 @@ namespace Tamana.AI
         public Vector3 IdlePosition { get; private set; }
         public Vector3 DirectionTowardPlayer { get; private set; }
         public float DotProductTowardPlayer { get; private set; }
+        public bool isPlayerOnAttackAnimationStarted { private set; get; }
 
         public Vector3 NextDestination;
         public Quaternion MyRotation;
@@ -39,11 +40,14 @@ namespace Tamana.AI
 
         public Data(Unit_AI_Hostile myself)
         {
-            this.Myself = myself;
+            Myself = myself;
             Player = GameManager.Player;
             PlayerParams = Player.UnitAnimator.Params;
             unitpf = myself.PF;
             IdlePosition = myself.transform.position;
+
+            Player.CombatHandler.AttackHandler.OnAttackAnimationStarted.AddListener(SetOnAttackAnimationStartedTrue);
+            Player.CombatHandler.AttackHandler.OnConsecutiveAttack.AddListener(SetOnAttackAnimationStartedTrue);
 
             Params = myself.UnitAnimator.Params;
         }
@@ -90,6 +94,16 @@ namespace Tamana.AI
             }
 
             DistanceToNodeParent = Mathf.Sqrt(DistanceToNodeParent);
+        }
+
+        public void ResetOnAttackAnimationStarted()
+        {
+            isPlayerOnAttackAnimationStarted = false;
+        }
+
+        private void SetOnAttackAnimationStartedTrue()
+        {
+            isPlayerOnAttackAnimationStarted = true;
         }
     }
 }

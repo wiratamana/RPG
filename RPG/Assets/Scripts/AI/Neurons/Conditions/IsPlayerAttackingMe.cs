@@ -22,7 +22,7 @@ namespace Tamana.AI.Neuron
                 return;
             }
 
-            Result = data.PlayerParams.IsInAttackingState;
+            Result = data.isPlayerOnAttackAnimationStarted;
         }
     }
 }
