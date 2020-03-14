@@ -27,6 +27,20 @@ namespace Tamana
 
                 return false;
             }
+
+            set
+            {
+                if(value == true)
+                {
+                    Debug.Log("You cannot assign trus value to this variable!", Debug.LogType.Warning);
+                    return;
+                }
+
+                for (int i = 0; i < pressedMovementButton.Length; i++)
+                {
+                    pressedMovementButton[i] = false;
+                }
+            }
         }
 
         private void OnValidate()
@@ -128,6 +142,7 @@ namespace Tamana
             InputEvent.Instance.Event_BeginMove.RemoveListener(OnBeginMove);
             InputEvent.Instance.Event_StopMove.RemoveListener(OnStopMove);
 
+            isMoveButtonPressed = false;
             Movement.TPC.UnitPlayer.UnitAnimator.SetMovementToZero();
         }
 
@@ -136,8 +151,10 @@ namespace Tamana
             InputEvent.Instance.Event_BeginMove.AddListener(OnBeginMove);
             InputEvent.Instance.Event_StopMove.AddListener(OnStopMove);
 
-            if (KeyboardController.IsForwardPressed == true)
+            if (KeyboardController.IsWASDPressed(out bool[] output))
             {
+                System.Array.Copy(output, pressedMovementButton, output.Length);
+
                 Movement.TPC.UnitPlayer.UnitAnimator.Params.IsMoving = true;
                 Movement.TPC.UnitPlayer.UnitAnimator.Params.IsAccelerating = true;
             }
