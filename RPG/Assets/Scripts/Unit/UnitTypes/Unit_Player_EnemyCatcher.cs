@@ -37,7 +37,7 @@ namespace Tamana
             }
 
             var radius = 10.0f;
-            var layer = LayerMask.GetMask(LayerManager.LAYER_ENEMY);
+            var layer = LayerMask.GetMask(LayerManager.LAYER_AI);
 
             var colliders = Physics.OverlapSphere(transform.position, radius, layer);
             if (colliders.Length == 0)
@@ -91,7 +91,7 @@ namespace Tamana
             while(true)
             {
                 var radius = 25.0f;
-                var layer = LayerMask.GetMask(LayerManager.LAYER_ENEMY);
+                var layer = LayerMask.GetMask(LayerManager.LAYER_AI);
 
                 var colliders = Physics.OverlapSphere(transform.position, radius, layer);
                 foreach (var c in colliders)

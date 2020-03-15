@@ -22,7 +22,7 @@ TagManager:
   - PlayerMenuPortrait
   - Player
   - ItemProjection
-  - Enemy
+  - AI
   - PostProcess
   - Environment
   - 
