@@ -6,12 +6,12 @@ using Tamana.AI;
 
 namespace Tamana
 {
-    public class Unit_AI_Hostile : Unit_Base
+    public class Unit_AI : Unit_Base
     {
         [SerializeField] private Item_Weapon weapon;
         [SerializeField] private AI_Brain brain;
-        private AI_Enemy_CombatLogic combatLogic;
-        public AI_Enemy_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(ref combatLogic);
+        private Unit_AI_CombatLogic combatLogic;
+        public Unit_AI_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(ref combatLogic);
         private PF_Unit pf;
         public PF_Unit PF => this.GetOrAddAndAssignComponent(ref pf);
 

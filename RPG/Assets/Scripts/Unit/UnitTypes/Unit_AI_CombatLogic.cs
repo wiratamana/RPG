@@ -4,10 +4,10 @@ using Tamana.AI;
 
 namespace Tamana
 {
-    public class AI_Enemy_CombatLogic : MonoBehaviour
+    public class Unit_AI_CombatLogic : MonoBehaviour
     {
-        private Unit_AI_Hostile unitEnemy;
-        public Unit_AI_Hostile UnitEnemy => this.GetAndAssignComponent(ref unitEnemy);
+        private Unit_AI unitEnemy;
+        public Unit_AI UnitEnemy => this.GetAndAssignComponent(ref unitEnemy);
 
         private AI_Brain brain;
         public bool IsBrainInstalled => brain != null;

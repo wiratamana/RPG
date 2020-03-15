@@ -10,7 +10,7 @@ namespace Tamana
     public class UI_Battle_TargetHP_Child : MonoBehaviour
     {
         private bool isInitialized = false;
-        private Unit_AI_Hostile enemy;
+        private Unit_AI enemy;
         private Camera mainCamera;
         private UnityAction<int> deregisterOnDestroyAction;
         private int enemyInstanceID;
@@ -21,7 +21,7 @@ namespace Tamana
         private Vector3 offset = new Vector3(0, Screen.height * 0.05f, 0);
         private float width = 200.0f;
 
-        public void Initialize(Unit_AI_Hostile enemy, UnityAction<int> deregisterOnDestroyAction)
+        public void Initialize(Unit_AI enemy, UnityAction<int> deregisterOnDestroyAction)
         {
             if (isInitialized == true)
             {

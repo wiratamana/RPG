@@ -151,7 +151,7 @@ namespace Tamana
             return cameraAngle;
         }
 
-        private void SetActiveCameraCombatHandler(Unit_AI_Hostile enemy)
+        private void SetActiveCameraCombatHandler(Unit_AI enemy)
         {
             CameraLookPlayer.enabled = false;
             CameraMovement.enabled = false;

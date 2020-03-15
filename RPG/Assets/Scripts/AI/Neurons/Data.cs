@@ -11,7 +11,7 @@ namespace Tamana.AI
         public readonly float DistanceStop = 1.6f;
         public readonly Unit_Animator_Params Params;
 
-        public Unit_AI_Hostile Myself { get; private set; }
+        public Unit_AI Myself { get; private set; }
         public Unit_Player Player { get; private set; }
         public Unit_Animator_Params PlayerParams { get; private set; }
         private PF_Unit unitpf;
@@ -38,7 +38,7 @@ namespace Tamana.AI
         public bool IsAlert;
         public AIState State;
 
-        public Data(Unit_AI_Hostile myself)
+        public Data(Unit_AI myself)
         {
             Myself = myself;
             Player = GameManager.Player;

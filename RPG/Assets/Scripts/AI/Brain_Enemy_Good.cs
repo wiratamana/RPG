@@ -21,8 +21,9 @@ namespace Tamana.AI
     public class Brain_Enemy_Good : AI_Brain
     {
         private Data data;
+        private float delay;
 
-        public override void Initialize(Unit_AI_Hostile unit)
+        public override void Initialize(Unit_AI unit)
         {
             base.Initialize(unit);
 
@@ -32,7 +33,6 @@ namespace Tamana.AI
 
         public override void Update()
         {
-            Benchmarker.Start();
             data.Update();
 
             if (data.IsAlert == false)
@@ -66,9 +66,18 @@ namespace Tamana.AI
                             new DoDodge(data);
                         }
 
-                        else if(new IsPlayerInsideAttackRange(data, 2.0f))
+                        else if (new IsPlayerInsideAttackRange(data, 2.0f))
                         {
-                            new DoAttack(data, "AI_Good_Attack");
+                            if (delay == 0)
+                            {
+                                new DoAttack(data, "AI_Good_Attack");
+                                delay = 2.0f;
+                            }
+                            else
+                            {
+                                delay = Mathf.Max(0, delay - Time.deltaTime);
+                            }
+                            
                         }
 
                         new DoMoveTowardPlayerPosition(data);
@@ -77,7 +86,6 @@ namespace Tamana.AI
             }
 
             Unit.transform.rotation = data.MyRotation;
-            Benchmarker.Stop($"State = {data.State} | IsAlert = {data.IsAlert}");
             data.ResetOnAttackAnimationStarted();
         }        
     }

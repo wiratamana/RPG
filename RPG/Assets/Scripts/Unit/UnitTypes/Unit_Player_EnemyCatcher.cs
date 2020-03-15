@@ -9,11 +9,11 @@ namespace Tamana
         private Unit_Player unitPlayer;
         public Unit_Player UnitPlayer => this.GetAndAssignComponent(ref unitPlayer);
 
-        public EventManager<Unit_AI_Hostile> OnEnemyCatched { get; } = new EventManager<Unit_AI_Hostile>();
+        public EventManager<Unit_AI> OnEnemyCatched { get; } = new EventManager<Unit_AI>();
         public EventManager OnCatchedEnemyReleased { get; } = new EventManager();
         public EventManager OnCatchedNothing { get; } = new EventManager();
 
-        public Unit_AI_Hostile UnitEnemy { get; private set; }
+        public Unit_AI UnitEnemy { get; private set; }
 
         private void Awake()
         {
@@ -58,7 +58,7 @@ namespace Tamana
                     continue;
                 }
 
-                var unitEnemy = c.GetComponent<Unit_AI_Hostile>();
+                var unitEnemy = c.GetComponent<Unit_AI>();
                 if(unitEnemy.Status.IsDead == true)
                 {
                     continue;
@@ -105,7 +105,7 @@ namespace Tamana
                         continue;
                     }
 
-                    UI_Battle.Instance.TargetHP.RegisterEnemy(c.GetComponent<Unit_AI_Hostile>());
+                    UI_Battle.Instance.TargetHP.RegisterEnemy(c.GetComponent<Unit_AI>());
                 }
 
                 yield return fourTimesPerSeconds;

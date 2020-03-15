@@ -56,7 +56,7 @@ namespace Tamana.AI
             }
         }
 
-        public override void Initialize(Unit_AI_Hostile ai)
+        public override void Initialize(Unit_AI ai)
         {
             base.Initialize(ai);
 

@@ -9,14 +9,14 @@ namespace Tamana.AI
         private const string REMOVE_NEURON = "REMOVE";
 
         private bool isInitialized = false;
-        public Unit_AI_Hostile Unit { protected set; get; }
+        public Unit_AI Unit { protected set; get; }
 
         protected readonly Dictionary<string, AI_Neuron> neuronsDic = new Dictionary<string, AI_Neuron>();
         protected readonly Dictionary<string, AI_Neuron_Update> updatableNeuronDic = new Dictionary<string, AI_Neuron_Update>();
 
         private readonly Queue<(string, AI_Neuron)> queue = new Queue<(string, AI_Neuron)>();
 
-        public virtual void Initialize(Unit_AI_Hostile unit)
+        public virtual void Initialize(Unit_AI unit)
         {
             if(isInitialized == true)
             {
