@@ -35,27 +35,12 @@ namespace Tamana
             Status.Initialize(Instantiate(status));
             Resources.UnloadAsset(status);
 
-            if(brain == null)
-            {
-                if (weapon.WeaponType == WeaponType.OneHand)
-                {
-                    var brain = ScriptableObject.CreateInstance<AI_Brain_Enemy_Dummy>();
-                    brain.Initialize(this);
-                    CombatLogic.InstallBrain(brain);
-                }
-                else
-                {
-                    var brain = ScriptableObject.CreateInstance<AI_Brain_Enemy_Dummy_2H>();
-                    brain.Initialize(this);
-                    CombatLogic.InstallBrain(brain);
-                }
-            }     
-            else
+            if(brain != null)
             {
                 var brain = Instantiate(this.brain);
                 brain.Initialize(this);
                 CombatLogic.InstallBrain(brain);
-            }
+            }     
         }
     }
 }
