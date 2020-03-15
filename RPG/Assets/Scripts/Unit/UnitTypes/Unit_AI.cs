@@ -9,11 +9,14 @@ namespace Tamana
     public class Unit_AI : Unit_Base
     {
         [SerializeField] private Item_Weapon weapon;
+        [SerializeField] private AIBehaviour behaviour;
         [SerializeField] private AI_Brain brain;
+
         private Unit_AI_CombatLogic combatLogic;
         public Unit_AI_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(ref combatLogic);
         private PF_Unit pf;
         public PF_Unit PF => this.GetOrAddAndAssignComponent(ref pf);
+        public AIBehaviour Behaviour => behaviour;
 
         protected override void OnValidate()
         {

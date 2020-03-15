@@ -38,6 +38,12 @@ namespace Tamana
         TwoHand
     }
 
+    public enum AIBehaviour
+    {
+        Hostile,
+        Neutral
+    }
+
     public enum StateMachineBehaviourPosition
     {
         OnStateEnter,
