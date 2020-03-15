@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Tamana
@@ -125,6 +126,9 @@ namespace Tamana
 
             TPC.UnitPlayer.EnemyCatcher.OnEnemyCatched.AddListener(SetActiveCameraCombatHandler);
             TPC.UnitPlayer.EnemyCatcher.OnCatchedEnemyReleased.AddListener(SetActiveCameraNormal);
+
+            UI_Chat_Main.Instance.Bubble.OnChatStarted.AddListener(SetActiveCameraChat);
+            UI_Chat_Main.Instance.Dialogue.OnDialogueDeactivated.AddListener(SetActiveCameraNormal);
         }
 
         private void SetActiveCameraCombatHandler(Unit_AI enemy)
@@ -147,6 +151,28 @@ namespace Tamana
             CameraCombatCollisionHandler.enabled = false;
 
             CameraLookPlayer.SetCameraLocalPositionToZero();
+        }
+
+        private void SetActiveCameraChat(Unit_AI ai)
+        {
+            CameraLookPlayer.enabled = false;
+            CameraMovement.enabled = false;
+            CameraCollisionHandler.enabled = false;
+            // =====================================================
+
+            CameraCombatHandler.enabled = false;
+            CameraCombatCollisionHandler.enabled = false;
+            // =====================================================
+
+            var type = ai.DialogueHolder.Dialogues.ElementAt(0).Type;
+            if (type == ChatType.Player)
+            {
+                ChatCameraHandler.ActivatePlayer(ai);
+            }
+            else if (type == ChatType.Target)
+            {
+                ChatCameraHandler.ActivateTarget(ai);
+            }
         }
     }
 }

@@ -42,6 +42,9 @@ namespace Tamana
 
             GameManager.Player.UnitAnimator.OnHolsteringAnimationFinished.AddListener(AddOpenMenuInventory);
             GameManager.Player.UnitAnimator.OnEquippingAnimationFinished.AddListener(AddOpenMenuInventory);
+
+            UI_Chat_Main.Instance.Dialogue.OnDialogueActivated.AddListener(RemoveOpenMenuInventory);
+            UI_Chat_Main.Instance.Dialogue.OnDialogueDeactivated.AddListener(AddOpenMenuInventory);
         }
 
         private void RemoveOpenMenuInventory()

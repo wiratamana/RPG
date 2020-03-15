@@ -25,5 +25,6 @@ namespace Tamana
         public const string TAG_PLAYER_MENU_PORTRAIT_CAMERA = "PlayerMenuPortraitCamera";
         public const string TAG_FLOATING_ITEM_PARENT = "FloatingItemParent";
         public const string TAG_NOT_COLLIDE_WITH_CAMERA = "NotCollideWithCamera";
+        public const string TAG_CANVAS_SHOP = "CanvasShop";
     }
 }

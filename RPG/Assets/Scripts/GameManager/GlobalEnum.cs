@@ -44,6 +44,20 @@ namespace Tamana
         Neutral
     }
 
+    public enum ChatType
+    {
+        Player,
+        Target,
+        Branch,
+        Event,
+        Exit
+    }
+
+    public enum ChatEvent
+    {
+        Shop,
+    }
+
     public enum StateMachineBehaviourPosition
     {
         OnStateEnter,

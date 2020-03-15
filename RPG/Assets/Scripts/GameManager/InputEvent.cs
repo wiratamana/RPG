@@ -10,7 +10,7 @@ namespace Tamana
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     var go = new GameObject(nameof(InputEvent));
                     DontDestroyOnLoad(go);
@@ -46,6 +46,7 @@ namespace Tamana
         public const char ACTION_OPEN_MENU_INVENTORY = 'B';
 
         public EventManager Event_Chat { get; } = new EventManager();
+        public EventManager Event_NextDialogue { get; } = new EventManager();
         public EventManager Event_PickUpItem { get; } = new EventManager();
         public EventManager Event_OpenOrCloseMenuInventory { private set; get; } = new EventManager();
 
@@ -67,6 +68,7 @@ namespace Tamana
             {
                 Event_PickUpItem.Invoke();
                 Event_Chat.Invoke();
+                Event_NextDialogue.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.B) == true)
@@ -83,6 +85,7 @@ namespace Tamana
             if(Input.GetKeyDown(KeyCode.Mouse0) == true)
             {
                 Event_DoAttackHeavy.Invoke();
+                Event_NextDialogue.Invoke();
             }
 
             if(Input.GetKeyDown(KeyCode.Mouse1) == true)
@@ -139,11 +142,6 @@ namespace Tamana
             {
                 Event_CatchEnemy.Invoke();
             }
-        }
-
-        private void OnDestroy()
-        {
-            bool a = false;
         }
     }
 }

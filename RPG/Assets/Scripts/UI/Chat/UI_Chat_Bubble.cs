@@ -11,20 +11,14 @@ namespace Tamana
         private Transform headTransform;
         private Transform aiTransform;
 
+        private UI_Chat_Main chatMain;
+        public UI_Chat_Main ChatMain => this.GetAndAssignComponentInParent(ref chatMain);
         private Vector3 offset = new Vector2(0, .5f);
         private Camera mainCamera => GameManager.MainCamera;
         private Image image;
         private Image Image => this.GetAndAssignComponent(ref image);
 
-        private void OnValidate()
-        {
-            Deactivate();
-        }
-
-        private void Awake()
-        {
-            Deactivate();
-        }
+        public EventManager<Unit_AI> OnChatStarted { get; } = new EventManager<Unit_AI>();
 
         private void Update()
         {
@@ -62,6 +56,7 @@ namespace Tamana
                 return;
             }
 
+            this.ai = ai;
             headTransform = ai.BodyTransform.Head;
             aiTransform = ai.transform;
             gameObject.SetActive(true);
@@ -69,6 +64,7 @@ namespace Tamana
             await AsyncManager.WaitForFrame(1);
 
             Image.enabled = true;
+            InputEvent.Instance.Event_Chat.AddListener(StartChat);
         }
 
         public void Deactivate()
@@ -79,6 +75,17 @@ namespace Tamana
 
             Image.enabled = false;
             gameObject.SetActive(false);
+
+            InputEvent.Instance.Event_Chat.RemoveListener(StartChat);
+        }
+
+        private void StartChat()
+        {
+            OnChatStarted.Invoke(ai);
+            ai.RotationHandler.RotateToward(GameManager.PlayerTransform.position, 5.0f);
+            ChatMain.Dialogue.Activate();
+            ChatMain.Dialogue.SetValue(ai.name, ai.DialogueHolder.Dialogues);
+            Deactivate();
         }
     }
 }

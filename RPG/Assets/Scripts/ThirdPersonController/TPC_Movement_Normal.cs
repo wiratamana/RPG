@@ -68,6 +68,12 @@ namespace Tamana
 
             Movement.TPC.UnitPlayer.CombatHandler.UnitAnimator.OnDodgeAnimationStarted.AddListener(DisableMovement);
             Movement.TPC.UnitPlayer.CombatHandler.UnitAnimator.OnDodgeAnimationFinished.AddListener(EnableMovement);
+
+            UI_Menu.OnBeforeOpen.AddListener(DisableMovement);
+            UI_Menu.OnAfterClose.AddListener(EnableMovement);
+
+            UI_Chat_Main.Instance.Dialogue.OnDialogueActivated.AddListener(DisableMovement);
+            UI_Chat_Main.Instance.Dialogue.OnDialogueDeactivated.AddListener(EnableMovement);
         }
 
         private void Update()

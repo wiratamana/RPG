@@ -10,6 +10,7 @@ TagManager:
   - PlayerMenuPortraitCamera
   - FloatingItemParent
   - NotCollideWithCamera
+  - CanvasShop
   layers:
   - Default
   - TransparentFX

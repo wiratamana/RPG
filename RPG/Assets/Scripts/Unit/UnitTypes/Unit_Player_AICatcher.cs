@@ -13,7 +13,34 @@ namespace Tamana
 
         private void Start()
         {
+            UI_Menu.OnBeforeOpen.AddListener(StopCatcherCoroutine);
+            UI_Menu.OnAfterClose.AddListener(StartCatcherCoroutine);
+
+            UI_Chat_Main.Instance.Dialogue.OnDialogueActivated.AddListener(StopCatcherCoroutine);
+            UI_Chat_Main.Instance.Dialogue.OnDialogueDeactivated.AddListener(StartCatcherCoroutine);
+
+            StartCatcherCoroutine();
+        }
+
+        private void StartCatcherCoroutine()
+        {
+            if(coroutine != null)
+            {
+                return;
+            }
+
             coroutine = StartCoroutine(GetAIWithinRangeCoroutine());
+        }
+
+        private void StopCatcherCoroutine()
+        {
+            if(coroutine == null)
+            {
+                return;
+            }
+
+            StopCoroutine(coroutine);
+            coroutine = null;
         }
 
         private IEnumerator GetAIWithinRangeCoroutine()

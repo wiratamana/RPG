@@ -15,7 +15,14 @@ namespace Tamana
             entry.callback.AddListener(callback);
 
             eventTrigger.triggers.Add(entry);
-        }        
+        }
+
+        public static void RemoveListener(this EventTrigger eventTrigger,
+            EventTriggerType triggerType, UnityAction<BaseEventData> callback)
+        {
+            var entry = eventTrigger.triggers.Find(x => x.eventID == triggerType);
+            entry.callback.RemoveListener(callback);
+        }
     }
 
 }

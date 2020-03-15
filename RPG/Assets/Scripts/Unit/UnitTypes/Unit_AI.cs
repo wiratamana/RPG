@@ -13,15 +13,20 @@ namespace Tamana
         [SerializeField] private AI_Brain brain;
 
         private Unit_AI_CombatLogic combatLogic;
-        public Unit_AI_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(ref combatLogic);
         private PF_Unit pf;
+        private Unit_AI_DialogueHolder dialogueHolder;
+
+        public Unit_AI_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(ref combatLogic);
         public PF_Unit PF => this.GetOrAddAndAssignComponent(ref pf);
+        public Unit_AI_DialogueHolder DialogueHolder => this.GetOrAddAndAssignComponent(ref dialogueHolder);
+
         public AIBehaviour Behaviour => behaviour;
 
         protected override void OnValidate()
         {
             base.OnValidate();
 
+            this.LogErrorIfComponentIsNull(DialogueHolder);
             this.LogErrorIfComponentIsNull(CombatLogic);
         }
 
