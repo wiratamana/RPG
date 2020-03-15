@@ -43,7 +43,7 @@ namespace Tamana
             var lookRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1080 * Time.deltaTime);
 
-            var camAngle = PlayerMovement.TPC.CameraHandler.GetCameraAngleFromPlayerForward(direction);
+            var camAngle = GetCameraAngleFromPlayerForward(direction);
             if (Mathf.Abs(camAngle) < 5.0f)
             {
                 PlayerMovement.TPC.UnitPlayer.UnitAnimator.Params.IsRotateBeforeMove = false;
@@ -61,6 +61,33 @@ namespace Tamana
 
             this.direction = direction;
             enabled = true;
+        }
+
+        private float GetCameraAngleFromPlayerForward(Direction direction)
+        {
+            var playerForward = VectorHelper.GetForward2DWithZ0(transform.forward);
+            var cameraForward = Vector2.zero;
+            var mainCamera = GameManager.MainCameraTransform;
+
+            switch (direction)
+            {
+                case Direction.Forward:
+                    cameraForward = VectorHelper.GetForward2DWithZ0(mainCamera.forward);
+                    break;
+                case Direction.Backward:
+                    cameraForward = VectorHelper.GetForward2DWithZ0(-mainCamera.forward);
+                    break;
+                case Direction.Left:
+                    cameraForward = VectorHelper.GetForward2DWithZ0(-mainCamera.right);
+                    break;
+                case Direction.Right:
+                    cameraForward = VectorHelper.GetForward2DWithZ0(mainCamera.right);
+                    break;
+            }
+
+            var cameraAngle = Vector2.SignedAngle(playerForward, cameraForward);
+
+            return cameraAngle;
         }
     }
 }

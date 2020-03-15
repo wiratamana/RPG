@@ -20,11 +20,6 @@ namespace Tamana
             InputEvent.Instance.Event_CatchEnemy.AddListener(SphereCastEnemy);
         }
 
-        private void Start()
-        {
-            StartCoroutine(PassiveEnemyCatcher());
-        }
-
         private void SphereCastEnemy()
         {
             if(UnitEnemy != null)
@@ -59,7 +54,7 @@ namespace Tamana
                 }
 
                 var unitEnemy = c.GetComponent<Unit_AI>();
-                if(unitEnemy.Status.IsDead == true)
+                if(unitEnemy.Status.IsDead == true || unitEnemy.Behaviour == AIBehaviour.Neutral)
                 {
                     continue;
                 }
@@ -81,35 +76,25 @@ namespace Tamana
 
             UnitEnemy.Status.HP.OnCurrentHealthUpdated.AddListener(OnEnemyDead);
             OnEnemyCatched.Invoke(UnitEnemy);
-        }
-
-        private IEnumerator PassiveEnemyCatcher()
+        }    
+        
+        public void Evaluate(IReadOnlyCollection<Unit_AI> hostileList)
         {
-            var fourTimesPerSeconds = new WaitForSeconds(0.25f);
-            var mainCamera = UnitPlayer.TPC.CameraHandler.MainCamera;   
+            var mainCamera = GameManager.MainCamera;
 
-            while(true)
+            foreach (var i in hostileList)
             {
-                var radius = 25.0f;
-                var layer = LayerMask.GetMask(LayerManager.LAYER_AI);
+                var camForward = mainCamera.transform.forward;
+                var dirToEnemy = (i.transform.position - mainCamera.transform.position).normalized;
+                var dotProduct = Vector3.Dot(camForward, dirToEnemy);
 
-                var colliders = Physics.OverlapSphere(transform.position, radius, layer);
-                foreach (var c in colliders)
+                if (dotProduct < 0.9f || i.transform.IsInsideCameraFrustum(mainCamera) == false)
                 {
-                    var camForward = mainCamera.transform.forward;
-                    var dirToEnemy = (c.transform.position - mainCamera.transform.position).normalized;
-                    var dotProduct = Vector3.Dot(camForward, dirToEnemy);
-
-                    if(dotProduct < 0.9f || c.transform.IsInsideCameraFrustum(mainCamera) == false)
-                    {
-                        continue;
-                    }
-
-                    UI_Battle.Instance.TargetHP.RegisterEnemy(c.GetComponent<Unit_AI>());
+                    continue;
                 }
 
-                yield return fourTimesPerSeconds;
-            }            
+                UI_Battle.Instance.TargetHP.RegisterEnemy(i);
+            }
         }
 
         private void OnEnemyDead(float enemyCurrentHealthRate)

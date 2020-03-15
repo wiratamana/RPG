@@ -43,7 +43,9 @@ namespace Tamana
                 var brain = Instantiate(this.brain);
                 brain.Initialize(this);
                 CombatLogic.InstallBrain(brain);
-            }     
+            }   
+            
+            
         }
     }
 }

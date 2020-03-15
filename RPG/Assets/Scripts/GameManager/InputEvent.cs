@@ -45,6 +45,7 @@ namespace Tamana
         public const char ACTION_PICK_UP_ITEM = 'E';
         public const char ACTION_OPEN_MENU_INVENTORY = 'B';
 
+        public EventManager Event_Chat { get; } = new EventManager();
         public EventManager Event_PickUpItem { get; } = new EventManager();
         public EventManager Event_OpenOrCloseMenuInventory { private set; get; } = new EventManager();
 
@@ -65,6 +66,7 @@ namespace Tamana
             if(Input.GetKeyDown(KeyCode.E) == true)
             {
                 Event_PickUpItem.Invoke();
+                Event_Chat.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.B) == true)
