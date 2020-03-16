@@ -20,6 +20,8 @@ namespace Tamana
             }
         }
 
+        private const float DEFAULT_PREVIEW_CAMERA_ORTHO_SIZE = 0.4f;
+
         private Camera _textureRendererCamera;
         public Camera TextureRendererCamera
         {
@@ -41,6 +43,20 @@ namespace Tamana
                 }
 
                 return _textureRendererCamera;
+            }
+        }
+
+        public static void ResetCameraPositionAndRotation(Item_Base item, Transform itemTransform)
+        {
+            SetOrthoSize(DEFAULT_PREVIEW_CAMERA_ORTHO_SIZE);
+            SetPosition(itemTransform.position - new Vector3(0, 0, 1));
+            SetRotation(Quaternion.identity);
+            if (item is Item_Weapon)
+            {
+                var weapon = item as Item_Weapon;
+                SetOrthoSize(weapon.CustomOrthoSize);
+                SetPosition(GetPosition() + weapon.MenuCameraOffset);
+                SetRotation(Quaternion.Euler(weapon.MenuDefaultCameraRotation));
             }
         }
 

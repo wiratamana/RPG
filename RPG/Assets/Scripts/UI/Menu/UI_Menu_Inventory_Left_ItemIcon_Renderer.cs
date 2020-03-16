@@ -37,7 +37,6 @@ namespace Tamana
 
         public Item_Preview ItemPreview { get; private set; }
         private bool isMousePointerAboveMe = false;
-        private const float DEFAULT_PREVIEW_CAMERA_ORTHO_SIZE = 0.4f;
 
         private static readonly Vector2 NormalSize = new Vector2(100, 100);
 
@@ -113,23 +112,14 @@ namespace Tamana
             // ===============================================================================================
             // Instantiate item prefab and set its position.
             // ===============================================================================================
-            ItemPreview = Item_Preview.InstantiateItemPrefab(ItemIcon, positionOffeset);
+            ItemPreview = Item_Preview.InstantiateItemPrefab(ItemIcon.Item, positionOffeset);
 
             return ItemPreview;
         }
 
         public void ResetCameraPositionAndRotation()
         {
-            UI_ItemRenderer.SetOrthoSize(DEFAULT_PREVIEW_CAMERA_ORTHO_SIZE);
-            UI_ItemRenderer.SetPosition(ItemPreview.transform.position - new Vector3(0, 0, 1));
-            UI_ItemRenderer.SetRotation(Quaternion.identity);
-            if (ItemPreview.ItemBase is Item_Weapon)
-            {
-                var weapon = ItemPreview.ItemBase as Item_Weapon;
-                UI_ItemRenderer.SetOrthoSize(weapon.CustomOrthoSize);
-                UI_ItemRenderer.SetPosition(UI_ItemRenderer.GetPosition() + weapon.MenuCameraOffset);
-                UI_ItemRenderer.SetRotation(Quaternion.Euler(weapon.MenuDefaultCameraRotation));
-            }
+            UI_ItemRenderer.ResetCameraPositionAndRotation(ItemPreview.ItemBase, ItemPreview.transform);
         }
 
         private void RenderCamera()

@@ -22,13 +22,18 @@ namespace Tamana
         public TextMeshProUGUI Price => price;
         public RawImage ItemRenderer => itemRenderer;
 
+        public Item_Preview ItemPreview { get; private set; }
         private UI_Shop_Left_ItemParent itemParent;
 
         public void Initialize(Item_Product product, UI_Shop_Left_ItemParent itemParent, Vector3 pos)
         {
             this.itemParent = itemParent;
+            var texSize = ItemRenderer.rectTransform.sizeDelta;
+            ItemRenderer.texture = new RenderTexture((int)texSize.x, (int)texSize.y, 16, RenderTextureFormat.ARGBHalf);
 
-            if(GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
+            InstantiateItemPrefab(product);
+
+            if (GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
             {
                 RectTransform.sizeDelta = new Vector2(this.itemParent.RectTransform.sizeDelta.x, RectTransform.sizeDelta.y);
             }
@@ -38,6 +43,21 @@ namespace Tamana
 
             RectTransform.position = pos;
             gameObject.SetActive(true);
+        }
+
+        private void InstantiateItemPrefab(Item_Product product)
+        {
+            ItemPreview = Item_Preview.InstantiateItemPrefab(product.Product, new Vector2(transform.GetSiblingIndex(), 1000));
+        }
+
+        private void OnDestroy()
+        {
+            if(itemRenderer.texture != null)
+            {
+                Destroy(ItemRenderer.texture);
+            }
+
+            ItemPreview = null;
         }
     }
 }

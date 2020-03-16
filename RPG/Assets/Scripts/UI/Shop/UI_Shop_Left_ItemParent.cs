@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Tamana
@@ -23,20 +24,37 @@ namespace Tamana
             InstantiateItem();
         }
 
-        private void InstantiateItem()
+        private async void InstantiateItem()
         {
             var products = Left.Shop.Products;
             var spacing = 10;
             var position = new Vector3(RectTransform.position.x, RectTransform.position.y + (RectTransform.sizeDelta.y * 0.5f));
             position.y -= itemPrefab.RectTransform.sizeDelta.y * 0.5f;
 
+            var items = new List<UI_Shop_Left_Item>(products.Count);
+
             foreach (var i in products)
             {
                 var product = Instantiate(itemPrefab, RectTransform);
                 product.Initialize(i, this, position);
+                items.Add(product);
 
                 position.y -= itemPrefab.RectTransform.sizeDelta.y + spacing;
             }
+
+            await AsyncManager.WaitForFrame(1);
+
+            int index = 0;
+            foreach (var item in items)
+            {
+                UI_ItemRenderer.ResetCameraPositionAndRotation(products.ElementAt(index).Product, item.ItemPreview.transform);
+                UI_ItemRenderer.SetTexture(item.ItemRenderer.texture as RenderTexture);
+                UI_ItemRenderer.Render();
+
+                index++;
+            }
+
+            UI_ItemRenderer.SetTexture(null);
         }
 
         private void Resize()

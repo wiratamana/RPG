@@ -164,17 +164,17 @@ namespace Tamana
         {
             await AsyncManager.WaitForFrame(2);
 
-            foreach(var t in instantiatedPrefabDic)
+            foreach(var t in itemIconsList)
             {
-                UI_ItemRenderer.SetPosition(t.Key.transform.position - new Vector3(0, 0, 1));
-                UI_ItemRenderer.SetTexture(t.Value);
-
-                t.Key.ItemIcon.ItemRenderer.ResetCameraPositionAndRotation();
-                t.Key.ResetRotation();
-                t.Key.UpdateMaterial();
+                UI_ItemRenderer.SetPosition(t.ItemRenderer.ItemPreview.transform.position - new Vector3(0, 0, 1));
+                UI_ItemRenderer.SetTexture(t.ItemRenderer.RawImage.texture as RenderTexture);
+                UI_ItemRenderer.ResetCameraPositionAndRotation(t.Item, t.ItemRenderer.ItemPreview.transform);
+                
+                t.ItemRenderer.ItemPreview.ResetRotation();
+                t.ItemRenderer.ItemPreview.UpdateMaterial();
                 UI_ItemRenderer.Render();
 
-                t.Key.ItemIcon.ItemRenderer.gameObject.SetActive(true);
+                t.ItemRenderer.gameObject.SetActive(true);
             }
         }
     }
