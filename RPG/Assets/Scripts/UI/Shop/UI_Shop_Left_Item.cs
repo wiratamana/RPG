@@ -22,15 +22,22 @@ namespace Tamana
         public TextMeshProUGUI Price => price;
         public RawImage ItemRenderer => itemRenderer;
 
-        public void Initialize(Item_Base item, int stock, int price, float width)
+        private UI_Shop_Left_ItemParent itemParent;
+
+        public void Initialize(Item_Product product, UI_Shop_Left_ItemParent itemParent, Vector3 pos)
         {
-            if(GameManager.IsScreenResolutionGreaterOrEqualThanFHD == false)
+            this.itemParent = itemParent;
+
+            if(GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
             {
-                return;
+                RectTransform.sizeDelta = new Vector2(this.itemParent.RectTransform.sizeDelta.x, RectTransform.sizeDelta.y);
             }
 
-            RectTransform.sizeDelta = new Vector2(width, RectTransform.sizeDelta.y);
-            RectTransform.position = new Vector3(100 + (RectTransform.sizeDelta.x * 0.5f), RectTransform.position.y);
+            ItemName.text = product.Product.ItemName;
+            stock.text = product.Stock.ToString();
+
+            RectTransform.position = pos;
+            gameObject.SetActive(true);
         }
     }
 }

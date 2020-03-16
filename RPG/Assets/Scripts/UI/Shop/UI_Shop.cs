@@ -27,7 +27,7 @@ namespace Tamana
         public UI_Shop_Left Left => this.GetAndAssignComponentInChildren(ref left);
         public UI_Shop_Right Right => this.GetAndAssignComponentInChildren(ref right);
 
-        private IReadOnlyCollection<Item_Product> products;
+        public IReadOnlyCollection<Item_Product> Products { get; private set; }
 
         private Canvas canvas;
         public Canvas Canvas => this.GetAndAssignComponent(ref canvas);
@@ -54,7 +54,7 @@ namespace Tamana
                 Right.RectTransform.localPosition = new Vector3(screenSize.x * 0.25f, 0.0f);
             }
 
-            this.products = products;
+            Products = products;
             Left.Activate();
         }
     }
