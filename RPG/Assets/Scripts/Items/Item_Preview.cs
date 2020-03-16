@@ -27,8 +27,7 @@ namespace Tamana
 
         public void UpdateMaterial()
         {
-            var cam = UI_Menu.Instance.Inventory.Left.ItemIconDrawer.TextureRendererCamera;
-            material.SetVector("_CamDir", cam.transform.forward);
+            material.SetVector("_CamDir", UI_ItemRenderer.GetCameraTransform().forward);
         }
 
         public void UpdateRotation()

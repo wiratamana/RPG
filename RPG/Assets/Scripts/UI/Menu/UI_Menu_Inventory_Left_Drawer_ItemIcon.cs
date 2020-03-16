@@ -21,30 +21,6 @@ namespace Tamana
             }
         }
 
-        private Camera _textureRendererCamera;
-        public Camera TextureRendererCamera
-        {
-            get
-            {
-                if(_textureRendererCamera == null)
-                {
-                    var go = new GameObject(nameof(TextureRendererCamera));
-                    var cam = go.AddComponent<Camera>();
-                    cam.orthographic = true;
-                    cam.orthographicSize = 0.4f;
-                    cam.clearFlags = CameraClearFlags.SolidColor;
-                    cam.backgroundColor = Color.clear;
-                    cam.cullingMask = 1 << LayerMask.NameToLayer(LayerManager.LAYER_ITEM_PROJECTION);
-
-                    go.SetActive(false);
-
-                    _textureRendererCamera = cam;
-                }
-
-                return _textureRendererCamera;
-            }
-        }
-
         private Dictionary<Item_Preview, RenderTexture> instantiatedPrefabDic = new Dictionary<Item_Preview, RenderTexture>();
         private List<UI_Menu_Inventory_Left_ItemIcon> itemIconsList = new List<UI_Menu_Inventory_Left_ItemIcon>();
         private Stack<UI_Menu_Inventory_Left_ItemIcon> itemIconsPool = new Stack<UI_Menu_Inventory_Left_ItemIcon>();
@@ -59,8 +35,8 @@ namespace Tamana
 
         private void OnItemTypeChanged(ItemType itemType)
         {
-            TextureRendererCamera.enabled = false;
-            TextureRendererCamera.targetTexture = null;
+            UI_ItemRenderer.Deactivate();
+            UI_ItemRenderer.SetTexture(null);
 
             foreach (var i in itemIconsList)
             {
@@ -75,12 +51,12 @@ namespace Tamana
 
             InstantiateItemIconBackground();
 
-            TextureRendererCamera.enabled = true;
+            UI_ItemRenderer.Activate();
         }
 
         private void CleanItem()
         {
-            TextureRendererCamera.targetTexture = null;
+            UI_ItemRenderer.SetTexture(null);
 
             foreach (var itemIcon in itemIconsList)
             {
@@ -181,22 +157,22 @@ namespace Tamana
             // ===============================================================================================
             // Render texture for the first time after instantiation finished
             // ===============================================================================================
-            StartCoroutine(RenderCameraForTheFirstTime());
+            RenderCameraForTheFirstTime();
         }
 
-        private IEnumerator RenderCameraForTheFirstTime()
+        private async void RenderCameraForTheFirstTime()
         {
-            yield return new WaitForEndOfFrame();
+            await AsyncManager.WaitForFrame(2);
 
             foreach(var t in instantiatedPrefabDic)
             {
-                TextureRendererCamera.transform.position = t.Key.transform.position - new Vector3(0, 0, 1);
-                TextureRendererCamera.targetTexture = t.Value;
+                UI_ItemRenderer.SetPosition(t.Key.transform.position - new Vector3(0, 0, 1));
+                UI_ItemRenderer.SetTexture(t.Value);
 
                 t.Key.ItemIcon.ItemRenderer.ResetCameraPositionAndRotation();
                 t.Key.ResetRotation();
                 t.Key.UpdateMaterial();
-                TextureRendererCamera.Render();
+                UI_ItemRenderer.Render();
 
                 t.Key.ItemIcon.ItemRenderer.gameObject.SetActive(true);
             }
