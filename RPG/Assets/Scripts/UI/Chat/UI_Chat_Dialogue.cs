@@ -97,9 +97,16 @@ namespace Tamana
 
             else if (chat is Chat_Event)
             {
-                Hide();
-                ChatMain.Branching.Deactivate();
-                UI_Shop.Instance.Open();
+                var e = chat as Chat_Event;
+                switch (e.Event)
+                {
+                    case ChatEvent.Shop:
+                        Hide();
+                        ChatMain.Branching.Deactivate();
+                        var products = e.GetEventObject<Item_ShopProducts>();
+                        UI_Shop.Instance.Open(products.Products);
+                        break;
+                }
             }
         }
     }

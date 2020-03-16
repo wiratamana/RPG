@@ -56,6 +56,7 @@ namespace Tamana
     public enum ChatEvent
     {
         Shop,
+        Blacksmith
     }
 
     public enum StateMachineBehaviourPosition

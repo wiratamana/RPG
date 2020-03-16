@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: 2-1-3-Shop
   m_EditorClassIdentifier: 
   _event: 0
+  products: {fileID: 11400000, guid: 1acfc5e425669b64093840fdc80e9157, type: 2}

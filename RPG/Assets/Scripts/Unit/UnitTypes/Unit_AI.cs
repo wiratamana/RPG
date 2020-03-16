@@ -15,10 +15,12 @@ namespace Tamana
         private Unit_AI_CombatLogic combatLogic;
         private PF_Unit pf;
         private Unit_AI_DialogueHolder dialogueHolder;
+        private Unit_AI_ShopHandler shopHandler;
 
         public Unit_AI_CombatLogic CombatLogic => this.GetOrAddAndAssignComponent(ref combatLogic);
         public PF_Unit PF => this.GetOrAddAndAssignComponent(ref pf);
         public Unit_AI_DialogueHolder DialogueHolder => this.GetOrAddAndAssignComponent(ref dialogueHolder);
+        public Unit_AI_ShopHandler ShopHandler => this.GetOrAddAndAssignComponent(ref shopHandler);
 
         public AIBehaviour Behaviour => behaviour;
 
@@ -28,6 +30,7 @@ namespace Tamana
 
             this.LogErrorIfComponentIsNull(DialogueHolder);
             this.LogErrorIfComponentIsNull(CombatLogic);
+            this.LogErrorIfComponentIsNull(ShopHandler);
         }
 
         protected override void Awake()
@@ -48,9 +51,7 @@ namespace Tamana
                 var brain = Instantiate(this.brain);
                 brain.Initialize(this);
                 CombatLogic.InstallBrain(brain);
-            }   
-            
-            
+            }                          
         }
     }
 }
