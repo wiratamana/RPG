@@ -33,7 +33,7 @@ namespace Tamana
             }
         }
 
-        public UI_Menu_Inventory_Right_ItemDetails_Effect_Child[] Effects { private set; get; }
+        public UI_ItemEffect[] Effects { private set; get; }
 
         private void Start()
         {
@@ -47,11 +47,11 @@ namespace Tamana
             var index = 0;
             var xSpacing = 20.0f;
             var xOffset = xSpacing;
-            Effects = new UI_Menu_Inventory_Right_ItemDetails_Effect_Child[effects.Length];
+            Effects = new UI_ItemEffect[effects.Length];
 
             foreach (var e in effects)
             {
-                var effect = UI_Menu_Inventory_Right_ItemDetails_Effect_Child
+                var effect = UI_ItemEffect
                     .CreateInstance(RectTransform, e, xOffset, out float outWidth);
                 Effects[index] = effect;
 

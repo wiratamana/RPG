@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 namespace Tamana
@@ -14,6 +15,7 @@ namespace Tamana
         [SerializeField] private TextMeshProUGUI stock;
         [SerializeField] private TextMeshProUGUI price;
         [SerializeField] private RawImage itemRenderer;
+        private EventTrigger eventTrigger;
 
         public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransform);
         public Image Background => background;
@@ -21,28 +23,35 @@ namespace Tamana
         public TextMeshProUGUI Stock => stock;
         public TextMeshProUGUI Price => price;
         public RawImage ItemRenderer => itemRenderer;
+        public EventTrigger EventTrigger => Background.GetOrAddAndAssignComponent(ref eventTrigger);
 
         public Item_Preview ItemPreview { get; private set; }
         private UI_Shop_Left_ItemParent itemParent;
+        private Item_Product itemProduct;
 
-        public void Initialize(Item_Product product, UI_Shop_Left_ItemParent itemParent, Vector3 pos)
+        public void Initialize(Item_Product itemProduct, UI_Shop_Left_ItemParent itemParent, Vector3 pos)
         {
             this.itemParent = itemParent;
+            this.itemProduct = itemProduct;
             var texSize = ItemRenderer.rectTransform.sizeDelta;
             ItemRenderer.texture = new RenderTexture((int)texSize.x, (int)texSize.y, 16, RenderTextureFormat.ARGBHalf);
 
-            InstantiateItemPrefab(product);
+            InstantiateItemPrefab(itemProduct);
 
             if (GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
             {
                 RectTransform.sizeDelta = new Vector2(this.itemParent.RectTransform.sizeDelta.x, RectTransform.sizeDelta.y);
             }
 
-            ItemName.text = product.Product.ItemName;
-            stock.text = product.Stock.ToString();
+            ItemName.text = itemProduct.Product.ItemName;
+            stock.text = itemProduct.Stock.ToString();
 
             RectTransform.position = pos;
             gameObject.SetActive(true);
+
+            EventTrigger.AddListener(EventTriggerType.PointerEnter, OnPointerEnter);
+            EventTrigger.AddListener(EventTriggerType.PointerExit, OnPointerExit);
+            EventTrigger.AddListener(EventTriggerType.PointerClick, OnPointerClick);
         }
 
         private void InstantiateItemPrefab(Item_Product product)
@@ -58,6 +67,23 @@ namespace Tamana
             }
 
             ItemPreview = null;
+        }
+
+        private void OnPointerEnter(BaseEventData eventData)
+        {
+            UI_Selection.CreateInstance(RectTransform, 24);
+            itemParent.OnSelectedItemChanged.Invoke(itemProduct);
+        }
+
+        private void OnPointerExit(BaseEventData eventData)
+        {
+            UI_Selection.DestroyInstance();
+            itemParent.OnSelectedItemChanged.Invoke(null);
+        }
+
+        private void OnPointerClick(BaseEventData eventData)
+        {
+
         }
     }
 }

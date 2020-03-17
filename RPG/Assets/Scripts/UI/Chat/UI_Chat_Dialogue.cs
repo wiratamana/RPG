@@ -11,6 +11,9 @@ namespace Tamana
         [SerializeField] private TextMeshProUGUI characterName;
         [SerializeField] private TextMeshProUGUI dialogueText;
 
+        private RectTransform rectTransfrom;
+        public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransfrom);
+
         private UI_Chat_Main chatMain;
         public UI_Chat_Main ChatMain => this.GetAndAssignComponentInParent(ref chatMain);
 
@@ -35,16 +38,6 @@ namespace Tamana
 
             InputEvent.Instance.SetCursorToInvisible();
             InputEvent.Instance.Event_NextDialogue.RemoveAllListener();
-        }
-
-        private void Hide()
-        {
-            gameObject.SetActive(false);
-        }
-
-        private void Show()
-        {
-            gameObject.SetActive(true);
         }
 
         public async void SetValue(string characterName, IReadOnlyCollection<Chat_Base> dialogues)
@@ -101,7 +94,6 @@ namespace Tamana
                 switch (e.Event)
                 {
                     case ChatEvent.Shop:
-                        Hide();
                         ChatMain.Branching.Deactivate();
                         var products = e.GetEventObject<Item_ShopProducts>();
                         UI_Shop.Instance.Open(products.Products);

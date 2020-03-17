@@ -56,6 +56,7 @@ namespace Tamana
 
             Products = products;
             Left.Activate();
+            Right.Activate();
         }
     }
 }

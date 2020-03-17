@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Tamana
 {
-    public class UI_Menu_Selection : MonoBehaviour
+    public class UI_Selection : MonoBehaviour
     {
         private Image selectionImage;
         public Image SelectionImage
@@ -20,16 +20,16 @@ namespace Tamana
             }
         }
 
-        private static UI_Menu_Selection instance;
+        private static UI_Selection instance;
 
         public static void CreateInstance(RectTransform parent, float maxExpand)
         {
             Image img = null;
             if(instance == null)
             {
-                img = UI_Pool.Instance.GetImage(parent, (int)parent.sizeDelta.x, (int)parent.sizeDelta.y, nameof(UI_Menu_Selection));
+                img = UI_Pool.Instance.GetImage(parent, (int)parent.sizeDelta.x, (int)parent.sizeDelta.y, nameof(UI_Selection));
 
-                var selection = img.gameObject.AddComponent<UI_Menu_Selection>();
+                var selection = img.gameObject.AddComponent<UI_Selection>();
                 selection.maxExpand = maxExpand;
                 selection.selectionImage = img;
 
@@ -41,7 +41,7 @@ namespace Tamana
 
                 img.rectTransform.SetParent(parent);
                 img.rectTransform.sizeDelta = parent.sizeDelta;
-                img.name = nameof(UI_Menu_Selection);
+                img.name = nameof(UI_Selection);
 
                 instance.maxExpand = maxExpand;
                 instance.defaultSizeDelta = parent.sizeDelta;
@@ -49,7 +49,7 @@ namespace Tamana
             }
 
             img.rectTransform.localPosition = Vector3.zero;
-            img.sprite = UI_Menu.Instance.MenuResources.InventoryItemOnPointerOver_Sprite;
+            img.sprite = GlobalAssetsReference.InventoryItemOnPointerOver_Sprite;
             img.type = Image.Type.Sliced;
             img.raycastTarget = false;
         }

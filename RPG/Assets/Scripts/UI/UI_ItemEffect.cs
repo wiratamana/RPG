@@ -5,7 +5,7 @@ using TMPro;
 
 namespace Tamana
 {
-    public class UI_Menu_Inventory_Right_ItemDetails_Effect_Child : MonoBehaviour
+    public class UI_ItemEffect : MonoBehaviour
     {
         private RectTransform _rectTransform;
         public RectTransform RectTransform
@@ -26,7 +26,7 @@ namespace Tamana
         public RectTransform TextBackground { private set; get; }
         public TextMeshProUGUI Text { private set; get; }
 
-        public static UI_Menu_Inventory_Right_ItemDetails_Effect_Child CreateInstance(RectTransform parent,
+        public static UI_ItemEffect CreateInstance(RectTransform parent,
             Item_Equipment_Effect effect, float xOffset, out float outWidth)
         {
             // ===============================================================================================
@@ -45,7 +45,7 @@ namespace Tamana
             var go = new GameObject(effect.ToString());
             var rt = go.AddComponent<RectTransform>();
             rt.SetParent(parent);
-            var retval = go.AddComponent<UI_Menu_Inventory_Right_ItemDetails_Effect_Child>();
+            var retval = go.AddComponent<UI_ItemEffect>();
 
             // ===============================================================================================
             // Instantiate IconBackground and Icon

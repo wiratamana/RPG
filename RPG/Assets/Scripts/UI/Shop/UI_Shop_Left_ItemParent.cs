@@ -14,6 +14,8 @@ namespace Tamana
         public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransform);
         public UI_Shop_Left Left => this.GetAndAssignComponentInParent(ref left);
 
+        public EventManager<Item_Product> OnSelectedItemChanged { get; } = new EventManager<Item_Product>();
+
         public void Activate()
         {
             if(GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
@@ -63,16 +65,19 @@ namespace Tamana
             var lsize = Left.ItemTypes.RectTransform.sizeDelta;
             var rpos = Left.Price.position;
             var rsize = Left.Price.sizeDelta;
+            var bpos = UI_Chat_Main.Instance.Dialogue.RectTransform.position;
+            var bsize = UI_Chat_Main.Instance.Dialogue.RectTransform.sizeDelta;
             var spacing = 15.0f;
 
             var left = lpos.x - (lsize.x * 0.5f);
             var right = rpos.x + (rsize.x * 0.5f);
-            var bot = rpos.y - (rsize.y * 0.5f);
+            var up = rpos.y - (rsize.y * 0.5f);
+            var bot = bpos.y + (bsize.y * 0.5f);
 
             var sizex = Mathf.Abs(left - right);
-            var sizey = bot - spacing;
+            var sizey = Mathf.Abs(up - bot) - (spacing * 2);
             RectTransform.sizeDelta = new Vector2(sizex, sizey);
-            RectTransform.position = new Vector3(left + (sizex * 0.5f), sizey * 0.5f);
+            RectTransform.position = new Vector3(left + (sizex * 0.5f), up - (sizey * 0.5f) - spacing);
         }
     }
 }
