@@ -54,7 +54,7 @@ namespace Tamana
             retval.Icon = UI_Pool.Instance.GetImage(retval.IconBackground.rectTransform,
                 (int)iconSize.x, (int)iconSize.y, nameof(Icon));
             retval.Icon.rectTransform.localPosition = Vector3.zero;
-            retval.Icon.sprite = UI_Menu.Instance.MenuResources.GetMainStatusSprites(effect.type);
+            retval.Icon.sprite = GlobalAssetsReference.GetMainStatusSprites(effect.type);
 
             // ===============================================================================================
             // Instantiate text, and get prefered width from the text. 

@@ -23,6 +23,19 @@ namespace Tamana
 
         public UI_Shop_Right_ItemDetails_Effect Effect => this.GetAndAssignComponentInChildren(ref effect);
 
+        private Item_Preview itemPreview;
+        private RenderTexture renderTexture;
+
+        private async void UpdateAsync()
+        {
+            while(itemPreview != null)
+            {
+                await AsyncManager.WaitForFrame(1);
+
+                UI_ItemRenderer.Render();
+            }
+        }
+
         public void Activate()
         {
             if(GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
@@ -31,6 +44,9 @@ namespace Tamana
             }
 
             Right.Shop.Left.ItemParent.OnSelectedItemChanged.AddListener(OnSelectedItemChanged, GetInstanceID());
+            renderTexture = new RenderTexture((int)itemRenderer.rectTransform.sizeDelta.x, (int)itemRenderer.rectTransform.sizeDelta.y, 
+                16, RenderTextureFormat.ARGBHalf);
+            itemRenderer.texture = renderTexture;
         }
 
         public void Deactivate()
@@ -43,11 +59,48 @@ namespace Tamana
             }
 
             Effect.Deactivate();
+
+            itemRenderer.texture = null;
+            UI_ItemRenderer.SetTexture(null);
+            Destroy(renderTexture);
+            renderTexture = null;
+
+            if(itemPreview != null)
+            {
+                Destroy(itemPreview);
+                itemPreview = null;
+            }
         }
 
         private void OnSelectedItemChanged(Item_Product itemProduct)
         {
-            Debug.Log(itemProduct == null ? "null" : itemProduct.Product.ItemName);
+            if(itemProduct == null)
+            {
+                Destroy(itemPreview);
+                itemPreview = null;
+
+                itemRenderer.enabled = false;
+                itemName.text = null;
+                itemDesription.text = null;
+
+                Effect.Deactivate();
+            }
+
+            else
+            {
+                itemPreview = Item_Preview.InstantiateItemPrefab(itemProduct.Product, Vector2.zero);
+                itemPreview.enabled = true;
+                itemRenderer.enabled = true;
+                itemName.text = itemProduct.Product.ItemName;
+                itemDesription.text = itemProduct.Product.ItemDescription;
+                Effect.Activate(itemProduct);
+
+                UI_ItemRenderer.ResetCameraPositionAndRotation(itemProduct.Product, itemPreview.transform);
+                UI_ItemRenderer.SetTexture(renderTexture);
+                UI_ItemRenderer.Render();
+
+                UpdateAsync();
+            }
         }
 
         private void Resize()
