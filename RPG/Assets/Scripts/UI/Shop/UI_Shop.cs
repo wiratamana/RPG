@@ -35,7 +35,10 @@ namespace Tamana
         public EventManager OnOpened { get; } = new EventManager();
         public EventManager OnClosed { get; } = new EventManager();
 
-        public void Open(IReadOnlyCollection<Item_Product> products)
+        private UI_Navigator uinav_escapeToCloseShop;
+        private Chat_ReturnTo dialogueAfterShopClosed;
+
+        public void Open(IReadOnlyCollection<Item_Product> products, Chat_ReturnTo dialogueAfterShopClosed)
         {
             if(GameManager.IsScreenResolutionGreaterOrEqualThanFHD == false)
             {
@@ -52,11 +55,34 @@ namespace Tamana
 
                 Right.RectTransform.sizeDelta = Left.RectTransform.sizeDelta;
                 Right.RectTransform.localPosition = new Vector3(screenSize.x * 0.25f, 0.0f);
-            }
+            }            
 
             Products = products;
             Left.Activate();
             Right.Activate();
+
+            uinav_escapeToCloseShop = UI_NavigatorManager.Instance.Add("Back", InputEvent.ACTION_CLOSE_SHOP_MENU);
+            this.dialogueAfterShopClosed = dialogueAfterShopClosed;
+            InputEvent.Instance.Event_CloseShop.AddListener(Close);
+
+            OnOpened.Invoke();
+        }
+
+        public void Close()
+        {
+            Left.Deactivate();
+            Right.Deactivate();
+            Products = null;
+
+            UI_NavigatorManager.Instance.Remove(ref uinav_escapeToCloseShop);
+            InputEvent.Instance.Event_CloseShop.RemoveAllListener();
+
+            UI_Chat_Main.Instance.Dialogue.UpdateDialogue(dialogueAfterShopClosed.ReturnToObject.Dialogue
+                , dialogueAfterShopClosed.ReturnToIndex);
+
+            dialogueAfterShopClosed = null;
+
+            OnClosed.Invoke();
         }
     }
 }

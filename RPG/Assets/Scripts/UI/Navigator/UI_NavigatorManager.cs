@@ -39,7 +39,7 @@ namespace Tamana
             Canvas.enabled = true;
         }
 
-        public void Remove(UI_Navigator navigator)
+        public void Remove(ref UI_Navigator navigator)
         {
             if(navigator == null)
             {
@@ -49,11 +49,29 @@ namespace Tamana
             navigator.transform.SetParent(poolTransform);
             navigatorPool.Push(navigator);
             Reposition();
+
+            navigator = null;
         }
 
         public UI_Navigator Add(string text, char letter)
         {
             if(navigatorPool.Count == 0)
+            {
+                navigatorPool.Push(Instantiate(prefab, poolTransform));
+            }
+
+            var nav = navigatorPool.Pop();
+            nav.SetValue(text, letter);
+
+            nav.transform.SetParent(transform);
+            Reposition();
+
+            return nav;
+        }
+
+        public UI_Navigator Add(string text, string letter)
+        {
+            if (navigatorPool.Count == 0)
             {
                 navigatorPool.Push(Instantiate(prefab, poolTransform));
             }

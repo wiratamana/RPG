@@ -42,7 +42,6 @@ namespace Tamana
 
         public async void SetValue(string characterName, IReadOnlyCollection<Chat_Base> dialogues)
         {
-            Debug.Log("SetValue");
             this.characterName.text = characterName;
             this.dialogues = dialogues;
             index = 0;
@@ -96,7 +95,11 @@ namespace Tamana
                     case ChatEvent.Shop:
                         ChatMain.Branching.Deactivate();
                         var products = e.GetEventObject<Item_ShopProducts>();
-                        UI_Shop.Instance.Open(products.Products);
+
+                        e = dialogues.ElementAt(index + 1) as Chat_Event;
+                        var returnTo = e.GetEventObject<Chat_ReturnTo>();
+                        UI_Shop.Instance.Open(products.Products, returnTo);
+                        InputEvent.Instance.Event_NextDialogue.RemoveAllListener();
                         break;
                 }
             }

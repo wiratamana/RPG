@@ -11,5 +11,23 @@ namespace Tamana
 
         private UI_Shop_Right_ItemDetails itemDetails;
         public UI_Shop_Right_ItemDetails ItemDetails => this.GetAndAssignComponentInParent(ref itemDetails);
+
+        private UI_ItemEffect[] itemEffects;
+
+        public void Deactivate()
+        {
+            if(itemEffects == null)
+            {
+                return;
+            }
+
+            foreach(var i in itemEffects)
+            {
+                i.ReturnToPool();
+                Destroy(i.gameObject);
+            }
+
+            itemEffects = null;
+        }
     }
 }

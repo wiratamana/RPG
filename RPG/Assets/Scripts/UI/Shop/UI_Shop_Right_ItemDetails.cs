@@ -30,7 +30,19 @@ namespace Tamana
                 Resize();
             }
 
-            Right.Shop.Left.ItemParent.OnSelectedItemChanged.AddListener(OnSelectedItemChanged);
+            Right.Shop.Left.ItemParent.OnSelectedItemChanged.AddListener(OnSelectedItemChanged, GetInstanceID());
+        }
+
+        public void Deactivate()
+        {
+            Right.Shop.Left.ItemParent.OnSelectedItemChanged.RemoveListener(OnSelectedItemChanged, GetInstanceID());
+
+            if(itemRenderer.texture != null)
+            {
+                Destroy(itemRenderer.texture);
+            }
+
+            Effect.Deactivate();
         }
 
         private void OnSelectedItemChanged(Item_Product itemProduct)

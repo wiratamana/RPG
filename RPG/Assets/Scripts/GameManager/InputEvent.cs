@@ -44,9 +44,13 @@ namespace Tamana
 
         public const char ACTION_PICK_UP_ITEM = 'E';
         public const char ACTION_OPEN_MENU_INVENTORY = 'B';
+        public const string ACTION_CLOSE_SHOP_MENU = "Esc";
 
         public EventManager Event_Chat { get; } = new EventManager();
         public EventManager Event_NextDialogue { get; } = new EventManager();
+
+        public EventManager Event_CloseShop { get; } = new EventManager();
+
         public EventManager Event_PickUpItem { get; } = new EventManager();
         public EventManager Event_OpenOrCloseMenuInventory { private set; get; } = new EventManager();
 
@@ -74,6 +78,11 @@ namespace Tamana
             if (Input.GetKeyDown(KeyCode.B) == true)
             {
                 Event_OpenOrCloseMenuInventory.Invoke();
+            }
+
+            if(Input.GetKeyDown(KeyCode.Escape) == true)
+            {
+                Event_CloseShop.Invoke();
             }
 
             if(Input.GetKeyDown(KeyCode.Space) == true)

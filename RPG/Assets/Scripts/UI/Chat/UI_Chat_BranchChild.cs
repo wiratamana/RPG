@@ -59,6 +59,8 @@ namespace Tamana
             EventTrigger.RemoveListener(EventTriggerType.PointerEnter, OnPointerEnter);
             EventTrigger.RemoveListener(EventTriggerType.PointerExit, OnPointerExit);
             EventTrigger.RemoveListener(EventTriggerType.PointerClick, OnPointerClick);
+
+            OnClickEvent.RemoveAllListener();
         }
 
         private void OnPointerClick(BaseEventData eventData)

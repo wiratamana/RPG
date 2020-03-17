@@ -10,11 +10,16 @@ namespace Tamana
     {
         SerializedProperty _event;
         SerializedProperty products;
+        SerializedProperty returnToObject;
+        SerializedProperty returnToIndex;
 
         private void OnEnable()
         {
             _event = serializedObject.FindProperty(Chat_Event.FIELD_EVENT);
             products = serializedObject.FindProperty(Chat_Event.FIELD_PRODUCTS);
+
+            returnToObject = serializedObject.FindProperty(Chat_Event.FIELD_RETURN_TO_OBJECT);
+            returnToIndex = serializedObject.FindProperty(Chat_Event.FIELD_RETURN_TO_INDEX);
         }
 
         public override void OnInspectorGUI()
@@ -30,6 +35,10 @@ namespace Tamana
                     EditorGUILayout.PropertyField(products);
                     break;
                 case ChatEvent.Blacksmith:
+                    break;
+                case ChatEvent.ReturnTo:
+                    EditorGUILayout.PropertyField(returnToObject);
+                    EditorGUILayout.PropertyField(returnToIndex);
                     break;
             }
 

@@ -16,6 +16,8 @@ namespace Tamana
 
         public EventManager<Item_Product> OnSelectedItemChanged { get; } = new EventManager<Item_Product>();
 
+        private List<UI_Shop_Left_Item> items = new List<UI_Shop_Left_Item>();
+
         public void Activate()
         {
             if(GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
@@ -26,14 +28,22 @@ namespace Tamana
             InstantiateItem();
         }
 
+        public void Deactivate()
+        {
+            foreach(var i in items)
+            {
+                Destroy(i);
+            }
+
+            items.Clear();
+        }
+
         private async void InstantiateItem()
         {
             var products = Left.Shop.Products;
             var spacing = 10;
             var position = new Vector3(RectTransform.position.x, RectTransform.position.y + (RectTransform.sizeDelta.y * 0.5f));
             position.y -= itemPrefab.RectTransform.sizeDelta.y * 0.5f;
-
-            var items = new List<UI_Shop_Left_Item>(products.Count);
 
             foreach (var i in products)
             {

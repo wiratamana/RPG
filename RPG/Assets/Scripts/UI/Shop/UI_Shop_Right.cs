@@ -24,6 +24,12 @@ namespace Tamana
             ItemDetails.Activate();
         }
 
+        public void Deactivate()
+        {
+            ItemDetails.Deactivate();
+            gameObject.SetActive(false);
+        }
+
         private void Resize()
         {
             var leftSize = Shop.Left.RectTransform.sizeDelta;

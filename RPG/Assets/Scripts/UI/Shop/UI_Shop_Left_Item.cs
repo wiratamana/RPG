@@ -66,7 +66,9 @@ namespace Tamana
                 Destroy(ItemRenderer.texture);
             }
 
+            Destroy(ItemPreview);
             ItemPreview = null;
+            Destroy(gameObject);
         }
 
         private void OnPointerEnter(BaseEventData eventData)

@@ -71,5 +71,11 @@ namespace Tamana
 
             return item.GetComponent<Item_Preview>();
         }
+
+        private void OnDestroy()
+        {
+            Destroy(material);
+            Destroy(gameObject);
+        }
     }
 }

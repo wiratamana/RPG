@@ -33,6 +33,12 @@ namespace Tamana
             ItemParent.Activate();
         }
 
+        public void Deactivate()
+        {
+            ItemParent.Deactivate();
+            gameObject.SetActive(false);
+        }
+
         private void Resize()
         {
             var startY = 200.0f;
