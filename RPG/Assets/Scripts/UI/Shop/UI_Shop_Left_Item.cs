@@ -40,7 +40,7 @@ namespace Tamana
 
             if (GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
             {
-                RectTransform.sizeDelta = new Vector2(this.itemParent.RectTransform.sizeDelta.x, RectTransform.sizeDelta.y);
+                Resize();
             }
 
             ItemName.text = itemProduct.Product.ItemName;
@@ -86,6 +86,30 @@ namespace Tamana
         private void OnPointerClick(BaseEventData eventData)
         {
 
+        }
+
+        private async void Resize()
+        {
+            RectTransform.sizeDelta = new Vector2(itemParent.RectTransform.sizeDelta.x, RectTransform.sizeDelta.y);
+
+            await AsyncManager.WaitForFrame(1);
+
+            var nameLeft = ItemRenderer.rectTransform.position.x + (ItemRenderer.rectTransform.sizeDelta.x * 0.5f);
+            var nameRight = itemParent.Left.ItemTypes.RectTransform.position.x + (itemParent.Left.ItemTypes.RectTransform.sizeDelta.x * 0.5f);
+            var width = Mathf.Abs(nameLeft - nameRight);
+
+            ItemName.rectTransform.sizeDelta = new Vector2(width, ItemName.rectTransform.sizeDelta.y);
+            ItemName.rectTransform.position = new Vector3(nameLeft + (width * 0.5f), ItemName.rectTransform.position.y);
+
+            var stockPos = itemParent.Left.Stock.position.x;
+            var stockWidth = itemParent.Left.Stock.sizeDelta.x;
+            Stock.rectTransform.sizeDelta = new Vector2(stockWidth, Stock.rectTransform.sizeDelta.y);
+            Stock.rectTransform.position = new Vector3(stockPos, Stock.rectTransform.position.y);
+
+            var pricePos = itemParent.Left.Price.position.x;
+            var priceWidth = itemParent.Left.Price.sizeDelta.x;
+            Price.rectTransform.sizeDelta = new Vector2(priceWidth, Stock.rectTransform.sizeDelta.y);
+            Price.rectTransform.position = new Vector3(pricePos, Stock.rectTransform.position.y);
         }
     }
 }
