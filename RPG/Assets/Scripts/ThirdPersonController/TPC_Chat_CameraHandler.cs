@@ -59,8 +59,9 @@ namespace Tamana
             var length = 2.0f;
             var layer = LayerMask.GetMask(LayerManager.LAYER_ENVIRONMENT);
             var posBetween2Head = GetPositionBetween2Head(out Vector3 dir);
-            var left = Vector3.Normalize(Quaternion.AngleAxis(-angle, Vector3.up) * dir);
-            var leftCampos = posBetween2Head + (left * length);
+
+            VectorHelper.FastNormalize(Quaternion.AngleAxis(-angle, Vector3.up) * dir, out Vector3 left);
+            VectorHelper.Add(posBetween2Head, left * length, out Vector3 leftCampos);
             Physics.Linecast(posBetween2Head, leftCampos, out RaycastHit hit, layer);
 
             float leftHitDistance;
@@ -71,22 +72,23 @@ namespace Tamana
             }
             else
             {
-                leftHitDistance = Vector3.Distance(posBetween2Head, hit.point);
+                VectorHelper.FastDistance(posBetween2Head, hit.point, out leftHitDistance);
             }
 
-            var right = Vector3.Normalize(Quaternion.AngleAxis(angle, Vector3.up) * dir);
+            var right = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+            VectorHelper.FastNormalize(ref right);
             var rightCampos = posBetween2Head + (right * length);
-            Physics.Linecast(posBetween2Head, leftCampos, out hit, layer);
+            Physics.Linecast(posBetween2Head, rightCampos, out hit, layer);
 
             if(hit.transform == null)
             {
-                dir2mid = left;
+                VectorHelper.FastNormalizeDirection(posBetween2Head, rightCampos, out dir2mid);
                 return rightCampos;
             }
             else
             {
-                var rightHitDistance = Vector3.Distance(posBetween2Head, hit.point);
-                if(rightHitDistance > leftHitDistance)
+                VectorHelper.FastDistance(posBetween2Head, hit.point, out float rightHitDistance);
+                if (rightHitDistance > leftHitDistance)
                 {
                     dir2mid = left;
                     return rightCampos;

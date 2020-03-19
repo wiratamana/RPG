@@ -32,12 +32,52 @@ namespace Tamana
             v.z /= distance;
         }
 
+        public static void FastNormalizeDirection(in Vector3 target, in Vector3 from, out Vector3 result)
+        {
+            result.x = target.x - from.x;
+            result.y = target.y - from.y;
+            result.z = target.z - from.z;
+
+            var distance = Mathf.Sqrt((result.x * result.x) + (result.y * result.y) + (result.z * result.z));
+            result.x /= distance;
+            result.y /= distance;
+            result.z /= distance;
+        }
+
         public static void FastNormalize(in Vector3 v, out Vector3 o)
         {
             var distance = Mathf.Sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
             o.x = v.x / distance;
             o.y = v.y / distance;
             o.z = v.z / distance;
+        }
+
+        public static void Add(in Vector3 a, in Vector3 b, out Vector3 r)
+        {
+            r.x = a.x + b.x;
+            r.y = a.y + b.y;
+            r.z = a.z + b.z;
+        }
+
+        public static void Sub(in Vector3 a, in Vector3 b, out Vector3 r)
+        {
+            r.x = a.x - b.x;
+            r.y = a.y - b.y;
+            r.z = a.z - b.z;
+        }
+
+        public static void Mul(in Vector3 a, in Vector3 b, out Vector3 r)
+        {
+            r.x = a.x * b.x;
+            r.y = a.y * b.y;
+            r.z = a.z * b.z;
+        }
+
+        public static void Div(in Vector3 a, in Vector3 b, out Vector3 r)
+        {
+            r.x = a.x / b.x;
+            r.y = a.y / b.y;
+            r.z = a.z / b.z;
         }
     }
 
