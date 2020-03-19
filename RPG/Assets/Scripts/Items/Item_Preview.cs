@@ -47,7 +47,7 @@ namespace Tamana
             }
         }
 
-        public static Item_Preview InstantiateItemPrefab(Item_Base itemBase, Vector2 positionOffset)
+        public static Item_Preview InstantiateItemPrefab(Item_Base itemBase, in Vector2 positionOffset)
         {
             var item = Instantiate(itemBase.Prefab);
 

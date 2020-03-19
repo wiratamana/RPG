@@ -38,21 +38,18 @@ namespace Tamana
 
             ItemPreview = Item_Preview.InstantiateItemPrefab(itemProduct.Product, new Vector2(transform.GetSiblingIndex(), 1000));
 
-            ItemName.enabled = false;
-            Stock.enabled = false;
-            Price.enabled = false;
-
-            if (GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
-            {
-                Resize();
-            }
-
             ItemName.text = itemProduct.Product.ItemName;
             Stock.text = itemProduct.Stock.ToString();
             Price.text = itemProduct.Price.ToString();
             Price.color = PlayerData.Money < itemProduct.Price ? Color.red : Color.white;
 
             RectTransform.position = pos;
+
+            if (GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
+            {
+                Resize();
+            }
+
             gameObject.SetActive(true);
 
             EventTrigger.AddListener(EventTriggerType.PointerEnter, OnPointerEnter);
@@ -98,32 +95,24 @@ namespace Tamana
             itemParent.Left.Shop.OpenPurchaseConfirmation(itemProduct);
         }
 
-        private async void Resize()
+        private void Resize()
         {
             RectTransform.sizeDelta = new Vector2(itemParent.RectTransform.sizeDelta.x, RectTransform.sizeDelta.y);
 
-            await AsyncManager.WaitForFrame(1);
+            var priceSizeX = itemParent.Left.Price.sizeDelta.x;
+            var right = Screen.width * 0.5f;
+            var posX = right - (priceSizeX * 0.5f) - UI_Shop_Left.END_X;
 
-            var nameLeft = ItemRenderer.rectTransform.position.x + (ItemRenderer.rectTransform.sizeDelta.x * 0.5f);
-            var nameRight = itemParent.Left.ItemTypes.RectTransform.position.x + (itemParent.Left.ItemTypes.RectTransform.sizeDelta.x * 0.5f);
-            var width = Mathf.Abs(nameLeft - nameRight);
+            Price.rectTransform.position = new Vector3(posX, Background.rectTransform.position.y);
 
-            ItemName.rectTransform.sizeDelta = new Vector2(width, ItemName.rectTransform.sizeDelta.y);
-            ItemName.rectTransform.position = new Vector3(nameLeft + (width * 0.5f), ItemName.rectTransform.position.y);
+            var stockSizeX = itemParent.Left.Stock.sizeDelta.x;
+            posX = right - priceSizeX - UI_Shop_Left.END_X - UI_Shop_Left.SPACING - (stockSizeX * 0.5f);
+            Stock.rectTransform.position = new Vector3(posX, Background.rectTransform.position.y);
 
-            var stockPos = itemParent.Left.Stock.position.x;
-            var stockWidth = itemParent.Left.Stock.sizeDelta.x;
-            Stock.rectTransform.sizeDelta = new Vector2(stockWidth, Stock.rectTransform.sizeDelta.y);
-            Stock.rectTransform.position = new Vector3(stockPos, Stock.rectTransform.position.y);
-
-            var pricePos = itemParent.Left.Price.position.x;
-            var priceWidth = itemParent.Left.Price.sizeDelta.x;
-            Price.rectTransform.sizeDelta = new Vector2(priceWidth, Stock.rectTransform.sizeDelta.y);
-            Price.rectTransform.position = new Vector3(pricePos, Stock.rectTransform.position.y);
-
-            ItemName.enabled = true;
-            Stock.enabled = true;
-            Price.enabled = true;
+            var left = ItemRenderer.rectTransform.position.x + (ItemRenderer.rectTransform.sizeDelta.x * 0.5f);
+            var size = Mathf.Abs(left - right);
+            ItemName.rectTransform.sizeDelta = new Vector2(size, ItemName.rectTransform.sizeDelta.y);
+            ItemName.rectTransform.position = new Vector3(left + (size * 0.5f), ItemName.rectTransform.position.y);
         }
     }
 }
