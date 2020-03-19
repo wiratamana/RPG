@@ -41,7 +41,10 @@ namespace Tamana
             ItemName.text = itemProduct.Product.ItemName;
             Stock.text = itemProduct.Stock.ToString();
             Price.text = itemProduct.Price.ToString();
-            Price.color = PlayerData.Money < itemProduct.Price ? Color.red : Color.white;
+
+            itemProduct.Validate(out Item_Product.ValidationResult result);
+            Stock.color = result.isAvailable ? Color.white : Color.red;
+            Price.color = result.isPlayerHasMoney ? Color.white : Color.red;
 
             RectTransform.position = pos;
 
@@ -84,9 +87,19 @@ namespace Tamana
 
         private void OnPointerClick(BaseEventData eventData)
         {
-            if(PlayerData.Money < itemProduct.Price)
+            itemProduct.Validate(out Item_Product.ValidationResult result);
+            if (result.isPlayerHasMoney == false || result.isAvailable == false)
             {
-                Debug.Log("Not enough money to purchase item");
+                if (result.isPlayerHasMoney == false)
+                {
+                    Debug.Log("Need more gold!");
+                }
+
+                else if (result.isAvailable == false)
+                {
+                    Debug.Log("Out of stock!");
+                }
+
                 return;
             }
 

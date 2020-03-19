@@ -6,6 +6,6 @@ namespace Tamana
 {
     public static class PlayerData
     {
-        public static int Money = 200;
+        public static int Money = 2000;
     }
 }

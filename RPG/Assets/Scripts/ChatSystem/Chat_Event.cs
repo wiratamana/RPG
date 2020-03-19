@@ -24,7 +24,7 @@ namespace Tamana
         {
             switch (_event)
             {
-                case ChatEvent.Shop:        return products as T;
+                case ChatEvent.Shop:        return Instantiate(products) as T;
                 case ChatEvent.Blacksmith:  return null;
                 case ChatEvent.ReturnTo:    return CreateInstance<Chat_ReturnTo>().Initialize(returnToObjcet, returnToIndex) as T;
                 default:                    return null;

@@ -22,9 +22,7 @@ namespace Tamana
 
             this.LogErrorIfComponentIsNull(TPC);
             this.LogErrorIfComponentIsNull(EnemyCatcher);
-            this.LogErrorIfComponentIsNull(AICatcher);
-          
-            LoadStatus();
+            this.LogErrorIfComponentIsNull(AICatcher);         
         }
 
         protected override void Awake()
@@ -36,7 +34,7 @@ namespace Tamana
 
         private void LoadStatus()
         {
-            if (Status == null)
+            if (Status.IsInitialized == false)
             {
                 var statusInfo = Resources.Load<Unit_Status_Information>("PlayerBaseStatus");
                 Status.Initialize(Instantiate(statusInfo));

@@ -80,8 +80,11 @@ namespace Tamana
         }
 
         private void OnPointerClick_Yes(BaseEventData eventData)
-        {
+        {           
+            PurchaseMenu.Mid.ItemProduct.Purchase();
 
+            UI_Selection.DestroyInstance();
+            UI_Shop.Instance.ClosePurchaseConfirmation();
         }
 
         private void OnPointerEnter_No(BaseEventData eventData)
@@ -96,6 +99,7 @@ namespace Tamana
 
         private void OnPointerClick_No(BaseEventData eventData)
         {
+            UI_Selection.DestroyInstance();
             UI_Shop.Instance.ClosePurchaseConfirmation();
         }
     }

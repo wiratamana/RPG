@@ -31,3 +31,15 @@ MonoBehaviour:
   - product: {fileID: 11400000, guid: 1fc7f4449c3e01146984011dfb0544e7, type: 2}
     price: 150
     stock: 1
+  - product: {fileID: 11400000, guid: 12f19d6c85ecdee4aad91f366c6f47cd, type: 2}
+    price: 150
+    stock: 1
+  - product: {fileID: 11400000, guid: cd1f995ba8b15684aacb1fad6cf61696, type: 2}
+    price: 150
+    stock: 1
+  - product: {fileID: 11400000, guid: e48255fdcc9cebc47b6213048a62fea3, type: 2}
+    price: 150
+    stock: 1
+  - product: {fileID: 11400000, guid: cffc433cf230c5e4bb5b879140af10f5, type: 2}
+    price: 150
+    stock: 1

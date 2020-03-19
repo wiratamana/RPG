@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _event: 0
   products: {fileID: 11400000, guid: 1acfc5e425669b64093840fdc80e9157, type: 2}
+  returnToObjcet: {fileID: 0}
+  returnToIndex: 0
