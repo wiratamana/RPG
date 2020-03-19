@@ -36,7 +36,7 @@ namespace Tamana
             var texSize = ItemRenderer.rectTransform.sizeDelta;
             ItemRenderer.texture = new RenderTexture((int)texSize.x, (int)texSize.y, 16, RenderTextureFormat.ARGBHalf);
 
-            InstantiateItemPrefab(itemProduct);
+            ItemPreview = Item_Preview.InstantiateItemPrefab(itemProduct.Product, new Vector2(transform.GetSiblingIndex(), 1000));
 
             ItemName.enabled = false;
             Stock.enabled = false;
@@ -50,6 +50,7 @@ namespace Tamana
             ItemName.text = itemProduct.Product.ItemName;
             Stock.text = itemProduct.Stock.ToString();
             Price.text = itemProduct.Price.ToString();
+            Price.color = PlayerData.Money < itemProduct.Price ? Color.red : Color.white;
 
             RectTransform.position = pos;
             gameObject.SetActive(true);
@@ -57,11 +58,6 @@ namespace Tamana
             EventTrigger.AddListener(EventTriggerType.PointerEnter, OnPointerEnter);
             EventTrigger.AddListener(EventTriggerType.PointerExit, OnPointerExit);
             EventTrigger.AddListener(EventTriggerType.PointerClick, OnPointerClick);
-        }
-
-        private void InstantiateItemPrefab(Item_Product product)
-        {
-            ItemPreview = Item_Preview.InstantiateItemPrefab(product.Product, new Vector2(transform.GetSiblingIndex(), 1000));
         }
 
         private void OnDestroy()
@@ -91,6 +87,12 @@ namespace Tamana
 
         private void OnPointerClick(BaseEventData eventData)
         {
+            if(PlayerData.Money < itemProduct.Price)
+            {
+                Debug.Log("Not enough money to purchase item");
+                return;
+            }
+
             UI_Selection.DestroyInstance();
             itemParent.OnSelectedItemChanged.Invoke(null);
             itemParent.Left.Shop.OpenPurchaseConfirmation(itemProduct);

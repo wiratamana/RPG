@@ -28,6 +28,8 @@ namespace Tamana
             {
                 Resize();
             }
+
+            Amount.text = PlayerData.Money.ToString();
         }
 
         public void Resize()
