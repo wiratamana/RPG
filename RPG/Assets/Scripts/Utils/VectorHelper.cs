@@ -19,6 +19,26 @@ namespace Tamana
             return fwd;
         }
 
+        public static void FastDistance(in Vector3 a, in Vector3 b, out float distance)
+        {
+            distance = Mathf.Sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z));
+        }
+
+        public static void FastNormalize(ref Vector3 v)
+        {
+            var distance = Mathf.Sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
+            v.x /= distance;
+            v.y /= distance;
+            v.z /= distance;
+        }
+
+        public static void FastNormalize(in Vector3 v, out Vector3 o)
+        {
+            var distance = Mathf.Sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
+            o.x = v.x / distance;
+            o.y = v.y / distance;
+            o.z = v.z / distance;
+        }
     }
 
 }
