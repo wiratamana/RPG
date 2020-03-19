@@ -45,6 +45,8 @@ namespace Tamana
             var position = new Vector3(RectTransform.position.x, RectTransform.position.y + (RectTransform.sizeDelta.y * 0.5f));
             position.y -= itemPrefab.RectTransform.sizeDelta.y * 0.5f;
 
+            Debug.Log($"Product Count : {products.Count} | item.Count : {items.Count}");
+
             foreach (var i in products)
             {
                 var product = Instantiate(itemPrefab, RectTransform);

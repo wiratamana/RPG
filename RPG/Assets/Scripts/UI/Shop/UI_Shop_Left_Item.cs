@@ -85,6 +85,8 @@ namespace Tamana
 
         private void OnPointerClick(BaseEventData eventData)
         {
+            UI_Selection.DestroyInstance();
+            itemParent.OnSelectedItemChanged.Invoke(null);
             itemParent.Left.Shop.OpenPurchaseConfirmation(itemProduct);
         }
 
