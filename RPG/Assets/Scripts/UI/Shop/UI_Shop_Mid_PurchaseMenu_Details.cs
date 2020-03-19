@@ -22,6 +22,7 @@ namespace Tamana
         public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransform);
 
         private RenderTexture renderTexture;
+        private Item_Preview itemPreview;
 
         public void Activate()
         {
@@ -40,7 +41,17 @@ namespace Tamana
                     (int)itemRenderer.rectTransform.sizeDelta.y, 16, RenderTextureFormat.ARGBHalf);
             }
 
+            var product = PurchaseMenu.Mid.ItemProduct;
+
+            costText.text = product.Price.ToString();
+
             itemRenderer.texture = renderTexture;
+            itemPreview = Item_Preview.InstantiateItemPrefab(product.Product, Vector2.zero);
+            itemPreview.enabled = true;
+            UI_ItemRenderer.ResetCameraPositionAndRotation(product.Product, itemPreview.transform);
+            UI_ItemRenderer.SetTexture(renderTexture);
+
+            UpdateAsync();
         }
 
         public void Deactivate()
@@ -51,7 +62,24 @@ namespace Tamana
                 renderTexture = null;
             }
 
+            if(itemPreview != null)
+            {
+                Destroy(itemPreview);
+                itemPreview = null;
+            }
+
             itemRenderer.texture = null;
+            UI_ItemRenderer.SetTexture(null);
+        }
+
+        private async void UpdateAsync()
+        {
+            while (renderTexture != null)
+            {
+                await AsyncManager.WaitForFrame(1);
+
+                UI_ItemRenderer.Render();
+            }
         }
 
         private void Resize()

@@ -91,7 +91,7 @@ namespace Tamana
         {
             Left.Deactivate();
             Right.Deactivate();
-            Mid.Activate();
+            Mid.Activate(itemProduct);
 
             InputEvent.Instance.Event_CloseShop.RemoveListener(Close);
             InputEvent.Instance.Event_CloseShop.AddListener(ClosePurchaseConfirmation);

@@ -13,21 +13,26 @@ namespace Tamana
         public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransform);
 
         private UI_Shop_Mid_PurchaseMenu purchaseConfirmation;
-        public UI_Shop_Mid_PurchaseMenu PurchaseConfirmation => this.GetAndAssignComponentInChildren(ref purchaseConfirmation);
+        public UI_Shop_Mid_PurchaseMenu PurchaseConfirmation => this.GetAndAssignComponentInChildren(ref purchaseConfirmation);       
 
-        public void Activate()
+        public Item_Product ItemProduct { get; private set; }
+
+        public void Activate(Item_Product itemProduct)
         {
             if(GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
             {
                 Resize();
             }
 
+            ItemProduct = itemProduct;
             gameObject.SetActive(true);
             PurchaseConfirmation.Activate();
         }
 
         public void Deactivate()
         {
+            ItemProduct = null;
+
             gameObject.SetActive(false);
             PurchaseConfirmation.Deactivate();
         }

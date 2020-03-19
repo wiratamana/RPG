@@ -14,12 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   products:
   - product: {fileID: 11400000, guid: 31f3b2fbf8e0cf44ea6f8f5e5f1003e8, type: 2}
+    price: 250
     stock: 1
   - product: {fileID: 11400000, guid: 6138bdfbbbf42f14295e0cbab4d3dbb4, type: 2}
+    price: 300
     stock: 1
   - product: {fileID: 11400000, guid: 8d0cda4d470172d448c496a43a20c727, type: 2}
+    price: 100
     stock: 1
   - product: {fileID: 11400000, guid: 36d8dc63de6814544b84a4b71c8e4c08, type: 2}
+    price: 150
     stock: 1
   - product: {fileID: 11400000, guid: 9be1c500e82cec543817c8b7b27f1606, type: 2}
+    price: 200
     stock: 1
