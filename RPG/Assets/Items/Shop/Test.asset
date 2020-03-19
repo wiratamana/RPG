@@ -28,3 +28,6 @@ MonoBehaviour:
   - product: {fileID: 11400000, guid: 9be1c500e82cec543817c8b7b27f1606, type: 2}
     price: 200
     stock: 1
+  - product: {fileID: 11400000, guid: 1fc7f4449c3e01146984011dfb0544e7, type: 2}
+    price: 150
+    stock: 1

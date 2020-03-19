@@ -28,11 +28,18 @@ namespace Tamana
 
         private async void UpdateAsync()
         {
-            while(itemPreview != null)
+            var instanceID = itemPreview.GetInstanceID();
+
+            while (itemPreview != null && instanceID == itemPreview.GetInstanceID())
             {
                 await AsyncManager.WaitForFrame(1);
 
-                UI_ItemRenderer.Render();
+                if(itemPreview != null)
+                {
+                    UI_ItemRenderer.ResetCameraPositionAndRotation(itemPreview.ItemBase, itemPreview.transform);
+                    UI_ItemRenderer.SetTexture(renderTexture);
+                    UI_ItemRenderer.Render();
+                }                
             }
         }
 

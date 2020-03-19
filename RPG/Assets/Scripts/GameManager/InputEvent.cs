@@ -46,6 +46,9 @@ namespace Tamana
         public const char ACTION_OPEN_MENU_INVENTORY = 'B';
         public const string ACTION_CLOSE_SHOP_MENU = "Esc";
 
+        public EventManager Event_ScrollUp { get; } = new EventManager();
+        public EventManager Event_ScrollDown { get; } = new EventManager();
+
         public EventManager Event_Chat { get; } = new EventManager();
         public EventManager Event_NextDialogue { get; } = new EventManager();
 
@@ -150,6 +153,17 @@ namespace Tamana
             if(Input.GetKeyDown(KeyCode.Mouse2) == true)
             {
                 Event_CatchEnemy.Invoke();
+            }
+
+            var scroll = Input.mouseScrollDelta;
+            if(scroll.y > 0)
+            {
+                Event_ScrollUp.Invoke();
+            }
+
+            else if(scroll.y < 0)
+            {
+                Event_ScrollDown.Invoke();
             }
         }
     }

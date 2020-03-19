@@ -65,7 +65,7 @@ namespace Tamana
             return Instance.TextureRendererCamera.transform;
         }
 
-        public static void SetPosition(Vector3 position)
+        public static void SetPosition(in Vector3 position)
         {
             Instance.TextureRendererCamera.transform.position = position;
         }
@@ -75,7 +75,7 @@ namespace Tamana
             return Instance.TextureRendererCamera.transform.position;
         }
 
-        public static void SetRotation(Quaternion rotation)
+        public static void SetRotation(in Quaternion rotation)
         {
             Instance.TextureRendererCamera.transform.rotation = rotation;
         }

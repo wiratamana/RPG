@@ -29,7 +29,7 @@ namespace Tamana
         private UI_Shop_Left_ItemParent itemParent;
         private Item_Product itemProduct;
 
-        public void Initialize(Item_Product itemProduct, UI_Shop_Left_ItemParent itemParent, Vector3 pos)
+        public void Initialize(Item_Product itemProduct, UI_Shop_Left_ItemParent itemParent, in Vector3 pos)
         {
             this.itemParent = itemParent;
             this.itemProduct = itemProduct;
@@ -38,13 +38,18 @@ namespace Tamana
 
             InstantiateItemPrefab(itemProduct);
 
+            ItemName.enabled = false;
+            Stock.enabled = false;
+            Price.enabled = false;
+
             if (GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
             {
                 Resize();
             }
 
             ItemName.text = itemProduct.Product.ItemName;
-            stock.text = itemProduct.Stock.ToString();
+            Stock.text = itemProduct.Stock.ToString();
+            Price.text = itemProduct.Price.ToString();
 
             RectTransform.position = pos;
             gameObject.SetActive(true);
@@ -66,6 +71,7 @@ namespace Tamana
                 Destroy(ItemRenderer.texture);
             }
 
+            itemParent.OnSelectedItemChanged.Invoke(null);
             Destroy(ItemPreview);
             ItemPreview = null;
             Destroy(gameObject);
@@ -112,6 +118,10 @@ namespace Tamana
             var priceWidth = itemParent.Left.Price.sizeDelta.x;
             Price.rectTransform.sizeDelta = new Vector2(priceWidth, Stock.rectTransform.sizeDelta.y);
             Price.rectTransform.position = new Vector3(pricePos, Stock.rectTransform.position.y);
+
+            ItemName.enabled = true;
+            Stock.enabled = true;
+            Price.enabled = true;
         }
     }
 }
