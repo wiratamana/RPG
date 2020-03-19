@@ -85,7 +85,7 @@ namespace Tamana
 
         private void OnPointerClick(BaseEventData eventData)
         {
-
+            itemParent.Left.Shop.OpenPurchaseConfirmation(itemProduct);
         }
 
         private async void Resize()

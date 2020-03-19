@@ -23,9 +23,11 @@ namespace Tamana
 
         private UI_Shop_Left left;
         private UI_Shop_Right right;
+        private UI_Shop_Mid mid;
 
         public UI_Shop_Left Left => this.GetAndAssignComponentInChildren(ref left);
         public UI_Shop_Right Right => this.GetAndAssignComponentInChildren(ref right);
+        public UI_Shop_Mid Mid => this.GetAndAssignComponentInChildren(ref mid);
 
         public IReadOnlyCollection<Item_Product> Products { get; private set; }
 
@@ -61,7 +63,7 @@ namespace Tamana
             Left.Activate();
             Right.Activate();
 
-            uinav_escapeToCloseShop = UI_NavigatorManager.Instance.Add("Back", InputEvent.ACTION_CLOSE_SHOP_MENU);
+            UI_NavigatorManager.Instance.Add(ref uinav_escapeToCloseShop, "Back", InputEvent.ACTION_CLOSE_SHOP_MENU);
             this.dialogueAfterShopClosed = dialogueAfterShopClosed;
             InputEvent.Instance.Event_CloseShop.AddListener(Close);
 
@@ -83,6 +85,26 @@ namespace Tamana
             dialogueAfterShopClosed = null;
 
             OnClosed.Invoke();
+        }
+
+        public void OpenPurchaseConfirmation(Item_Product itemProduct)
+        {
+            Left.Deactivate();
+            Right.Deactivate();
+            Mid.Activate();
+
+            InputEvent.Instance.Event_CloseShop.RemoveListener(Close);
+            InputEvent.Instance.Event_CloseShop.AddListener(ClosePurchaseConfirmation);
+        }
+
+        public void ClosePurchaseConfirmation()
+        {
+            Left.Activate();
+            Right.Activate();
+            Mid.Deactivate();
+
+            InputEvent.Instance.Event_CloseShop.RemoveListener(ClosePurchaseConfirmation);
+            InputEvent.Instance.Event_CloseShop.AddListener(Close);
         }
     }
 }

@@ -69,20 +69,18 @@ namespace Tamana
             return nav;
         }
 
-        public UI_Navigator Add(string text, string letter)
+        public void Add(ref UI_Navigator nav, string text, string letter)
         {
             if (navigatorPool.Count == 0)
             {
                 navigatorPool.Push(Instantiate(prefab, poolTransform));
             }
 
-            var nav = navigatorPool.Pop();
+            nav = navigatorPool.Pop();
             nav.SetValue(text, letter);
 
             nav.transform.SetParent(transform);
             Reposition();
-
-            return nav;
         }
 
         private void Reposition()
