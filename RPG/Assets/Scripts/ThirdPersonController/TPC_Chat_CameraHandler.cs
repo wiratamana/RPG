@@ -25,6 +25,9 @@ namespace Tamana
         public void ActivatePlayer(Unit_AI ai)
         {
             this.ai = ai;
+
+            GameManager.MainCameraTransform.SetParent(null);
+
             GameManager.MainCameraTransform.position = GetCameraPosition(30, out Vector3 dir);
             GameManager.MainCameraTransform.rotation = Quaternion.LookRotation(dir, Vector3.up);
         }
@@ -32,12 +35,19 @@ namespace Tamana
         public void ActivateTarget(Unit_AI ai)
         {
             this.ai = ai;
+
+            GameManager.MainCameraTransform.SetParent(null);
+
             GameManager.MainCameraTransform.position = GetCameraPosition(150, out Vector3 dir);
             GameManager.MainCameraTransform.rotation = Quaternion.LookRotation(dir, Vector3.up);
         }
 
         public void Deactivate()
         {
+            ResetCameraPosition(out Quaternion rot);
+            CameraHandler.CameraMovement.SetRotation(rot);
+            GameManager.MainCameraTransform.SetParent(CameraHandler.CameraLookPoint);
+
             ai = null;
         }
 
@@ -48,8 +58,6 @@ namespace Tamana
             var halfDistance = Vector3.Distance(playerHead, aiHead) * 0.5f;
             dir2ai = Vector3.Normalize(aiHead - playerHead);
             var position = playerHead + (dir2ai * halfDistance);
-
-            Debug.Log(position);
 
             return position;
         }
@@ -99,6 +107,20 @@ namespace Tamana
                     return leftCampos;
                 }
             }
+        }
+
+        private void ResetCameraPosition(out Quaternion rotation)
+        {
+            var spinePos = CameraHandler.TPC.UnitPlayer.BodyTransform.Spine.position;
+            var camPos = GameManager.MainCameraTransform.position;
+            var midPos = GetPositionBetween2Head(out _);
+            VectorHelper.FastNormalizeDirection(camPos, midPos, out Vector3 dir);
+            VectorHelper.FastDistance(spinePos, CameraHandler.CameraDefaultPositionTransform.position, out float dis);
+            VectorHelper.Mul(dir, dis, out dir);
+            VectorHelper.Add(spinePos, dir, out camPos);
+            camPos.y += 1.0f;
+            VectorHelper.FastNormalizeDirection(spinePos, camPos, out dir);
+            rotation = Quaternion.LookRotation(dir, Vector3.up);
         }
     }
 }

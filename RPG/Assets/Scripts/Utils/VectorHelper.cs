@@ -73,6 +73,13 @@ namespace Tamana
             r.z = a.z * b.z;
         }
 
+        public static void Mul(in Vector3 a, in float b, out Vector3 r)
+        {
+            r.x = a.x * b;
+            r.y = a.y * b;
+            r.z = a.z * b;
+        }
+
         public static void Div(in Vector3 a, in Vector3 b, out Vector3 r)
         {
             r.x = a.x / b.x;

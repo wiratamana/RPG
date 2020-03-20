@@ -151,6 +151,7 @@ namespace Tamana
             CameraCombatCollisionHandler.enabled = false;
 
             CameraLookPlayer.SetCameraLocalPositionToZero();
+            ChatCameraHandler.Deactivate();
         }
 
         private void SetActiveCameraChat(Unit_AI ai)
