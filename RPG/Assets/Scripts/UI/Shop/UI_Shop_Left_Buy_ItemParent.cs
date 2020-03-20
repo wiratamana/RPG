@@ -6,18 +6,18 @@ using UnityEngine.EventSystems;
 
 namespace Tamana
 {
-    public class UI_Shop_Left_ItemParent : MonoBehaviour
+    public class UI_Shop_Left_Buy_ItemParent : MonoBehaviour
     {
-        [SerializeField] private UI_Shop_Left_Item itemPrefab;
+        [SerializeField] private UI_Shop_Left_Buy_ItemChild itemPrefab;
 
         private RectTransform rectTransform;
-        private UI_Shop_Left left;
+        private UI_Shop_Left_Buy buy;
         public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransform);
-        public UI_Shop_Left Left => this.GetAndAssignComponentInParent(ref left);
+        public UI_Shop_Left_Buy Buy => this.GetAndAssignComponentInParent(ref buy);
 
         public EventManager<Item_Product> OnSelectedItemChanged { get; } = new EventManager<Item_Product>();
 
-        private UI_Shop_Left_Item[] items;
+        private UI_Shop_Left_Buy_ItemChild[] items;
 
         private EventTrigger eventTrigger;
         public EventTrigger EventTrigger => this.GetAndAssignComponent(ref eventTrigger);
@@ -74,12 +74,12 @@ namespace Tamana
 
         private async void InstantiateItem()
         {
-            var products = Left.Shop.Products;
+            var products = Buy.Left.Shop.Products;
             var position = new Vector3(RectTransform.position.x, RectTransform.position.y + (RectTransform.sizeDelta.y * 0.5f));
             var spacingPerItem = 10.0f;
             position.y -= itemPrefab.RectTransform.sizeDelta.y * 0.5f;
 
-            items = new UI_Shop_Left_Item[maxVisibleItem];
+            items = new UI_Shop_Left_Buy_ItemChild[maxVisibleItem];
             for (int i = startIndex; i < startIndex + maxVisibleItem; i++)
             {
                 if(i > products.Count - 1)
@@ -116,10 +116,10 @@ namespace Tamana
 
         private void Resize()
         {
-            var lpos = Left.ItemTypes.RectTransform.position;
-            var lsize = Left.ItemTypes.RectTransform.sizeDelta;
-            var rpos = Left.Price.position;
-            var rsize = Left.Price.sizeDelta;
+            var lpos = Buy.ItemTypes.RectTransform.position;
+            var lsize = Buy.ItemTypes.RectTransform.sizeDelta;
+            var rpos = Buy.Price.position;
+            var rsize = Buy.Price.sizeDelta;
             var bpos = UI_Chat_Main.Instance.Dialogue.RectTransform.position;
             var bsize = UI_Chat_Main.Instance.Dialogue.RectTransform.sizeDelta;
             var spacing = 15.0f;
@@ -170,7 +170,7 @@ namespace Tamana
 
         private void ScrollDown()
         {
-            if(Left.Shop.Products.Count <= startIndex + maxVisibleItem)
+            if(Buy.Left.Shop.Products.Count <= startIndex + maxVisibleItem)
             {
                 return;
             }

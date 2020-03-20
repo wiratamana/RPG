@@ -7,7 +7,7 @@ using TMPro;
 
 namespace Tamana
 {
-    public class UI_Shop_Left_Item : MonoBehaviour
+    public class UI_Shop_Left_Buy_ItemChild : MonoBehaviour
     {
         private RectTransform rectTransform;
         [SerializeField] private Image background;
@@ -26,10 +26,10 @@ namespace Tamana
         public EventTrigger EventTrigger => Background.GetOrAddAndAssignComponent(ref eventTrigger);
 
         public Item_Preview ItemPreview { get; private set; }
-        private UI_Shop_Left_ItemParent itemParent;
+        private UI_Shop_Left_Buy_ItemParent itemParent;
         private Item_Product itemProduct;
 
-        public void Initialize(Item_Product itemProduct, UI_Shop_Left_ItemParent itemParent, in Vector3 pos)
+        public void Initialize(Item_Product itemProduct, UI_Shop_Left_Buy_ItemParent itemParent, in Vector3 pos)
         {
             this.itemParent = itemParent;
             this.itemProduct = itemProduct;
@@ -105,20 +105,20 @@ namespace Tamana
 
             UI_Selection.DestroyInstance();
             itemParent.OnSelectedItemChanged.Invoke(null);
-            itemParent.Left.Shop.OpenPurchaseConfirmation(itemProduct);
+            itemParent.Buy.Left.Shop.OpenPurchaseConfirmation(itemProduct);
         }
 
         private void Resize()
         {
             RectTransform.sizeDelta = new Vector2(itemParent.RectTransform.sizeDelta.x, RectTransform.sizeDelta.y);
 
-            var priceSizeX = itemParent.Left.Price.sizeDelta.x;
+            var priceSizeX = itemParent.Buy.Price.sizeDelta.x;
             var right = Screen.width * 0.5f;
             var posX = right - (priceSizeX * 0.5f) - UI_Shop_Left.END_X;
 
             Price.rectTransform.position = new Vector3(posX, Background.rectTransform.position.y);
 
-            var stockSizeX = itemParent.Left.Stock.sizeDelta.x;
+            var stockSizeX = itemParent.Buy.Stock.sizeDelta.x;
             posX = right - priceSizeX - UI_Shop_Left.END_X - UI_Shop_Left.SPACING - (stockSizeX * 0.5f);
             Stock.rectTransform.position = new Vector3(posX, Background.rectTransform.position.y);
 

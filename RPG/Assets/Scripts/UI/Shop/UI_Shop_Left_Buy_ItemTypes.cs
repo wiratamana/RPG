@@ -6,7 +6,7 @@ using TMPro;
 
 namespace Tamana
 {
-    public class UI_Shop_Left_ItemTypes : MonoBehaviour
+    public class UI_Shop_Left_Buy_ItemTypes : MonoBehaviour
     {
         [SerializeField] private Image background;
         [SerializeField] private RectTransform dropdown;

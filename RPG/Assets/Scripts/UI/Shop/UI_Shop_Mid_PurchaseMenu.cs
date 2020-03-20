@@ -36,7 +36,7 @@ namespace Tamana
 
         private void Resize()
         {
-            var top = Mid.Shop.Left.Stock.position.y + (Mid.Shop.Left.Stock.sizeDelta.y * 0.5f);
+            var top = Mid.Shop.Left.Buy.Stock.position.y + (Mid.Shop.Left.Buy.Stock.sizeDelta.y * 0.5f);
             var bot = UI_Chat_Main.Instance.Dialogue.RectTransform.position.y + (UI_Chat_Main.Instance.Dialogue.RectTransform.sizeDelta.y * 0.5f);
             var sizeY = Mathf.Abs(top - bot);
             var sizeX = Mid.RectTransform.sizeDelta.x;

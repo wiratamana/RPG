@@ -14,51 +14,33 @@ namespace Tamana
         private UI_Shop shop;
         public UI_Shop Shop => this.GetAndAssignComponentInParent(ref shop);
 
+        private UI_Shop_Left_Buy buy;
+        public UI_Shop_Left_Buy Buy => this.GetAndAssignComponentInChildren(ref buy);
+
         private RectTransform rectTransform;
         public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransform);
 
-        private UI_Shop_Left_ItemTypes itemTypes;
-        private UI_Shop_Left_ItemParent itemParent;
-        [SerializeField] private RectTransform stock;
-        [SerializeField] private RectTransform price;
-
-        public UI_Shop_Left_ItemTypes ItemTypes => this.GetAndAssignComponentInChildren(ref itemTypes);
-        public UI_Shop_Left_ItemParent ItemParent => this.GetAndAssignComponentInChildren(ref itemParent);
-        public RectTransform Stock => stock;
-        public RectTransform Price => price;
-
         public void Activate()
-        {
+        {       
             if(GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
             {
                 Resize();
             }
-           
+
             gameObject.SetActive(true);
-            ItemParent.Activate();
+            Buy.Activate();
         }
 
         public void Deactivate()
         {
-            ItemParent.Deactivate();
+            Buy.Deactivate();
             gameObject.SetActive(false);
         }
 
         private void Resize()
         {
-            var priceWidth = Price.sizeDelta.x;
-            var parentHeigth = RectTransform.sizeDelta.y;
-            var parentWidth = RectTransform.sizeDelta.x;
-
-            Price.localPosition = new Vector3((parentWidth * 0.5f) - (priceWidth * 0.5f) - END_X,
-                (parentHeigth * 0.5f) - START_Y);
-
-            Stock.localPosition = Price.localPosition - new Vector3(SPACING + Stock.sizeDelta.x, 0);
-
-            var stockLeftPos = Stock.position.x - (Stock.sizeDelta.x * 0.5f);
-            var itemTypeWidth = Mathf.Abs(START_X - stockLeftPos) - SPACING;
-            ItemTypes.RectTransform.sizeDelta = new Vector2(itemTypeWidth, Price.sizeDelta.y);
-            ItemTypes.RectTransform.position = new Vector3(START_X + (itemTypeWidth * 0.5f), Price.position.y);
+            RectTransform.sizeDelta = Buy.RectTransform.sizeDelta;
+            RectTransform.position = Buy.RectTransform.position;
         }
     }
 }

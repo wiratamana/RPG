@@ -50,7 +50,7 @@ namespace Tamana
                 Resize();
             }
 
-            Right.Shop.Left.ItemParent.OnSelectedItemChanged.AddListener(OnSelectedItemChanged, GetInstanceID());
+            Right.Shop.Left.Buy.ItemParent.OnSelectedItemChanged.AddListener(OnSelectedItemChanged, GetInstanceID());
             renderTexture = new RenderTexture((int)itemRenderer.rectTransform.sizeDelta.x, (int)itemRenderer.rectTransform.sizeDelta.y, 
                 16, RenderTextureFormat.ARGBHalf);
             itemRenderer.texture = renderTexture;
@@ -58,7 +58,7 @@ namespace Tamana
 
         public void Deactivate()
         {
-            Right.Shop.Left.ItemParent.OnSelectedItemChanged.RemoveListener(OnSelectedItemChanged, GetInstanceID());
+            Right.Shop.Left.Buy.ItemParent.OnSelectedItemChanged.RemoveListener(OnSelectedItemChanged, GetInstanceID());
 
             if(itemRenderer.texture != null)
             {
@@ -112,7 +112,7 @@ namespace Tamana
 
         private void Resize()
         {
-            var itemParentRT = Right.Shop.Left.ItemParent.RectTransform;
+            var itemParentRT = Right.Shop.Left.Buy.ItemParent.RectTransform;
             var size = itemParentRT.sizeDelta;
             var localPos = itemParentRT.localPosition;
             localPos.x = -localPos.x;

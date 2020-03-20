@@ -84,7 +84,7 @@ namespace Tamana
 
         private void Resize()
         {
-            var top = PurchaseMenu.Mid.Shop.Left.Stock.position.y + (PurchaseMenu.Mid.Shop.Left.Stock.sizeDelta.y * 0.5f);
+            var top = PurchaseMenu.Mid.Shop.Left.Buy.Stock.position.y + (PurchaseMenu.Mid.Shop.Left.Buy.Stock.sizeDelta.y * 0.5f);
             var bot = UI_Chat_Main.Instance.Dialogue.RectTransform.position.y + (UI_Chat_Main.Instance.Dialogue.RectTransform.sizeDelta.y * 0.5f);
             var offset = 20.0f;
             var posY = bot + UI_Shop_Mid_PurchaseMenu_Confirmation.HEIGHT + offset;
