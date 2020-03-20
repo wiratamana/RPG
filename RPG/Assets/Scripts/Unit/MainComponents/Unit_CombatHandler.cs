@@ -59,6 +59,9 @@ namespace Tamana
 
                 Unit.UnitAnimator.OnEquippingAnimationStarted.AddListener(RemoveEquip);
                 Unit.UnitAnimator.OnEquippingAnimationFinished.AddListener(AddHolster);
+
+                UI_Chat_Main.Instance.Dialogue.OnDialogueActivated.AddListener(TemporarilyDisableCombatEvents);
+                UI_Chat_Main.Instance.Dialogue.OnDialogueDeactivated.AddListener(ReenableCombatEvents);
             }
 
             Unit.Equipment.OnEquippedEvent.AddListener(OnWeaponEquipped);
@@ -80,8 +83,6 @@ namespace Tamana
 
         private void AddCombatEventsToListeners()
         {
-            Debug.Log("AddCombatEventsToListeners");
-
             InputEvent.Instance.Event_DoAttackHeavy.AddListener(AttackHandler.PlayAttackAnim);
             InputEvent.Instance.Event_Parry.AddListener(ParryHandler.Parry);
             InputEvent.Instance.Event_Dodge.AddListener(DodgeHandler.Dodge);
@@ -89,8 +90,6 @@ namespace Tamana
 
         private void RemoveCombatEventsFromListeners()
         {
-            Debug.Log("RemoveCombatEventsFromListeners");
-
             InputEvent.Instance.Event_DoAttackHeavy.RemoveListener(AttackHandler.PlayAttackAnim);
             InputEvent.Instance.Event_Parry.RemoveListener(ParryHandler.Parry);
             InputEvent.Instance.Event_Dodge.RemoveListener(DodgeHandler.Dodge);

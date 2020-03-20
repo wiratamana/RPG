@@ -45,6 +45,13 @@ namespace Tamana
                 return;
             }
 
+            var param = GameManager.Player.UnitAnimator.Params;
+            if (param.IsHolstering || param.IsEquipping)
+            {
+                Deactivate();
+                return;
+            }
+
             var position = mainCamera.WorldToScreenPoint(headTransform.position + offset);
             Image.rectTransform.position = position;
         }

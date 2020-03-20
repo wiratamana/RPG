@@ -26,11 +26,6 @@ namespace Tamana
             SetCursorToInvisible();
         }
 
-        private void Start()
-        {
-            var wira = Instance;
-        }
-
         public void SetCursorToVisible()
         {
             Cursor.lockState = CursorLockMode.None;
