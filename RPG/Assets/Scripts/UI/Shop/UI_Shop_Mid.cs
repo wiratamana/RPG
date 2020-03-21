@@ -12,12 +12,12 @@ namespace Tamana
         private RectTransform rectTransform;
         public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransform);
 
-        private UI_Shop_Mid_PurchaseMenu purchaseConfirmation;
-        public UI_Shop_Mid_PurchaseMenu PurchaseConfirmation => this.GetAndAssignComponentInChildren(ref purchaseConfirmation);       
+        private UI_Shop_Mid_TradeMenu tradeMenu;
+        public UI_Shop_Mid_TradeMenu TradeMenu => this.GetAndAssignComponentInChildren(ref tradeMenu);       
 
         public Item_Product ItemProduct { get; private set; }
 
-        public void Activate(Item_Product itemProduct)
+        public void Activate(Item_Product itemProduct, in TradeType tradeType)
         {
             if(GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
             {
@@ -26,7 +26,7 @@ namespace Tamana
 
             ItemProduct = itemProduct;
             gameObject.SetActive(true);
-            PurchaseConfirmation.Activate();
+            TradeMenu.Activate();
         }
 
         public void Deactivate()
@@ -34,7 +34,7 @@ namespace Tamana
             ItemProduct = null;
 
             gameObject.SetActive(false);
-            PurchaseConfirmation.Deactivate();
+            TradeMenu.Deactivate();
         }
 
         private void Resize()

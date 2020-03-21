@@ -15,32 +15,39 @@ namespace Tamana
         public UI_Shop Shop => this.GetAndAssignComponentInParent(ref shop);
 
         private UI_Shop_Left_Buy buy;
+        private UI_Shop_Left_Sell sell;
         public UI_Shop_Left_Buy Buy => this.GetAndAssignComponentInChildren(ref buy);
+        public UI_Shop_Left_Sell Sell => this.GetAndAssignComponentInChildren(ref sell);
 
         private RectTransform rectTransform;
         public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransform);
 
-        public void Activate()
-        {       
-            if(GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
-            {
-                Resize();
-            }
-
+        public void Activate(in TradeType tradeType = TradeType.Buy)
+        {
             gameObject.SetActive(true);
-            Buy.Activate();
+
+            if (tradeType == TradeType.Buy)
+            {
+                Buy.Activate();
+            }
+            else
+            {
+                Sell.Activate();
+            }
         }
 
         public void Deactivate()
         {
-            Buy.Deactivate();
-            gameObject.SetActive(false);
-        }
+            if (UI_Shop.Instance.TradeType == TradeType.Buy)
+            {
+                Buy.Deactivate();
+            }
+            else
+            {
+                Sell.Deactivate();
+            }
 
-        private void Resize()
-        {
-            RectTransform.sizeDelta = Buy.RectTransform.sizeDelta;
-            RectTransform.position = Buy.RectTransform.position;
+            gameObject.SetActive(false);
         }
     }
 }

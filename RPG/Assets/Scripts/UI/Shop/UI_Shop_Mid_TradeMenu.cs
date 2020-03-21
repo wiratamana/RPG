@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tamana
 {
-    public class UI_Shop_Mid_PurchaseMenu : MonoBehaviour
+    public class UI_Shop_Mid_TradeMenu : MonoBehaviour
     {
         private UI_Shop_Mid mid;
         public UI_Shop_Mid Mid => this.GetAndAssignComponentInParent(ref mid);
@@ -12,10 +12,10 @@ namespace Tamana
         private RectTransform rectTransform;
         public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransform);
 
-        private UI_Shop_Mid_PurchaseMenu_Confirmation confirmation;
-        private UI_Shop_Mid_PurchaseMenu_Details details;
-        public UI_Shop_Mid_PurchaseMenu_Confirmation Confirmation => this.GetAndAssignComponentInChildren(ref confirmation);
-        public UI_Shop_Mid_PurchaseMenu_Details Details => this.GetAndAssignComponentInChildren(ref details);
+        private UI_Shop_Mid_TradeMenu_Confirmation confirmation;
+        private UI_Shop_Mid_TradeMenu_Details details;
+        public UI_Shop_Mid_TradeMenu_Confirmation Confirmation => this.GetAndAssignComponentInChildren(ref confirmation);
+        public UI_Shop_Mid_TradeMenu_Details Details => this.GetAndAssignComponentInChildren(ref details);
 
         public void Activate()
         {

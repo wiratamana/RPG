@@ -37,8 +37,14 @@ namespace Tamana
         public EventManager OnOpened { get; } = new EventManager();
         public EventManager OnClosed { get; } = new EventManager();
 
+        public EventManager OnSwitchedMenuToBuy { get; } = new EventManager();
+        public EventManager OnSwitchedMenuToSell { get; } = new EventManager();
+
         private UI_Navigator uinav_escapeToCloseShop;
+        private UI_Navigator uinav_tabSellOrBuy;
         private Chat_ReturnTo dialogueAfterShopClosed;
+
+        public TradeType TradeType { get; private set; }
 
         public void Open(IReadOnlyCollection<Item_Product> products, Chat_ReturnTo dialogueAfterShopClosed)
         {
@@ -57,26 +63,40 @@ namespace Tamana
 
                 Right.RectTransform.sizeDelta = Left.RectTransform.sizeDelta;
                 Right.RectTransform.localPosition = new Vector3(screenSize.x * 0.25f, 0.0f);
-            }            
+            }
+
+            TradeType = TradeType.Buy;
 
             Products = products;
             Left.Activate();
             Right.Activate();
 
             UI_NavigatorManager.Instance.Add(ref uinav_escapeToCloseShop, "Back", InputEvent.ACTION_CLOSE_SHOP_MENU);
+            UI_NavigatorManager.Instance.Add(ref uinav_tabSellOrBuy, "Sell", InputEvent.ACTION_SWITCH_SHOP_MENU);
             this.dialogueAfterShopClosed = dialogueAfterShopClosed;
             InputEvent.Instance.Event_CloseShop.AddListener(Close);
+            InputEvent.Instance.Event_SwitchShop.AddListener(SwitchMenuToSell);
 
             OnOpened.Invoke();
         }
 
         public void Close()
         {
+            if(TradeType == TradeType.Buy)
+            {
+                InputEvent.Instance.Event_SwitchShop.RemoveListener(SwitchMenuToSell);
+            }
+            else
+            {
+                InputEvent.Instance.Event_SwitchShop.RemoveListener(SwitchMenuToBuy);
+            }
+
             Left.Deactivate();
             Right.Deactivate();
             Products = null;
 
             UI_NavigatorManager.Instance.Remove(ref uinav_escapeToCloseShop);
+            UI_NavigatorManager.Instance.Remove(ref uinav_tabSellOrBuy);
             InputEvent.Instance.Event_CloseShop.RemoveAllListener();
 
             UI_Chat_Main.Instance.Dialogue.UpdateDialogue(dialogueAfterShopClosed.ReturnToObject.Dialogue
@@ -87,24 +107,54 @@ namespace Tamana
             OnClosed.Invoke();
         }
 
-        public void OpenPurchaseConfirmation(Item_Product itemProduct)
+        public void OpenTradeMenu(Item_Product itemProduct)
         {
             Left.Deactivate();
             Right.Deactivate();
-            Mid.Activate(itemProduct);
+            Mid.Activate(itemProduct, TradeType);
 
             InputEvent.Instance.Event_CloseShop.RemoveListener(Close);
-            InputEvent.Instance.Event_CloseShop.AddListener(ClosePurchaseConfirmation);
+            InputEvent.Instance.Event_CloseShop.AddListener(CloseTradeMenu);
         }
 
-        public void ClosePurchaseConfirmation()
+        public void CloseTradeMenu()
         {
-            Left.Activate();
+            Left.Activate(TradeType);
             Right.Activate();
             Mid.Deactivate();
 
-            InputEvent.Instance.Event_CloseShop.RemoveListener(ClosePurchaseConfirmation);
+            InputEvent.Instance.Event_CloseShop.RemoveListener(CloseTradeMenu);
             InputEvent.Instance.Event_CloseShop.AddListener(Close);
+        }
+
+        private void SwitchMenuToSell()
+        {
+            InputEvent.Instance.Event_SwitchShop.RemoveListener(SwitchMenuToSell);
+            InputEvent.Instance.Event_SwitchShop.AddListener(SwitchMenuToBuy);
+
+            uinav_tabSellOrBuy.SetValue("Buy", InputEvent.ACTION_SWITCH_SHOP_MENU);
+
+            Left.Buy.Deactivate();
+
+            TradeType = TradeType.Sell;
+            Left.Sell.Activate();
+
+            OnSwitchedMenuToSell.Invoke();
+        }
+
+        private void SwitchMenuToBuy()
+        {
+            InputEvent.Instance.Event_SwitchShop.RemoveListener(SwitchMenuToBuy);
+            InputEvent.Instance.Event_SwitchShop.AddListener(SwitchMenuToSell);
+
+            uinav_tabSellOrBuy.SetValue("Sell", InputEvent.ACTION_SWITCH_SHOP_MENU);
+
+            Left.Sell.Deactivate();
+
+            TradeType = TradeType.Buy;
+            Left.Buy.Activate();
+
+            OnSwitchedMenuToBuy.Invoke();
         }
     }
 }

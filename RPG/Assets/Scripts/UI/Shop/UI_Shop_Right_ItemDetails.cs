@@ -26,6 +26,12 @@ namespace Tamana
         private Item_Preview itemPreview;
         private RenderTexture renderTexture;
 
+        private void Awake()
+        {
+            Right.Shop.OnSwitchedMenuToSell.AddListener(OnSwitchedMenuToSell);
+            Right.Shop.OnSwitchedMenuToBuy.AddListener(OnSwitchedMenuToBuy);
+        }
+
         private async void UpdateAsync()
         {
             var instanceID = itemPreview.GetInstanceID();
@@ -50,7 +56,15 @@ namespace Tamana
                 Resize();
             }
 
-            Right.Shop.Left.Buy.ItemParent.OnSelectedItemChanged.AddListener(OnSelectedItemChanged, GetInstanceID());
+            if (UI_Shop.Instance.TradeType == TradeType.Buy)
+            {
+                Right.Shop.Left.Buy.ItemParent.OnSelectedItemChanged.AddListener(OnSelectedItemChanged);
+            }
+            else
+            {
+                Right.Shop.Left.Sell.ItemParent.OnSelectedItemChanged.AddListener(OnSelectedItemChanged);
+            }
+
             renderTexture = new RenderTexture((int)itemRenderer.rectTransform.sizeDelta.x, (int)itemRenderer.rectTransform.sizeDelta.y, 
                 16, RenderTextureFormat.ARGBHalf);
             itemRenderer.texture = renderTexture;
@@ -58,7 +72,14 @@ namespace Tamana
 
         public void Deactivate()
         {
-            Right.Shop.Left.Buy.ItemParent.OnSelectedItemChanged.RemoveListener(OnSelectedItemChanged, GetInstanceID());
+            if(UI_Shop.Instance.TradeType == TradeType.Buy)
+            {
+                Right.Shop.Left.Buy.ItemParent.OnSelectedItemChanged.RemoveListener(OnSelectedItemChanged);
+            }
+            else
+            {
+                Right.Shop.Left.Sell.ItemParent.OnSelectedItemChanged.RemoveListener(OnSelectedItemChanged);
+            }            
 
             if(itemRenderer.texture != null)
             {
@@ -143,6 +164,22 @@ namespace Tamana
             var descSize = new Vector2(effectSize.x, Mathf.Abs(pos.y - bot) - offset);
             itemDesription.rectTransform.sizeDelta = descSize;
             itemDesription.rectTransform.position = pos - new Vector3(0, descSize.y * 0.5f);
+        }
+
+        private void OnSwitchedMenuToBuy()
+        {
+            OnSelectedItemChanged(null);
+
+            Right.Shop.Left.Buy.ItemParent.OnSelectedItemChanged.AddListener(OnSelectedItemChanged);
+            Right.Shop.Left.Sell.ItemParent.OnSelectedItemChanged.RemoveListener(OnSelectedItemChanged);
+        }
+
+        private void OnSwitchedMenuToSell()
+        {
+            OnSelectedItemChanged(null);
+
+            Right.Shop.Left.Sell.ItemParent.OnSelectedItemChanged.AddListener(OnSelectedItemChanged);
+            Right.Shop.Left.Buy.ItemParent.OnSelectedItemChanged.RemoveListener(OnSelectedItemChanged);
         }
     }
 }

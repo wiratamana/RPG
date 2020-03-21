@@ -56,6 +56,11 @@ namespace Tamana
 
         public static void DestroyInstance()
         {
+            if(instance == null)
+            {
+                return;
+            }
+
             UI_Pool.Instance.RemoveImage(instance.SelectionImage);
             Destroy(instance);
             instance = null;

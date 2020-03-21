@@ -28,7 +28,7 @@ namespace Tamana
 
         private void Awake()
         {
-            UI_Shop.Instance.OnClosed.AddListener(ResetStartIndex);
+            UI_Shop.Instance.OnClosed.AddListener(ResetSettings);
         }
 
         public void Activate()
@@ -64,12 +64,15 @@ namespace Tamana
             EventTrigger.RemoveEntry(EventTriggerType.PointerEnter);
             EventTrigger.RemoveEntry(EventTriggerType.PointerExit);
 
-            for (int i = 0; i < items.Length; i++)
+            if(items != null)
             {
-                Destroy(items[i]);
-            }
+                for (int i = 0; i < items.Length; i++)
+                {
+                    Destroy(items[i]);
+                }
 
-            items = null;
+                items = null;
+            }           
         }
 
         private async void InstantiateItem()
@@ -185,9 +188,10 @@ namespace Tamana
             InstantiateItem();
         }
 
-        private void ResetStartIndex()
+        private void ResetSettings()
         {
             startIndex = 0;
+            OnSelectedItemChanged.RemoveAllListener();
         }
     }
 }

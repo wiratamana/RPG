@@ -105,7 +105,7 @@ namespace Tamana
 
             UI_Selection.DestroyInstance();
             itemParent.OnSelectedItemChanged.Invoke(null);
-            itemParent.Buy.Left.Shop.OpenPurchaseConfirmation(itemProduct);
+            itemParent.Buy.Left.Shop.OpenTradeMenu(itemProduct);
         }
 
         private void Resize()

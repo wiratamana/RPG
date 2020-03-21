@@ -6,7 +6,7 @@ using TMPro;
 
 namespace Tamana
 {
-    public class UI_Shop_Mid_PurchaseMenu_Details : MonoBehaviour
+    public class UI_Shop_Mid_TradeMenu_Details : MonoBehaviour
     {
         [SerializeField] private RawImage itemRenderer;
         [SerializeField] private RectTransform costRT;
@@ -15,8 +15,8 @@ namespace Tamana
         public RectTransform CostRT => costRT;
         public TextMeshProUGUI CostText => costText;
 
-        private UI_Shop_Mid_PurchaseMenu purchaseMenu;
-        public UI_Shop_Mid_PurchaseMenu PurchaseMenu => this.GetAndAssignComponentInParent(ref purchaseMenu);
+        private UI_Shop_Mid_TradeMenu tradeMenu;
+        public UI_Shop_Mid_TradeMenu TradeMenu => this.GetAndAssignComponentInParent(ref tradeMenu);
 
         private RectTransform rectTransform;
         public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransform);
@@ -41,7 +41,7 @@ namespace Tamana
                     (int)itemRenderer.rectTransform.sizeDelta.y, 16, RenderTextureFormat.ARGBHalf);
             }
 
-            var product = PurchaseMenu.Mid.ItemProduct;
+            var product = TradeMenu.Mid.ItemProduct;
 
             costText.text = product.Price.ToString();
 
@@ -84,11 +84,11 @@ namespace Tamana
 
         private void Resize()
         {
-            var top = PurchaseMenu.Mid.Shop.Left.Buy.Stock.position.y + (PurchaseMenu.Mid.Shop.Left.Buy.Stock.sizeDelta.y * 0.5f);
+            var top = TradeMenu.Mid.Shop.Left.Buy.Stock.position.y + (TradeMenu.Mid.Shop.Left.Buy.Stock.sizeDelta.y * 0.5f);
             var bot = UI_Chat_Main.Instance.Dialogue.RectTransform.position.y + (UI_Chat_Main.Instance.Dialogue.RectTransform.sizeDelta.y * 0.5f);
             var offset = 20.0f;
-            var posY = bot + UI_Shop_Mid_PurchaseMenu_Confirmation.HEIGHT + offset;
-            var sizeX = PurchaseMenu.Mid.RectTransform.sizeDelta.x;
+            var posY = bot + UI_Shop_Mid_TradeMenu_Confirmation.HEIGHT + offset;
+            var sizeX = TradeMenu.Mid.RectTransform.sizeDelta.x;
             var sizeY = Mathf.Abs(top - posY) - offset;
             posY += sizeY * 0.5f;
 
@@ -103,7 +103,7 @@ namespace Tamana
             var costOffsetX = 65;
             var costOffsetY = 30;
             var costPosX = rendPos.x + (rendSizeY * 0.5f) + (costRT.sizeDelta.x * 0.5f) + costOffsetX;
-            var costPosY = bot + (offset * 2) + UI_Shop_Mid_PurchaseMenu_Confirmation.HEIGHT + costOffsetY;
+            var costPosY = bot + (offset * 2) + UI_Shop_Mid_TradeMenu_Confirmation.HEIGHT + costOffsetY;
 
             costRT.position = new Vector3(costPosX, costPosY);
         }

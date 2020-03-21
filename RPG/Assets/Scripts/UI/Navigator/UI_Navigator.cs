@@ -10,14 +10,14 @@ namespace Tamana
         [SerializeField] private TextMeshProUGUI letter;
         [SerializeField] private TextMeshProUGUI text;
 
-        public void SetValue(string text, char letter)
+        public void SetValue(in string text, char letter)
         {
             this.text.text = text;
             this.letter.enableAutoSizing = false;
             this.letter.text = letter.ToString();
         }
 
-        public void SetValue(string text, string letter)
+        public void SetValue(in string text, in string letter)
         {
             this.text.text = text;
             this.letter.enableAutoSizing = true;

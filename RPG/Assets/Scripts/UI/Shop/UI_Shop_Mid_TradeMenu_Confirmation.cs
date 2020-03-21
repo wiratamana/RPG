@@ -5,13 +5,13 @@ using UnityEngine.EventSystems;
 
 namespace Tamana
 {
-    public class UI_Shop_Mid_PurchaseMenu_Confirmation : MonoBehaviour
+    public class UI_Shop_Mid_TradeMenu_Confirmation : MonoBehaviour
     {
         [SerializeField] private RectTransform yes;
         [SerializeField] private RectTransform no;
 
-        private UI_Shop_Mid_PurchaseMenu purchaseMenu;
-        public UI_Shop_Mid_PurchaseMenu PurchaseMenu => this.GetAndAssignComponentInParent(ref purchaseMenu);
+        private UI_Shop_Mid_TradeMenu tradeMenu;
+        public UI_Shop_Mid_TradeMenu TradeMenu => this.GetAndAssignComponentInParent(ref tradeMenu);
 
         private RectTransform rectTransform;
         public RectTransform RectTransform => this.GetAndAssignComponent(ref rectTransform);
@@ -63,7 +63,7 @@ namespace Tamana
             var bot = UI_Chat_Main.Instance.Dialogue.RectTransform.position.y + (UI_Chat_Main.Instance.Dialogue.RectTransform.sizeDelta.y * 0.5f);
             var offset = 20.0f;
             var posY = bot + (HEIGHT * 0.5f) + offset;
-            var sizeX = PurchaseMenu.Mid.RectTransform.sizeDelta.x;
+            var sizeX = TradeMenu.Mid.RectTransform.sizeDelta.x;
 
             RectTransform.sizeDelta = new Vector2(sizeX, HEIGHT);
             rectTransform.position = new Vector3(Screen.width * 0.5f, posY);
@@ -80,11 +80,19 @@ namespace Tamana
         }
 
         private void OnPointerClick_Yes(BaseEventData eventData)
-        {           
-            PurchaseMenu.Mid.ItemProduct.Purchase();
+        {    
+            if (UI_Shop.Instance.TradeType == TradeType.Buy)
+            {
+                TradeMenu.Mid.ItemProduct.Purchase();
+            }
+            else
+            {
+                TradeMenu.Mid.ItemProduct.Sell();
+            }
+            
 
             UI_Selection.DestroyInstance();
-            UI_Shop.Instance.ClosePurchaseConfirmation();
+            UI_Shop.Instance.CloseTradeMenu();
         }
 
         private void OnPointerEnter_No(BaseEventData eventData)
@@ -100,7 +108,7 @@ namespace Tamana
         private void OnPointerClick_No(BaseEventData eventData)
         {
             UI_Selection.DestroyInstance();
-            UI_Shop.Instance.ClosePurchaseConfirmation();
+            UI_Shop.Instance.CloseTradeMenu();
         }
     }
 }

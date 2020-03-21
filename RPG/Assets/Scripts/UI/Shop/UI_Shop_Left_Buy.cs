@@ -30,29 +30,56 @@ namespace Tamana
             }
 
             ItemParent.Activate();
+
+            gameObject.SetActive(true);
         }
 
         public void Deactivate()
         {
+            if (UI_Shop.Instance.TradeType == TradeType.Sell)
+            {
+                return;
+            }
 
+            ItemParent.Deactivate();
+
+            gameObject.SetActive(false);
         }
 
 
         private void Resize()
         {
-            var priceWidth = Price.sizeDelta.x;
-            var parentHeigth = RectTransform.sizeDelta.y;
-            var parentWidth = RectTransform.sizeDelta.x;
+            var top = Screen.height - UI_Shop_Left.START_Y;
+            var bot = UI_Chat_Main.Instance.Dialogue.RectTransform.position.y + (UI_Chat_Main.Instance.Dialogue.RectTransform.sizeDelta.y * 0.5f) + UI_Shop_Left.SPACING;
+            var sizeY = Mathf.Abs(top - bot);
 
-            Price.localPosition = new Vector3((parentWidth * 0.5f) - (priceWidth * 0.5f) - UI_Shop_Left.END_X,
-                (parentHeigth * 0.5f) - UI_Shop_Left.START_Y);
+            var left = UI_Shop_Left.START_X;
+            var right = (Screen.width * 0.5f) - UI_Shop_Left.END_X;
+            var sizeX = right - left;
 
-            Stock.localPosition = Price.localPosition - new Vector3(UI_Shop_Left.SPACING + Stock.sizeDelta.x, 0);
+            var posX = left + (sizeX * 0.5f);
+            var posY = top - (sizeY * 0.5f);
 
-            var stockLeftPos = Stock.position.x - (Stock.sizeDelta.x * 0.5f);
-            var itemTypeWidth = Mathf.Abs(UI_Shop_Left.START_X - stockLeftPos) - UI_Shop_Left.SPACING;
-            ItemTypes.RectTransform.sizeDelta = new Vector2(itemTypeWidth, Price.sizeDelta.y);
-            ItemTypes.RectTransform.position = new Vector3(UI_Shop_Left.START_X + (itemTypeWidth * 0.5f), Price.position.y);
+            var priceSize = Price.sizeDelta;
+            var pricePosX = right - (priceSize.x * 0.5f);
+            var pricePosY = top;
+
+            var stockSize = Stock.sizeDelta;
+            var stockPosX = pricePosX - (priceSize.x * 0.5f) - UI_Shop_Left.SPACING - (stockSize.x * 0.5f);
+            var stockPosY = pricePosY;
+
+            var itSizeX = stockPosX - (stockSize.x * 0.5f) - UI_Shop_Left.SPACING - left;
+            var itSizeY = stockSize.y;
+            var itPosX = stockPosX - (stockSize.x * 0.5f) - UI_Shop_Left.SPACING - (itSizeX * 0.5f);
+            var itPosY = pricePosY;
+
+            RectTransform.sizeDelta = new Vector2(sizeX, sizeY);
+            RectTransform.position = new Vector3(posX, posY);
+
+            Price.position = new Vector3(pricePosX, pricePosY);
+            Stock.position = new Vector3(stockPosX, stockPosY);
+            ItemTypes.RectTransform.sizeDelta = new Vector2(itSizeX, itSizeY);
+            ItemTypes.RectTransform.position = new Vector3(itPosX, itPosY);
         }
     }
 }

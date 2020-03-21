@@ -60,6 +60,12 @@ namespace Tamana
         ReturnTo,
     }
 
+    public enum TradeType 
+    { 
+        Buy, 
+        Sell 
+    }
+
     public enum StateMachineBehaviourPosition
     {
         OnStateEnter,
