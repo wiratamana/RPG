@@ -26,10 +26,7 @@ namespace Tamana
 
         private void Update()
         {
-            if(UnitEnemy.Behaviour == AIBehaviour.Hostile)
-            {
-                brain.Update();
-            }            
+            brain.Update();
         }
 
         public void InstallBrain(AI_Brain brain)

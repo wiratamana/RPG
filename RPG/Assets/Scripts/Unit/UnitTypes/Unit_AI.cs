@@ -20,7 +20,18 @@ namespace Tamana
         public PF_Unit PF => this.GetOrAddAndAssignComponent(ref pf);
         public Unit_AI_DialogueHolder DialogueHolder => this.GetOrAddAndAssignComponent(ref dialogueHolder);
 
-        public AIBehaviour Behaviour => behaviour;
+        public AIBehaviour Behaviour
+        {
+            get
+            {
+                return behaviour;
+            }
+
+            set
+            {
+                behaviour = value;
+            }
+        }
 
         protected override void OnValidate()
         {

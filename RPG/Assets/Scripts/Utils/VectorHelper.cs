@@ -52,6 +52,13 @@ namespace Tamana
             o.z = v.z / distance;
         }
 
+        public static void FastDot(in Vector3 a, in Vector3 b, out float dot)
+        {
+            dot = a.x * b.x;
+            dot += a.y * b.y;
+            dot += a.z * b.z;
+        }
+
         public static void Add(in Vector3 a, in Vector3 b, out Vector3 r)
         {
             r.x = a.x + b.x;

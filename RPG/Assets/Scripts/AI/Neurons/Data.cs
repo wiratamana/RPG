@@ -16,22 +16,38 @@ namespace Tamana.AI
         public Unit_Animator_Params PlayerParams { get; private set; }
         private PF_Unit unitpf;
 
+        private Vector3 playerPosition;
+        private Vector3 playerForward;
+        private float distanceToPlayer;
+        private Vector3 myPosition;
+        private Vector3 myForward;
+        private float distanceFromPlayerToIdlePosition;
+        private float distanceToIdlePosition;
+        private float movementVelocity;
+        private float rotationSpeed;
+        private Vector3 nodeParentPosition;
+        private float distanceToNodeParent;
+        private Vector3 idlePosition;
+        private Vector3 directionTowardPlayer;
+        private float dotProductTowardPlayer;
+        private bool isPlayerOnAttackAnimationStarted;
+
         public IReadOnlyCollection<PF_Node> NeighbourNodes => unitpf.nodeParent.neighbours;
-        public Vector3 PlayerPosition { get; private set; }
-        public Vector3 PlayerForward { get; private set; }
-        public float DistanceToPlayer { get; private set; }
-        public Vector3 MyPosition { get; private set; }
-        public Vector3 MyForward { get; private set; }
-        public float DistanceFromPlayerToIdlePosition { get; private set; }
-        public float DistanceToIdlePosition { get; private set; }
-        public float MovementVelocity { get; private set; }
-        public float RotationSpeed { get; private set; }
-        public Vector3 NodeParentPosition { get; private set; }
-        public float DistanceToNodeParent { get; private set; }
-        public Vector3 IdlePosition { get; private set; }
-        public Vector3 DirectionTowardPlayer { get; private set; }
-        public float DotProductTowardPlayer { get; private set; }
-        public bool isPlayerOnAttackAnimationStarted { private set; get; }
+        public Vector3 PlayerPosition => playerPosition;
+        public Vector3 PlayerForward => playerForward;
+        public float DistanceToPlayer => distanceToPlayer;
+        public Vector3 MyPosition => myPosition;
+        public Vector3 MyForward => myForward;
+        public float DistanceFromPlayerToIdlePosition => distanceFromPlayerToIdlePosition;
+        public float DistanceToIdlePosition => distanceToIdlePosition;
+        public float MovementVelocity => movementVelocity;
+        public float RotationSpeed => rotationSpeed;
+        public Vector3 NodeParentPosition => nodeParentPosition;
+        public float DistanceToNodeParent => distanceToNodeParent;
+        public Vector3 IdlePosition => idlePosition;
+        public Vector3 DirectionTowardPlayer => directionTowardPlayer;
+        public float DotProductTowardPlayer => dotProductTowardPlayer;
+        public bool IsPlayerOnAttackAnimationStarted => isPlayerOnAttackAnimationStarted;
 
         public Vector3 NextDestination;
         public Quaternion MyRotation;
@@ -44,7 +60,7 @@ namespace Tamana.AI
             Player = GameManager.Player;
             PlayerParams = Player.UnitAnimator.Params;
             unitpf = myself.PF;
-            IdlePosition = myself.transform.position;
+            idlePosition = myself.transform.position;
 
             Player.CombatHandler.AttackHandler.OnAttackAnimationStarted.AddListener(SetOnAttackAnimationStartedTrue);
             Player.CombatHandler.AttackHandler.OnConsecutiveAttack.AddListener(SetOnAttackAnimationStartedTrue);
@@ -54,29 +70,29 @@ namespace Tamana.AI
 
         public void Update()
         {
-            PlayerPosition = Player.transform.position;
-            PlayerForward = Player.transform.forward;
-            MyPosition = Myself.transform.position;
-            MyForward = Myself.transform.forward;
-            DotProductTowardPlayer = Vector3.Dot(MyForward, PlayerForward);
+            playerPosition = Player.transform.position;
+            playerForward = Player.transform.forward;
+            myPosition = Myself.transform.position;
+            myForward = Myself.transform.forward;
+            dotProductTowardPlayer = Vector3.Dot(MyForward, PlayerForward);
 
-            DistanceToPlayer = Vector3.Distance(PlayerPosition, MyPosition);
-            DistanceFromPlayerToIdlePosition = Vector3.Distance(PlayerPosition, IdlePosition);
-            DistanceToIdlePosition = Vector3.Distance(MyPosition, IdlePosition);
-            DirectionTowardPlayer = Vector3.Normalize(PlayerPosition - MyPosition);
+            distanceToPlayer = Vector3.Distance(PlayerPosition, MyPosition);
+            distanceFromPlayerToIdlePosition = Vector3.Distance(PlayerPosition, IdlePosition);
+            distanceToIdlePosition = Vector3.Distance(MyPosition, IdlePosition);
+            directionTowardPlayer = Vector3.Normalize(PlayerPosition - MyPosition);
 
             var deltaTime = Time.deltaTime;
-            MovementVelocity = 5.0f * deltaTime;
-            RotationSpeed = 5.0f * deltaTime;
+            movementVelocity = 5.0f * deltaTime;
+            rotationSpeed = 5.0f * deltaTime;
 
-            NodeParentPosition = unitpf.nodeParent.transform.position;
-            DistanceToNodeParent = Vector3.Distance(MyPosition, NodeParentPosition);
+            nodeParentPosition = unitpf.nodeParent.transform.position;
+            distanceToNodeParent = Vector3.Distance(MyPosition, NodeParentPosition);
             MyRotation = Myself.transform.rotation;
         }
 
         public void UpdateNode()
         {
-            DistanceToNodeParent = (MyPosition - NodeParentPosition).sqrMagnitude;
+            distanceToNodeParent = (MyPosition - NodeParentPosition).sqrMagnitude;
 
             foreach (var i in unitpf.nodeParent.neighbours)
             {
@@ -89,11 +105,11 @@ namespace Tamana.AI
                 if (distance < DistanceToNodeParent)
                 {
                     unitpf.nodeParent = i;
-                    DistanceToNodeParent = distance;
+                    distanceToNodeParent = distance;
                 }
             }
 
-            DistanceToNodeParent = Mathf.Sqrt(DistanceToNodeParent);
+            distanceToNodeParent = Mathf.Sqrt(DistanceToNodeParent);
         }
 
         public void ResetOnAttackAnimationStarted()

@@ -35,6 +35,16 @@ namespace Tamana.AI
         {
             data.Update();
 
+            if (new IsHostileToPlayer(data) == false)
+            {
+                if(new IsTakingDamage(data) == false)
+                {
+                    return;
+                }
+
+                new DoSwitchToHostile(data);
+            }
+
             if (data.IsAlert == false)
             {
                 data.IsAlert = new IsPlayerInsideHostileArea(data);

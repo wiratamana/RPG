@@ -22,7 +22,7 @@ namespace Tamana.AI.Neuron
                 return;
             }
 
-            Result = data.isPlayerOnAttackAnimationStarted;
+            Result = data.IsPlayerOnAttackAnimationStarted;
         }
 
         public static implicit operator bool(IsPlayerAttackingMe result)
