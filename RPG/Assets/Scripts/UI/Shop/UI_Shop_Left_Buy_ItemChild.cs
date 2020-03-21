@@ -40,7 +40,7 @@ namespace Tamana
 
             ItemName.text = itemProduct.Product.ItemName;
             Stock.text = itemProduct.Stock.ToString();
-            Price.text = itemProduct.Price.ToString();
+            Price.text = itemProduct.PriceBuy.ToString();
 
             itemProduct.Validate(out Item_Product.ValidationResult result);
             Stock.color = result.isAvailable ? Color.white : Color.red;

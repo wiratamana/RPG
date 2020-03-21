@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 namespace Tamana
 {
@@ -9,6 +10,7 @@ namespace Tamana
     {
         [SerializeField] private RectTransform yes;
         [SerializeField] private RectTransform no;
+        [SerializeField] private TextMeshProUGUI confirmationText;
 
         private UI_Shop_Mid_TradeMenu tradeMenu;
         public UI_Shop_Mid_TradeMenu TradeMenu => this.GetAndAssignComponentInParent(ref tradeMenu);
@@ -21,6 +23,9 @@ namespace Tamana
 
         public const float HEIGHT = 250.0f;
 
+        private static readonly string confirmationMessage_buy = $"Are you sure you want to{System.Environment.NewLine}buy this item?";
+        private static readonly string confirmationMessage_sell = $"Are you sure you want to{System.Environment.NewLine}sell this item?";
+
         public void Activate()
         {
             if(GameManager.IsScreenResolutionGreaterOrEqualThanFHD)
@@ -28,7 +33,9 @@ namespace Tamana
                 Resize();
             }
 
-            if(eventTrigger_yes == null)
+            confirmationText.text = UI_Shop.Instance.TradeType == TradeType.Buy ? confirmationMessage_buy : confirmationMessage_sell;
+
+            if (eventTrigger_yes == null)
             {
                 eventTrigger_yes = yes.GetComponent<EventTrigger>() ?? yes.gameObject.AddComponent<EventTrigger>();
             }

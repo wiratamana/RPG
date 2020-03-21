@@ -43,7 +43,7 @@ namespace Tamana
 
             var product = TradeMenu.Mid.ItemProduct;
 
-            costText.text = product.Price.ToString();
+            costText.text = UI_Shop.Instance.TradeType == TradeType.Buy ? product.PriceBuyString : product.PriceSellString;
 
             itemRenderer.texture = renderTexture;
             itemPreview = Item_Preview.InstantiateItemPrefab(product.Product, Vector2.zero);

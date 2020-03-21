@@ -15,6 +15,8 @@ MonoBehaviour:
   itemName: Chr_Torso_Male_23
   itemDescription: Item 'Chr_Torso_Male_23' description!!
   prefab: {fileID: 4289899281546860, guid: df9bf4ba2acdeba4caf66955d6b4dbfc, type: 3}
+  price: 230
+  effects: []
   partLocation: PartsGetter/Modular_Characters/Male_Parts/Male_03_Torso/Chr_Torso_Male_23
   gender: 1
   type: 1

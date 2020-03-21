@@ -87326,6 +87326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yes: {fileID: 2076176757}
   no: {fileID: 1898759256}
+  confirmationText: {fileID: 1354795931}
 --- !u!1001 &1706023156
 PrefabInstance:
   m_ObjectHideFlags: 0
