@@ -8,8 +8,7 @@ namespace Tamana
         private MeshRenderer renderer;
         private Material material;
 
-        public Item_Base ItemBase => ItemIcon.Item;
-        public UI_Menu_Inventory_Left_ItemIcon ItemIcon { private set; get; }
+        public Item_Base ItemBase { get; private set; }
 
         private void Awake()
         {
@@ -27,18 +26,12 @@ namespace Tamana
 
         public void UpdateMaterial()
         {
-            var cam = UI_Menu.Instance.Inventory.Left.ItemIconDrawer.TextureRendererCamera;
-            material.SetVector("_CamDir", cam.transform.forward);
+            material.SetVector("_CamDir", UI_ItemRenderer.GetCameraTransform().forward);
         }
 
         public void UpdateRotation()
         {
             transform.Rotate(Vector3.up * 120 * Time.deltaTime);
-        }
-
-        public void SetItemIcon(UI_Menu_Inventory_Left_ItemIcon itemIcon)
-        {
-            ItemIcon = itemIcon;
         }
 
         public void ResetRotation()
@@ -54,9 +47,8 @@ namespace Tamana
             }
         }
 
-        public static Item_Preview InstantiateItemPrefab(UI_Menu_Inventory_Left_ItemIcon itemIcon, Vector2 positionOffset)
+        public static Item_Preview InstantiateItemPrefab(Item_Base itemBase, in Vector2 positionOffset)
         {
-            var itemBase = itemIcon.Item;
             var item = Instantiate(itemBase.Prefab);
 
             if (itemBase is Item_Armor || itemBase is Item_Attachment)
@@ -66,12 +58,24 @@ namespace Tamana
 
             item.gameObject.layer = LayerMask.NameToLayer(LayerManager.LAYER_ITEM_PROJECTION);
             item.GetComponent<MeshRenderer>().sharedMaterial = GameManager.ItemMaterial;
-            item.gameObject.AddComponent<Item_Preview>().SetItemIcon(itemIcon);
+            item.gameObject.AddComponent<Item_Preview>().ItemBase = itemBase;
 
             item.position = new Vector3(0, 1000, 1) + (Vector3)positionOffset;
             item.rotation = Quaternion.Euler(0, 180, 0);
 
+            if (itemBase is Item_Weapon)
+            {
+                var weapon = itemBase as Item_Weapon;
+                item.rotation = Quaternion.Euler(weapon.MenuDefaultItemRotation);
+            }
+
             return item.GetComponent<Item_Preview>();
+        }
+
+        private void OnDestroy()
+        {
+            Destroy(material);
+            Destroy(gameObject);
         }
     }
 }

@@ -1,0 +1,15 @@
+1. Knapa pencetan inventory di B? Itu rada ga biasa buat gw sih, soalnya biasanya inventory kan pencet Tab ato ga I.
+
+2. Mendingan pedangnya dibikin sistem auto aja sih jadi ga masuk ato ngeluarin dulu. Atau ga kalo mau masuk ketika udah beberapa detik ga dipake, dan pas ngeklik buat nyerang itu sekalian buat narik pedangnya juga jadi ga make pencetan khusus buat narik ato masukinnya.
+
+3.Musuhnya aggressive pas siang, pas malem beneran ga gerak.
+
+4.Waktunya bergerak dari siang ke malem (gw suka ini), tapi kalo pas malemnya itu terlalu gelap sampe sulit buat ngeliat apapun.
+
+5.Sistem lock enemy cuma aktif ketika pedangnya udah keluar, kalo pas pedang masih didalem ngelock tapi ga bisa bergerak, dan kalo lw ngelock pas lagi lari karakternya langsung lari ngerush ke arah musuhnya dan ga bisa diberentiin kecuali ngelepas locknya.
+
+6.Walaupun darah gw udah abis dan mati, gw bisa idup lagi mencet 1 tombol gw tadi lupa tombol apa.
+
+7.Invert kamera atas bawahnya entah kenapa rada nyusahin.
+
+8.Ada 1 karakter tengah yang ngebug T-pose di tengah map (ntar gw kirim gambarnya).

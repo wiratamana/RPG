@@ -38,6 +38,34 @@ namespace Tamana
         TwoHand
     }
 
+    public enum AIBehaviour
+    {
+        Hostile,
+        Neutral
+    }
+
+    public enum ChatType
+    {
+        Player,
+        Target,
+        Branch,
+        Event,
+        Exit
+    }
+
+    public enum ChatEvent
+    {
+        Shop,
+        Blacksmith,
+        ReturnTo,
+    }
+
+    public enum TradeType 
+    { 
+        Buy, 
+        Sell 
+    }
+
     public enum StateMachineBehaviourPosition
     {
         OnStateEnter,
@@ -106,5 +134,13 @@ namespace Tamana
         Longs_KO_2 = 1 << 1,
         Longs_KO_Air = 1 << 2,
         Longs_KO_AirStrong = 1 << 3,
+    }
+
+    public enum VictoryAnimation
+    {
+        Sword1h_Vicotry_1,
+        Sword1h_Vicotry_2,
+        Sword1h_Vicotry_3,
+        Sword1h_Vicotry_4,
     }
 }

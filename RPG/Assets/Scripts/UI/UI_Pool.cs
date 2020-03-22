@@ -52,6 +52,11 @@ namespace Tamana
         }
 
         public TextMeshProUGUI GetText(Transform parent, int width, int height, string text, string objName)
+        {    
+            return GetText(parent, (float)width, height, text, objName);
+        }
+
+        public TextMeshProUGUI GetText(Transform parent, float width, float height, string text, string objName)
         {
             if (textsPool.Count == 0)
             {

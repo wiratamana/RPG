@@ -6,7 +6,7 @@ namespace Tamana
 {
     public class AsyncManager : MonoBehaviour
     {
-        private static int frameCount;
+        public static int frameCount;
 
         private static List<AsyncAwaiter> frameAwaiterList;
 

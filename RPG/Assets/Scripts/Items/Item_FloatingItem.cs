@@ -77,8 +77,7 @@ namespace Tamana
         {
             if (navigator != null)
             {
-                UI_NavigatorManager.Instance.Remove(navigator);
-                navigator = null;
+                UI_NavigatorManager.Instance.Remove(ref navigator);
 
                 InputEvent.Instance.Event_PickUpItem.RemoveListener(PickUpItem, GetInstanceID());
             }

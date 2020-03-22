@@ -9,10 +9,20 @@ namespace Tamana
         private Light pointLight;
         private MeshRenderer meshRenderer;
 
+        private static Material lanternMaterial;
+
         private void Awake()
         {
             pointLight = GetComponentInChildren<Light>();
             meshRenderer = GetComponent<MeshRenderer>();
+
+            if(lanternMaterial == null)
+            {
+                var material = meshRenderer.sharedMaterial;
+                lanternMaterial = new Material(material);
+            }
+            
+            meshRenderer.sharedMaterial = lanternMaterial;
         }
 
         private void Update()

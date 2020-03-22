@@ -58,7 +58,7 @@ namespace Tamana
         {
             if (value == null)
             {
-                value = component.GetComponentInChildren<T>();
+                value = component.GetComponentInChildren<T>(true);
             }
 
             return value;
@@ -67,7 +67,7 @@ namespace Tamana
         {
             if (values == null || values.Length == 0)
             {
-                values = component.GetComponentsInChildren<T>();
+                values = component.GetComponentsInChildren<T>(true);
             }
 
             return values;
@@ -76,7 +76,7 @@ namespace Tamana
         {
             if (values == null)
             {
-                var components = component.GetComponentsInChildren<T>();
+                var components = component.GetComponentsInChildren<T>(true);
                 var comp = System.Array.Find(components, predicate);
 
                 if (comp == null)

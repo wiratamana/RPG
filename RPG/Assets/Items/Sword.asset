@@ -17,6 +17,7 @@ MonoBehaviour:
     a strange sense of nostalgia washed over you. Take it when going alone would
     otherwise be dangerous.
   prefab: {fileID: 4561571508225656, guid: 0c14f3ea30af4174ba288b3c2042f665, type: 3}
+  price: 180
   effects:
   - type: 3
     value: 50

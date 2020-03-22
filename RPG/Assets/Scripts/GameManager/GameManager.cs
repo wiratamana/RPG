@@ -17,6 +17,11 @@ namespace Tamana
             DontDestroyOnLoad(go);
         }
 
+        private const int FULLHD = FULLHD_HEIGHT * FULLHD_WIDTH;
+        public const int FULLHD_WIDTH = 1920;
+        public const int FULLHD_HEIGHT = 1080;
+        public static bool IsScreenResolutionGreaterOrEqualThanFHD => Screen.width * Screen.height >= FULLHD;
+
         private static Transform _playerTransform;
         public static Transform PlayerTransform
         {
@@ -54,6 +59,20 @@ namespace Tamana
                 }
 
                 return player;
+            }
+        }
+
+        public static bool IsAbleToInteract
+        {
+            get
+            {
+                var param = Player.UnitAnimator.Params;
+                if (param.IsHolstering || param.IsEquipping || UI_Menu.IsMenuActive)
+                {
+                    return false;
+                }
+
+                return true;
             }
         }
 

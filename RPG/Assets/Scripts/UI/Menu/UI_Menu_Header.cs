@@ -25,6 +25,7 @@ namespace Tamana
         private RectTransform right;
 
         public UI_Menu_Header_MenuName MenuName { private set; get; }
+        public UI_Menu_Header_Money Money { get; private set; }
 
         protected override void Awake()
         {
@@ -48,6 +49,7 @@ namespace Tamana
             right   = rightGO.AddComponent<RectTransform>();
 
             MenuName = mid.gameObject.AddComponent<UI_Menu_Header_MenuName>();
+            Money = right.gameObject.AddComponent<UI_Menu_Header_Money>();
 
             // =================================================================
 

@@ -10,7 +10,7 @@ namespace Tamana
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     var go = new GameObject(nameof(InputEvent));
                     DontDestroyOnLoad(go);
@@ -26,11 +26,6 @@ namespace Tamana
             SetCursorToInvisible();
         }
 
-        private void Start()
-        {
-            var wira = Instance;
-        }
-
         public void SetCursorToVisible()
         {
             Cursor.lockState = CursorLockMode.None;
@@ -44,6 +39,17 @@ namespace Tamana
 
         public const char ACTION_PICK_UP_ITEM = 'E';
         public const char ACTION_OPEN_MENU_INVENTORY = 'B';
+        public const string ACTION_CLOSE_SHOP_MENU = "Esc";
+        public const string ACTION_SWITCH_SHOP_MENU = "Tab";
+
+        public EventManager Event_ScrollUp { get; } = new EventManager();
+        public EventManager Event_ScrollDown { get; } = new EventManager();
+
+        public EventManager Event_Chat { get; } = new EventManager();
+        public EventManager Event_NextDialogue { get; } = new EventManager();
+
+        public EventManager Event_CloseShop { get; } = new EventManager();
+        public EventManager Event_SwitchShop { get; } = new EventManager();
 
         public EventManager Event_PickUpItem { get; } = new EventManager();
         public EventManager Event_OpenOrCloseMenuInventory { private set; get; } = new EventManager();
@@ -65,11 +71,23 @@ namespace Tamana
             if(Input.GetKeyDown(KeyCode.E) == true)
             {
                 Event_PickUpItem.Invoke();
+                Event_Chat.Invoke();
+                Event_NextDialogue.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.B) == true)
             {
                 Event_OpenOrCloseMenuInventory.Invoke();
+            }
+
+            if(Input.GetKeyDown(KeyCode.Escape) == true)
+            {
+                Event_CloseShop.Invoke();
+            }
+
+            if(Input.GetKeyDown(KeyCode.Tab))
+            {
+                Event_SwitchShop.Invoke();
             }
 
             if(Input.GetKeyDown(KeyCode.Space) == true)
@@ -81,6 +99,7 @@ namespace Tamana
             if(Input.GetKeyDown(KeyCode.Mouse0) == true)
             {
                 Event_DoAttackHeavy.Invoke();
+                Event_NextDialogue.Invoke();
             }
 
             if(Input.GetKeyDown(KeyCode.Mouse1) == true)
@@ -137,11 +156,17 @@ namespace Tamana
             {
                 Event_CatchEnemy.Invoke();
             }
-        }
 
-        private void OnDestroy()
-        {
-            bool a = false;
+            var scroll = Input.mouseScrollDelta;
+            if(scroll.y > 0)
+            {
+                Event_ScrollUp.Invoke();
+            }
+
+            else if(scroll.y < 0)
+            {
+                Event_ScrollDown.Invoke();
+            }
         }
     }
 }

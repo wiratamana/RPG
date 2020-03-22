@@ -65,7 +65,7 @@ namespace Tamana
             OnMovementTypeChanged.Invoke(movementType);
         }
 
-        private void SetMovementTypeToStrafe(Unit_AI_Hostile enemy)
+        private void SetMovementTypeToStrafe(Unit_AI enemy)
         {
             SetMovementType(MovementType.Strafe);
         }

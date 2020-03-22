@@ -71,13 +71,13 @@ namespace Tamana
         private void OnPointerExit(BaseEventData eventData)
         {
             OnMouseExit.Invoke();
-            UI_Menu_Selection.DestroyInstance();
+            UI_Selection.DestroyInstance();
         }
 
         private void OnPointerEnter(BaseEventData eventData)
         {
             OnMouseEnter.Invoke();
-            UI_Menu_Selection.CreateInstance(RectTransform, 24);
+            UI_Selection.CreateInstance(RectTransform, 24);
         }
 
         private void OnPointerClick(BaseEventData eventData)

@@ -20,20 +20,31 @@ namespace Tamana.AI
     [CreateAssetMenu(fileName = "Good AI", menuName = "Create/Brain/Good AI")]
     public class Brain_Enemy_Good : AI_Brain
     {
-        private Data data;
+        private readonly string attackName = "AI_Good_Attack";
 
-        public override void Initialize(Unit_AI_Hostile unit)
+        public override void Initialize(Unit_AI unit)
         {
             base.Initialize(unit);
 
             Unit.PF.nodeParent = PF_Master.Instance.GetNearestNode(unit.transform.position);
-            data = new Data(Unit);
+
+            Prop.attackDelay_cur = 2.0f;
+            Prop.attackDelay_val = 2.0f;
         }
 
         public override void Update()
         {
-            Benchmarker.Start();
             data.Update();
+
+            if (new IsHostileToPlayer(data) == false)
+            {
+                if(new IsTakingDamage(data) == false)
+                {
+                    return;
+                }
+
+                new DoSwitchToHostile(data);
+            }
 
             if (data.IsAlert == false)
             {
@@ -56,6 +67,8 @@ namespace Tamana.AI
                 {
                     if(new IsTakingDamage(data) == false)
                     {
+                        Prop.attackDelay_cur = Mathf.Max(0, Prop.attackDelay_cur - Time.deltaTime);
+
                         if (new IsWeaponEquipped(data) == false)
                         {
                             new DoDrawWeapon(data);
@@ -66,9 +79,12 @@ namespace Tamana.AI
                             new DoDodge(data);
                         }
 
-                        else if(new IsPlayerInsideAttackRange(data, 2.0f))
+                        else if (new IsPlayerInsideAttackRange(data, 2.0f))
                         {
-                            new DoAttack(data, "AI_Good_Attack");
+                            if (Prop.attackDelay_cur == 0)
+                            {
+                                new DoAttack(data, Prop, attackName);
+                            }                            
                         }
 
                         new DoMoveTowardPlayerPosition(data);
@@ -77,7 +93,6 @@ namespace Tamana.AI
             }
 
             Unit.transform.rotation = data.MyRotation;
-            Benchmarker.Stop($"State = {data.State} | IsAlert = {data.IsAlert}");
             data.ResetOnAttackAnimationStarted();
         }        
     }

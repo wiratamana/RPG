@@ -15,6 +15,7 @@ MonoBehaviour:
   itemName: 2H-Sword
   itemDescription: A very powerful 2h sword.
   prefab: {fileID: 473066, guid: c17b117a7e676e148b2ee325c1e6041d, type: 3}
+  price: 200
   effects:
   - type: 1
     value: 10

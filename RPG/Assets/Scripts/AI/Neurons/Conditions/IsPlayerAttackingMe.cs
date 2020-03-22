@@ -8,21 +8,21 @@ namespace Tamana.AI.Neuron
     {
         public readonly bool Result;
 
-        public IsPlayerAttackingMe(Data data)
+        public IsPlayerAttackingMe(Data data, float minimumDistance = 3.0f, float dotValue = -0.667f)
         {
             Result = false;
 
-            if(data.DistanceToPlayer > 3.0f)
+            if(data.DistanceToPlayer > minimumDistance)
             {                
                 return;
             }
 
-            if(data.DotProductTowardPlayer > -0.667f)
+            if(data.DotProductTowardPlayer > dotValue)
             {
                 return;
             }
 
-            Result = data.isPlayerOnAttackAnimationStarted;
+            Result = data.IsPlayerOnAttackAnimationStarted;
         }
 
         public static implicit operator bool(IsPlayerAttackingMe result)

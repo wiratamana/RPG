@@ -72,7 +72,7 @@ namespace Tamana
             var myPos = transform.position;
             var distance = float.MaxValue; 
 
-            var layer = Unit.IsUnitPlayer ? LayerMask.GetMask(LayerManager.LAYER_ENEMY) :
+            var layer = Unit.IsUnitPlayer ? LayerMask.GetMask(LayerManager.LAYER_AI) :
                 LayerMask.GetMask(LayerManager.LAYER_PLAYER);
             var radius = 5.0f;
             var overlap = Physics.OverlapSphere(transform.position, radius, layer);

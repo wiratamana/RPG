@@ -8,12 +8,13 @@ namespace Tamana
         public bool IsCompleted { get; private set; }        
         private Action continuation;
 
+        private readonly float time;
         private readonly int frames;
         public int CurrentFrame
         {
             set
             {
-                if (value == frames)
+                if (value >= frames && UnityEngine.Time.time > time)
                 {
                     IsCompleted = true;
                     continuation();
@@ -24,6 +25,7 @@ namespace Tamana
         public AsyncAwaiter(int frames)
         {
             this.frames = frames;
+            time = UnityEngine.Time.time;
         }
 
         public void OnCompleted(Action continuation)

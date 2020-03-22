@@ -80,12 +80,12 @@ namespace Tamana
 
         private void OnMouseEnter()
         {
-            UI_Menu_Selection.CreateInstance(RectTransform, 32);
+            UI_Selection.CreateInstance(RectTransform, 32);
         }
 
         private void OnMouseExit()
         {
-            UI_Menu_Selection.DestroyInstance();
+            UI_Selection.DestroyInstance();
         }
 
         public void ReturnToPool()

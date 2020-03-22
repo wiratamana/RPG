@@ -40,7 +40,7 @@ namespace Tamana
             RectTransform.position = screenPosition;
         }
 
-        private void Activate(Unit_AI_Hostile targetUnit)
+        private void Activate(Unit_AI targetUnit)
         {
             TargetUnit = targetUnit;
             DotImage.enabled = true;
