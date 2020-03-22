@@ -20,15 +20,16 @@ namespace Tamana.AI
     [CreateAssetMenu(fileName = "Good AI", menuName = "Create/Brain/Good AI")]
     public class Brain_Enemy_Good : AI_Brain
     {
-        private Data data;
-        private float delay;
+        private readonly string attackName = "AI_Good_Attack";
 
         public override void Initialize(Unit_AI unit)
         {
             base.Initialize(unit);
 
             Unit.PF.nodeParent = PF_Master.Instance.GetNearestNode(unit.transform.position);
-            data = new Data(Unit);
+
+            Prop.attackDelay_cur = 2.0f;
+            Prop.attackDelay_val = 2.0f;
         }
 
         public override void Update()
@@ -66,6 +67,8 @@ namespace Tamana.AI
                 {
                     if(new IsTakingDamage(data) == false)
                     {
+                        Prop.attackDelay_cur = Mathf.Max(0, Prop.attackDelay_cur - Time.deltaTime);
+
                         if (new IsWeaponEquipped(data) == false)
                         {
                             new DoDrawWeapon(data);
@@ -78,16 +81,10 @@ namespace Tamana.AI
 
                         else if (new IsPlayerInsideAttackRange(data, 2.0f))
                         {
-                            if (delay == 0)
+                            if (Prop.attackDelay_cur == 0)
                             {
-                                new DoAttack(data, "AI_Good_Attack");
-                                delay = 2.0f;
-                            }
-                            else
-                            {
-                                delay = Mathf.Max(0, delay - Time.deltaTime);
-                            }
-                            
+                                new DoAttack(data, Prop, attackName);
+                            }                            
                         }
 
                         new DoMoveTowardPlayerPosition(data);

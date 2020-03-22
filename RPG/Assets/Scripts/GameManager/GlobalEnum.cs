@@ -135,4 +135,12 @@ namespace Tamana
         Longs_KO_Air = 1 << 2,
         Longs_KO_AirStrong = 1 << 3,
     }
+
+    public enum VictoryAnimation
+    {
+        Sword1h_Vicotry_1,
+        Sword1h_Vicotry_2,
+        Sword1h_Vicotry_3,
+        Sword1h_Vicotry_4,
+    }
 }

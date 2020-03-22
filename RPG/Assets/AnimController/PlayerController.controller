@@ -128,7 +128,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword1h_Dodge 0
+  m_Name: AI_Better_Counter1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -174,6 +174,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-8345265970760766816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 2
+  prop: 1
+  value: 0
 --- !u!114 &-8291927602532403131
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -330,6 +345,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-7494293506816592471
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.9
+  normalizedTransitionDuration: 0.1
 --- !u!1102 &-7431220840558589082
 AnimatorState:
   serializedVersion: 5
@@ -358,6 +387,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-7169489465975491237
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 0
+  prop: 2
+  value: 1
 --- !u!114 &-7143086144494440689
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -457,6 +501,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-5945883534356129150
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 0
+  prop: 2
+  value: 1
 --- !u!206 &-5832098506253170395
 BlendTree:
   m_ObjectHideFlags: 3
@@ -662,6 +721,50 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &-5441003598889714324
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sword1h_Victory_4
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: -7494293506816592471}
+  - {fileID: 6303776734249091618}
+  - {fileID: 1596497619400770989}
+  - {fileID: -7169489465975491237}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400048, guid: 63caa43b07a53a44e998f2ca18685177, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!114 &-5413543897567105174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.521
+  normalizedTransitionDuration: 0.1
 --- !u!1102 &-5412846979715201986
 AnimatorState:
   serializedVersion: 5
@@ -686,6 +789,36 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400006, guid: 7c3c4d895ee89ce43b0e1138cc8994e0, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-5330079676548361306
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sword1h_Victory_2
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: 7625184564071320271}
+  - {fileID: 3943344878787639425}
+  - {fileID: 4888205753380730355}
+  - {fileID: -3688494579719348664}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400044, guid: 63caa43b07a53a44e998f2ca18685177, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -855,6 +988,21 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-4331735847970975709
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 2
+  prop: 0
+  value: 0
 --- !u!1101 &-4279487378089495064
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1028,6 +1176,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-3688494579719348664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 0
+  prop: 2
+  value: 1
 --- !u!1101 &-3658783375670340178
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1320,7 +1483,7 @@ AnimatorStateMachine:
     m_Position: {x: 670, y: 30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6089146694279837973}
-    m_Position: {x: 800, y: -280, z: 0}
+    m_Position: {x: 670, y: -360, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8648207821707358426}
     m_Position: {x: 670, y: -400, z: 0}
@@ -1336,6 +1499,18 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 676646330849439209}
     m_Position: {x: 987.35046, y: -585.8192, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -2024334427075007734}
+    m_Position: {x: -430, y: -180, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -5330079676548361306}
+    m_Position: {x: -430, y: -140, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 7525457635366524173}
+    m_Position: {x: -430, y: -100, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -5441003598889714324}
+    m_Position: {x: -430, y: -60, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1402,6 +1577,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-2687526717951506862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.9
+  normalizedTransitionDuration: 0.1
 --- !u!114 &-2460404401659342702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1444,6 +1633,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-2371061744244133280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.3
+  normalizedTransitionDuration: 0.1
 --- !u!114 &-2286087224434634494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1481,6 +1684,36 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400042, guid: fb07a934dbc1969468121112ca048964, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-2024334427075007734
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sword1h_Vicotry_1
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: -2687526717951506862}
+  - {fileID: -8345265970760766816}
+  - {fileID: 3819189561933541255}
+  - {fileID: -5945883534356129150}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400042, guid: 63caa43b07a53a44e998f2ca18685177, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1567,6 +1800,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-1309692734843667396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.3
+  normalizedTransitionDuration: 0.1
 --- !u!1102 &-1279599095004765226
 AnimatorState:
   serializedVersion: 5
@@ -1595,6 +1842,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-1022375958138576080
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 0
+  prop: 2
+  value: 1
 --- !u!1101 &-829539706243305503
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -1648,6 +1910,21 @@ MonoBehaviour:
   weaponType: 0
   animDodge_1H: 4
   animDodge_2H: 0
+--- !u!114 &-548527960032896680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 0
+  prop: 1
+  value: 1
 --- !u!114 &-400384364067140440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1663,6 +1940,20 @@ MonoBehaviour:
   weaponType: 0
   animHit_1H: 16
   animHit_2H: 0
+--- !u!114 &-193121386864273269
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.9
+  normalizedTransitionDuration: 0.1
 --- !u!1102 &-25550109202946014
 AnimatorState:
   serializedVersion: 5
@@ -2198,6 +2489,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &1596497619400770989
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 0
+  prop: 1
+  value: 1
 --- !u!114 &1750416155618503617
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2387,11 +2693,13 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Attack_Move_snap_Point
+  m_Name: AI_Better_Counter2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -5413543897567105174}
+  - {fileID: -4331735847970975709}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -2689,6 +2997,21 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &3819189561933541255
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 0
+  prop: 1
+  value: 1
 --- !u!1101 &3880309891783091862
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2711,6 +3034,21 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &3943344878787639425
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 2
+  prop: 1
+  value: 0
 --- !u!114 &3946035369219244558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2793,6 +3131,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionTimingMultiplier: 0.5
+  normalizedTransitionDuration: 0.1
+--- !u!114 &4258384079195254589
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.3
   normalizedTransitionDuration: 0.1
 --- !u!1101 &4369175266248026866
 AnimatorStateTransition:
@@ -3048,6 +3400,21 @@ BlendTree:
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 3
+--- !u!114 &4888205753380730355
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 0
+  prop: 1
+  value: 1
 --- !u!1102 &4891850436737238086
 AnimatorState:
   serializedVersion: 5
@@ -3194,6 +3561,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &6303776734249091618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 2
+  prop: 1
+  value: 0
 --- !u!1102 &6723233296361508439
 AnimatorState:
   serializedVersion: 5
@@ -3250,6 +3632,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionTimingMultiplier: 0.47
   normalizedTransitionDuration: 0.1
+--- !u!114 &6830569908128974882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07d81bff310114286a7f7da18f540c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 2
+  prop: 1
+  value: 0
 --- !u!1102 &7016702541003486913
 AnimatorState:
   serializedVersion: 5
@@ -3370,6 +3767,36 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &7525457635366524173
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sword1h_Victory_3
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: -193121386864273269}
+  - {fileID: 6830569908128974882}
+  - {fileID: -548527960032896680}
+  - {fileID: -1022375958138576080}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400046, guid: 63caa43b07a53a44e998f2ca18685177, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &7526412562105709890
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3436,6 +3863,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &7625184564071320271
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bba4c50b115f334ca5ef6ebefb1cf3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionTimingMultiplier: 0.9
+  normalizedTransitionDuration: 0.1
 --- !u!1102 &7649322472158372748
 AnimatorState:
   serializedVersion: 5

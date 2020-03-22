@@ -50,5 +50,10 @@ namespace Tamana
                 Debug.Log("Brain was shut down!");
             }
         }
+
+        public Prop GetBrainProp()
+        {
+            return brain.Prop;
+        }
     }
 }

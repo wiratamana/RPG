@@ -62,6 +62,8 @@ namespace Tamana
 
                 UI_Chat_Main.Instance.Dialogue.OnDialogueActivated.AddListener(TemporarilyDisableCombatEvents);
                 UI_Chat_Main.Instance.Dialogue.OnDialogueDeactivated.AddListener(ReenableCombatEvents);
+
+                DeathHandler.OnDeath.AddListener(TemporarilyDisableCombatEvents);
             }
 
             Unit.Equipment.OnEquippedEvent.AddListener(OnWeaponEquipped);
