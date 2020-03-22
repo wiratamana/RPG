@@ -67,7 +67,7 @@ namespace Tamana
             get
             {
                 var param = Player.UnitAnimator.Params;
-                if (param.IsHolstering || param.IsEquipping)
+                if (param.IsHolstering || param.IsEquipping || UI_Menu.IsMenuActive)
                 {
                     return false;
                 }
