@@ -163,6 +163,11 @@ namespace Tamana
 
         public static TextMeshProUGUI CreateText(Transform parent, int width, int height, string text, string name)
         {
+            return CreateText(parent, (float)width, height, text, name);
+        }
+
+        public static TextMeshProUGUI CreateText(Transform parent, float width, float height, string text, string name)
+        {
             var go = new GameObject(name);
             go.transform.SetParent(parent);
             var txt = go.AddComponent<TextMeshProUGUI>();

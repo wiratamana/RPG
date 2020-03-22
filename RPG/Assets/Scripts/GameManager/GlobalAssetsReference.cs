@@ -21,6 +21,7 @@ namespace Tamana
             }
         }
         [SerializeField] private Sprite headerSmallCircle;
+        [SerializeField] private Sprite money;
 
         [SerializeField]
         [UI_Menu_AttributeSpriteItemType(ItemType.Weapon)]
@@ -68,6 +69,7 @@ namespace Tamana
         public static Sprite InventoryItemIconRing_Sprite => Instance.inventoryItemIconRing_Sprite;
         public static Sprite InventoryItemBackgroundEquipped_Sprite => Instance.inventoryItemBackgroundEquipped_Sprite;
         public static Sprite InventoryItemOnPointerOver_Sprite => Instance.inventoryItemOnPointerOver_Sprite;
+        public static Sprite Money_Sprite => Instance.money;
 
         private static Dictionary<ItemType, Sprite> itemTypeSpritesDic;
         public static Dictionary<ItemType, Sprite> ItemTypeSpritesDic

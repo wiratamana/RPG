@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tamana.AI.Neuron
 {
-    public struct IsHostileToPlayer
+    public readonly struct IsHostileToPlayer
     {
         public readonly bool Result;
 

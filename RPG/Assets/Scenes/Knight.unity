@@ -101296,6 +101296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headerSmallCircle: {fileID: 21300000, guid: 4ff794940ecdf814d90ceb06087e113b, type: 3}
+  money: {fileID: 21300000, guid: 964a28e9b42f8944e9822159be68ab49, type: 3}
   inventoryItemTypeWeapon: {fileID: 21300000, guid: cd019f76d910bda40b397c42e44c4b5d,
     type: 3}
   inventoryItemTypeArmor: {fileID: 21300000, guid: d67d7abed53fb294491d02cdbe030ac8,
