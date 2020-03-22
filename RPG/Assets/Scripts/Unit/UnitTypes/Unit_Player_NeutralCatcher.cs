@@ -33,6 +33,11 @@ namespace Tamana
                     continue;
                 }
 
+                if (GameManager.IsAbleToInteract == false)
+                {
+                    return;
+                }
+
                 UI_Chat_Main.Instance.Bubble.Activate(i);
             }
         }

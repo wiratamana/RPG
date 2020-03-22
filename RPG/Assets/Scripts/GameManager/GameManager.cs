@@ -62,6 +62,20 @@ namespace Tamana
             }
         }
 
+        public static bool IsAbleToInteract
+        {
+            get
+            {
+                var param = Player.UnitAnimator.Params;
+                if (param.IsHolstering || param.IsEquipping)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
         private static Material itemMaterial;
         public static Material ItemMaterial
         {

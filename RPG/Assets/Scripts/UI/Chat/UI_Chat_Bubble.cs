@@ -45,8 +45,7 @@ namespace Tamana
                 return;
             }
 
-            var param = GameManager.Player.UnitAnimator.Params;
-            if (param.IsHolstering || param.IsEquipping)
+            if (GameManager.IsAbleToInteract == false)
             {
                 Deactivate();
                 return;
