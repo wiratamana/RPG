@@ -8343,8 +8343,16 @@ ModelImporter:
       curves: []
       events:
       - time: 0.16955684
-        functionName: SendEvent
-        data: toStrike
+        functionName: OnDoDamage
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: c9ce28149bef3b74bad8ccc43bdf29c0,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.10354223
+        functionName: ChanceToParry
+        data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

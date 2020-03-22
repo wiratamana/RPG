@@ -37,7 +37,6 @@ namespace Tamana
 
         public Item_Preview ItemPreview { get; private set; }
         private bool isMousePointerAboveMe = false;
-        private const float DEFAULT_PREVIEW_CAMERA_ORTHO_SIZE = 0.4f;
 
         private static readonly Vector2 NormalSize = new Vector2(100, 100);
 
@@ -82,7 +81,7 @@ namespace Tamana
                     if(ItemPreview.enabled == true)
                     {
                         ItemPreview.enabled = false;
-                        StartCoroutine(ResetItemPreviewRotationToDefault());
+                        ResetItemPreviewRotationToDefault();
                     }
                 }
             }
@@ -93,9 +92,9 @@ namespace Tamana
             }
         }
 
-        private IEnumerator ResetItemPreviewRotationToDefault()
+        private async void ResetItemPreviewRotationToDefault()
         {
-            yield return new WaitForEndOfFrame();
+            await AsyncManager.WaitForFrame(1);
 
             ItemPreview.ResetRotation();
             ResetCameraPositionAndRotation();
@@ -113,29 +112,20 @@ namespace Tamana
             // ===============================================================================================
             // Instantiate item prefab and set its position.
             // ===============================================================================================
-            ItemPreview = Item_Preview.InstantiateItemPrefab(ItemIcon, positionOffeset);
+            ItemPreview = Item_Preview.InstantiateItemPrefab(ItemIcon.Item, positionOffeset);
 
             return ItemPreview;
         }
 
         public void ResetCameraPositionAndRotation()
         {
-            UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.orthographicSize = DEFAULT_PREVIEW_CAMERA_ORTHO_SIZE;
-            UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.position = ItemPreview.transform.position - new Vector3(0, 0, 1);
-            UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.rotation = Quaternion.identity;
-            if (ItemPreview.ItemBase is Item_Weapon)
-            {
-                var weapon = ItemPreview.ItemBase as Item_Weapon;
-                UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.orthographicSize = weapon.CustomOrthoSize;
-                UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.position += weapon.MenuCameraOffset;
-                UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.transform.rotation = Quaternion.Euler(weapon.MenuDefaultCameraRotation);
-            }
+            UI_ItemRenderer.ResetCameraPositionAndRotation(ItemPreview.ItemBase, ItemPreview.transform);
         }
 
         private void RenderCamera()
-        {            
-            UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.targetTexture = RawImage.texture as RenderTexture;
-            UI_Menu_Inventory_Left_Drawer_ItemIcon.Instance.TextureRendererCamera.Render();
+        {
+            UI_ItemRenderer.SetTexture(RawImage.texture as RenderTexture);
+            UI_ItemRenderer.Render();
         }
 
         private void OnPointerClick(BaseEventData eventData)

@@ -7,7 +7,7 @@ namespace Tamana
 {
     public class TPC_RotateTowardEnemyHandler : MonoBehaviour
     {
-        private Unit_AI_Hostile enemy;
+        private Unit_AI enemy;
         private TPC_Movement movement;
         public TPC_Movement Movement => this.GetOrAddAndAssignComponent(ref movement);
 
@@ -47,7 +47,7 @@ namespace Tamana
             enabled = false;
         }
 
-        private void OnEnemyCatched(Unit_AI_Hostile enemy)
+        private void OnEnemyCatched(Unit_AI enemy)
         {
             this.enemy = enemy;
             enabled = true;

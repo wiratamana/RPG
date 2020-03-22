@@ -23,7 +23,7 @@ namespace Tamana
         private TPC_CameraHandler cameraHandler;
         public TPC_CameraHandler CameraHandler => this.GetAndAssignComponent(ref cameraHandler);
 
-        private Unit_AI_Hostile unitBase;
+        private Unit_AI unitBase;
         private Transform playerRootTransform;
         private Transform playerSpineTransform;
         private Transform enemySpineTransform;
@@ -83,7 +83,7 @@ namespace Tamana
             CameraCombatData = new DataInfo(cameraLookPosition, camCurrentPos, camCurrentRot);
         }
 
-        private void Activate(Unit_AI_Hostile unitBase)
+        private void Activate(Unit_AI unitBase)
         {
             this.unitBase = unitBase;
             enemySpineTransform = unitBase.BodyTransform.Spine;

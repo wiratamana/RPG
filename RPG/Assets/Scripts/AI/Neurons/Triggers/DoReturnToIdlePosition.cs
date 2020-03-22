@@ -16,11 +16,15 @@ namespace Tamana.AI.Neuron
                 data.NextDestination = data.NodeParentPosition;
             }
 
+            var isIdlePositionFounded = data.NextDestination == data.IdlePosition;
+
             var distanceToNextDestination = Vector3.Distance(data.NextDestination, data.MyPosition);
             var distanceFromNodeParentToIdlePosition = Vector3.Distance(data.NodeParentPosition, data.IdlePosition);
 
-            if(distanceToNextDestination < 1.5f)
+            if(isIdlePositionFounded == false && distanceToNextDestination < 1.5f)
             {
+                bool isNearestNeighbourNodeFound = false;
+
                 foreach (var n in data.NeighbourNodes)
                 {
                     if (n == null)
@@ -31,15 +35,17 @@ namespace Tamana.AI.Neuron
                     var distanceFromNeighbourNodeToIdlePosition = Vector3.Distance(n.transform.position, data.IdlePosition);
                     if (distanceFromNeighbourNodeToIdlePosition < distanceFromNodeParentToIdlePosition)
                     {
+                        isNearestNeighbourNodeFound = true;
+
                         distanceFromNodeParentToIdlePosition = distanceFromNeighbourNodeToIdlePosition;
                         data.NextDestination = n.transform.position;
                     }
                 }
-            }
 
-            if (data.DistanceToIdlePosition < distanceToNextDestination)
-            {
-                data.NextDestination = data.IdlePosition;
+                if(isNearestNeighbourNodeFound == false)
+                {
+                    data.NextDestination = data.IdlePosition;
+                }
             }
 
             UnityEngine.Debug.DrawLine(data.MyPosition, data.NextDestination, Color.cyan);

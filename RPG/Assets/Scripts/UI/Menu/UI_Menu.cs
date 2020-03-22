@@ -8,6 +8,19 @@ namespace Tamana
     [GM_AttributeInstantiator(typeof(UI_Menu))]
     public class UI_Menu : SingletonMonobehaviour<UI_Menu>
     {
+        public static bool IsMenuActive
+        {
+            get
+            {
+                if (Instance == null)
+                {
+                    return false;
+                }
+
+                return Instance.gameObject.activeInHierarchy;
+            }
+        }
+
         private UI_Menu_Background _background;
         public UI_Menu_Background Background
         {

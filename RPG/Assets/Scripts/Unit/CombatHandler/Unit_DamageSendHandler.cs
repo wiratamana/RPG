@@ -17,7 +17,7 @@ namespace Tamana
 
             if (CombatHandler.Unit.IsUnitPlayer == true)
             {
-                layer = LayerMask.GetMask(LayerManager.LAYER_ENEMY);
+                layer = LayerMask.GetMask(LayerManager.LAYER_AI);
             }
             else
             {

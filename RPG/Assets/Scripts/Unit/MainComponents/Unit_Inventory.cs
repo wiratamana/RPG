@@ -43,5 +43,13 @@ namespace Tamana
 
             Debug.Log($"Item added. Name : '{item.ItemName}'");
         }
+
+        public void RemoveItem(Item_Base item)
+        {
+            Debug.Log($"Removing item. Name : '{item.ItemName}'");
+
+            itemList.Remove(item);
+            Object.Destroy(item);
+        }
     }
 }

@@ -70,6 +70,12 @@ namespace Tamana
 
         public void RemoveAllListener()
         {
+            if(isInvoking == false)
+            {
+                callbacksDic.Clear();
+                return;
+            }
+
             foreach (var listener in callbacksDic)
             {
                 listenerEditorQueue.Enqueue((REMOVE_LISTENER, listener.Key, null));
@@ -217,6 +223,12 @@ namespace Tamana
 
         public void RemoveAllListener()
         {
+            if (isInvoking == false)
+            {
+                callbacksDic.Clear();
+                return;
+            }
+
             foreach (var listener in callbacksDic)
             {
                 listenerEditorQueue.Enqueue((REMOVE_LISTENER, listener.Key, null));
@@ -364,6 +376,12 @@ namespace Tamana
 
         public void RemoveAllListener()
         {
+            if (isInvoking == false)
+            {
+                callbacksDic.Clear();
+                return;
+            }
+
             foreach (var listener in callbacksDic)
             {
                 listenerEditorQueue.Enqueue((REMOVE_LISTENER, listener.Key, null));

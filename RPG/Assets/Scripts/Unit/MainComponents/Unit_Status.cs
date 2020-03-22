@@ -10,6 +10,8 @@ namespace Tamana
         private Unit_Status_Information mainStatus;
         private List<Unit_Status_Information> additionalStatus;
 
+        public bool IsInitialized => mainStatus != null;
+
         private Unit_Base unit;
         public Unit_Base Unit => this.GetAndAssignComponent(ref unit);
 

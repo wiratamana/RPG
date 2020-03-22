@@ -18,14 +18,25 @@ namespace Tamana
 
         private void Update()
         {
-            CameraHandler.CameraLookPoint.transform.position = Vector3.Lerp(CameraHandler.CameraLookPoint.transform.position, transform.position, 5 * Time.deltaTime);
+            CameraHandler.CameraLookPoint.transform.position = Vector3.Lerp(CameraHandler.CameraLookPoint.transform.position, 
+                CameraHandler.TPC.UnitPlayer.BodyTransform.Spine.position, 5 * Time.deltaTime);
 
             RotateCamera();                
+        }
+
+        public void SetRotation(Quaternion rotation)
+        {
+            CameraHandler.CameraLookPoint.transform.rotation = rotation;
         }
 
         private void RotateCamera()
         {
             var eulerAngle = CameraHandler.CameraLookPoint.eulerAngles;
+            if(eulerAngle.x > 180)
+            {
+                eulerAngle.x /= 360.0f;
+            }
+
             eulerAngle.x = Mathf.Clamp(eulerAngle.x + KeyboardController.MouseVertical, 0.0f, 75.0f);
             eulerAngle.y += KeyboardController.MouseHorizontal;
 

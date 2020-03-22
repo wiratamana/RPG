@@ -9,15 +9,15 @@ namespace Tamana
         [SerializeField] private Sprite hpst;
         public Sprite HPST_Sprite => hpst;
 
-        private Dictionary<int, Unit_AI_Hostile> registeredEnemyDic;
+        private Dictionary<int, Unit_AI> registeredEnemyDic;
         private Canvas canvas;
         public Canvas Canvas => this.GetAndAssignComponentInParent(ref canvas);
 
-        public void RegisterEnemy(Unit_AI_Hostile enemy)
+        public void RegisterEnemy(Unit_AI enemy)
         {
             if (registeredEnemyDic == null)
             {
-                registeredEnemyDic = new Dictionary<int, Unit_AI_Hostile>();
+                registeredEnemyDic = new Dictionary<int, Unit_AI>();
             }
 
             var instanceID = enemy.GetInstanceID();

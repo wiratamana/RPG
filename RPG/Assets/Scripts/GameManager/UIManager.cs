@@ -42,6 +42,9 @@ namespace Tamana
 
             GameManager.Player.UnitAnimator.OnHolsteringAnimationFinished.AddListener(AddOpenMenuInventory);
             GameManager.Player.UnitAnimator.OnEquippingAnimationFinished.AddListener(AddOpenMenuInventory);
+
+            UI_Chat_Main.Instance.Dialogue.OnDialogueActivated.AddListener(RemoveOpenMenuInventory);
+            UI_Chat_Main.Instance.Dialogue.OnDialogueDeactivated.AddListener(AddOpenMenuInventory);
         }
 
         private void RemoveOpenMenuInventory()
@@ -159,6 +162,11 @@ namespace Tamana
         }
 
         public static TextMeshProUGUI CreateText(Transform parent, int width, int height, string text, string name)
+        {
+            return CreateText(parent, (float)width, height, text, name);
+        }
+
+        public static TextMeshProUGUI CreateText(Transform parent, float width, float height, string text, string name)
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent);

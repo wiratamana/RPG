@@ -49,6 +49,9 @@ namespace Tamana
             }
         }
 
+        [SerializeField] private int price;
+        public int Price => price;
+
         public abstract Item_ItemDetails ItemDetails { get; }
 
         protected Unit_Inventory inventoryOwner;

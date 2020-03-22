@@ -24,13 +24,8 @@ namespace Tamana
         // Update is called once per frame
         void Update()
         {
-            var a = InputEvent.Instance;
-            var b = GameManager.Instance;
-            var c = TagManager.Instance;
-            var d = LayerManager.Instance;
-
-            var playerPosition = CameraLookTargetTransform.position;
-            var directionToPlayer = (playerPosition - CameraHandler.MainCamera.transform.position).normalized;
+            VectorHelper.FastNormalizeDirection(CameraLookTargetTransform.position, 
+                CameraHandler.MainCamera.transform.position, out Vector3 directionToPlayer);
 
             var lookRotation = Quaternion.LookRotation(directionToPlayer);
             CameraHandler.MainCamera.transform.rotation = Quaternion.Slerp(CameraHandler.MainCamera.transform.rotation, lookRotation, 4 * Time.deltaTime);
